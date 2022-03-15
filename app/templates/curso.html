@@ -1,50 +1,39 @@
 <!DOCTYPE html>
 <html>
 
-{% extends 'base.html' %}
-{% load i18n static %}
-
-{% block extrahead %}
-    <link type="text/css" rel="stylesheet"
-         href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet"
-         href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-    <link type="text/css" rel="stylesheet" href="{% static "hello/style.css" %}" />
-{% endblock %}
-
-{% block contenido %}
+{% extends 'base.html' %} {% load i18n static %} {% block contenido %}
 <br>
 <div style="align-content: center; margin-top: 10%;">
 
-<p style="text-align: center;"> Asignatura: Redes de Computadores &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Profesor: María Martínez </p>
-<p style="text-align: center;"> Precio: 12€ </p>
-<br><br>
-<div style="text-align: center;">
-    <td>
-        <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="200px" height="160px">
-    </td>
-    
+    <p style="text-align: center;"> Asignatura: Redes de Computadores &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Profesor: María Martínez </p>
+    <p style="text-align: center;"> Precio: 12€ </p>
+    <br><br>
+    <div style="text-align: center;">
+        <td>
+            <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="200px" height="160px">
+        </td>
 
-    <td>
-        <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="200px" height="160px">
-    </td>
-    
-    
-    <td>
-        <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="160px" height="160px">
-    </td>
-    
-    
-    <td>
-        <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="160px" height="160px">
-    </td>
-   <br>
-    <input style="margin-top: 20px; margin-right: 40px;" type="button" class="editarContenido" value="Editar Contenido">
-    <input style="margin-top: 20px; margin-left: 40px;" type="button" class="editarContenido" value="Editar Contenido">
-    <input style="margin-top: 20px; margin-left: 40px;" type="button" class="editarContenido" value="Editar Contenido">
-    <input style="margin-top: 20px; margin-left: 40px;" type="button" class="editarContenido" value="Editar Contenido">
-    <br><br><br><br><br>
-</div>
+
+        <td>
+            <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="200px" height="160px">
+        </td>
+
+
+        <td>
+            <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="160px" height="160px">
+        </td>
+
+
+        <td>
+            <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="160px" height="160px">
+        </td>
+        <br>
+        <input style="margin-top: 20px; margin-right: 40px;" type="button" class="editarContenido" value="Editar Contenido">
+        <input style="margin-top: 20px; margin-left: 40px;" type="button" class="editarContenido" value="Editar Contenido">
+        <input style="margin-top: 20px; margin-left: 40px;" type="button" class="editarContenido" value="Editar Contenido">
+        <input style="margin-top: 20px; margin-left: 40px;" type="button" class="editarContenido" value="Editar Contenido">
+        <br><br><br><br><br>
+    </div>
     <div style="text-align: center;">
         <input style="margin-top: 20px;" type="button" class="atras" value="Atrás">
         <input style="margin-top: 20px;" type="button" class="unirseCurso" value="Unirse al Curso"><br>
@@ -53,4 +42,5 @@
 
 </div>
 {% endblock %}
+
 </html>
