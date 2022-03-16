@@ -15,8 +15,9 @@
 {% block contenido %}
 <div style="align-content: center; margin-top: 10%;">
     <form style="text-align: center;" method="post">
-        <input style="margin-bottom: 20px;" id="correo" type="text" name="correo_field" placeholder="usuario@alum.us.es"><br>
-        <input id="password" type="text" name="password_field" placeholder="Contraseña"><br>
+        {% csrf_token %}
+        <input style="margin-bottom: 20px;" id="correo" type="text" name="correo" placeholder="usuario@alum.us.es"><br>
+        <input id="contrasena" type="password" name="contrasena" placeholder="Contraseña"><br>
         <a href="" style="color: gray;">Olvidé mi contraseña</a><br>
         <input style="margin-top: 20px;" type="submit" class="iniciarProfesor" value="Iniciar Sesión"><br>
     </form>
