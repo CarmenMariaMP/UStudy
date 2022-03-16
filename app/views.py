@@ -7,9 +7,12 @@ def inicio(request):
 
 def login(request):
     return render(request, "login.html")
+
+def inicio_profesor(request):
+    return render(request, "inicio_profesor.html")
   
 def curso(request):
     return render(request, "curso.html")
-
+  
 def mycourses(request):
     return render(request, "mycourses.html")
