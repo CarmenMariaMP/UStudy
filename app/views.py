@@ -10,3 +10,6 @@ def login(request):
   
 def curso(request):
     return render(request, "curso.html")
+
+def mycourses(request):
+    return render(request, "mycourses.html")

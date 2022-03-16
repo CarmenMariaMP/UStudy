@@ -1,0 +1,39 @@
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.separado {
+    margin-top: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
+.download2 {
+  display: inline-block;
+  margin-right: 10px;
+  background: #339DFF;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 38px;
+  border-radius: 50px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  width: 170px;
+  text-align: center;
+}
+
+.download2:hover {
+  background: #fff;
+  box-shadow: 0 4px 4px rgba(83, 100, 255, 0.32);
+}
