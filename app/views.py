@@ -16,3 +16,6 @@ def curso(request):
   
 def miscursos(request):
     return render(request, "miscursos.html")
+
+def cursosdisponibles(request):
+    return render(request, "cursosdisponibles.html")
