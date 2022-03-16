@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    {% load static %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/base.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/button.css' %}" rel="stylesheet" />
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="/"><img class="logo" src="{% static 'media/logo.png' %}" alt="" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <h1>UStudy</h1>
+                </div>
+            </div>
+            <a class="btn btn-primary btn-lg float-right" href="/login">Login</a>
+            <!-- <a class="btn btn-secondary btn-lg float-right" href="#">Registrate aquí</a> -->
+        </nav>
+        <img class="logo center" src="{% static 'media/logo.png' %}" alt="" />
+    </header>
+    <section>{% block contenido %} {% endblock %}</section>
+    <form role="search" class="center" id="form">
+        <input type="search" id="query" name="q"
+         placeholder="Buscar cursos..."
+         aria-label="Search through site content">
+        <button>
+          <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+        </button>
+      </form>
+        <h1 class="center">Cursos disponibles</h1>
+      <div class="separado borde-azul">
+        <h2>Asignatura: </h2>
+        <h2>Profesor: </h2>
+        <h2>Precio: </h2>
+        <div id="container">
+            <a class="download2" href="">Suscribirse al Curso</a>
+        </div>
+      </div>
+
+      <div class="separado borde-azul">
+        <h2>Asignatura: </h2>
+        <h2>Profesor: </h2>
+        <h2>Precio: </h2>
+        <div id="container">
+            <a class="download2" href="">Suscribirse al Curso</a>
+        </div>
+      </div>
+      
+    {% block pie %}{% endblock %}
+</body>
+
+</html>
