@@ -59,13 +59,19 @@ class Comentario(models.Model):
     fecha = models.DateField()
     archivo = models.ForeignKey(Archivo, verbose_name="Archivo", on_delete=models.CASCADE)
     responde_a =  models.OneToOneField('self', null = True, blank = True, verbose_name = "Responde a", on_delete= models.DO_NOTHING)
-     
+
     
 class Notificacion(models.Model):
+    class TipoNotificacion(models.TextChoices):
+        COMENTARIO = "COMENTARIO"
+        REPORTE = "REPORTE"
+        NUEVO_ALUMNO = "NUEVO_ALUMNO"
+        
+    id_refencia = models.SmallIntegerField(null=True)
+    tipo = models.CharField(max_length=20, choices=TipoNotificacion.choices)
     fecha = models.DateField()
     visto = models.BooleanField()
     usuario = models.ForeignKey(Usuario, verbose_name="Usuario", on_delete=models.CASCADE)
-    comentario = models.ForeignKey(Comentario, verbose_name="Comentario", on_delete=models.CASCADE)
 
 
 class Valoracion(models.Model):
@@ -73,21 +79,12 @@ class Valoracion(models.Model):
     usuario = models.ForeignKey(Usuario, verbose_name="Usuario", on_delete=models.CASCADE)
     curso = models.ForeignKey(Curso, verbose_name="Curso", on_delete=models.CASCADE)
 
-
-class TipoReporte(Enum):
-    PLAGIO = "PLAGIO"
-    ERROR = "ERROR"
-    
-    @classmethod
-    def choices(cls):
-        return tuple((i.name, i.value) for i in cls)
     
 class Reporte(models.Model):
-    descripcion = models.CharField(max_length=500)
-    
-    fecha = models.DateField()
     class TipoReporte(models.TextChoices):
         PLAGIO = "PLAGIO"
         ERROR = "ERROR"
-
-    tipo_reporte = models.CharField(max_length=10, choices=TipoReporte.choices)
+        
+    descripcion = models.CharField(max_length=500)
+    fecha = models.DateField()
+    tipo = models.CharField(max_length=10, choices=TipoReporte.choices)
