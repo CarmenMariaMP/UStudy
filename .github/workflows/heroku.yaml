@@ -1,4 +1,4 @@
-name: Python application
+name: Heroku
 
 on:
   pull_request:
@@ -10,11 +10,15 @@ on:
       workflows: ["Codacy Analysis CLI"]
       types:
         - completed
+  push:
+    branches:
+      - 'main'
+    workflow_run:
+      workflows: ["Codacy Analysis CLI"]
+      types:
+        - completed
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
   deploy:
     runs-on: ubuntu-latest
     steps:

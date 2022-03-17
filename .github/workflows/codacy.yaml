@@ -11,6 +11,14 @@ on:
       workflows: ["Tests"]
       types:
         - completed
+  push:
+    branches:    
+      - 'develop'
+      - 'main'
+    workflow_run:
+      workflows: ["Tests"]
+      types:
+        - completed
 
 jobs:
   codacy-analysis-cli:
