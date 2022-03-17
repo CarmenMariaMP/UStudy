@@ -10,7 +10,7 @@ body::after {
     content: "";
     background-image: url("https://arteyanimacion.com/wp-content/uploads/2020/10/clases-en-linea.jpg");
     background-size: cover;
-    opacity: 0.2;
+    opacity: 0.1;
     top: 0;
     left: 0;
     bottom: 0;
@@ -24,12 +24,13 @@ body::after {
 }
 
 .logo {
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 80px;
+    align-content: center;
 }
 
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
-  }
+}
