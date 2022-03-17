@@ -11,14 +11,14 @@ on:
       - main
 
 jobs:
-  codacy-analysis-cli:
-    name: Codacy Analysis CLI
+  codacy:
+    name: Codacy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@main
 
-      - name: Run Codacy Analysis CLI
+      - name: Run Codacy
         uses: codacy/codacy-analysis-cli-action@master
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
