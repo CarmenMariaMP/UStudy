@@ -3,11 +3,12 @@ name: Tests
 on:
   pull_request:
     types:
-      - [opened, reopened]
+      - "opened"
+      - "reopened"
   push:
     branches:
-      - 'develop'
-      - 'main'
+      - develop
+      - main
 
 jobs:
   build:
@@ -36,6 +37,4 @@ jobs:
       run: 
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Run migrations
-      run: cd decide; python manage.py migrate
     # Corres los tests 
