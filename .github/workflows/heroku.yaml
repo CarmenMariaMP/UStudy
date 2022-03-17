@@ -1,0 +1,26 @@
+name: Python application
+
+on:
+  pull_request:
+    types:
+      - [closed]
+    branches:
+      - 'main'
+    workflow_run:
+      workflows: ["Codacy Analysis CLI"]
+      types:
+        - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: " <<your app name>>"
+          heroku_email: " <<your email>>"
