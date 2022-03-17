@@ -1,25 +1,11 @@
 name: Heroku
 
 on:
-  pull_request:
-    types:
-      - [closed]
-    branches:
-      - 'main'
-    workflow_run:
-      workflows: ["Codacy Analysis CLI"]
-      types:
-        - completed
   push:
     branches:
-      - 'main'
-    workflow_run:
-      workflows: ["Codacy Analysis CLI"]
-      types:
-        - completed
+      - main
 
 jobs:
-  if: github.event.pull_request.merged == true
     deploy:
       runs-on: ubuntu-latest
       steps:

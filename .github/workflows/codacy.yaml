@@ -1,24 +1,20 @@
 name: Codacy Analysis CLI
 
 on:
+  workflow_run:
+      workflows: ["Tests"]
+      types:
+        - completed
   pull_request:
     types:
-      - [closed]
+      - "closed"
     branches:    
-      - 'develop'
-      - 'main'
-    workflow_run:
-      workflows: ["Tests"]
-      types:
-        - completed
+      - develop
+      - main
   push:
     branches:    
-      - 'develop'
-      - 'main'
-    workflow_run:
-      workflows: ["Tests"]
-      types:
-        - completed
+      - develop
+      - main
 
 jobs:
   codacy-analysis-cli:
