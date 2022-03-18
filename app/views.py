@@ -16,13 +16,11 @@ def login_user(request):
         usuario_autenticado = authenticate(username=correo, password=contrasena)
 
         if usuario_autenticado is not None:
-            nombre = usuario_autenticado.usuario
+            usuario = usuario_autenticado.usuario
             login(request,usuario_autenticado)
-            print(request, "¡¡Credenciales correctas!!")
-            return render(request, "inicio_profesor.html",{"nombre":nombre.nombre})
+            return redirect("/inicio_profesor",{"nombre":usuario.nombre})
         else:
-            print(request, "¡¡Credenciales erroneas!!")
-            return redirect('login')
+            return render(request,'login.html',{"mensaje_error":True})
     return render(request, "login.html")
 
 def logout_user(request):
