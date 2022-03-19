@@ -28,33 +28,25 @@
         <img class="logo center" src="{% static 'media/logo.png' %}" alt="" />
     </header>
     <section>{% block contenido %} {% endblock %}</section>
-    <form role="search" class="center" id="form">
+<!--  <form role="search" class="center" id="form">
         <input type="search" id="query" name="q"
          placeholder="Buscar cursos..."
          aria-label="Search through site content">
         <button>
           <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
-        </button>
-      </form>
+        </button> 
+      </form>-->
         <h1 class="center">Cursos disponibles</h1>
       <div class="separado borde-azul">
-        <h2>Asignatura: </h2>
-        <h2>Profesor: </h2>
-        <h2>Precio: </h2>
+        {% for curso in cursos %}
+        <h2>Asignatura: {{ curso.asignatura.nombre }}</h2>
+        <h2>Profesor: {{ curso.propietario.nombre }}</h2>
+        <h2>Precio: 12 Euros</h2>
         <div id="container">
             <a class="download2" href="">Suscribirse al Curso</a>
         </div>
       </div>
-
-      <div class="separado borde-azul">
-        <h2>Asignatura: </h2>
-        <h2>Profesor: </h2>
-        <h2>Precio: </h2>
-        <div id="container">
-            <a class="download2" href="">Suscribirse al Curso</a>
-        </div>
-      </div>
-      
+        {% endfor %}    
     {% block pie %}{% endblock %}
 </body>
 
