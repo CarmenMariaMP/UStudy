@@ -35,3 +35,9 @@ def inicio_profesor(request):
   
 def curso(request):
     return render(request, "curso.html")
+  
+def miscursos(request):
+    return render(request, "miscursos.html")
+
+def cursosdisponibles(request):
+    return render(request, "cursosdisponibles.html")
