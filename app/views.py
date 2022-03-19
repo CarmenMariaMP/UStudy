@@ -31,7 +31,7 @@ def inicio_profesor(request):
     if request.user.is_authenticated:
         return render(request, "inicio_profesor.html", {'nombre': request.user.usuario.nombre})
     else:
-        return render(request, 'inicio.html')
+        return render(request, 'login.html')
   
 def curso(request):
     return render(request, "curso.html")
