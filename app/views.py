@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from app.models import Usuario
+from app.models import *
 
 # Create your views here.
 def inicio(request):
@@ -33,11 +33,34 @@ def inicio_profesor(request):
     else:
         return render(request, 'inicio.html')
   
-def curso(request):
-    return render(request, "curso.html")
+def curso(request, id):
+    es_owner = False
+    es_suscriptor = False       
+    
+    curso = Curso.objects.get(id=id)
+    contenido_curso = Archivo.objects.all().filter(curso=curso)
+    
+    if request.user.is_authenticated:
+        # Comprobar si el usuario es profesor
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(email_academico=usuario_autenticado)
+        if curso.propietario == usuario:
+            es_owner = True
+        elif usuario in curso.suscriptores.all():
+            es_suscriptor = True
+            
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso":curso ,"contenido_curso": contenido_curso})
+   
+    else:
+       return render(request, 'inicio.html')
+        
+    
+    
+   
   
 def miscursos(request):
     return render(request, "miscursos.html")
 
 def cursosdisponibles(request):
     return render(request, "cursosdisponibles.html")
+
