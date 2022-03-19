@@ -53,10 +53,7 @@ def curso(request, id):
    
     else:
        return render(request, 'inicio.html')
-        
-    
-    
-   
+         
   
 def miscursos(request):
     return render(request, "miscursos.html")
