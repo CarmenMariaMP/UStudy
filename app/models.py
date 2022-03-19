@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator,MaxValueValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from pytest import param
+from django.contrib.auth.models import User
 
 def emails_distintos(email_academico):
     if('@alum.us.es' in email_academico):
@@ -36,6 +37,7 @@ class Usuario(models.Model):
     foto = models.CharField(max_length=100)
     contrasenha = models.CharField(max_length=100)
     dinero = models.DecimalField(max_digits=12, decimal_places=2)
+    django_user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="usuario", null=True)
 
 
 class Curso(models.Model):
