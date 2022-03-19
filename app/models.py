@@ -48,12 +48,14 @@ class Curso(models.Model):
     propietario = models.ForeignKey(Usuario, related_name="Propietario", on_delete=models.DO_NOTHING)
     suscriptores = models.ManyToManyField(Usuario, related_name="Suscriptores")
 
+def user_directory_path(instance, filename):
+    return '{0}/{1}'.format(instance.curso.id, filename)
     
 class Archivo(models.Model):
     nombre = models.CharField(max_length=200)
-    ruta = models.CharField(max_length=200)
-    fecha_publicacion = models.DateField()
+    fecha_publicacion = models.DateField(auto_now_add=True, blank=True)
     curso = models.ForeignKey(Curso, verbose_name="Curso", on_delete=models.CASCADE)
+    ruta = models.FileField(upload_to=user_directory_path)
 
 
 class Comentario(models.Model):
