@@ -3,6 +3,8 @@ from django.views.generic import TemplateView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from app.models import *
+from .forms import UploadFileForm
+
 
 # Create your views here.
 def inicio(request):
@@ -44,16 +46,26 @@ def curso(request, id):
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
         usuario = Usuario.objects.get(email_academico=usuario_autenticado)
+        form = UploadFileForm(request.POST, request.FILES)
         if curso.propietario == usuario:
             es_owner = True
+            if request.method == 'POST':
+              if form.is_valid():
+                file = request.FILES['file']
+                curso = Curso.objects.get(id=id)
+                archivo = Archivo.objects.create(nombre=file.name, ruta=file, curso=curso)
+                archivo.save()
+              else:
+                form = UploadFileForm()
+              
         elif usuario in curso.suscriptores.all():
             es_suscriptor = True
+        
             
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso":curso ,"contenido_curso": contenido_curso})
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso":curso ,"contenido_curso": contenido_curso, "form":form})
    
     else:
-       return render(request, 'inicio.html')
-         
+       return render(request, 'inicio.html')     
   
 def miscursos(request):
     return render(request, "miscursos.html")
@@ -61,3 +73,5 @@ def miscursos(request):
 def cursosdisponibles(request):
     return render(request, "cursosdisponibles.html")
 
+def ver_archivo(request, id_curso, id_archivo):
+    return render(request, "archivo.html")
