@@ -31,9 +31,34 @@ def logout_user(request):
 
 def inicio_profesor(request):
     if request.user.is_authenticated:
-        return render(request, "inicio_profesor.html", {'nombre': request.user.usuario.nombre})
+        
+
+        usuarioActual = request.user.usuario
+
+        cursosUsuario = Curso.objects.all().filter(propietario=usuarioActual).order_by('nombre')
+
+        dicc= dict()
+
+        for curso in cursosUsuario:
+            archivos = Archivo.objects.all().filter(curso = curso)
+            valoraciones = Valoracion.objects.all().filter(curso=curso)
+            puntos = 0
+            for valoracion in valoraciones:
+                puntos += valoracion.puntuacion
+            
+            if len(valoraciones)>0:
+                mediaPuntos=puntos/len(valoraciones)
+            else:
+                mediaPuntos = "No tiene valoraciones"
+
+            dicc[curso] = (len(archivos),mediaPuntos,len(curso.suscriptores.all()))
+
+
+        return render(request, "inicio_profesor.html", {'nombre':usuarioActual.nombre, 'dicc':dicc})
+
+    
     else:
-        return render(request, 'inicio.html')
+        return redirect("/login",{"mensaje_error":True})
   
 def curso(request, id):
     es_owner = False
@@ -68,7 +93,21 @@ def curso(request, id):
        return render(request, 'inicio.html')     
   
 def miscursos(request):
-    return render(request, "miscursos.html")
+
+    if request.user.is_authenticated:
+        user1 = request.user.usuario
+        cursos = user1.Suscriptores
+        
+
+        cursosAlumno = list()
+
+        for curso in cursos.all():
+                cursosAlumno.append(curso)
+
+        return render(request, "miscursos.html",{'cursos':cursosAlumno})
+    
+    else:
+        return redirect("/login",{"mensaje_error":True})
 
 def cursosdisponibles(request):
     return render(request, "cursosdisponibles.html")
