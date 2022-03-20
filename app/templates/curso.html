@@ -36,9 +36,10 @@
 
     {% endif %}
     <div style="text-align: center;">
-        <input class="btn btn-primary col-sm-1" style="margin-top: 20px;" type="button" class="atras" value="Atrás">
+        <input class="btn btn-primary col-sm-1" style="margin-top: 20px;" type="button" class="atras" value="Atrás" onclick="history.back()">
         {% if not es_suscriptor and not es_owner%}
-            <input class="btn btn-primary col-sm-1" style="margin-top: 20px;" type="button" class="unirseCurso" value="Unirse al Curso"><br><br><br>
+            <input class="btn btn-primary col-sm-1" style="margin-top: 20px;" type="button" class="unirseCurso" value="Unirse"><br><br><br>
+            <h5>Para acceder al contenido de este curso debes unirte al mismo</h5>
         {%endif%}
         
         {%if es_owner%}
