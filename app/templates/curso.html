@@ -9,6 +9,10 @@
     <p style="text-align: center;"> Precio: 12€ </p>
     <br><br>
     <div style="text-align: center;">
+        {% for archivo in archivos %}
+        {{ archivo.nombre }}
+        <br>
+        {% endfor %}
         <td>
             <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="200px" height="160px">
         </td>
@@ -37,7 +41,13 @@
     <div style="text-align: center;">
         <input style="margin-top: 20px;" type="button" class="atras" value="Atrás">
         <input style="margin-top: 20px;" type="button" class="unirseCurso" value="Unirse al Curso"><br>
-        <input style="margin-top: 20px;" type="button" class="añadirContenido" value="Añadir Contenido"><br><br><br>
+        <form  method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                {{form.file}}
+            </p>
+            <input type="submit" class="btn btn-primary btn-sm mt-4" value="Añadir archivo">
+        </form>
     </div>
 
 </div>

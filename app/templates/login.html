@@ -9,19 +9,27 @@
          href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet"
          href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-    <link type="text/css" rel="stylesheet" href="{% static "hello/style.css" %}" />
+    <link type="text/css" rel="stylesheet" href="{% static "css/style.css" %}" />
 {% endblock %}
 
 {% block contenido %}
-<div style="align-content: center; margin-top: 10%;">
-    <form style="text-align: center;" method="post">
-        <input style="margin-bottom: 20px;" id="correo" type="text" name="correo_field" placeholder="usuario@alum.us.es"><br>
-        <input id="password" type="text" name="password_field" placeholder="Contraseña"><br>
-        <a href="" style="color: gray;">Olvidé mi contraseña</a><br>
-        <input style="margin-top: 20px;" type="submit" class="iniciarProfesor" value="Iniciar Sesión"><br>
+{% if mensaje_error %}
+    <div class="alert alert-danger" role="alert">
+        Credenciales incorrectas
+    </div>
+{% endif %}
+<div class="mx-auto">
+    <div class="col-auto p-5 text-center">
+    <form method="post">
+        {% csrf_token %}
+        <input class="mb-4" type="text" name="correo" placeholder="usuario@alum.us.es"><br>
+        <input type="text" name="contrasena" placeholder="Contraseña"><br>
+        <a href="" class="text-muted">Olvidé mi contraseña</a><br>
+        <input class="btn btn-primary btn-sm mt-4" type="submit" value="Iniciar Sesión"><br>
     </form>
-    <div style="text-align: center;">
+    <div>
         ¿No tienes cuenta?<a href="">Regístrate</a>
+    </div>
     </div>
 </div>
 {% endblock %}
