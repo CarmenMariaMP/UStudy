@@ -39,13 +39,13 @@ def curso(request):
 def miscursos(request):
 
     if request.user.is_authenticated:
-        cursos = Curso.objects.all().order_by("nombre")
+        user1 = request.user.usuario
+        cursos = user1.Suscriptores
+        
 
         cursosAlumno = list()
 
-        for curso in cursos:
-            suscriptores = curso.suscriptores.all()
-            if request.user.usuario in suscriptores:
+        for curso in cursos.all():
                 cursosAlumno.append(curso)
 
         return render(request, "miscursos.html",{'cursos':cursosAlumno})
