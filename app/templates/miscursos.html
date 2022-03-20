@@ -37,23 +37,17 @@
         </button>
       </form>
         <h1 class="center">Mis Cursos</h1>
-      <div class="separado borde-azul">
-        <h2>Asignatura: </h2>
-        <h2>Profesor: </h2>
-        <h2>Precio: </h2>
-        <div id="container">
+        {% for curso in cursos %}
+          <div class="separado borde-azul">
+          <h2>Asignatura: {{curso.asignatura.nombre}} </h2>
+          <h2>Profesor: {{curso.propietario.nombre}}</h2>
+          <h2>Precio: 10 Euros</h2>
+          <div id="container">
             <a class="download2" href="">Eliminar Curso</a>
+          </div>
         </div>
-      </div>
+        {% endfor %}
 
-      <div class="separado borde-azul">
-        <h2>Asignatura: </h2>
-        <h2>Profesor: </h2>
-        <h2>Precio: </h2>
-        <div id="container">
-            <a class="download2" href="">Eliminar Curso</a>
-        </div>
-      </div>
       
     {% block pie %}{% endblock %}
 </body>

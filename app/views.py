@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from app.models import Usuario
+from app.models import Curso, Usuario
 
 # Create your views here.
 def inicio(request):
@@ -37,7 +37,17 @@ def curso(request):
     return render(request, "curso.html")
   
 def miscursos(request):
-    return render(request, "miscursos.html")
+
+    cursos = Curso.objects.all().order_by("nombre")
+
+    cursosAlumno = list()
+
+    for curso in cursos:
+        suscriptores = curso.suscriptores.all()
+        if request.user.usuario in suscriptores:
+            cursosAlumno.append(curso)
+
+    return render(request, "miscursos.html",{'cursos':cursosAlumno})
 
 def cursosdisponibles(request):
     return render(request, "cursosdisponibles.html")
