@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', views.inicio),
@@ -23,8 +26,9 @@ urlpatterns = [
     path('login/', views.login_user),
     path('logout/', views.logout_user),
     path('inicio_profesor/', views.inicio_profesor),
-    path('curso/', views.curso),
+    path('curso/<int:id>', views.curso),
     path('miscursos/', views.miscursos),
     path('cursosdisponibles/', views.cursosdisponibles),
-    path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo)
-]
+    path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo)]
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
