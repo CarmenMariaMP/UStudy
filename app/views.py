@@ -38,16 +38,20 @@ def curso(request):
   
 def miscursos(request):
 
-    cursos = Curso.objects.all().order_by("nombre")
+    if request.user.is_authenticated:
+        cursos = Curso.objects.all().order_by("nombre")
 
-    cursosAlumno = list()
+        cursosAlumno = list()
 
-    for curso in cursos:
-        suscriptores = curso.suscriptores.all()
-        if request.user.usuario in suscriptores:
-            cursosAlumno.append(curso)
+        for curso in cursos:
+            suscriptores = curso.suscriptores.all()
+            if request.user.usuario in suscriptores:
+                cursosAlumno.append(curso)
 
-    return render(request, "miscursos.html",{'cursos':cursosAlumno})
+        return render(request, "miscursos.html",{'cursos':cursosAlumno})
+    
+    else:
+        return redirect("/login",{"mensaje_error":True})
 
 def cursosdisponibles(request):
     return render(request, "cursosdisponibles.html")
