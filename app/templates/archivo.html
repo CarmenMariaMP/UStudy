@@ -5,7 +5,6 @@
     {% load static %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <link href="{% static 'css/base.css' %}" rel="stylesheet" />
     <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
@@ -27,25 +26,27 @@
         </nav>
     </header>
     <section>
+      {% if acceso %}
         <div class="row">
             <div class="leftcolumn" style="margin-left: 40px; margin-top: 30px;">
-              <h2>NOMBRE ARCHIVO</h2>
+              <h2 style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{archivo.nombre}}</h2>
               <div class="card">
-                <h5>Fecha de publicación: 19/03/2022</h5>
-                <pdf src="{% static 'files/Criptografia.pdf' %}" width="100%" height="500px" />
+                <h5>Fecha de publicación: {{archivo.fecha_publicacion}}</h5>
+                {% if ".mp4" in archivo.ruta.path %}
+                <video controls controlsList="nodownload">
+                  <source src= "{{archivo.ruta.url}}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                {% else %}
+                  <embed id='archivo' src="{{archivo.ruta.url}}#toolbar=0&navpanes=0&scrollbar=0" style="width:100%; height:700px;"/>
+                {% endif %}
               </div>
-               
               <h2 style="margin-top: 30px;">COMENTARIOS</h2>
               <div class="card" style="max-height: 500px;">
                 <ul>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                    {% for comentario in comentarios %}
+                        <p>{{comentario}}</p>
+                    {% endfor %}
                 </ul>
               </div>
             </div>
@@ -53,20 +54,18 @@
               <div class="card" style="margin-top: 30px;">
                 <h2>Archivos del curso</h2>
                 <ul>
-                    <li><a href="#">Archivo 1</a></li>
-                    <li><a href="#">Archivo 2</a></li>
-                    <li><a href="#">Archivo 3</a></li>
-                    <li><a href="#">Archivo 4</a></li>
-                    <li><a href="#">Archivo 5</a></li>
-                    <li><a href="#">Archivo 6</a></li>
-                    <li><a href="#">Archivo 7</a></li>
-                    <li><a href="#">Archivo 8</a></li>
-                    <li><a href="#">Archivo 9</a></li>
-                    <li><a href="#">Archivo 10</a></li>
+                    {% for archivo in contenido_curso %}
+                        <li style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"><a href="/curso/{{curso.id}}/archivo/{{archivo.id}}">{{archivo.nombre}}</a></li>
+                    {% endfor %}
                 </ul>
               </div>   
             </div>
           </div>
+        {% else %}
+          <div>
+            <p style="text-align: center;"> No tienes acceso a este recueso </p>
+          </div>
+        {% endif%}
         {% endblock %}
     </section>
     {% block pie %}{% endblock %}
