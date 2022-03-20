@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from app.models import Archivo, Usuario,Curso, Valoracion
+from .forms import UploadFileForm
 
 # Create your views here.
 def inicio(request):
@@ -58,11 +59,25 @@ def inicio_profesor(request):
     else:
         return redirect("/login",{"mensaje_error":True})
   
-def curso(request):
-    return render(request, "curso.html")
+def curso(request, id):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = request.FILES['file']
+            curso = Curso.objects.get(id=id)
+            archivo = Archivo.objects.create(nombre=file.name, ruta=file, curso=curso)
+            archivo.save()
+    else:
+        form = UploadFileForm()
+        
+    archivos = Archivo.objects.filter(curso=id)
+    return render(request, "curso.html", {'form': form, 'archivos': archivos})
   
 def miscursos(request):
     return render(request, "miscursos.html")
 
 def cursosdisponibles(request):
     return render(request, "cursosdisponibles.html")
+
+def ver_archivo(request, id_curso, id_archivo):
+    return render(request, "archivo.html")
