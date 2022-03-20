@@ -28,8 +28,7 @@ urlpatterns = [
     path('inicio_profesor/', views.inicio_profesor),
     path('curso/<int:id>', views.curso),
     path('miscursos/', views.miscursos),
-    path('cursosdisponibles/', views.cursosdisponibles)
-]
-
+    path('cursosdisponibles/', views.cursosdisponibles),
+    path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo)]
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

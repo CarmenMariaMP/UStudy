@@ -53,3 +53,6 @@ def miscursos(request):
 
 def cursosdisponibles(request):
     return render(request, "cursosdisponibles.html")
+
+def ver_archivo(request, id_curso, id_archivo):
+    return render(request, "archivo.html")

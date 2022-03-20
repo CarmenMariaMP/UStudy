@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+{% block contenido %}
+<head>
+    {% load static %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="{% static 'css/base.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <header>
+        {% block encabezado %}{% endblock %}
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="/"><img class="logo" src="{% static 'media/logo.png' %}" alt="" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <h1>UStudy</h1>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section>
+        <div class="row">
+            <div class="leftcolumn" style="margin-left: 40px; margin-top: 30px;">
+              <h2>NOMBRE ARCHIVO</h2>
+              <div class="card">
+                <h5>Fecha de publicación: 19/03/2022</h5>
+                <pdf src="{% static 'files/Criptografia.pdf' %}" width="100%" height="500px" />
+              </div>
+               
+              <h2 style="margin-top: 30px;">COMENTARIOS</h2>
+              <div class="card" style="max-height: 500px;">
+                <ul>
+                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                </ul>
+              </div>
+            </div>
+            <div class="rightcolumn">
+              <div class="card" style="margin-top: 30px;">
+                <h2>Archivos del curso</h2>
+                <ul>
+                    <li><a href="#">Archivo 1</a></li>
+                    <li><a href="#">Archivo 2</a></li>
+                    <li><a href="#">Archivo 3</a></li>
+                    <li><a href="#">Archivo 4</a></li>
+                    <li><a href="#">Archivo 5</a></li>
+                    <li><a href="#">Archivo 6</a></li>
+                    <li><a href="#">Archivo 7</a></li>
+                    <li><a href="#">Archivo 8</a></li>
+                    <li><a href="#">Archivo 9</a></li>
+                    <li><a href="#">Archivo 10</a></li>
+                </ul>
+              </div>   
+            </div>
+          </div>
+        {% endblock %}
+    </section>
+    {% block pie %}{% endblock %}
+</body>
+
+</html>
