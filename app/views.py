@@ -56,7 +56,7 @@ def inicio_profesor(request):
 
     
     else:
-        return render(request, 'inicio.html')
+        return redirect("/login",{"mensaje_error":True})
   
 def curso(request):
     return render(request, "curso.html")
