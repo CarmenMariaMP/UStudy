@@ -74,7 +74,21 @@ def curso(request, id):
     return render(request, "curso.html", {'form': form, 'archivos': archivos})
   
 def miscursos(request):
-    return render(request, "miscursos.html")
+
+    if request.user.is_authenticated:
+        user1 = request.user.usuario
+        cursos = user1.Suscriptores
+        
+
+        cursosAlumno = list()
+
+        for curso in cursos.all():
+                cursosAlumno.append(curso)
+
+        return render(request, "miscursos.html",{'cursos':cursosAlumno})
+    
+    else:
+        return redirect("/login",{"mensaje_error":True})
 
 def cursosdisponibles(request):
     return render(request, "cursosdisponibles.html")
