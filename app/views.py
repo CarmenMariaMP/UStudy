@@ -9,6 +9,7 @@ from .forms import UploadFileForm
 import os
 
 
+
 # Create your views here.
 def inicio(request):
     return render(request, "inicio.html")
@@ -116,7 +117,17 @@ def miscursos(request):
         return redirect("/login",{"mensaje_error":True})
 
 def cursosdisponibles(request):
-    return render(request, "cursosdisponibles.html")
+    if request.user.is_authenticated:
+        cursos_todos = Curso.objects.order_by('nombre')
+        cursos=[]
+        for curso in cursos_todos:
+            suscriptores = curso.suscriptores.all()
+            if (curso.propietario != request.user.usuario):
+                if (request.user.usuario not in suscriptores):
+                    cursos.append(curso)
+        return render(request, "cursosdisponibles.html", {'cursos':cursos})
+    else:
+        return redirect("/login")
      
 def ver_archivo(request, id_curso, id_archivo):
     acceso = False
@@ -133,4 +144,5 @@ def ver_archivo(request, id_curso, id_archivo):
         return render(request, "archivo.html", {'pdf':archivo.ruta ,'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'acceso': acceso, 'comentarios': comentarios})
     else:
         return render(request, 'inicio.html')
+
 
