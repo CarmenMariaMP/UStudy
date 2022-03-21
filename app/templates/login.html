@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html>
 
-{% extends 'base.html' %} {% load i18n static %} {% block extrahead %}
-<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-<link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" /> {% endblock %} {% block contenido %}
-<h1> Login </h1>
+<head>
+{% extends 'base.html' %} {% load i18n static %}
+
+{% block extrahead %}
+    <link type="text/css" rel="stylesheet"
+         href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet"
+         href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+    <link type="text/css" rel="stylesheet" href="{% static "css/style.css" %}" />
+{% endblock %}
+</head>
+
+<body>
+{% block contenido %}
 {% if mensaje_error %}
 <div class="alert alert-danger" role="alert">
     Credenciales incorrectas
@@ -15,16 +24,22 @@
     <div class="col-auto p-5 text-center">
         <form method="post">
             {% csrf_token %}
-            <input class="mb-4" type="text" name="correo" placeholder="usuario@alum.us.es"><br>
-            <input type="text" name="contrasena" placeholder="Contraseña"><br>
+            <input class="mb-4" type="email" name="correo" placeholder="usuario@alum.us.es" 
+            pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?"
+            required><br>
+            <input id="show_hide_password" type="password" name="contrasena" placeholder="Contraseña" required><br>
             <a href="" class="text-muted">Olvidé mi contraseña</a><br>
             <input class="btn btn-primary btn-sm mt-4" type="submit" value="Iniciar Sesión"><br>
         </form>
         <div>
-            ¿No tienes cuenta?<a href="">Regístrate</a>
+        ¿No tienes cuenta?<a href="">Regístrate</a>
         </div>
     </div>
 </div>
 {% endblock %}
+</body>
 
+<footer>
+    {% block pie %}{% endblock %}
+</footer>
 </html>
