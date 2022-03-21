@@ -62,6 +62,9 @@ def inicio_profesor(request):
     
     else:
         return redirect("/login",{"mensaje_error":True})
+
+def crearcurso(request):
+    return render(request, "crearcurso.html")
   
 def curso(request, id):
     es_owner = False
@@ -116,7 +119,6 @@ def cursosdisponibles(request):
     return render(request, "cursosdisponibles.html")
      
 def ver_archivo(request, id_curso, id_archivo):
-    # TODO coger comentarios
     acceso = False
     curso = Curso.objects.get(id=id_curso)
     contenido_curso = Archivo.objects.all().filter(curso=curso)
@@ -131,3 +133,4 @@ def ver_archivo(request, id_curso, id_archivo):
         return render(request, "archivo.html", {'pdf':archivo.ruta ,'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'acceso': acceso, 'comentarios': comentarios})
     else:
         return render(request, 'inicio.html')
+
