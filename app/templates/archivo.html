@@ -29,6 +29,7 @@
       {% if acceso %}
         <div class="row">
             <div class="leftcolumn" style="margin-left: 40px; margin-top: 30px;">
+              <input class="btn btn-primary col-sm-1" style="float:right;" type="button" class="atras" value="Atrás" onclick="history.back()">
               <h2 style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{archivo.nombre}}</h2>
               <div class="card">
                 <h5>Fecha de publicación: {{archivo.fecha_publicacion}}</h5>
