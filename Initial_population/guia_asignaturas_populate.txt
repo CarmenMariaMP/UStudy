@@ -1,0 +1,6 @@
+1. En caso de tener ya el archivo json, moverlo a la ruta raiz del proyecto y ejecutar en la terminal "python ./manage.py loaddata asignaturas_db.json"
+2. En caso de querer generar el archivo json con las asignaturas, ejecutar el script de scrapping (para ello debes tener instalado bs4: "pip3 install BeautifulSoup4") 
+3. Una vez obtenido el json realizar lo anteriormente comentado en el paso 1.
+
+Nota: El script de scrapping puede fallar dado que son muchas peticiones a la pagina web de la universidad de Sevilla y alguna puede fallar, en ese caso habria que ejecutar
+el script hasta que printee 12/12, paciencia amigos ^^.
