@@ -49,4 +49,6 @@ def cursosdisponibles(request):
             if (curso.propietario != request.user.usuario):
                 if (request.user.usuario not in suscriptores):
                     cursos.append(curso)
-    return render(request, "cursosdisponibles.html", {'cursos':cursos})
+        return render(request, "cursosdisponibles.html", {'cursos':cursos})
+    else:
+        return render(request, 'login.html')
