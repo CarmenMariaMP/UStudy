@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.http import FileResponse
+from django.conf import settings
 from app.models import *
 from .forms import UploadFileForm
+import os
 
 
 # Create your views here.
@@ -114,6 +117,20 @@ def miscursos(request):
 
 def cursosdisponibles(request):
     return render(request, "cursosdisponibles.html")
-
+     
 def ver_archivo(request, id_curso, id_archivo):
-    return render(request, "archivo.html")
+    acceso = False
+    curso = Curso.objects.get(id=id_curso)
+    contenido_curso = Archivo.objects.all().filter(curso=curso)
+    comentarios = Comentario.objects.all().filter(archivo=id_archivo)
+    archivo = Archivo.objects.get(id=id_archivo)
+    if request.user.is_authenticated:
+        # Comprobar si el usuario es profesor
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(email_academico=usuario_autenticado)
+        if (curso.propietario == usuario) or (usuario in curso.suscriptores.all()):
+            acceso = True
+        return render(request, "archivo.html", {'pdf':archivo.ruta ,'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'acceso': acceso, 'comentarios': comentarios})
+    else:
+        return render(request, 'inicio.html')
+
