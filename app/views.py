@@ -59,6 +59,9 @@ def inicio_profesor(request):
     
     else:
         return redirect("/login",{"mensaje_error":True})
+
+def crearcurso(request):
+    return render(request, "crearcurso.html")
   
 def curso(request, id):
     es_owner = False
