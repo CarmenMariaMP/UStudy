@@ -41,6 +41,7 @@ def miscursos(request):
     return render(request, "miscursos.html")
 
 def cursosdisponibles(request):
+    print(request.user)
     if request.user.is_authenticated:
         cursos_todos = Curso.objects.order_by('nombre')
         cursos=[]
@@ -51,4 +52,4 @@ def cursosdisponibles(request):
                     cursos.append(curso)
         return render(request, "cursosdisponibles.html", {'cursos':cursos})
     else:
-        return render(request, 'login.html')
+        return redirect("/login")

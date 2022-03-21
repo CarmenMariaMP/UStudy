@@ -37,15 +37,16 @@
         </button> 
       </form>-->
         <h1 class="center">Cursos disponibles</h1>
-      <div class="separado borde-azul">
+      
         {% for curso in cursos %}
-        <h2>Asignatura: {{ curso.asignatura.nombre }}</h2>
-        <h2>Profesor: {{ curso.propietario.nombre }}</h2>
-        <h2>Precio: 12 Euros</h2>
-        <div id="container">
-            <a class="download2" href="">Suscribirse al Curso</a>
+        <div class="separado borde-azul">
+            <h2>Asignatura: {{ curso.asignatura.nombre }}</h2>
+            <h2>Profesor: {{ curso.propietario.nombre }}</h2>
+            <h2>Precio: 12 Euros</h2>
+            <div id="container">
+                <a class="download2" href="">Suscribirse al Curso</a>
+            </div>
         </div>
-      </div>
         {% endfor %}    
     {% block pie %}{% endblock %}
 </body>
