@@ -27,7 +27,7 @@ body {
     background-color: white;
     padding: 20px;
     margin-top: 20px;
-    overflow-y: auto
+    overflow-y: auto;
   }
   
   /* Clear floats after the columns */

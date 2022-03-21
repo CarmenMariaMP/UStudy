@@ -2,8 +2,13 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from app.models import Archivo, Usuario,Curso, Valoracion
+from django.http import FileResponse
+from django.conf import settings
+from app.models import *
 from .forms import UploadFileForm
+import os
+
+
 
 # Create your views here.
 def inicio(request):
@@ -58,26 +63,86 @@ def inicio_profesor(request):
     
     else:
         return redirect("/login",{"mensaje_error":True})
+
+def crearcurso(request):
+    return render(request, "crearcurso.html")
   
 def curso(request, id):
-    if request.method == 'POST':
+    es_owner = False
+    es_suscriptor = False       
+    
+    curso = Curso.objects.get(id=id)
+    contenido_curso = Archivo.objects.all().filter(curso=curso)
+    
+    if request.user.is_authenticated:
+        # Comprobar si el usuario es profesor
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(email_academico=usuario_autenticado)
         form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            file = request.FILES['file']
-            curso = Curso.objects.get(id=id)
-            archivo = Archivo.objects.create(nombre=file.name, ruta=file, curso=curso)
-            archivo.save()
-    else:
-        form = UploadFileForm()
+        if curso.propietario == usuario:
+            es_owner = True
+            if request.method == 'POST':
+              if form.is_valid():
+                file = request.FILES['file']
+                curso = Curso.objects.get(id=id)
+                archivo = Archivo.objects.create(nombre=file.name, ruta=file, curso=curso)
+                archivo.save()
+              else:
+                form = UploadFileForm()
+              
+        elif usuario in curso.suscriptores.all():
+            es_suscriptor = True
         
-    archivos = Archivo.objects.filter(curso=id)
-    return render(request, "curso.html", {'form': form, 'archivos': archivos})
+            
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso":curso ,"contenido_curso": contenido_curso, "form":form})
+   
+    else:
+       return render(request, 'inicio.html')     
   
 def miscursos(request):
-    return render(request, "miscursos.html")
+
+    if request.user.is_authenticated:
+        user1 = request.user.usuario
+        cursos = user1.Suscriptores
+        
+
+        cursosAlumno = list()
+
+        for curso in cursos.all():
+                cursosAlumno.append(curso)
+
+        return render(request, "miscursos.html",{'cursos':cursosAlumno})
+    
+    else:
+        return redirect("/login",{"mensaje_error":True})
 
 def cursosdisponibles(request):
-    return render(request, "cursosdisponibles.html")
-
+    if request.user.is_authenticated:
+        cursos_todos = Curso.objects.order_by('nombre')
+        cursos=[]
+        for curso in cursos_todos:
+            suscriptores = curso.suscriptores.all()
+            if (curso.propietario != request.user.usuario):
+                if (request.user.usuario not in suscriptores):
+                    cursos.append(curso)
+        return render(request, "cursosdisponibles.html", {'cursos':cursos})
+    else:
+        return redirect("/login")
+     
 def ver_archivo(request, id_curso, id_archivo):
-    return render(request, "archivo.html")
+    acceso = False
+    curso = Curso.objects.get(id=id_curso)
+    contenido_curso = Archivo.objects.all().filter(curso=curso)
+    comentarios = Comentario.objects.all().filter(archivo=id_archivo)
+    archivo = Archivo.objects.get(id=id_archivo)
+    if request.user.is_authenticated:
+        # Comprobar si el usuario es profesor
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(email_academico=usuario_autenticado)
+        if (curso.propietario == usuario) or (usuario in curso.suscriptores.all()):
+            acceso = True
+        return render(request, "archivo.html", {'pdf':archivo.ruta ,'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'acceso': acceso, 'comentarios': comentarios})
+    else:
+        return render(request, 'inicio.html')
+
+
