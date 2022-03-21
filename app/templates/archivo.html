@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+{% block contenido %}
+<head>
+    {% load static %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <header>
+        {% block encabezado %}{% endblock %}
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="/"><img class="logo" src="{% static 'media/logo.png' %}" alt="" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <h1>UStudy</h1>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section>
+      {% if acceso %}
+        <div class="row">
+            <div class="leftcolumn" style="margin-left: 40px; margin-top: 30px;">
+              <input class="btn btn-primary col-sm-1" style="float:right;" type="button" class="atras" value="Atrás" onclick="history.back()">
+              <h2 style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{archivo.nombre}}</h2>
+              <div class="card">
+                <h5>Fecha de publicación: {{archivo.fecha_publicacion}}</h5>
+                {% if ".mp4" in archivo.ruta.path %}
+                <video controls controlsList="nodownload">
+                  <source src= "{{archivo.ruta.url}}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                {% else %}
+                  <iframe src="{{ archivo.ruta.url }}#zoom=90&toolbar=0&navpanes=0&scrollbar=0" title="PDF in an i-Frame" frameborder="0" scrolling="auto" style="width:100%; height:700px"></iframe>
+                {% endif %}
+              </div>
+              <h2 style="margin-top: 30px;">COMENTARIOS</h2>
+              <div class="card" style="max-height: 500px;">
+                <ul>
+                    {% for comentario in comentarios %}
+                        <p>{{comentario}}</p>
+                    {% endfor %}
+                </ul>
+              </div>
+            </div>
+            <div class="rightcolumn">
+              <div class="card" style="margin-top: 30px;">
+                <h2>Archivos del curso</h2>
+                <ul>
+                    {% for archivo in contenido_curso %}
+                        <li style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"><a href="/curso/{{curso.id}}/archivo/{{archivo.id}}">{{archivo.nombre}}</a></li>
+                    {% endfor %}
+                </ul>
+              </div>   
+            </div>
+          </div>
+        {% else %}
+          <div>
+            <p style="text-align: center;"> No tienes acceso a este recueso </p>
+          </div>
+        {% endif%}
+        {% endblock %}
+    </section>
+    {% block pie %}{% endblock %}
+</body>
+
+</html>
