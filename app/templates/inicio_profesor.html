@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% block contenido %}
+<br>
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <h2 >Hola {{nombre}}!</h2>
+    </div>
+    <div class="row d-flex justify-content-end">
+        <a href="#" class="btn btn-primary col-sm-2 d-flex justify-content-center">Añadir curso</a>
+    </div>
+    <br>
+
+    {% for curso,archivos in dicc.items %}
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-6">
+            <div class="card border border-dark">
+              <div class="card-body">
+              <h5 class="card-title">{{curso.asignatura.nombre}}</h5>
+              <p class="card-text">{{curso.descripcion}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Número de alumnos inscritos: {{archivos.2}}</li>
+                <li class="list-group-item">Número de archivos multimedia: {{archivos.0}}</li>
+                <li class="list-group-item">Última actualización: {{curso.fecha_publicacion}}</li>
+                <li class="list-group-item">
+                    <div class="row justify-content-around">
+                        <div class="d-flex">
+                            {% if archivos.1 >= 0 %}
+                             <div class="p-2 bg-secondary text-white">Puntuación: {{archivos.1}}/5</div>
+                             {% else %}
+                             <div class="p-2 bg-secondary text-white">Todavía no ha recibido valoraciones</div>
+                             {% endif %}
+                        </div>
+                        <a href="#" class="btn btn-primary col-sm-3">Publicar</a>
+                        <a href="#" class="btn btn-primary col-sm-3">Editar curso</a>
+                    </div>
+                </li>
+            </ul>
+          </div>
+        </div>
+        {% endfor %}
+       
+{% endblock %}
