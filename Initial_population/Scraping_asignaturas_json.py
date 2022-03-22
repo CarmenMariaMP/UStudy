@@ -23,14 +23,15 @@ def scraping_asignaturas():
                 asignatura_name = soup.find("h1", class_ = "text-center noticia grado").getText()
                 
                 for asignatura in asignaturas:
-                        curso = asignatura.find("td", class_ = "views-field-field-cur-numcur").getText()
-                        title = asignatura.find("td", class_ = "views-field views-field-title").find("a").getText()
+                        curso = str.strip(asignatura.find("td", class_ = "views-field-field-cur-numcur").getText())
+                        title = str.strip(asignatura.find("td", class_ = "views-field views-field-title").find("a").getText())
                         if title!= "Trabajo Fin de Grado":
-                                json_fixture = json_fixture + '{ "model": "app.asignatura", "pk":' + str(id) + ', "fields": {"nombre": "'+ title + '", "titulacion": "'+ asignatura_name + '", "anyo": '+ curso + '} },'
+                                json_fixture = json_fixture + '{ "model": "app.asignatura", "pk":' + str(id) + ', "fields": {"nombre": "'+ title + '", "titulacion": "'+ asignatura_name.strip() + '", "anyo": '+ curso + '} },'
                                 json_fixture = str.join("", json_fixture.splitlines())
                         id = id+1
                 print(f"{counter_carreras}/12 ")
                 counter_carreras +=1
+
         json_fixture = json_fixture[:-1]
         json_fixture = json_fixture + "]" 
         

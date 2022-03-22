@@ -5,8 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import FileResponse
 from django.conf import settings
 from app.models import *
-from .forms import UploadFileForm
+from app.forms import *
 import os
+import datetime
 
 
 # Create your views here.
@@ -68,8 +69,26 @@ def inicio_profesor(request):
 
 
 def crearcurso(request):
-    return render(request, "crearcurso.html")
 
+    # si el usuario está autenticado
+    if request.user.is_authenticated:
+        if request.method == 'POST': # si es una consulta post (enviando el formulario)
+            form = CursoForm(request.user,request.POST)
+            if form.is_valid:
+                curso = form.save(commit=False)
+                curso.fecha_publicacion = datetime.datetime.now()
+                curso.propietario = Usuario.objects.get(email_academico=request.user)
+                curso.save()
+                return render(request, 'inicio.html')
+            else:
+                return render(request, 'inicio.html')
+            
+        else: # si es una consulta get vamos a la vista con el formulario vacio
+            form = CursoForm(user=request.user)
+            
+            return render(request, "crearcurso.html",{"form":form})
+    else:
+       return render(request, 'inicio.html')
 
 def curso(request, id):
     es_owner = False
