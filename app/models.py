@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator,MaxValueValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from pytest import param
+from django.contrib.auth.models import User
 
 def emails_distintos(email_academico):
     if('@alum.us.es' in email_academico):
@@ -36,6 +37,7 @@ class Usuario(models.Model):
     foto = models.CharField(max_length=100)
     contrasenha = models.CharField(max_length=100)
     dinero = models.DecimalField(max_digits=12, decimal_places=2)
+    django_user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="usuario", null=True)
 
 
 class Curso(models.Model):
@@ -46,12 +48,14 @@ class Curso(models.Model):
     propietario = models.ForeignKey(Usuario, related_name="Propietario", on_delete=models.DO_NOTHING)
     suscriptores = models.ManyToManyField(Usuario, related_name="Suscriptores")
 
+def user_directory_path(instance, filename):
+    return '{0}/{1}'.format(instance.curso.id, filename)
     
 class Archivo(models.Model):
     nombre = models.CharField(max_length=200)
-    ruta = models.CharField(max_length=200)
-    fecha_publicacion = models.DateField()
+    fecha_publicacion = models.DateField(auto_now_add=True, blank=True)
     curso = models.ForeignKey(Curso, verbose_name="Curso", on_delete=models.CASCADE)
+    ruta = models.FileField(upload_to=user_directory_path)
 
 
 class Comentario(models.Model):
