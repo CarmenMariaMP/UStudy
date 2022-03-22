@@ -7,12 +7,12 @@
 
 <body>
     <div style="align-content: center; margin-top: 10%;">
-        <form style="text-align: center;" >
+        <form style="text-align: center;">
             <img class="mb-4" src="{% static 'media/logo.png' %}" alt="" width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal">Escoge una aignatura</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Escoge una aignatura</h1>
             <p>
-    
-            
+
+
                 <select style="margin-bottom: 20px;" class="btn btn-default selectpicker border border-primary" name="Elige un curso">
                     
                 <option selected value="0"> Asignatura </option>
@@ -21,17 +21,18 @@
                   <option>Redes de computadores</option>
             
                 </select>
-    
+
                 <p>
-                <input class="btn btn-primary" type="submit" value="Aceptar">
+                    <input class="btn btn-primary" type="submit" value="Aceptar">
                 </p>
-                
+
             </p>
         </form>
-    {% endblock %}
+        {% endblock %}
 </body>
 
 <footer>
     {% block pie %}{% endblock %}
 </footer>
+
 </html>

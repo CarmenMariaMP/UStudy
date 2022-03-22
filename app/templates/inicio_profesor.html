@@ -1,19 +1,16 @@
 <header>
     {% extends 'base_navbar.html' %} {% block contenido %}
 </header>
+
 <body>
     <br>
     <div class="container">
         <div class="row d-flex justify-content-center">
-            <h2>Hola {{nombre}}!</h2>
+            <h2>Cursos del profesor {{nombre}}</h2>
         </div>
-        <div class="row d-flex justify-content-end">
-            <a href="#" class="btn btn-primary col-sm-2 d-flex justify-content-center">Añadir curso</a>
-        </div>
-        <br>
         <div class="album py-5 bg-light">
             <div class="container">
-    
+
                 <div class="row">
                     {% for curso,archivos in dicc.items %}
                     <div class="col-md-4">
@@ -49,7 +46,7 @@
                     {% endfor %}
                 </div>
             </div>
-    
+
             {% endblock %}
 </body>
 <footer>
