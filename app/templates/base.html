@@ -17,30 +17,10 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="/"><img src="{% static 'media/logo.png' %}" alt="" width="43" height="40" class="d-inline-block align-top" /></a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse">☰</button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="navbardrop" data-toggle="dropdown">Alumno</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/miscursos">Mis cursos</a>
-                        <a class="dropdown-item" href="/cursosdisponibles">Cursos disponible</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="navbardrop" data-toggle="dropdown">Profesor</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/inicio_profesor">Inicio</a>
-                        <a class="dropdown-item" href="">Crear curso</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    {% block contenido %}{% endblock %} {% block pie %}{% endblock %}
+    {% block contenido %}{% endblock %} 
 </body>
+<footer>
+    {% block pie %}{% endblock %}
+</footer>
 
 </html>

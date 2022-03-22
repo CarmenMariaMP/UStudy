@@ -1,30 +1,37 @@
 <!DOCTYPE html>
 <html>
 
-{% extends 'base.html' %} {% load i18n static %} 
+<header>
+    {% extends 'base_navbar.html' %}{% load static %}{% block contenido %}
+</header>
 
-{% block contenido %}
-<div style="align-content: center; margin-top: 10%;">
-    <form style="text-align: center;" >
-        <p>
-
-        
-            <select style="margin-bottom: 20px;" class="btn btn-default" name="Elige un curso">
-                
-            <option selected value="0"> Asignatura </option>
-              <option>Arquitectura de computadores</option>
-              <option>Diseño y pruebas</option>
-              <option>Redes de computadores</option>
-        
-            </select>
-
+<body>
+    <div style="align-content: center; margin-top: 10%;">
+        <form style="text-align: center;" >
+            <img class="mb-4" src="{% static 'media/logo.png' %}" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Escoge una aignatura</h1>
             <p>
-            <input class="btn btn-primary" type="submit" value="Enviar">
-            </p>
+    
             
-        </p>
-    </form>
+                <select style="margin-bottom: 20px;" class="btn btn-default selectpicker border border-primary" name="Elige un curso">
+                    
+                <option selected value="0"> Asignatura </option>
+                  <option>Arquitectura de computadores</option>
+                  <option>Diseño y pruebas</option>
+                  <option>Redes de computadores</option>
+            
+                </select>
+    
+                <p>
+                <input class="btn btn-primary" type="submit" value="Aceptar">
+                </p>
+                
+            </p>
+        </form>
+    {% endblock %}
+</body>
 
-
-{% endblock %}
+<footer>
+    {% block pie %}{% endblock %}
+</footer>
 </html>

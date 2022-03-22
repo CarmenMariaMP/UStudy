@@ -1,0 +1,28 @@
+.blue_dark {
+    background-color: #3762BD;
+  }
+
+  .standard_web_color {
+    background-color: #F2F2F2;
+  }
+
+  .blue_light {
+    background-color: #39B7F5;
+  }
+
+  .blue_standard {
+    background-color: #2685BF;
+  }
+
+  .btn1:hover {  
+    background: #2079b0;
+  }
+
+  
+#submit {
+    background-color: #2694BF;
+  }
+  
+  #submit:hover {
+      background: #ddd;
+  }
