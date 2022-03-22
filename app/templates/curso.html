@@ -56,6 +56,10 @@
         {%if es_suscriptor%}
             <input class="btn btn-primary col-sm-1" style="margin-bottom: 20px;" type="button" class="atras" value="Atrás" onclick="history.back()"> 
         {%endif%}
+
+        {%if excede_tamano%}
+            <h2> {{excede_mensaje}} </h2>
+        {%endif%}
     </div>
 </div>
 {% endblock %}
