@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block extrahead %}
+<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+<link href="{% static 'css/subir_contenido.css' %}" rel="stylesheet" />
+<link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
+<link href="{% static 'css/base.css' %}" rel="stylesheet" />
+<link href="{% static 'css/button.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block contenido %}
+<div class="container">
+    <h1 class="center">Subir contenido</h1> 
+    <form method="post">
+        <div class="m-3">
+            <label for="nombre_archivo" class="form-label">Nombre archivo</label>
+            <input class="form-control" type="text" name="correo" required>
+        </div>
+        <div class="m-3">
+            <label for="archivo" class="form-label">Archivo a subir</label>
+            <div class="input-group mb-3">
+                <input type="file" accept=".jpg,.jpeg,.pdf,.doc,.mp4,.pptx" class="form-control" type="text" name="archivo" required >
+            </div>
+        </div>
+        <div class="col-auto p-5 text-center">
+            <input class="btn btn-primary mt-4" type="submit" value="Subir"><br>
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock %}
+
+</html>
