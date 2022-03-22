@@ -8,25 +8,24 @@
 </head>
 
 <body>
+    <br>
+    <div class="row d-flex justify-content-center">
+        <h2>Cursos disponibles</h2>
+    </div>
     <form role="search" class="center" id="form">
-        <input type="search" id="query" name="q"
-         placeholder="Buscar cursos..."
-         aria-label="Search through site content">
+        <input type="search" id="query" name="q" placeholder="Buscar cursos..." aria-label="Search through site content">
         <button class="button-search">
           <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
         </button>
-      </form>
+    </form>
     <br>
     <div class="container">
-        <div class="row d-flex justify-content-center">
-            <h2>Cursos disponibles</h2>
-        </div>
+
         <br>
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                  {% if cursos.1 >= 0 %}
-                  {% for curso in cursos %}
+                    {% if cursos.1 >= 0 %} {% for curso in cursos %}
                     <div class="col-md-4">
                         <div class="card mb-4">
                             <div class="card-body standard_web_color">
@@ -41,15 +40,14 @@
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
-                  {% else %}
-                  <div class="d-flex text-center">Actualmente no existen cursos disponibles</div>
+                    {% endfor %} {% else %}
+                    <div class="d-flex text-center">Actualmente no existen cursos disponibles</div>
                 </div>
-                  {% endif %}
+                {% endif %}
             </div>
-    
+
             {% endblock %}
-  </body>
+</body>
 
 <footer>
     {% block pie %}{% endblock %}
