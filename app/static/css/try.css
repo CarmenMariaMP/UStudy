@@ -18,8 +18,9 @@
     background: #2079b0;
 }
 
-#submit {
+.boton {
     background-color: #2694BF;
+    color:white;
 }
 
 #submit:hover {

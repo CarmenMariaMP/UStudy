@@ -27,7 +27,7 @@ urlpatterns = [
     path('login/', views.login_user),
     path('logout/', views.logout_user),
     path('inicio_profesor/', views.inicio_profesor),
-    path('curso/<int:id>', views.curso),
+    path('inicio_profesor/curso/<int:id>', views.curso),
     path('miscursos/', views.miscursos),
     path('cursosdisponibles/', views.cursosdisponibles),
     path('subir_contenido/', views.subir_contenido),

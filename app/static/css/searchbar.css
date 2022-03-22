@@ -25,8 +25,8 @@ input {
 .button-search {
   all: unset;
   cursor: pointer;
-  width: 44px;
-  height: 44px;
+  width: 24px;
+  height: 24px;
 }
 
 svg {
@@ -40,6 +40,6 @@ svg {
 .borde-azul {
   border: solid;
   border-radius: 25px;
-  border-color: #2582bd;
+  border-color: #2694BF;
   font-size: small;
 }
