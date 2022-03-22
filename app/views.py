@@ -78,14 +78,21 @@ def curso(request, id):
         usuario_autenticado = request.user
         usuario = Usuario.objects.get(email_academico=usuario_autenticado)
         form = UploadFileForm(request.POST, request.FILES)
+        excede_tamano = False
+        excede_mensaje = ""
         if curso.propietario == usuario:
             es_owner = True
             if request.method == 'POST':
               if form.is_valid():
                 file = request.FILES['file']
                 curso = Curso.objects.get(id=id)
-                archivo = Archivo.objects.create(nombre=file.name, ruta=file, curso=curso)
-                archivo.save()
+                model_instance = Archivo(nombre=file.name, ruta=file, curso=curso)
+                try:
+                    model_instance.full_clean()
+                    model_instance.save()
+                except ValidationError as e:
+                    excede_tamano = True
+                    excede_mensaje = e.message_dict['ruta'][0]
               else:
                 form = UploadFileForm()
               
@@ -93,7 +100,7 @@ def curso(request, id):
             es_suscriptor = True
         
             
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso":curso ,"contenido_curso": contenido_curso, "form":form})
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso":curso ,"contenido_curso": contenido_curso, "form":form, "excede_tamano":excede_tamano, "excede_mensaje":excede_mensaje})
    
     else:
        return render(request, 'inicio.html')     
