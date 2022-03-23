@@ -5,7 +5,7 @@
     {% extends 'base.html' %} {% load i18n static %} {% block extrahead %}
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-    <link type="text/css" rel="stylesheet" href="{% static " css/style.css " %}" /> {% endblock %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" /> {% endblock %}
 </head>
 
 <body>
@@ -29,7 +29,7 @@
         <input type="checkbox" value="remember-me"> Recordar contraseña
       </label>
         </div>
-        <button class="btn btn-info btn-lg btn-block" type="submit" style="background-color: #2694BF">Iniciar sesión</button>
+        <button class="btn boton btn-info btn-lg btn-block" type="submit">Iniciar sesión</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
     </form>
     {% endblock %}

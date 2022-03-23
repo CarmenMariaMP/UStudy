@@ -2,25 +2,58 @@
 <html lang="es">
 
 <head>
-    {% load static %}
+
+    {% extends 'base_navbar.html' %}{% load static %}{% block contenido %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/base.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/button.css' %}" rel="stylesheet" />
+
     <meta charset="utf-8" />
 </head>
 
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" href="/"><img class="logo" src="{% static 'media/logo.png' %}" alt="" /></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <h1>UStudy</h1>
+
+    <br>
+    <div class="row d-flex justify-content-center">
+        <h2>Cursos disponibles</h2>
+    </div>
+    <form role="search" class="center" id="form">
+        <div class="row">
+            <input class="col-sm-8" type="search" id="query" name="q" placeholder="  Buscar cursos..." aria-label="Search through site content">
+            <button class="button-search col-sm-1">
+             <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+           </button>
+        </div>
+    </form>
+    <br>
+    <div class="container">
+
+        <br>
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    {%if cursos|length > 0 %} {% for curso in cursos %}
+                    <div class="col-md-4">
+                        <div class="card border-info mb-4">
+                            <div class="card-body standard_web_color">
+                                <h5 class="card-title">{{curso.asignatura.nombre}}</h5>
+                                <p class="card-text">{{curso.propietario.nombre}}</p>
+                                <p class="card-text">{{curso.descripcion}}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group text-center">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Subscribirse</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %} {%else%}
+                    <div class="d-flex text-center">Actualmente no existen cursos disponibles</div>
+                    {%endif%}
+
                 </div>
+
+
             </div>
             <a class="btn btn-primary btn-lg float-right" href="/login">Login</a>
             <!-- <a class="btn btn-secondary btn-lg float-right" href="#">Registrate aquí</a> -->
