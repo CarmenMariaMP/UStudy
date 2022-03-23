@@ -29,7 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-BASEURL = 'https://ustudysprint1.herokuapp.com'
 
 import django_heroku
 django_heroku.settings(locals())
