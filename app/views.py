@@ -190,13 +190,14 @@ def ver_archivo(request, id_curso, id_archivo):
     contenido_curso = Archivo.objects.all().filter(curso=curso)
     comentarios = Comentario.objects.all().filter(archivo=id_archivo)
     archivo = Archivo.objects.get(id=id_archivo)
+    url = archivo.ruta.url.replace("app/static/", "")
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
         usuario = Usuario.objects.get(email_academico=usuario_autenticado)
         if (curso.propietario == usuario) or (usuario in curso.suscriptores.all()):
             acceso = True
-        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'acceso': acceso, 'comentarios': comentarios})
+        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'acceso': acceso, 'comentarios': comentarios, 'url': url})
     else:
         return render(request, 'inicio.html')
 

@@ -25,7 +25,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     url(r'^archivos/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
-    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
+    url(r'^/static(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     path('', views.inicio),
     path('admin/', admin.site.urls),
     path('crearcurso/', views.crearcurso),
@@ -39,6 +39,7 @@ urlpatterns = [
     path('suscripcion/', views.suscripcion),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo)
 ]
+
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
     
