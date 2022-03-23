@@ -31,6 +31,7 @@ urlpatterns = [
     path('miscursos/', views.miscursos),
     path('cursosdisponibles/', views.cursosdisponibles),
     path('subir_contenido/', views.subir_contenido),
+    path('suscripcion/', views.suscripcion),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo)
 ]
 urlpatterns += staticfiles_urlpatterns()
