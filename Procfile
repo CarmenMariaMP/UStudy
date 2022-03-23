@@ -1,2 +1,2 @@
-web: gunicorn ustudysprint1.wsgi --log-file -
+web: gunicorn ustudy.wsgi --log-file -
 manage.py migrate
