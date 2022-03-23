@@ -173,10 +173,11 @@ def cursosdisponibles(request):
     if request.user.is_authenticated:
         cursos_todos = Curso.objects.order_by('nombre')
         cursos = []
+        usuario_actual = request.user.usuario
         for curso in cursos_todos:
             suscriptores = curso.suscriptores.all()
-            if (curso.propietario != request.user.usuario):
-                if (request.user.usuario not in suscriptores):
+            if (curso.propietario != usuario_actual):
+                if (usuario_actual not in suscriptores and usuario_actual.titulacion == curso.asignatura.titulacion):
                     cursos.append(curso)
         return render(request, "cursosdisponibles.html", {'cursos': cursos})
     else:
