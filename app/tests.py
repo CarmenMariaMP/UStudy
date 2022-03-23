@@ -111,3 +111,132 @@ class TestLoginexitoso(LiveServerTestCase):
         self.driver.find_element(By.ID, "show_hide_password").click()
         self.driver.find_element(By.ID, "show_hide_password").send_keys("contraseña")
         self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
+
+# Test de email correcto y contraseña incorrecto
+class TestLogincontraseaincorrecta(LiveServerTestCase):
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+    def setup_method(self, method):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())  
+        self.driver = webdriver.Chrome()
+        self.vars = {}
+  
+    def teardown_method(self, method):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())  
+        self.driver.quit()
+  
+    def test_logincontraseaincorrecta(self):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver.get("http://127.0.0.1:8000/")
+        self.driver.set_window_size(1427, 804)
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        self.driver.find_element(By.ID, "inputEmail").click()
+        self.driver.find_element(By.ID, "inputEmail").send_keys("marcasbon@alum.us.es")
+        self.driver.find_element(By.ID, "show_hide_password").click()
+        self.driver.find_element(By.ID, "show_hide_password").send_keys("contrahdjsa")
+        self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
+
+   
+# Test de email incorrecto y contraseña incorrecta
+class TestLoginemailincorrecto(LiveServerTestCase):
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+    def setup_method(self, method):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver = webdriver.Chrome()
+        self.vars = {}
+  
+    def teardown_method(self, method):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver.quit()
+  
+    def test_loginemailincorrecto(self):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver.get("http://127.0.0.1:8000/")
+        self.driver.set_window_size(1427, 804)
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        self.driver.find_element(By.ID, "inputEmail").click()
+        self.driver.find_element(By.ID, "inputEmail").send_keys("marcasbon@alum.us.es")
+        self.driver.find_element(By.ID, "show_hide_password").click()
+        self.driver.find_element(By.ID, "show_hide_password").send_keys("contraseña123")
+        self.driver.find_element(By.ID, "inputEmail").click()
+        self.driver.find_element(By.ID, "inputEmail").send_keys("marcabon@alum.us.es")
+        self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
+
+
+#Test Login sin campos
+class TestLoginvacio(LiveServerTestCase):
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+    
+    def setup_method(self, method):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver = webdriver.Chrome()
+        self.vars = {}
+  
+    def teardown_method(self, method):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver.quit()
+  
+    def test_loginvacio(self):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver.get("http://127.0.0.1:8000/")
+        self.driver.set_window_size(1427, 804)
+        self.driver.find_element(By.CSS_SELECTOR, "body").click()
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
+
+#Test Login y log out
+class TestLoginylogaout(LiveServerTestCase):
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+    def setup_method(self, method):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver = webdriver.Chrome()
+        self.vars = {}
+  
+    def teardown_method(self, method):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver.quit()
+  
+    def test_loginylogaout(self):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver.get("http://127.0.0.1:8000/")
+        self.driver.set_window_size(1427, 804)
+        self.driver.find_element(By.LINK_TEXT, "Login").click()
+        self.driver.find_element(By.ID, "inputEmail").click()
+        self.driver.find_element(By.ID, "inputEmail").send_keys("marcasbon@alum.us.es")
+        self.driver.find_element(By.ID, "show_hide_password").click()
+        self.driver.find_element(By.ID, "show_hide_password").send_keys("contraseña123")
+        self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
+        self.driver.find_element(By.LINK_TEXT, "Salir").click()
+
+
