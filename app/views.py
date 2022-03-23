@@ -182,3 +182,15 @@ def ver_archivo(request, id_curso, id_archivo):
 
 def subir_contenido(request):
     return render(request, "subir_contenido.html")
+
+def error_404(request, exception):
+    context = {"error": "Parece que esta página no existe..."}
+    return render(request,'error.html', context)
+
+def error_403(request, exception):
+    context = {"error": "Parece que no tienes acceso a esta página..."}
+    return render(request,'error.html', context)
+
+def error_500(request):
+    context = {"error": "Parece que hay un error en el servidor..."}
+    return render(request,'error.html', context)
