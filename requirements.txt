@@ -3,3 +3,4 @@ django-environ
 python-decouple
 pytest
 psutil
+webdriver-manager
