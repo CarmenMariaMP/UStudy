@@ -4,3 +4,5 @@ python-decouple
 pytest
 psutil
 webdriver-manager
+gunicorn
+django-heroku
