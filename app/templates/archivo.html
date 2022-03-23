@@ -1,35 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-{% block contenido %}
+  {% extends 'base_navbar.html' %}{% load static %} {% block contenido %}
 <head>
-    {% load static %}
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="{% static 'css/base.css' %}" rel="stylesheet" />
     <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
 </head>
 
 <body>
-    <header>
-        {% block encabezado %}{% endblock %}
-        <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" href="/"><img class="logo" src="{% static 'media/logo.png' %}" alt="" /></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <h1>UStudy</h1>
-                </div>
-            </div>
-        </nav>
-    </header>
     <section>
       {% if acceso %}
         <div class="row">
             <div class="leftcolumn" style="margin-left: 40px; margin-top: 30px;">
-              <input class="btn btn-primary col-sm-1" style="float:right;" type="button" class="atras" value="Atrás" onclick="history.back()">
               <h2 style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{archivo.nombre}}</h2>
               <div class="card">
                 <h5>Fecha de publicación: {{archivo.fecha_publicacion}}</h5>
@@ -59,6 +40,7 @@
                         <li style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"><a href="/curso/{{curso.id}}/archivo/{{archivo.id}}">{{archivo.nombre}}</a></li>
                     {% endfor %}
                 </ul>
+                <input class="btn boton col-sm-12" style="float:right;" type="button" class="atras" value="Atrás" onclick="history.back()">
               </div>   
             </div>
           </div>
@@ -69,7 +51,10 @@
         {% endif%}
         {% endblock %}
     </section>
-    {% block pie %}{% endblock %}
 </body>
+
+<footer>
+  {% block pie %}{% endblock %}
+</footer>
 
 </html>

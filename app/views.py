@@ -79,9 +79,9 @@ def crearcurso(request):
                 curso.fecha_publicacion = datetime.datetime.now()
                 curso.propietario = Usuario.objects.get(email_academico=request.user)
                 curso.save()
-                return render(request, 'inicio.html')
+                return render(request, 'inicio_profesor.html')
             else:
-                return render(request, 'inicio.html')
+                return render(request, 'inicio_profesor.html')
             
         else: # si es una consulta get vamos a la vista con el formulario vacio
             form = CursoForm(user=request.user)

@@ -2,44 +2,41 @@
 <html>
 
 <head>
-{% extends 'base.html' %} {% load i18n static %}
-
-{% block extrahead %}
-    <link type="text/css" rel="stylesheet"
-         href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet"
-         href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-    <link type="text/css" rel="stylesheet" href="{% static "css/style.css" %}" />
-{% endblock %}
+    {% extends 'base.html' %} {% load i18n static %} {% block extrahead %}
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" /> {% endblock %}
 </head>
 
 <body>
-{% block contenido %}
-{% if mensaje_error %}
-<div class="alert alert-danger" role="alert">
-    Credenciales incorrectas
-</div>
-{% endif %}
-<div class="mx-auto">
-    <div class="col-auto p-5 text-center">
-        <form method="post">
-            {% csrf_token %}
-            <input class="mb-4" type="email" name="correo" placeholder="usuario@alum.us.es" 
-            pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?"
-            required><br>
-            <input id="show_hide_password" type="password" name="contrasena" placeholder="Contraseña" required><br>
-            <a href="" class="text-muted">Olvidé mi contraseña</a><br>
-            <input class="btn btn-primary btn-sm mt-4" type="submit" value="Iniciar Sesión"><br>
-        </form>
-        <div>
-        ¿No tienes cuenta?<a href="">Regístrate</a>
-        </div>
+    {% block contenido %} {% if mensaje_error %}
+    <div class="alert alert-danger" role="alert">
+        Credenciales incorrectas
     </div>
-</div>
-{% endblock %}
+    {% endif %}
+
+    <form class="form-signin container col-auto p-5 text-center" style="width:30%;margin-top: 50px;" method="post">
+        {% csrf_token %}
+        <img class="mb-4" src="{% static 'media/logo.png' %}" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Bienvenido a UStudy</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" name="correo" placeholder="usuario@alum.us.es" pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?" required>
+        <label for="show_hide_password" class="sr-only">Contraseña</label>
+        <input id="show_hide_password" type="password" class="form-control" name="contrasena" placeholder="Contraseña" required><br>
+        <a href="" class="text-muted">Olvidé mi contraseña</a><br>
+        <div class="checkbox mb-3">
+            <label>
+        <input type="checkbox" value="remember-me"> Recordar contraseña
+      </label>
+        </div>
+        <button class="btn boton btn-info btn-lg btn-block" type="submit">Iniciar sesión</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+    </form>
+    {% endblock %}
 </body>
 
 <footer>
     {% block pie %}{% endblock %}
 </footer>
+
 </html>
