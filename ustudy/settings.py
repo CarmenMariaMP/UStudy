@@ -14,6 +14,11 @@ from pathlib import Path
 from decouple import config
 import os
 
+import django_heroku
+
+django_heroku.settings(locals())
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +32,9 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["https://ustudysprint1.herokuapp.com",
+"localhost",
+"127.0.0.1"]
 
 
 import django_heroku
@@ -141,3 +148,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 MEDIA_URL = '/archivos/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'archivos')
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
