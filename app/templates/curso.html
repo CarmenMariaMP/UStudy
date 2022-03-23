@@ -32,7 +32,7 @@
                 <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b>{{archivo.nombre}}</b></a> {% elif ".pdf" in archivo.ruta.url %}
                 <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="26px" height="26px">
                 <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b>{{archivo.nombre}}</b></a> {% endif %} {% if es_owner %}
-                <input class="btn boton col-sm-1" style="width: 20%; float: right;" type="button" class="editarContenido" value="Eliminar"> {% endif %}
+                <!-- <input class="btn boton col-sm-1" style="width: 20%; float: right;" type="button" class="editarContenido" value="Eliminar"> {% endif %} -->
             </li>
             {% endfor %}
         </ul>
