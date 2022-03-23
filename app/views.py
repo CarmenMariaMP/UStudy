@@ -14,6 +14,26 @@ import datetime
 def inicio(request):
     return render(request, "inicio.html")
 
+def suscripcion(request):
+    if request.user.is_authenticated:
+        alumno = Usuario.objects.get(email_academico=request.user)
+
+        id = request.GET.get('id')
+        try:
+            curso = Curso.objects.get(pk=id)
+        except:
+            curso = None
+
+        if curso == None: # si no existe el curso al que se quiere apuntar
+            return redirect("/login")
+        else:
+            curso.suscriptores.add(alumno)
+            curso.save()
+            return redirect("/miscursos")
+    else:
+        return redirect("/login")
+
+
 
 def login_user(request):
     if request.method == 'POST':
@@ -26,7 +46,7 @@ def login_user(request):
         if usuario_autenticado is not None:
             usuario = usuario_autenticado.usuario
             login(request, usuario_autenticado)
-            return redirect("/inicio_profesor", {"nombre": usuario.nombre})
+            return redirect("/miscursos", {"nombre": usuario.nombre})
         else:
             return render(request, 'login.html', {"mensaje_error": True})
     return render(request, "login.html")
