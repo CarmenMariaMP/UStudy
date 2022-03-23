@@ -21,11 +21,11 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import handler404, handler500, handler403, handler400
 from django.views.static import serve
-from django.conf.urls import url
+#from django.conf.urls import url
 
 urlpatterns = [
-    url(r'^archivos/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
-    url(r'^/static(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
+    #url(r'^archivos/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    #url(r'^/static(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     path('', views.inicio),
     path('admin/', admin.site.urls),
     path('crearcurso/', views.crearcurso),
@@ -40,8 +40,8 @@ urlpatterns = [
     path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo)
 ]
 
-urlpatterns += staticfiles_urlpatterns()
-urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+#urlpatterns += staticfiles_urlpatterns()
+#urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
     
 handler404 = views.error_404
 handler403 = views.error_403
