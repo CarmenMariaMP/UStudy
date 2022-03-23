@@ -1,11 +1,15 @@
-{% extends 'base.html' %} {% block contenido %}
+{% extends 'base.html' %} {% load static %}{% block contenido %}
 <br>
-<a class="btn btn-primary btn-lg float-right mr-5" href="/login">Login</a>
+<a class="btn boton btn-info btn-lg float-right mr-5"  href="/login">Login</a>
 <!-- <a class="btn btn-secondary btn-lg float-right" href="#">Registrate aquí</a> -->
-<br><br>
-<h1 style="text-align: center;"> Inicio </h1>
-<br><br>
-<p style="text-align: center;">Bienvenidos a UStudy. </p>
-<br><br>
-<p style="text-align: center;">Crea y comparte contenido multimedia con tus compañeros. </p>
+
+<form class="form-signin container col-auto p-5 text-center" style="width:30%;margin-top: 50px;" method="post">
+    {% csrf_token %}
+    <img class="mb-4" src="{% static 'media/logo.png' %}" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Bienvenido a UStudy</h1>
+    <h5 style="text-align: center;">Crea y comparte contenido multimedia con tus compañeros. </h5>
+    <button class="btn boton btn-info btn-lg btn-block" type="submit">Registrarme</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+</form>
 {% endblock %}
+</body>

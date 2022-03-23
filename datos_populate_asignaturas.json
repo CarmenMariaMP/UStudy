@@ -1,0 +1,5690 @@
+[
+    {
+        "model": "app.asignatura",
+        "pk": 1000,
+        "fields": {
+            "nombre": "Administración de Empresas",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1001,
+        "fields": {
+            "nombre": "Álgebra Lineal y Numérica",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1002,
+        "fields": {
+            "nombre": "Cálculo Infinitesimal y Numérico",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1003,
+        "fields": {
+            "nombre": "Circuitos Electrónicos Digitales",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1004,
+        "fields": {
+            "nombre": "Estadística",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1005,
+        "fields": {
+            "nombre": "Estructura de Computadores",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1006,
+        "fields": {
+            "nombre": "Fundamentos de Programación",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1007,
+        "fields": {
+            "nombre": "Fundamentos Físicos de la Informática",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1008,
+        "fields": {
+            "nombre": "Introducción a la Matemática Discreta",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1009,
+        "fields": {
+            "nombre": "Análisis y Diseño de Datos y Algoritmos",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1010,
+        "fields": {
+            "nombre": "Arquitectura de Computadores",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1011,
+        "fields": {
+            "nombre": "Arquitectura e Integración de Sistemas Software",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1012,
+        "fields": {
+            "nombre": "Introducción a la Ingeniería del Software y los Sistemas de Información I",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1013,
+        "fields": {
+            "nombre": "Introducción a la Ingeniería del Software y los Sistemas de Información II",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1014,
+        "fields": {
+            "nombre": "Lógica Informática",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1015,
+        "fields": {
+            "nombre": "Matemática Discreta",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1016,
+        "fields": {
+            "nombre": "Redes de Computadores",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1017,
+        "fields": {
+            "nombre": "Sistemas Operativos",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1018,
+        "fields": {
+            "nombre": "Arquitectura y Servicios de Redes",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1019,
+        "fields": {
+            "nombre": "Diseño y Pruebas I",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1020,
+        "fields": {
+            "nombre": "Diseño y Pruebas II",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1021,
+        "fields": {
+            "nombre": "Ingeniería de Requisitos",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1022,
+        "fields": {
+            "nombre": "Inteligencia Artificial",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1023,
+        "fields": {
+            "nombre": "Modelado y Simulación Numérica",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1024,
+        "fields": {
+            "nombre": "Modelado y Visualización Gráfica",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1025,
+        "fields": {
+            "nombre": "Procesamiento de Señales Multimedia",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1026,
+        "fields": {
+            "nombre": "Proceso Software y Gestión I",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1027,
+        "fields": {
+            "nombre": "Proceso Software y Gestión II",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1028,
+        "fields": {
+            "nombre": "Acceso Inteligente a la Información",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1029,
+        "fields": {
+            "nombre": "Ampliación de Administración de Empresas",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1030,
+        "fields": {
+            "nombre": "Aplicaciones de Soft Computing",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1031,
+        "fields": {
+            "nombre": "Complementos de Bases de Datos",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1032,
+        "fields": {
+            "nombre": "Criptografía",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1033,
+        "fields": {
+            "nombre": "Derecho en la Informática",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1034,
+        "fields": {
+            "nombre": "Estadística Computacional",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1035,
+        "fields": {
+            "nombre": "Evolución y Gestión de la Configuración",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1036,
+        "fields": {
+            "nombre": "Gestión de la Producción",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1037,
+        "fields": {
+            "nombre": "Ingeniería del Software y Práctica Profesional",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1038,
+        "fields": {
+            "nombre": "Métodos Cuantitativos de Gestión",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1039,
+        "fields": {
+            "nombre": "Optimización de Sistemas",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1040,
+        "fields": {
+            "nombre": "Planificación y Gestión de Proyectos Informáticos",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1041,
+        "fields": {
+            "nombre": "Prácticas Externas",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1042,
+        "fields": {
+            "nombre": "Procesamiento de Imágenes Digitales",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1043,
+        "fields": {
+            "nombre": "Seguridad en Sistemas Informáticos y en Internet",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1044,
+        "fields": {
+            "nombre": "Tecnología, Informática y Sociedad",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1045,
+        "fields": {
+            "nombre": "Teledetección",
+            "titulacion": "Grado en Ingeniería Informática-Ingeniería del Software",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1047,
+        "fields": {
+            "nombre": "Aplicaciones Informáticas para la Gestión",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1048,
+        "fields": {
+            "nombre": "Derecho Administrativo I",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1049,
+        "fields": {
+            "nombre": "Derecho Constitucional I",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1050,
+        "fields": {
+            "nombre": "Derecho Internacional Público (Instituciones Jurídicas de la Unión Europea)",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1051,
+        "fields": {
+            "nombre": "Economía Política y Hacienda Pública",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1052,
+        "fields": {
+            "nombre": "Formación Histórica del Derecho",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1053,
+        "fields": {
+            "nombre": "Historia del Derecho",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1054,
+        "fields": {
+            "nombre": "Instituciones de Derecho Romano",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1055,
+        "fields": {
+            "nombre": "Introducción a la Ciencia Política",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1056,
+        "fields": {
+            "nombre": "Introducción a la Sociología",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1057,
+        "fields": {
+            "nombre": "Introducción Histórica al Derecho Romano",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1058,
+        "fields": {
+            "nombre": "Organización y Estructura de la Administración y de los Servicios Públicos",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1059,
+        "fields": {
+            "nombre": "Teoría del Derecho",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1060,
+        "fields": {
+            "nombre": "Derecho Administrativo II",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1061,
+        "fields": {
+            "nombre": "Derecho Administrativo III",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1062,
+        "fields": {
+            "nombre": "Derecho Civil I",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1063,
+        "fields": {
+            "nombre": "Derecho Constitucional II",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1064,
+        "fields": {
+            "nombre": "Derecho Internacional Público",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1065,
+        "fields": {
+            "nombre": "Derecho Penal. Parte Especial I",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1066,
+        "fields": {
+            "nombre": "Derecho Penal. Parte General",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1067,
+        "fields": {
+            "nombre": "Filosofía del Derecho",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1068,
+        "fields": {
+            "nombre": "Historia de las Administraciones Públicas",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1069,
+        "fields": {
+            "nombre": "Introducción a la Contabilidad",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1070,
+        "fields": {
+            "nombre": "Introducción a la Estadística",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1071,
+        "fields": {
+            "nombre": "Introducción al Derecho Procesal",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1072,
+        "fields": {
+            "nombre": "Contabilidad de las Administraciones Públicas",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1073,
+        "fields": {
+            "nombre": "Derecho Administrativo IV",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1074,
+        "fields": {
+            "nombre": "Derecho Administrativo V",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1075,
+        "fields": {
+            "nombre": "Derecho Civil II",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1076,
+        "fields": {
+            "nombre": "Derecho Constitucional III",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1077,
+        "fields": {
+            "nombre": "Derecho del Trabajo",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1078,
+        "fields": {
+            "nombre": "Derecho Penal. Parte Especial II",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1079,
+        "fields": {
+            "nombre": "Derecho Procesal Civil",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1080,
+        "fields": {
+            "nombre": "Derecho Procesal Penal",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1081,
+        "fields": {
+            "nombre": "Planificación Administrativa y del Sector Público",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1082,
+        "fields": {
+            "nombre": "Sistemas de Información para la Administración Pública",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1083,
+        "fields": {
+            "nombre": "Análisis de Datos Estadísticos",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1084,
+        "fields": {
+            "nombre": "Archivística",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1085,
+        "fields": {
+            "nombre": "Auditoría Pública",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1086,
+        "fields": {
+            "nombre": "Derecho Civil III",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1087,
+        "fields": {
+            "nombre": "Derecho de la Seguridad Social",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1088,
+        "fields": {
+            "nombre": "Derecho Financiero y Tributario I",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1089,
+        "fields": {
+            "nombre": "Derecho Mercantil I",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1090,
+        "fields": {
+            "nombre": "Justicia Internacional y Derecho Penal Internacional",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1091,
+        "fields": {
+            "nombre": "Organización y Gestión de Recursos Humanos",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1092,
+        "fields": {
+            "nombre": "Técnicas de Muestreo y Aplicaciones",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1093,
+        "fields": {
+            "nombre": "Derecho Civil IV",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1094,
+        "fields": {
+            "nombre": "Derecho de la Propiedad Inmobiliaria",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1095,
+        "fields": {
+            "nombre": "Derecho de las Telecomunicaciones y de las Nuevas Tecnologías",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1096,
+        "fields": {
+            "nombre": "Derecho de Nacionalidad y Derecho de Extranjería",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1097,
+        "fields": {
+            "nombre": "Derecho Financiero y Tributario II",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1098,
+        "fields": {
+            "nombre": "Derecho Internacional Privado",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1099,
+        "fields": {
+            "nombre": "Derecho Mercantil II",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1100,
+        "fields": {
+            "nombre": "Derecho Privado de los Transportes",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1101,
+        "fields": {
+            "nombre": "Derecho y Factor Religioso",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1102,
+        "fields": {
+            "nombre": "Economía del Sector Público",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1103,
+        "fields": {
+            "nombre": "El Matrimonio Religioso en el Ordenamiento Jurídico Español",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1104,
+        "fields": {
+            "nombre": "Federalismo: Estado Autonómico y Unión Europea",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1105,
+        "fields": {
+            "nombre": "Fiscalidad Comunitaria e Internacional",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1106,
+        "fields": {
+            "nombre": "Fundamentos Romanísticos del Derecho Europeo",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1107,
+        "fields": {
+            "nombre": "Garantías Jurídicas del Administrado",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1108,
+        "fields": {
+            "nombre": "Gestión y Control del Gasto Público",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1109,
+        "fields": {
+            "nombre": "Instituciones Históricas del Derecho",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1110,
+        "fields": {
+            "nombre": "La Libertad Religiosa en Derecho Español e Internacional",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1111,
+        "fields": {
+            "nombre": "Metodología del Derecho",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1112,
+        "fields": {
+            "nombre": "Organizaciones Internacionales y Derechos Humanos",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1113,
+        "fields": {
+            "nombre": "Prácticas Externas",
+            "titulacion": "Doble Grado en Derecho y Gestión y Administración Pública",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1115,
+        "fields": {
+            "nombre": "Estadística",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1116,
+        "fields": {
+            "nombre": "Finanzas",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1117,
+        "fields": {
+            "nombre": "Fundamentos de Contabilidad",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1118,
+        "fields": {
+            "nombre": "Historia Económica",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1119,
+        "fields": {
+            "nombre": "Instituciones Básicas de Derecho Privado",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1120,
+        "fields": {
+            "nombre": "Introducción a la Economía",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1121,
+        "fields": {
+            "nombre": "Introducción a la Economía de la Empresa (Organización)",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1122,
+        "fields": {
+            "nombre": "Introducción al Marketing",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1123,
+        "fields": {
+            "nombre": "Matemáticas I",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1124,
+        "fields": {
+            "nombre": "Microeconomía",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1125,
+        "fields": {
+            "nombre": "Administración de Empresas",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1126,
+        "fields": {
+            "nombre": "Derecho Mercantil",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1127,
+        "fields": {
+            "nombre": "Economía Mundial y Española I",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1128,
+        "fields": {
+            "nombre": "Estadística Avanzada",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1129,
+        "fields": {
+            "nombre": "Estados Contables",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1130,
+        "fields": {
+            "nombre": "Macroeconomía",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1131,
+        "fields": {
+            "nombre": "Matemáticas II",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1132,
+        "fields": {
+            "nombre": "Organización de Empresas II",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1133,
+        "fields": {
+            "nombre": "Sector Público",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1134,
+        "fields": {
+            "nombre": "Sistemas de Costes e Información Económica",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1135,
+        "fields": {
+            "nombre": "Contabilidad para Directivos de Empresa",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1136,
+        "fields": {
+            "nombre": "Derecho del Trabajo",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1137,
+        "fields": {
+            "nombre": "Dirección Comercial",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1138,
+        "fields": {
+            "nombre": "Dirección de Recursos Humanos I",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1139,
+        "fields": {
+            "nombre": "Dirección Financiera",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1140,
+        "fields": {
+            "nombre": "Dirección Táctico-Operativa de Operaciones",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1141,
+        "fields": {
+            "nombre": "Econometría para la Empresa",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1142,
+        "fields": {
+            "nombre": "Economía Mundial y Española II",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1143,
+        "fields": {
+            "nombre": "Gestión Empresarial Informatizada",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1144,
+        "fields": {
+            "nombre": "Matemáticas Financieras",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1145,
+        "fields": {
+            "nombre": "Análisis Financiero",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1146,
+        "fields": {
+            "nombre": "Auditoría",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1147,
+        "fields": {
+            "nombre": "Control de Gestión",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1148,
+        "fields": {
+            "nombre": "Creación de Empresas",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1149,
+        "fields": {
+            "nombre": "Dirección de RR.HH. II",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1150,
+        "fields": {
+            "nombre": "Dirección Estratégica",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1151,
+        "fields": {
+            "nombre": "Dirección Estratégica de Operaciones",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1152,
+        "fields": {
+            "nombre": "Diseño de Negocio Electrónico",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1153,
+        "fields": {
+            "nombre": "Distribución Comercial",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1154,
+        "fields": {
+            "nombre": "Estrategia e Innovación",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1155,
+        "fields": {
+            "nombre": "Gestión de la Calidad",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1156,
+        "fields": {
+            "nombre": "Habilidades Directivas",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1157,
+        "fields": {
+            "nombre": "Investigación Comercial",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1158,
+        "fields": {
+            "nombre": "Marketing de Servicios",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1159,
+        "fields": {
+            "nombre": "Plan de Empresa",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1160,
+        "fields": {
+            "nombre": "Prácticas en Empresas",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1161,
+        "fields": {
+            "nombre": "Régimen Fiscal de la Empresa",
+            "titulacion": "Grado en Administración y Dirección de Empresas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1163,
+        "fields": {
+            "nombre": "Anatomía Humana General",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1164,
+        "fields": {
+            "nombre": "Anatomía Humana I",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1165,
+        "fields": {
+            "nombre": "Biología",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1166,
+        "fields": {
+            "nombre": "Bioquímica y Biología Molecular Básica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1167,
+        "fields": {
+            "nombre": "Bioquímica y Biología Molecular Humana",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1168,
+        "fields": {
+            "nombre": "Física Médica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1169,
+        "fields": {
+            "nombre": "Fisiología General",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1170,
+        "fields": {
+            "nombre": "Fundamentos de la Práctica Médica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1171,
+        "fields": {
+            "nombre": "Hidrología y Climatología Médica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1172,
+        "fields": {
+            "nombre": "Histología Humana",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1173,
+        "fields": {
+            "nombre": "Inmunología Básica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1174,
+        "fields": {
+            "nombre": "Medicina y Sociedad",
+            "titulacion": "Grado en Medicina",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1175,
+        "fields": {
+            "nombre": "Anatomia Humana II",
+            "titulacion": "Grado en Medicina",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1176,
+        "fields": {
+            "nombre": "Bioestadística",
+            "titulacion": "Grado en Medicina",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1177,
+        "fields": {
+            "nombre": "Comunicación Asistencial",
+            "titulacion": "Grado en Medicina",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1178,
+        "fields": {
+            "nombre": "Epidemiología e Investigación en Salud",
+            "titulacion": "Grado en Medicina",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1179,
+        "fields": {
+            "nombre": "Fisiología Médica I",
+            "titulacion": "Grado en Medicina",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1180,
+        "fields": {
+            "nombre": "Fisiología Médica II",
+            "titulacion": "Grado en Medicina",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1181,
+        "fields": {
+            "nombre": "Historia de la Medicina y Documentación Científica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1182,
+        "fields": {
+            "nombre": "Patología General: Semiología y Propedéutica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1183,
+        "fields": {
+            "nombre": "Psicología Médica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1184,
+        "fields": {
+            "nombre": "Anatomía Patológica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1185,
+        "fields": {
+            "nombre": "Dermatología",
+            "titulacion": "Grado en Medicina",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1186,
+        "fields": {
+            "nombre": "Ética Médica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1187,
+        "fields": {
+            "nombre": "Farmacología Médica y Clínica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1188,
+        "fields": {
+            "nombre": "Fundamentos de Cirugía, Anestesiología y Reanimación",
+            "titulacion": "Grado en Medicina",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1189,
+        "fields": {
+            "nombre": "Microbiología Médica y Clínica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1190,
+        "fields": {
+            "nombre": "Oftalmología",
+            "titulacion": "Grado en Medicina",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1191,
+        "fields": {
+            "nombre": "Otorrinolaringología",
+            "titulacion": "Grado en Medicina",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1192,
+        "fields": {
+            "nombre": "Patología Médica de las Enfermedades Infecciosas y del Sistema Inmune. Atención Primaria.",
+            "titulacion": "Grado en Medicina",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1193,
+        "fields": {
+            "nombre": "Diagnóstico por Imagen",
+            "titulacion": "Grado en Medicina",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1194,
+        "fields": {
+            "nombre": "Genética Médica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1195,
+        "fields": {
+            "nombre": "Obstetricia y Ginecología",
+            "titulacion": "Grado en Medicina",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1196,
+        "fields": {
+            "nombre": "Patología Médica de Sistemas: Cardiovascular, Respiratorio y Digestivo",
+            "titulacion": "Grado en Medicina",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1197,
+        "fields": {
+            "nombre": "Patología Quirúrgica de Sistemas: Cardiovascular, Toracopulmonar y Abdomen",
+            "titulacion": "Grado en Medicina",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1198,
+        "fields": {
+            "nombre": "Pediatría",
+            "titulacion": "Grado en Medicina",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1199,
+        "fields": {
+            "nombre": "Psiquiatría",
+            "titulacion": "Grado en Medicina",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1200,
+        "fields": {
+            "nombre": "Rehabilitación Médica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1201,
+        "fields": {
+            "nombre": "Alergia e Inmunopatología",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1202,
+        "fields": {
+            "nombre": "Bioquímica Clínica y Patología Molecular",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1203,
+        "fields": {
+            "nombre": "Dermatología Avanzada e Infecciones de Transmisión Sexual",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1204,
+        "fields": {
+            "nombre": "Dermatología Estética y Cosmética",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1205,
+        "fields": {
+            "nombre": "Drogodependencias",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1206,
+        "fields": {
+            "nombre": "Ecografía Clínica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1207,
+        "fields": {
+            "nombre": "El Dolor en la Práctica Médica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1208,
+        "fields": {
+            "nombre": "Geriatría y Cuidados Paliativos",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1209,
+        "fields": {
+            "nombre": "Hematología y Oncología Médica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1210,
+        "fields": {
+            "nombre": "Introducción a la Cirugía Plástica Reparadora",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1211,
+        "fields": {
+            "nombre": "Medicina Legal",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1212,
+        "fields": {
+            "nombre": "Medicina Preventiva y Salud Pública",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1213,
+        "fields": {
+            "nombre": "Obesidad Mórbida",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1214,
+        "fields": {
+            "nombre": "Pat. Quirúrgica Endocrino y Mama. Traumatología y Ortopedia. Maxilofacial. Urología. Neurocirugía",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1215,
+        "fields": {
+            "nombre": "Patología Médica del Sistema Endocrino, Reumatología, Nefrología y Sistema Nervioso",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1216,
+        "fields": {
+            "nombre": "Prácticas Externas",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1217,
+        "fields": {
+            "nombre": "Psiquiatría Geriátrica",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1218,
+        "fields": {
+            "nombre": "Psiquiatría Infantil",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1219,
+        "fields": {
+            "nombre": "Simulación Médica en Pediatría",
+            "titulacion": "Grado en Medicina",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1220,
+        "fields": {
+            "nombre": "Rotatorio Clínico 1",
+            "titulacion": "Grado en Medicina",
+            "anyo": 6
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1221,
+        "fields": {
+            "nombre": "Rotatorio Clínico 2",
+            "titulacion": "Grado en Medicina",
+            "anyo": 6
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1222,
+        "fields": {
+            "nombre": "Rotatorio Clínico 3",
+            "titulacion": "Grado en Medicina",
+            "anyo": 6
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1224,
+        "fields": {
+            "nombre": "Álgebra Básica",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1225,
+        "fields": {
+            "nombre": "Álgebra Lineal y Geometría I",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1226,
+        "fields": {
+            "nombre": "Cálculo Infinitesimal",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1227,
+        "fields": {
+            "nombre": "Cálculo Numérico I",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1228,
+        "fields": {
+            "nombre": "Física I",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1229,
+        "fields": {
+            "nombre": "Informática",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1230,
+        "fields": {
+            "nombre": "Matemática Discreta",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1231,
+        "fields": {
+            "nombre": "Álgebra Lineal y Geometría II",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1232,
+        "fields": {
+            "nombre": "Cálculo Numérico II",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1233,
+        "fields": {
+            "nombre": "Diferenciación de Funciones de Varias Variables",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1234,
+        "fields": {
+            "nombre": "Ecuaciones Diferenciales Ordinarias",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1235,
+        "fields": {
+            "nombre": "Elementos de Probabilidad y Estadística",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1236,
+        "fields": {
+            "nombre": "Física II",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1237,
+        "fields": {
+            "nombre": "Integración de Funciones de Varias Variables",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1238,
+        "fields": {
+            "nombre": "Series de Funciones e Integral de Lebesgue",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1239,
+        "fields": {
+            "nombre": "Teoría de la Probabilidad",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1240,
+        "fields": {
+            "nombre": "Topología",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1241,
+        "fields": {
+            "nombre": "Ampliación de Ecuaciones Diferenciales",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1242,
+        "fields": {
+            "nombre": "Análisis Funcional",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1243,
+        "fields": {
+            "nombre": "Estructuras Algebraicas",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1244,
+        "fields": {
+            "nombre": "Funciones de Una Variable Compleja",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1245,
+        "fields": {
+            "nombre": "Geometría Local de Curvas y Superficies",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1246,
+        "fields": {
+            "nombre": "Geometría y Topología de Superficies",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1247,
+        "fields": {
+            "nombre": "Inferencia Estadística",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1248,
+        "fields": {
+            "nombre": "Lógica Matemática y Fundamentos",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1249,
+        "fields": {
+            "nombre": "Modelización Matemática",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1250,
+        "fields": {
+            "nombre": "Modelos Lineales y Diseño de Experimentos",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1251,
+        "fields": {
+            "nombre": "Programación Matemática",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1252,
+        "fields": {
+            "nombre": "Teoría de Códigos y Criptografía",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1253,
+        "fields": {
+            "nombre": "Álgebra Conmutativa y Geometría Algebraica",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1254,
+        "fields": {
+            "nombre": "Álgebra, Combinatoria y Computación",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1255,
+        "fields": {
+            "nombre": "Análisis de Datos Multivariantes",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1256,
+        "fields": {
+            "nombre": "Análisis de Fourier",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1257,
+        "fields": {
+            "nombre": "Análisis Funcional y Ecuaciones en Derivadas Parciales",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1258,
+        "fields": {
+            "nombre": "Análisis Numérico de Ecuaciones Diferenciales",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1259,
+        "fields": {
+            "nombre": "Cálculo en Variedades",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1260,
+        "fields": {
+            "nombre": "Ciencias de la Computación",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1261,
+        "fields": {
+            "nombre": "Complementos de Modelización y Optimización Numérica",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1262,
+        "fields": {
+            "nombre": "Ecuaciones en Derivadas Parciales",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1263,
+        "fields": {
+            "nombre": "Geometría Aplicada",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1264,
+        "fields": {
+            "nombre": "Homología Simplicial",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1265,
+        "fields": {
+            "nombre": "Modelos de la Investigación Operativa",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1266,
+        "fields": {
+            "nombre": "Teoría Analítica de Números",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1268,
+        "fields": {
+            "nombre": "Variable Compleja",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1269,
+        "fields": {
+            "nombre": "Variedades Diferenciables",
+            "titulacion": "Grado en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1270,
+        "fields": {
+            "nombre": "Administración de Empresas",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1271,
+        "fields": {
+            "nombre": "Álgebra Básica",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1272,
+        "fields": {
+            "nombre": "Álgebra Lineal y Geometría I",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1273,
+        "fields": {
+            "nombre": "Cálculo Infinitesimal",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1274,
+        "fields": {
+            "nombre": "Cálculo Numérico I",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1275,
+        "fields": {
+            "nombre": "Circuitos Electrónicos Digitales",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1276,
+        "fields": {
+            "nombre": "Estructura de Computadores",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1277,
+        "fields": {
+            "nombre": "Fundamentos de Programación",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1278,
+        "fields": {
+            "nombre": "Matemática Discreta",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1279,
+        "fields": {
+            "nombre": "Análisis y Diseño de Datos y Algoritmos",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1280,
+        "fields": {
+            "nombre": "Cálculo Numérico II",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1281,
+        "fields": {
+            "nombre": "Diferenciación de Funciones de Varias Variables",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1282,
+        "fields": {
+            "nombre": "Ecuaciones Diferenciales Ordinarias",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1283,
+        "fields": {
+            "nombre": "Física I",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1284,
+        "fields": {
+            "nombre": "Física II",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1285,
+        "fields": {
+            "nombre": "Integración de Funciones de Varias Variables",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1286,
+        "fields": {
+            "nombre": "Introducción a la Ingeniería del Software y los Sistemas de Información I",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1287,
+        "fields": {
+            "nombre": "Introducción a la Ingeniería del Software y los Sistemas de Información II",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1288,
+        "fields": {
+            "nombre": "Series de Funciones e Integral de Lebesgue",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1289,
+        "fields": {
+            "nombre": "Topología",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1290,
+        "fields": {
+            "nombre": "Álgebra Lineal y Geometría II",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1291,
+        "fields": {
+            "nombre": "Arquitectura de Computadores",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1292,
+        "fields": {
+            "nombre": "Arquitectura de Redes",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1293,
+        "fields": {
+            "nombre": "Elementos de Probabilidad y Estadística",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1294,
+        "fields": {
+            "nombre": "Estructuras Algebraicas",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1295,
+        "fields": {
+            "nombre": "Inteligencia Artificial",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1296,
+        "fields": {
+            "nombre": "Inteligencia Empresarial",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1297,
+        "fields": {
+            "nombre": "Lógica Informática",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1298,
+        "fields": {
+            "nombre": "Programación Matemática",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1299,
+        "fields": {
+            "nombre": "Redes de Computadores",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1300,
+        "fields": {
+            "nombre": "Sistemas de Información Empresariales",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1301,
+        "fields": {
+            "nombre": "Sistemas Inteligentes",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1302,
+        "fields": {
+            "nombre": "Teoría de la Probabilidad",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1303,
+        "fields": {
+            "nombre": "Acceso Inteligente a la Información",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1304,
+        "fields": {
+            "nombre": "Álgebra, Combinatoria y Computación",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1305,
+        "fields": {
+            "nombre": "Ampliación de Ecuaciones Diferenciales",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1306,
+        "fields": {
+            "nombre": "Ampliación de Inteligencia Artificial",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1307,
+        "fields": {
+            "nombre": "Análisis de Datos Multivariantes",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1308,
+        "fields": {
+            "nombre": "Análisis Funcional",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1309,
+        "fields": {
+            "nombre": "Aplicaciones de Soft Computing",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1310,
+        "fields": {
+            "nombre": "Arquitectura de Sistemas Distribuidos",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1311,
+        "fields": {
+            "nombre": "Cálculo en Variedades",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1312,
+        "fields": {
+            "nombre": "Complementos de Modelización y Optimización Numérica",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1313,
+        "fields": {
+            "nombre": "Criptografía",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1314,
+        "fields": {
+            "nombre": "Funciones de Una Variable Compleja",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1315,
+        "fields": {
+            "nombre": "Geometría Local de Curvas y Superficies",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1316,
+        "fields": {
+            "nombre": "Geometría y Topología de Superficies",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1317,
+        "fields": {
+            "nombre": "Gestión de la Producción",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1318,
+        "fields": {
+            "nombre": "Gestión de Sistemas de Información",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1319,
+        "fields": {
+            "nombre": "Homología Simplicial",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1320,
+        "fields": {
+            "nombre": "Inferencia Estadística",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1321,
+        "fields": {
+            "nombre": "Modelización Matemática",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1322,
+        "fields": {
+            "nombre": "Modelos Lineales y Diseño de Experimentos",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1323,
+        "fields": {
+            "nombre": "Prácticas Externas",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1324,
+        "fields": {
+            "nombre": "Programación Declarativa",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1325,
+        "fields": {
+            "nombre": "Sistemas Operativos",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1326,
+        "fields": {
+            "nombre": "Sistemas Orientados a Servicios",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1327,
+        "fields": {
+            "nombre": "Tecnología, Informática y Sociedad",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1328,
+        "fields": {
+            "nombre": "Tecnologías Avanzadas de la Información",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1329,
+        "fields": {
+            "nombre": "Teoría de Códigos y Criptografía",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1330,
+        "fields": {
+            "nombre": "Variable Compleja",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1331,
+        "fields": {
+            "nombre": "Configuración, Implementación y Mantenimiento de Sistemas Informáticos",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1332,
+        "fields": {
+            "nombre": "Geometría Aplicada",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1333,
+        "fields": {
+            "nombre": "Interacción Persona-ordenador",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1334,
+        "fields": {
+            "nombre": "Modelos de Computación y Complejidad",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1335,
+        "fields": {
+            "nombre": "Planificación y Gestión de Proyectos Informáticos",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1336,
+        "fields": {
+            "nombre": "Procesadores de Lenguajes",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1337,
+        "fields": {
+            "nombre": "Procesamiento de Imágenes Digitales",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1338,
+        "fields": {
+            "nombre": "Seguridad en Sistemas Informáticos y en Internet",
+            "titulacion": "Doble Grado en Ingeniería Informática-Tecnologías Informáticas y en Matemáticas",
+            "anyo": 5
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1339,
+        "fields": {
+            "nombre": "Empresa",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1340,
+        "fields": {
+            "nombre": "Estadística e Investigación Operativa",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1341,
+        "fields": {
+            "nombre": "Expresión Gráfica",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1342,
+        "fields": {
+            "nombre": "Física I",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1343,
+        "fields": {
+            "nombre": "Física II",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1344,
+        "fields": {
+            "nombre": "Informática",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1345,
+        "fields": {
+            "nombre": "Matemáticas I",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1346,
+        "fields": {
+            "nombre": "Matemáticas II",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1347,
+        "fields": {
+            "nombre": "Matemáticas III",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1348,
+        "fields": {
+            "nombre": "Química",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1349,
+        "fields": {
+            "nombre": "Ampliación de Matemáticas y Métodos Numéricos",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1350,
+        "fields": {
+            "nombre": "Ciencia de los Materiales",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1351,
+        "fields": {
+            "nombre": "Electrónica",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1352,
+        "fields": {
+            "nombre": "Fundamentos de Control Automático",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1353,
+        "fields": {
+            "nombre": "Mecánica de Fluidos",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1354,
+        "fields": {
+            "nombre": "Recursos Energéticos y Tecnología de los Combustibles",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1355,
+        "fields": {
+            "nombre": "Resistencia de Materiales",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1356,
+        "fields": {
+            "nombre": "Teoría de Circuitos",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1357,
+        "fields": {
+            "nombre": "Termodinámica",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1358,
+        "fields": {
+            "nombre": "Termodinámica Aplicada",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1359,
+        "fields": {
+            "nombre": "Transmisión de Calor",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1360,
+        "fields": {
+            "nombre": "Ahorro y Eficiencia Energética",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1361,
+        "fields": {
+            "nombre": "Energías Renovables",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1362,
+        "fields": {
+            "nombre": "Instalaciones Térmicas",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1363,
+        "fields": {
+            "nombre": "Instalaciones y Máquinas Eléctricas",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1364,
+        "fields": {
+            "nombre": "Instalaciones y Máquinas Hidraúlicas",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1365,
+        "fields": {
+            "nombre": "Máquinas Térmicas",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1366,
+        "fields": {
+            "nombre": "Organización y Gestión de Empresas",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1367,
+        "fields": {
+            "nombre": "Proyectos",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1368,
+        "fields": {
+            "nombre": "Sistemas de Energía Eléctrica",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1369,
+        "fields": {
+            "nombre": "Sistemas de Producción de Potencia",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1370,
+        "fields": {
+            "nombre": "Tecnología de la Combustión",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1371,
+        "fields": {
+            "nombre": "Tecnología del Medio Ambiente",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1372,
+        "fields": {
+            "nombre": "Tecnología Energética",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1373,
+        "fields": {
+            "nombre": "Ahorro en Demanda Energética",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1374,
+        "fields": {
+            "nombre": "Ahorro y Eficiencia en Instalaciones y Máquinas Eléctricas",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1375,
+        "fields": {
+            "nombre": "Análisis y Prevención de Riesgos Laborales",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1376,
+        "fields": {
+            "nombre": "Centrales Hidráulicas",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1377,
+        "fields": {
+            "nombre": "Centrales Solares",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1378,
+        "fields": {
+            "nombre": "Cogeneración",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1379,
+        "fields": {
+            "nombre": "Control en Sistemas Energéticos",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1380,
+        "fields": {
+            "nombre": "Eficiencia Energética en Instalaciones Térmicas en la Edificación",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1381,
+        "fields": {
+            "nombre": "Eficiencia Energética en Sectores Industriales",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1382,
+        "fields": {
+            "nombre": "Energía Eólica",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1383,
+        "fields": {
+            "nombre": "Energía Hidráulica y Marina",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1384,
+        "fields": {
+            "nombre": "Energía Solar en la Edificación",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1385,
+        "fields": {
+            "nombre": "Instalaciones Fotovoltaicas",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1386,
+        "fields": {
+            "nombre": "Integración de Energías Renovables",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1387,
+        "fields": {
+            "nombre": "Metodología e Historia de la Ingeniería",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1388,
+        "fields": {
+            "nombre": "Motores de Combustión Interna Alternativas",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1389,
+        "fields": {
+            "nombre": "Plantas de Potencia de Vapor",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1390,
+        "fields": {
+            "nombre": "Prácticas en Empresa",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1391,
+        "fields": {
+            "nombre": "Prácticas en Empresa",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1392,
+        "fields": {
+            "nombre": "Prácticas en Empresa",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1393,
+        "fields": {
+            "nombre": "Prácticas en Empresas",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1394,
+        "fields": {
+            "nombre": "Reglamentación y Certificación Energética",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1395,
+        "fields": {
+            "nombre": "Sistemas Basados en el Hidrógeno",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1396,
+        "fields": {
+            "nombre": "Sistemas Eléctricos en Plantas de Potencia",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1397,
+        "fields": {
+            "nombre": "Sistemas Electrónicos de Conversión de Potencia",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1398,
+        "fields": {
+            "nombre": "Tecnología Nuclear",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1399,
+        "fields": {
+            "nombre": "Termoeconomía de Sistemas Energéticos",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1401,
+        "fields": {
+            "nombre": "Turbina de Gas y Ciclos Combinados",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1402,
+        "fields": {
+            "nombre": "Turbomáquinas Térmicas",
+            "titulacion": "Grado en Ingeniería de la Energía por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1403,
+        "fields": {
+            "nombre": "Anatomía Humana",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1404,
+        "fields": {
+            "nombre": "Bioquímica y Biología Molecular",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1405,
+        "fields": {
+            "nombre": "Enfermería Psicosocial",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1406,
+        "fields": {
+            "nombre": "Estadística y Tecnología de la Información y Comunicación",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1407,
+        "fields": {
+            "nombre": "Farmacología Clínica",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1408,
+        "fields": {
+            "nombre": "Fisiología",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1409,
+        "fields": {
+            "nombre": "Fisiopatología",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1410,
+        "fields": {
+            "nombre": "Género y Salud",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1411,
+        "fields": {
+            "nombre": "Historia, Teoría y Métodos de la Enfermería I",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1412,
+        "fields": {
+            "nombre": "Promoción de la Salud",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1413,
+        "fields": {
+            "nombre": "Enfermería Clínica I",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1414,
+        "fields": {
+            "nombre": "Enfermería Clínica II",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1415,
+        "fields": {
+            "nombre": "Enfermería de la Infancia y la Adolescencia",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1416,
+        "fields": {
+            "nombre": "Enfermería en la Salud Reproductiva",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1417,
+        "fields": {
+            "nombre": "Enfermería Familiar y Comunitaria",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1418,
+        "fields": {
+            "nombre": "Historia, Teoría y Métodos de la Enfermería II",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1419,
+        "fields": {
+            "nombre": "Practicum I",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1420,
+        "fields": {
+            "nombre": "Soporte Vital",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1421,
+        "fields": {
+            "nombre": "Terapéutica Enfermera, Alimentación y Cuidados",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1422,
+        "fields": {
+            "nombre": "Cuidados Críticos y Paliativos",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1423,
+        "fields": {
+            "nombre": "Enfermería Clínica y Problemas Bioéticos",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1424,
+        "fields": {
+            "nombre": "Enfermería de Salud Mental",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1425,
+        "fields": {
+            "nombre": "Enfermería del Adulto en el Ámbito Comunitario",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1426,
+        "fields": {
+            "nombre": "Enfermería del Envejecimiento",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1427,
+        "fields": {
+            "nombre": "Ética y Gestión de Enfermería",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1428,
+        "fields": {
+            "nombre": "Practicum II",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1429,
+        "fields": {
+            "nombre": "Practicum III",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1430,
+        "fields": {
+            "nombre": "Adolescencia y Riesgo",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1431,
+        "fields": {
+            "nombre": "Atención a Múltiples Víctimas y Ayuda Humanitaria",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1432,
+        "fields": {
+            "nombre": "Practicum IV",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1433,
+        "fields": {
+            "nombre": "Practicum V",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1434,
+        "fields": {
+            "nombre": "Principios de Fisioterapia Aplicados a la Enfermería",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1435,
+        "fields": {
+            "nombre": "Sociología de la Salud",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1436,
+        "fields": {
+            "nombre": "Terapias Alternativas en Cuidados de Salud",
+            "titulacion": "Grado en Enfermería",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1438,
+        "fields": {
+            "nombre": "Estadística Aplicada a la Biología",
+            "titulacion": "Grado en Biología",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1439,
+        "fields": {
+            "nombre": "Informática Aplicada a la Biología",
+            "titulacion": "Grado en Biología",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1440,
+        "fields": {
+            "nombre": "Matemáticas Aplicadas a la Biología",
+            "titulacion": "Grado en Biología",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1441,
+        "fields": {
+            "nombre": "Principios Físicos de la Biología",
+            "titulacion": "Grado en Biología",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1442,
+        "fields": {
+            "nombre": "Principios Químicos de la Biología",
+            "titulacion": "Grado en Biología",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1443,
+        "fields": {
+            "nombre": "Principios, Instrumentación y Metodologías en Biología Celular y Microbiología",
+            "titulacion": "Grado en Biología",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1444,
+        "fields": {
+            "nombre": "Principios, Instrumentación y Metodologías en Botánica y Fisiología Vegetal",
+            "titulacion": "Grado en Biología",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1445,
+        "fields": {
+            "nombre": "Principios, Instrumentación y Metodologías en Ecología y Edafología",
+            "titulacion": "Grado en Biología",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1446,
+        "fields": {
+            "nombre": "Principios, Instrumentación y Metodologías en Genética y Bioquímica",
+            "titulacion": "Grado en Biología",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1447,
+        "fields": {
+            "nombre": "Principios, Instrumentación y Metodologías en Zoología y Fisiología Animal",
+            "titulacion": "Grado en Biología",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1448,
+        "fields": {
+            "nombre": "Biología Celular e Histología I",
+            "titulacion": "Grado en Biología",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1449,
+        "fields": {
+            "nombre": "Biología Celular e Histología II",
+            "titulacion": "Grado en Biología",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1450,
+        "fields": {
+            "nombre": "Bioquímica I",
+            "titulacion": "Grado en Biología",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1451,
+        "fields": {
+            "nombre": "Bioquímica II",
+            "titulacion": "Grado en Biología",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1452,
+        "fields": {
+            "nombre": "Botánica I",
+            "titulacion": "Grado en Biología",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1453,
+        "fields": {
+            "nombre": "Botánica II",
+            "titulacion": "Grado en Biología",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1454,
+        "fields": {
+            "nombre": "Genética I",
+            "titulacion": "Grado en Biología",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1455,
+        "fields": {
+            "nombre": "Genética II",
+            "titulacion": "Grado en Biología",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1456,
+        "fields": {
+            "nombre": "Zoología I",
+            "titulacion": "Grado en Biología",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1457,
+        "fields": {
+            "nombre": "Zoología II",
+            "titulacion": "Grado en Biología",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1458,
+        "fields": {
+            "nombre": "Ecología I",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1459,
+        "fields": {
+            "nombre": "Ecología II",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1460,
+        "fields": {
+            "nombre": "Fisiología Animal I",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1461,
+        "fields": {
+            "nombre": "Fisiología Animal II",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1462,
+        "fields": {
+            "nombre": "Fisiología Vegetal I",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1463,
+        "fields": {
+            "nombre": "Fisiología Vegetal II",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1464,
+        "fields": {
+            "nombre": "Genética Molecular",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1465,
+        "fields": {
+            "nombre": "Inmunología",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1466,
+        "fields": {
+            "nombre": "Microbiología Aplicada y Biotecnología",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1467,
+        "fields": {
+            "nombre": "Microbiología I",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1468,
+        "fields": {
+            "nombre": "Microbiología II",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1469,
+        "fields": {
+            "nombre": "Reproducción Vegetal e Interacciones Planta-Animal",
+            "titulacion": "Grado en Biología",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1470,
+        "fields": {
+            "nombre": "Biodiversidad y Conservación de Especies Animales",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1471,
+        "fields": {
+            "nombre": "Biología Celular",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1472,
+        "fields": {
+            "nombre": "Biología Celular del Desarrollo",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1473,
+        "fields": {
+            "nombre": "Biología Molecular y Biotecnología Vegetal",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1474,
+        "fields": {
+            "nombre": "Ecología del Cambio Global: Transición Actual de la Biosfera",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1475,
+        "fields": {
+            "nombre": "Estructura y Biosíntesis de Macromoléculas",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1476,
+        "fields": {
+            "nombre": "Etología",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1477,
+        "fields": {
+            "nombre": "Fisiología Vegetal Ambiental",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1478,
+        "fields": {
+            "nombre": "Flora y Vegetación Mediterráneas",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1479,
+        "fields": {
+            "nombre": "Funcionamiento y Gestión de Ecosistemas Acuáticos",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1480,
+        "fields": {
+            "nombre": "Genética Humana",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1481,
+        "fields": {
+            "nombre": "Metabolismo Secundario Vegetal y Defensa frente a Patógenos y Herbívoros",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1482,
+        "fields": {
+            "nombre": "Microbiología Celular",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1483,
+        "fields": {
+            "nombre": "Neurofisiología",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1484,
+        "fields": {
+            "nombre": "Redacción y Ejecución de Proyectos",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1486,
+        "fields": {
+            "nombre": "Zoología Aplicada",
+            "titulacion": "Grado en Biología",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1487,
+        "fields": {
+            "nombre": "Biología Celular",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1488,
+        "fields": {
+            "nombre": "Estadística Aplicada a la Bioquímica",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1489,
+        "fields": {
+            "nombre": "Física",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1490,
+        "fields": {
+            "nombre": "Fundamentos de Bioquímica",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1491,
+        "fields": {
+            "nombre": "Fundamentos de Genética",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1492,
+        "fields": {
+            "nombre": "Fundamentos de Microbiología",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1493,
+        "fields": {
+            "nombre": "Matemáticas Generales Aplicadas a la Bioquímica",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1494,
+        "fields": {
+            "nombre": "Química Física",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1495,
+        "fields": {
+            "nombre": "Química General",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1496,
+        "fields": {
+            "nombre": "Química Orgánica",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1497,
+        "fields": {
+            "nombre": "Biofísica",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1498,
+        "fields": {
+            "nombre": "Bioquímica Experimental I",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1499,
+        "fields": {
+            "nombre": "Bioquímica Experimental II",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1500,
+        "fields": {
+            "nombre": "Biosíntesis de Macromoléculas",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1501,
+        "fields": {
+            "nombre": "Enzimología y sus Aplicaciones",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1502,
+        "fields": {
+            "nombre": "Estructura de Macromoléculas",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1503,
+        "fields": {
+            "nombre": "Informática Aplicada a la Bioquímica",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1504,
+        "fields": {
+            "nombre": "Inmunología",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1505,
+        "fields": {
+            "nombre": "Organografía",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1506,
+        "fields": {
+            "nombre": "Regulación del Metabolismo",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1507,
+        "fields": {
+            "nombre": "Bases Celulares y Moleculares del Desarrollo",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1508,
+        "fields": {
+            "nombre": "Biología Molecular de Sistemas",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1509,
+        "fields": {
+            "nombre": "Bioquímica Clínica y Patología Molecular",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1510,
+        "fields": {
+            "nombre": "Bioquímica Humana",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1511,
+        "fields": {
+            "nombre": "Bioquímica y Microbiología Industrial",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1512,
+        "fields": {
+            "nombre": "Bioquímica, Biotecnología y Sociedad",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1513,
+        "fields": {
+            "nombre": "Biotecnología Animal",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1514,
+        "fields": {
+            "nombre": "Biotecnología Medioambiental",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1515,
+        "fields": {
+            "nombre": "Biotecnología Microbiana",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1516,
+        "fields": {
+            "nombre": "Biotecnología Vegetal",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1517,
+        "fields": {
+            "nombre": "Fisiología Molecular de Animales",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1518,
+        "fields": {
+            "nombre": "Fisiología Molecular de Plantas",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1519,
+        "fields": {
+            "nombre": "Genética Molecular e Ingeniería Genética",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1520,
+        "fields": {
+            "nombre": "Métodos Instrumentales Cuantitativos",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1521,
+        "fields": {
+            "nombre": "Alimentos: Composición, Elaboración y Control",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1522,
+        "fields": {
+            "nombre": "Bases Bioquímicas de la Nutrición Humana",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1523,
+        "fields": {
+            "nombre": "Bioinformática y Análisis Genómico",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1524,
+        "fields": {
+            "nombre": "Biología Molecular de Plantas",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1525,
+        "fields": {
+            "nombre": "Biología Molecular del Cáncer",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1526,
+        "fields": {
+            "nombre": "Bioprocesos Industriales",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1527,
+        "fields": {
+            "nombre": "Bioquímica de la Nutrición Vegetal",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1528,
+        "fields": {
+            "nombre": "Bioquímica e Ingeniería de Proteínas",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1529,
+        "fields": {
+            "nombre": "Bioquímica Farmacológica",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1530,
+        "fields": {
+            "nombre": "Biorreactores y Tecnología de Procesos",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1531,
+        "fields": {
+            "nombre": "Biotecnología de Alimentos",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1532,
+        "fields": {
+            "nombre": "Biotecnología Marina",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1533,
+        "fields": {
+            "nombre": "Cultivos Tisulares y Celulares",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1534,
+        "fields": {
+            "nombre": "Endocrinología",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1535,
+        "fields": {
+            "nombre": "Genética Aplicada",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1536,
+        "fields": {
+            "nombre": "Genética Humana",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1537,
+        "fields": {
+            "nombre": "Inmunopatología",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1538,
+        "fields": {
+            "nombre": "Introducción a la Medicina Molecular",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1539,
+        "fields": {
+            "nombre": "Nanotecnología",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1540,
+        "fields": {
+            "nombre": "Neuroquímica: Procesos Neurodegenerativos",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1541,
+        "fields": {
+            "nombre": "Organización y Gestión de Proyectos Biotecnológicos",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1542,
+        "fields": {
+            "nombre": "Toxicología Molecular",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1544,
+        "fields": {
+            "nombre": "Virología",
+            "titulacion": "Grado en Bioquímica por la Universidad de Sevilla y la Universidad de Málaga",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1545,
+        "fields": {
+            "nombre": "Economía I",
+            "titulacion": "Grado en Turismo",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1546,
+        "fields": {
+            "nombre": "Economía II",
+            "titulacion": "Grado en Turismo",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1547,
+        "fields": {
+            "nombre": "El Turismo en el Mundo Actual",
+            "titulacion": "Grado en Turismo",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1548,
+        "fields": {
+            "nombre": "Empresas y Organizaciones Turísticas",
+            "titulacion": "Grado en Turismo",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1549,
+        "fields": {
+            "nombre": "Fundamentos de Contabilidad",
+            "titulacion": "Grado en Turismo",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1550,
+        "fields": {
+            "nombre": "Introducción a las Finanzas",
+            "titulacion": "Grado en Turismo",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1551,
+        "fields": {
+            "nombre": "Marketing Turístico",
+            "titulacion": "Grado en Turismo",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1552,
+        "fields": {
+            "nombre": "Patrimonio Cultural Etnológico",
+            "titulacion": "Grado en Turismo",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1553,
+        "fields": {
+            "nombre": "Patrimonio Cultural Histórico y Artístico",
+            "titulacion": "Grado en Turismo",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1554,
+        "fields": {
+            "nombre": "Tipologías de Espacios Turísticos",
+            "titulacion": "Grado en Turismo",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1555,
+        "fields": {
+            "nombre": "Alemán Turístico I",
+            "titulacion": "Grado en Turismo",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1556,
+        "fields": {
+            "nombre": "Contabilidad para la Gestión en el Sector Turístico",
+            "titulacion": "Grado en Turismo",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1557,
+        "fields": {
+            "nombre": "Derecho Privado del Empresario Turístico",
+            "titulacion": "Grado en Turismo",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1558,
+        "fields": {
+            "nombre": "Dirección de Operaciones en Organizaciones Turísticas I",
+            "titulacion": "Grado en Turismo",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1559,
+        "fields": {
+            "nombre": "Dirección y Organización de Empresas Turísticas",
+            "titulacion": "Grado en Turismo",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1560,
+        "fields": {
+            "nombre": "Estadística",
+            "titulacion": "Grado en Turismo",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1561,
+        "fields": {
+            "nombre": "Estructura de Mercados",
+            "titulacion": "Grado en Turismo",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1562,
+        "fields": {
+            "nombre": "Francés Turístico I",
+            "titulacion": "Grado en Turismo",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1563,
+        "fields": {
+            "nombre": "Inglés I para Turismo",
+            "titulacion": "Grado en Turismo",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1564,
+        "fields": {
+            "nombre": "Introducción al Derecho del Turismo",
+            "titulacion": "Grado en Turismo",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1565,
+        "fields": {
+            "nombre": "Territorio, Turismo y Desarrollo Sostenible",
+            "titulacion": "Grado en Turismo",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1566,
+        "fields": {
+            "nombre": "Alemán Turístico II",
+            "titulacion": "Grado en Turismo",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1567,
+        "fields": {
+            "nombre": "Análisis Geográfico del Turismo en Andalucía",
+            "titulacion": "Grado en Turismo",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1568,
+        "fields": {
+            "nombre": "Derecho Administrativo del Sector Turístico",
+            "titulacion": "Grado en Turismo",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1569,
+        "fields": {
+            "nombre": "Dirección de Operaciones en Organizaciones Turísticas II",
+            "titulacion": "Grado en Turismo",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1570,
+        "fields": {
+            "nombre": "Dirección Estratégica de Organizaciones Turísticas",
+            "titulacion": "Grado en Turismo",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1571,
+        "fields": {
+            "nombre": "Francés Turístico II",
+            "titulacion": "Grado en Turismo",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1572,
+        "fields": {
+            "nombre": "Gestión de los Recursos Humanos en el Sector Turístico",
+            "titulacion": "Grado en Turismo",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1573,
+        "fields": {
+            "nombre": "Inglés II para Turismo",
+            "titulacion": "Grado en Turismo",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1574,
+        "fields": {
+            "nombre": "Investigación de Mercados Turísticos",
+            "titulacion": "Grado en Turismo",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1575,
+        "fields": {
+            "nombre": "Políticas Públicas en el Sector Turístico",
+            "titulacion": "Grado en Turismo",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1576,
+        "fields": {
+            "nombre": "Tecnologías de la Información y la Comunicación",
+            "titulacion": "Grado en Turismo",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1577,
+        "fields": {
+            "nombre": "Ampliación de Alemán",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1578,
+        "fields": {
+            "nombre": "Ampliación de Francés",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1579,
+        "fields": {
+            "nombre": "Análisis Cuantitativo de las Operaciones Bancarias en las Empresas Turísticas",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1580,
+        "fields": {
+            "nombre": "Antropología del Turismo y Gestión del Patrimonio Cultural Etnológico",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1581,
+        "fields": {
+            "nombre": "Arte y Turismo Cultural",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1582,
+        "fields": {
+            "nombre": "Control de Costes y Control Presupuestario en el Sector Turístico",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1583,
+        "fields": {
+            "nombre": "Creación de Empresas Turísticas",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1584,
+        "fields": {
+            "nombre": "Derecho del Trabajo y Relaciones Laborales en las Empresas Turísticas",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1585,
+        "fields": {
+            "nombre": "Finanzas a Corto Plazo",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1586,
+        "fields": {
+            "nombre": "Gestión Integrada de la Calidad en el Turismo",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1587,
+        "fields": {
+            "nombre": "Informática Aplicada al Turismo",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1588,
+        "fields": {
+            "nombre": "Inglés III para Turismo",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1589,
+        "fields": {
+            "nombre": "Practicum",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1590,
+        "fields": {
+            "nombre": "Publicidad y Promoción Comercial del Turismo",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1591,
+        "fields": {
+            "nombre": "Régimen Fiscal de la Empresa Turística",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1592,
+        "fields": {
+            "nombre": "Regiones Turísticas Españolas",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1593,
+        "fields": {
+            "nombre": "Sistema Turístico de Sevilla",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1594,
+        "fields": {
+            "nombre": "Sociología del Turismo",
+            "titulacion": "Grado en Turismo",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1596,
+        "fields": {
+            "nombre": "Antropología Cultural",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1597,
+        "fields": {
+            "nombre": "Filosofía de la Ciencia",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1598,
+        "fields": {
+            "nombre": "Geografía",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1599,
+        "fields": {
+            "nombre": "Historia Antigua",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1600,
+        "fields": {
+            "nombre": "Historia Contemporánea",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1601,
+        "fields": {
+            "nombre": "Historia del Arte",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1602,
+        "fields": {
+            "nombre": "Historia Medieval",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1603,
+        "fields": {
+            "nombre": "Historia Moderna",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1604,
+        "fields": {
+            "nombre": "Idioma Moderno",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1605,
+        "fields": {
+            "nombre": "Prehistoria",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 1
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1606,
+        "fields": {
+            "nombre": "Análisis de la Cultura Material",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1607,
+        "fields": {
+            "nombre": "Arqueología de Grecia y Roma",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1608,
+        "fields": {
+            "nombre": "Arqueología del Próximo Oriente",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1609,
+        "fields": {
+            "nombre": "Arqueología Medieval y Postmedieval",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1610,
+        "fields": {
+            "nombre": "El Registro Arqueológico",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1611,
+        "fields": {
+            "nombre": "La Excavación Arqueológica",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1612,
+        "fields": {
+            "nombre": "La Prospección Arqueológica",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1613,
+        "fields": {
+            "nombre": "Prehistoria de Europa",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1614,
+        "fields": {
+            "nombre": "Protohistoria de Europa",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1615,
+        "fields": {
+            "nombre": "Teoría e Historia de la Arqueología",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 2
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1616,
+        "fields": {
+            "nombre": "Arqueobotánica y Arqueozoología",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1617,
+        "fields": {
+            "nombre": "Arqueogeología y Geoquímica",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1618,
+        "fields": {
+            "nombre": "Arqueología Colonial de América",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1619,
+        "fields": {
+            "nombre": "Arqueología de la Ciudad y el Territorio en la Hispania Romana",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1620,
+        "fields": {
+            "nombre": "Arqueología de la Construcción",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1621,
+        "fields": {
+            "nombre": "Arqueología de la Moneda",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1622,
+        "fields": {
+            "nombre": "Arqueología de los Procesos Tecnológicos y Arqueología Experimental",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1623,
+        "fields": {
+            "nombre": "Arqueología Evolutiva",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1624,
+        "fields": {
+            "nombre": "Fuentes Textuales para el Estudio de la Arqueología",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1625,
+        "fields": {
+            "nombre": "Historia de la Hispania Romana",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1626,
+        "fields": {
+            "nombre": "Historia de las Culturas Andinas y Mesoamericanas",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1627,
+        "fields": {
+            "nombre": "Historia General de América",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1628,
+        "fields": {
+            "nombre": "Introducción al Latín y a los Textos Históricos Latinos",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1629,
+        "fields": {
+            "nombre": "Paleogeografía del Cuaternario",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1630,
+        "fields": {
+            "nombre": "Prehistoria de América",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1631,
+        "fields": {
+            "nombre": "Protohistoria de la Península Ibérica",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 3
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1632,
+        "fields": {
+            "nombre": "Análisis de Artefactos",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1633,
+        "fields": {
+            "nombre": "Aplicaciones Informáticas en Arqueología y Estadística",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1634,
+        "fields": {
+            "nombre": "Arqueología Urbana e Introducción al Planeamiento Urbanístico",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1635,
+        "fields": {
+            "nombre": "Bioarqueología",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1636,
+        "fields": {
+            "nombre": "Conservación de los Bienes Arqueológicos",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1637,
+        "fields": {
+            "nombre": "Difusión y Puesta en Valor del P. Arqueológico",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1638,
+        "fields": {
+            "nombre": "Nuevas Tecnologías para la Difusión y Puesta en Valor del P. Arqueológico",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1639,
+        "fields": {
+            "nombre": "Prácticum",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1640,
+        "fields": {
+            "nombre": "Protección y Gestión del Patrimonio Arqueológico",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 4
+        }
+    },
+    {
+        "model": "app.asignatura",
+        "pk": 1641,
+        "fields": {
+            "nombre": "Trabajo de Fin de Grado",
+            "titulacion": "Grado en Arqueología por la Universidad de Granada, Universidad de Jaén y Universidad de Sevilla",
+            "anyo": 4
+        }
+    }
+]

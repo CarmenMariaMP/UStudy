@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from pytest import param
 from django.contrib.auth.models import User
+import psutil
 
 def emails_distintos(email_academico):
     if('@alum.us.es' in email_academico):
@@ -20,6 +21,13 @@ def validador_email(email):
             _('Este %(email)s no pertenece a la Universidad de Sevilla'),
             params={'email':email}
         )
+
+def validador_archivo(file):
+    if(file.size > 1024*1024*20):
+        raise ValidationError(_('El archivo es demasiado grande'), code='mensaje')
+    if(psutil.virtual_memory()[1] < 1024 * 1024 * 40):
+        raise ValidationError(_('No hay memoria suficiente para subir el archivo, conctacte con el soporte técnico'), code='mensaje2')
+        
 
 class Asignatura(models.Model):
     nombre = models.CharField(max_length = 200)
@@ -48,12 +56,14 @@ class Curso(models.Model):
     propietario = models.ForeignKey(Usuario, related_name="Propietario", on_delete=models.DO_NOTHING)
     suscriptores = models.ManyToManyField(Usuario, related_name="Suscriptores")
 
+def user_directory_path(instance, filename):
+    return '{0}/{1}'.format(instance.curso.id, filename)
     
 class Archivo(models.Model):
     nombre = models.CharField(max_length=200)
-    ruta = models.CharField(max_length=200)
-    fecha_publicacion = models.DateField()
+    fecha_publicacion = models.DateField(auto_now_add=True, blank=True)
     curso = models.ForeignKey(Curso, verbose_name="Curso", on_delete=models.CASCADE)
+    ruta = models.FileField(upload_to=user_directory_path, validators=[validador_archivo])
 
 
 class Comentario(models.Model):
