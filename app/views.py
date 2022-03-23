@@ -80,9 +80,9 @@ def crearcurso(request):
                 curso.propietario = Usuario.objects.get(email_academico=request.user)
                 curso.save()
 
-                return render(request, 'inicio_profesor.html')
+                return redirect('/inicio_profesor')
             else:
-                return render(request, 'inicio_profesor.html')
+                return render(request, 'crearcurso.html')
 
             
         else: # si es una consulta get vamos a la vista con el formulario vacio
