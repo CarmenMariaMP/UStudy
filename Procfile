@@ -1,2 +1,3 @@
 web: gunicorn ustudy.wsgi --log-file -
-python manage.py runserver --insecure
+web: python manage.py runserver --insecure
+worker: python manage.py runserver --insecure
