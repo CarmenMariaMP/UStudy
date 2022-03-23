@@ -94,7 +94,7 @@ def crearcurso(request):
     if request.user.is_authenticated:
         if request.method == 'POST': # si es una consulta post (enviando el formulario)
             form = CursoForm(request.user,request.POST)
-            if form.is_valid:
+            if form.is_valid():
                 curso = form.save(commit=False)
                 curso.fecha_publicacion = datetime.datetime.now()
                 curso.propietario = Usuario.objects.get(email_academico=request.user)
@@ -102,7 +102,7 @@ def crearcurso(request):
 
                 return redirect('/inicio_profesor')
             else:
-                return render(request, 'crearcurso.html')
+                return render(request, 'crearcurso.html',{"form":form})
 
             
         else: # si es una consulta get vamos a la vista con el formulario vacio
