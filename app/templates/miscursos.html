@@ -14,6 +14,7 @@
     <div class="row d-flex justify-content-center">
         <h2>Mis cursos</h2>
     </div>
+
     <form role="search" class="center" id="form">
         <div class="row">
             <input class="col-sm-8" type="search" id="query" name="q" placeholder="  Buscar cursos..." aria-label="Search through site content">
@@ -40,6 +41,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group text-center">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">Ocultar</button>
+                                        <input type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='/curso/{{curso.id}}';" value="Acceder"/>
                                     </div>
                                 </div>
                             </div>
