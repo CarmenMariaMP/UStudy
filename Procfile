@@ -1,1 +1,1 @@
-release: python ./manage.py runserver --insecure
+release: sh -c 'python manage.py runserver --insecure'
