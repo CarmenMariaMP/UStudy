@@ -1,1 +1,1 @@
-web: python ./manage.py runserver --insecure
+release: python ./manage.py runserver --insecure
