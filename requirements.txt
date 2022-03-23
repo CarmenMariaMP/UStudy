@@ -3,3 +3,5 @@ django-environ
 python-decouple
 pytest
 psutil
+gunicorn
+django-heroku
