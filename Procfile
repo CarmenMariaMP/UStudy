@@ -1,1 +1,1 @@
-web: gunicorn ustudysprint1.wsgi --log-file -
+web:gunicorn ustudysprint1.wsgi --log-file -
