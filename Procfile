@@ -1,1 +1,1 @@
-release: sh -c 'python manage.py runserver --insecure'
+web: gunicorn ustudy.wsgi
