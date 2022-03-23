@@ -19,6 +19,13 @@ class CursoForm(ModelForm):
         asignaturas_choices = tuple((a.id,a.nombre) for a in asignaturas)
         self.fields['asignatura'] = AsignaturaModelChoiceField(queryset=Asignatura.objects.filter(titulacion=titulacion_user))
 
+        # mensajes de error
+        self.fields['nombre'].error_messages['required'] = 'Este campo es obligatorio'
+        self.fields['descripcion'].error_messages['required'] = 'Este campo es obligatorio'
+        self.fields['asignatura'].error_messages['required'] = 'Este campo es obligatorio'
+        self.fields['asignatura'].error_messages['invalid_choice'] = 'Selecciona una opción válida'
+        
+
     class Meta:
         model = Curso
         fields = ('nombre','descripcion','asignatura')
