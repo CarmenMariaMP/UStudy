@@ -2,12 +2,21 @@ from django import forms
 from app.models import *
 from django.forms import ModelForm
 
+
 class AsignaturaModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
          return obj.nombre
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()
+    
+class ReporteForm(forms.Form):
+    TIPOS_REPORTE =(
+        ("PLAGIO", "PLAGIO"),
+        ("ERROR", "ERROR"),
+    )
+    descripcion = forms.CharField(max_length=10, required=False)
+    tipo = forms.ChoiceField(choices=TIPOS_REPORTE)
 
 class CursoForm(ModelForm):
 

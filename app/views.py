@@ -132,10 +132,10 @@ def curso(request, id):
               if form.is_valid():
                 file = request.FILES['file']
                 curso = Curso.objects.get(id=id)
-                model_instance = Archivo(nombre=file.name, ruta=file, curso=curso)
+                archivo_instancia = Archivo(nombre=file.name, ruta=file, curso=curso)
                 try:
-                    model_instance.full_clean()
-                    model_instance.save()
+                    archivo_instancia.full_clean()
+                    archivo_instancia.save()
                 except ValidationError as e:
                     excede_tamano = True
                     excede_mensaje = e.message_dict['ruta'][0]
@@ -191,13 +191,29 @@ def ver_archivo(request, id_curso, id_archivo):
     comentarios = Comentario.objects.all().filter(archivo=id_archivo)
     archivo = Archivo.objects.get(id=id_archivo)
     url = archivo.ruta.url.replace("app/static/", "")
+    reportes = None
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
         usuario = Usuario.objects.get(email_academico=usuario_autenticado)
-        if (curso.propietario == usuario) or (usuario in curso.suscriptores.all()):
+        if (curso.propietario == usuario):
+            reportes = Reporte.objects.all().filter(archivo=archivo)
             acceso = True
-        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'acceso': acceso, 'comentarios': comentarios, 'url': url})
+        if (usuario in curso.suscriptores.all()):
+            acceso = True
+            
+        if request.method == 'POST': # si es una consulta post (enviando el formulario)
+            form = ReporteForm(request.POST)
+            if form.is_valid():
+                reporteForm = form.cleaned_data
+                descripcion = reporteForm['descripcion']
+                tipo = reporteForm['tipo']
+                reporte_instancia = Reporte(descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
+                reporte_instancia.save()
+                return redirect('/curso/'+str(id_curso))
+        else:
+            form = ReporteForm()
+        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'acceso': acceso, 'comentarios': comentarios, 'url': url, 'form': form, 'reportes': reportes})
     else:
         return render(request, 'inicio.html')
 
