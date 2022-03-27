@@ -1,39 +1,67 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.http import FileResponse
-from django.conf import settings
+from django.http import JsonResponse
 from app.models import *
 from app.forms import *
+import json
+
+from django.http import FileResponse
+from django.conf import settings
+from django.core.exceptions import ValidationError
 import os
 import datetime
+from decouple import config
 
 
 # Create your views here.
 def inicio(request):
     return render(request, "inicio.html")
 
-def suscripcion(request):
-    if request.user.is_authenticated:
-        alumno = Usuario.objects.get(email_academico=request.user)
 
-        id = request.GET.get('id')
-        try:
+def pago(request):
+    if request.user.is_authenticated:
+         client_id = config('PAYPAL_CLIENT_ID')
+         id = request.GET.get('id')
+         try:
             curso = Curso.objects.get(pk=id)
-        except:
+         except:
             curso = None
 
-        if curso == None: # si no existe el curso al que se quiere apuntar
+         if curso == None: # si no existe el curso al que se quiere apuntar
             return redirect("/login")
-        else:
-            curso.suscriptores.add(alumno)
-            curso.save()
-            return redirect("/miscursos")
+         else:
+            return render(request,"pasarela_pago.html",context={"client_id":client_id,"curso":curso})
+
     else:
         return redirect("/login")
 
 
+def suscripcion(request, id):
+
+    alumno = Usuario.objects.get(email_academico=request.user)
+    curso = Curso.objects.get(pk=id)
+    
+    data = json.loads(request.body)
+    order_id = data['orderID']
+
+
+    detalle = GetOrder().get_order(order_id)
+    detalle_precio = float(detalle.result.purchase_units[0].amount.value)
+
+    if detalle_precio == 10.0:
+        curso.suscriptores.add(alumno)
+        curso.save()
+        data = {
+            "mensaje": "Se ha suscrito al curso correctamente"
+        }
+        return JsonResponse(data)
+    else:
+        data = {
+            "mensaje": "Error =("
+        }
+        return JsonResponse(data)
+
+    
 def login_user(request):
     if request.method == 'POST':
         usuario = request.POST['username']
@@ -164,10 +192,10 @@ def curso(request, id):
               if form.is_valid():
                 file = request.FILES['file']
                 curso = Curso.objects.get(id=id)
-                model_instance = Archivo(nombre=file.name, ruta=file, curso=curso)
+                archivo_instancia = Archivo(nombre=file.name, ruta=file, curso=curso)
                 try:
-                    model_instance.full_clean()
-                    model_instance.save()
+                    archivo_instancia.full_clean()
+                    archivo_instancia.save()
                 except ValidationError as e:
                     excede_tamano = True
                     excede_mensaje = e.message_dict['ruta'][0]
@@ -223,13 +251,29 @@ def ver_archivo(request, id_curso, id_archivo):
     comentarios = Comentario.objects.all().filter(archivo=id_archivo)
     archivo = Archivo.objects.get(id=id_archivo)
     url = archivo.ruta.url.replace("app/static/", "")
+    reportes = None
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
-        if (curso.propietario == usuario) or (usuario in curso.suscriptores.all()):
+        if (curso.propietario == usuario):
+            reportes = Reporte.objects.all().filter(archivo=archivo)
             acceso = True
-        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'acceso': acceso, 'comentarios': comentarios, 'url': url})
+        if (usuario in curso.suscriptores.all()):
+            acceso = True
+            
+        if request.method == 'POST': # si es una consulta post (enviando el formulario)
+            form = ReporteForm(request.POST)
+            if form.is_valid():
+                reporteForm = form.cleaned_data
+                descripcion = reporteForm['descripcion']
+                tipo = reporteForm['tipo']
+                reporte_instancia = Reporte(descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
+                reporte_instancia.save()
+                return redirect('/curso/'+str(id_curso))
+        else:
+            form = ReporteForm()
+        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'acceso': acceso, 'comentarios': comentarios, 'url': url, 'form': form, 'reportes': reportes})
     else:
         return render(request, 'inicio.html')
 
@@ -248,3 +292,4 @@ def error_403(request, exception):
 def error_500(request):
     context = {"error": "Parece que hay un error en el servidor..."}
     return render(request,'error.html', context)
+
