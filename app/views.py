@@ -2,37 +2,69 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.views.generic.base import RedirectView
 from django.http import FileResponse
 from django.conf import settings
 from app.models import *
 from app.forms import *
-import os
+import os,json
 import datetime
+from decouple import config
 
 
 # Create your views here.
 def inicio(request):
     return render(request, "inicio.html")
 
-def suscripcion(request):
-    if request.user.is_authenticated:
-        alumno = Usuario.objects.get(email_academico=request.user)
 
-        id = request.GET.get('id')
-        try:
+def pago(request):
+    if request.user.is_authenticated:
+         client_id = config('PAYPAL_CLIENT_ID')
+         id = request.GET.get('id')
+         try:
             curso = Curso.objects.get(pk=id)
-        except:
+         except:
             curso = None
 
-        if curso == None: # si no existe el curso al que se quiere apuntar
+         if curso == None: # si no existe el curso al que se quiere apuntar
             return redirect("/login")
-        else:
-            curso.suscriptores.add(alumno)
-            curso.save()
-            return redirect("/miscursos")
+         else:
+            return render(request,"pasarela_pago.html",context={"client_id":client_id,"curso":curso})
+
     else:
         return redirect("/login")
 
+
+
+
+def suscripcion(request,id):
+
+    alumno = Usuario.objects.get(email_academico=request.user)
+    curso = Curso.objects.get(pk=id)
+    
+    data = json.loads(request.body)
+    order_id = data['orderID']
+
+
+    detalle = GetOrder().get_order(order_id)
+    detalle_precio = float(detalle.result.purchase_units[0].amount.value)
+
+    if detalle_precio == 10.0:
+        curso.suscriptores.add(alumno)
+        curso.save()
+        data = {
+            "mensaje": "Se ha suscrito al curso correctamente"
+        }
+        return JsonResponse(data)
+    else:
+        data = {
+            "mensaje": "Error =("
+        }
+        return JsonResponse(data)
+
+    
+        
 
 
 def login_user(request):
@@ -216,3 +248,4 @@ def error_403(request, exception):
 def error_500(request):
     context = {"error": "Parece que hay un error en el servidor..."}
     return render(request,'error.html', context)
+

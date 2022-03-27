@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+    function token(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = token('csrftoken');
+    </script>
+</head>
+<body>
+    <h1>Pago UStudy</h1>
+    <div id="paypal-button-container"></div>
+
+    <script src="https://www.paypal.com/sdk/js?client-id={{client_id}}">
+    </script>
+
+    <script>
+        paypal.Buttons({
+          createOrder: function(data, actions) {
+            return actions.order.create({
+              purchase_units: [{
+                amount: {
+                  value: '10.00'
+                }
+              }]
+            });
+          },
+          onApprove: function(data) {
+            return fetch('/suscripcion/{{curso.id}}', {
+                method: 'POST',
+                headers: {
+                'content-type': 'application/json',
+                'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({
+                orderID: data.orderID
+                })
+            }).then(function(res) {
+                return res.json();
+            }).then(function(details) {
+                alert(details.mensaje);
+                window.location.href = "/curso/{{curso.id}}"
+                
+            })
+          }
+        }).render('#paypal-button-container');
+      </script>
+
+</body>
+</html>

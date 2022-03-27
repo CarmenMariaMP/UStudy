@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from app import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
@@ -36,8 +36,9 @@ urlpatterns = [
     path('miscursos/', views.miscursos),
     path('cursosdisponibles/', views.cursosdisponibles),
     path('subir_contenido/', views.subir_contenido),
-    path('suscripcion/', views.suscripcion),
-    path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo)
+    path('suscripcion/<int:id>', views.suscripcion),
+    path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo),
+    path('pago/',views.pago)
 ]
 
 #urlpatterns += staticfiles_urlpatterns()
