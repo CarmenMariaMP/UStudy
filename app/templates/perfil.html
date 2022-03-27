@@ -1,0 +1,62 @@
+<header>
+    {% extends 'base_navbar.html' %} {% block contenido %}{%load static%}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
+</header>
+
+<body>
+    <br>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+            <img src={{foto.url}} class="img-fluid img-thumbnail"/>
+          </div>
+          <div class="col-md-7">
+            <h3>{{nombre}}</h3>
+            <p>Titulación: {{titulacion}}</p>
+            <p>Total ganado: {{dinero}}€</p>
+          </div>
+          <div class="col-md-3">
+            {% if boolPuntos %}
+            <div class="rating-block">
+                <h5>Valoración media de los usuarios</h5>
+                <h2 class="bold padding-bottom-7">{{valoracion}} <small>/ 5</small></h2>
+            </div>    
+            {% else %}
+                <h3>No tienes valoraciones</h3>
+            {%endif%}
+            <a class="btn btn-outline-secondary"  href="actualizar">Actualizar Perfil</a>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="border: 2px solid grey">        
+                <h5>Reporte</h5>
+                <p>Fecha: 27-03-2022</p>
+                <p>Descripción: La linea 22 tiene una errata</p>
+            </div>
+            <br>
+            <div class="col-md-12" style="border: 2px solid grey">         
+                <h5>Comentario</h5>
+                <p>Fecha: 27-03-2022</p>
+                <p>Descripción: No entiendo a que te refieres en la linea 22, no entiendo porque haces la recursion ahi cuando lo inteligente seria...</p>
+            </div>
+            <br>
+            <div class="col-md-12" style="border: 2px solid grey">       
+                <h5>Nuevo alumno</h5>
+                <p>Fecha: 14-02-2022</p>
+                <p>jesapaort se ha inscrito en tu curso</p>
+            </div>
+        </div>
+       </div>
+      </div>
+
+{% endblock %}
+</body>
+<footer>
+    {% block pie %}{% endblock %}
+</footer>

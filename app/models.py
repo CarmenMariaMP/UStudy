@@ -34,16 +34,14 @@ class Asignatura(models.Model):
     titulacion = models.CharField(max_length = 200)
     anyo = models.SmallIntegerField()
 
+def image_directory_path(instance, filename):
+    return 'user_images/{0}.jpg'.format(instance.django_user)
 
 class Usuario(models.Model):
-    nombre = models.CharField(max_length=40)
-    apellidos = models.CharField(max_length=40)
-    email = models.EmailField(unique=True)
     email_academico = models.EmailField(primary_key=True, unique=True, validators=[validador_email])
     titulacion = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=500)
-    foto = models.CharField(max_length=100)
-    contrasenha = models.CharField(max_length=100)
+    foto = models.ImageField(null=True, blank=True, upload_to=image_directory_path)
     dinero = models.DecimalField(max_digits=12, decimal_places=2)
     django_user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="usuario", null=True)
 

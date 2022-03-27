@@ -37,11 +37,12 @@ urlpatterns = [
     path('cursosdisponibles/', views.cursosdisponibles),
     path('subir_contenido/', views.subir_contenido),
     path('suscripcion/', views.suscripcion),
+    path('perfil/', views.perfil_usuario),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo)
 ]
 
 #urlpatterns += staticfiles_urlpatterns()
-#urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
     
 handler404 = views.error_404
 handler403 = views.error_403
