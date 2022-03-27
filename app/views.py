@@ -1,14 +1,9 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.views.generic.base import RedirectView
-from django.http import FileResponse
-from django.conf import settings
+from django.http import JsonResponse
 from app.models import *
 from app.forms import *
-import os,json
+import json
 import datetime
 from decouple import config
 
@@ -38,7 +33,7 @@ def pago(request):
 
 
 
-def suscripcion(request,id):
+def suscripcion(request, id):
 
     alumno = Usuario.objects.get(email_academico=request.user)
     curso = Curso.objects.get(pk=id)
