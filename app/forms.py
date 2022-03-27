@@ -15,7 +15,7 @@ class ReporteForm(forms.Form):
         ("PLAGIO", "PLAGIO"),
         ("ERROR", "ERROR"),
     )
-    descripcion = forms.CharField(max_length=10, required=False)
+    descripcion = forms.CharField(max_length=100, required=False)
     tipo = forms.ChoiceField(choices=TIPOS_REPORTE)
 
 class CursoForm(ModelForm):
