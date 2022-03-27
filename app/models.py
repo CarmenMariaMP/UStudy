@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
 from paypalcheckoutsdk.orders import OrdersGetRequest, OrdersCaptureRequest
 from django.utils.translation import gettext_lazy as _
+from django.utils.timezone import now
 from pytest import param
 from django.contrib.auth.models import User
 import psutil
@@ -64,14 +65,14 @@ def user_directory_path(instance, filename):
     
 class Archivo(models.Model):
     nombre = models.CharField(max_length=200)
-    fecha_publicacion = models.DateField(auto_now_add=True, blank=True)
+    fecha_publicacion = models.DateTimeField(default=now, blank=True)
     curso = models.ForeignKey(Curso, verbose_name="Curso", on_delete=models.CASCADE)
     ruta = models.FileField(upload_to=user_directory_path, validators=[validador_archivo])
 
 
 class Comentario(models.Model):
     texto = models.CharField(max_length=500)
-    fecha = models.DateField()
+    fecha = models.DateTimeField(default=now, blank=True)
     archivo = models.ForeignKey(Archivo, verbose_name="Archivo", on_delete=models.CASCADE)
     responde_a =  models.OneToOneField('self', null = True, blank = True, verbose_name = "Responde a", on_delete= models.DO_NOTHING)
 
@@ -101,8 +102,10 @@ class Reporte(models.Model):
         ERROR = "ERROR"
         
     descripcion = models.CharField(max_length=500)
-    fecha = models.DateField()
+    fecha = models.DateTimeField(default=now, blank=True)
     tipo = models.CharField(max_length=10, choices=TipoReporte.choices)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="usuario", null=True)
+    archivo = models.ForeignKey(Archivo, on_delete=models.CASCADE, related_name="archivo", null=True)
 
 
 class PayPalClient:

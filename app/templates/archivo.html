@@ -31,6 +31,22 @@
                     {% endfor %}
                 </ul>
               </div>
+              <div>
+                <h2 style="margin-top: 30px;">SUBIR REPORTE</h2>
+                <form class="boton" id="myform" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{form.as_p}}
+                  <button class="btn boton btn-info" type="submit">Reportar</button>
+                </form>
+              </div>
+              {% if reportes != None %}
+                <div>
+                  <h2 style="margin-top: 30px;">REPORTES</h2>
+                  {% for reporte in reportes %}
+                    <p>{{reporte.descripcion}} : {{reporte.tipo}} - {{reporte.usuario.nombre}}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
             </div>
             <div class="rightcolumn">
               <div class="card" style="margin-top: 30px;">
