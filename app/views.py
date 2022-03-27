@@ -38,7 +38,7 @@ def pago(request):
 
 def suscripcion(request, id):
 
-    alumno = Usuario.objects.get(email_academico=request.user)
+    alumno = Usuario.objects.get(django_user=request.user)
     curso = Curso.objects.get(pk=id)
     
     data = json.loads(request.body)
