@@ -4,8 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import FileResponse
 from django.conf import settings
-from app.models import *
-from app.forms import *
+from app.models import Reporte, Usuario, Curso, Archivo, Valoracion
+from app.forms import 
 import os
 import datetime
 
