@@ -91,8 +91,8 @@ def perfil_usuario(request):
         nombre = request.user.first_name+' '+request.user.last_name
         titulacion = request.user.usuario.titulacion
         dinero = request.user.usuario.dinero
-        foto = request.user.usuario.foto
-        
+        foto = request.user.usuario.foto.url
+        url = foto.replace("app/static/", "")
         boolPuntos = False
         
         mediaPuntos = 0
@@ -111,7 +111,7 @@ def perfil_usuario(request):
             else:
                 mediaPuntos = 0
                 
-        return render(request, "perfil.html", {"boolPuntos": boolPuntos, "nombre": nombre, "titulacion":titulacion, "dinero":dinero, "valoracion": mediaPuntos, "foto":foto}) 
+        return render(request, "perfil.html", {"boolPuntos": boolPuntos, "nombre": nombre, "titulacion":titulacion, "dinero":dinero, "valoracion": mediaPuntos, "foto":url}) 
         
     else:
         return redirect("/login", {"mensaje_error": True})
@@ -251,6 +251,7 @@ def ver_archivo(request, id_curso, id_archivo):
     comentarios = Comentario.objects.all().filter(archivo=id_archivo)
     archivo = Archivo.objects.get(id=id_archivo)
     url = archivo.ruta.url.replace("app/static/", "")
+    print(url)
     reportes = None
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
