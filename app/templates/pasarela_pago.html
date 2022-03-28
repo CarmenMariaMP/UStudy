@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
+    <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
+    <meta charset="utf-8" />
     <script>
     function token(name) {
     var cookieValue = null;
@@ -23,8 +23,12 @@ var csrftoken = token('csrftoken');
     </script>
 </head>
 <body>
-    <h1>Pago UStudy</h1>
-    <div id="paypal-button-container"></div>
+  <br>
+  <div class="row d-flex justify-content-center">
+      <h2>Métodos de pago del curso {{curso.nombre}}</h2>
+  </div>
+  
+    <div id="paypal-button-container" class="d-flex justify-content-center mt-lg-5"></div>
 
     <script src="https://www.paypal.com/sdk/js?client-id={{client_id}}">
     </script>
@@ -62,4 +66,5 @@ var csrftoken = token('csrftoken');
       </script>
 
 </body>
+{% endblock %}
 </html>
