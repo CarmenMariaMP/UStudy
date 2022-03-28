@@ -22,8 +22,7 @@ class CursoForm(ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super(CursoForm, self).__init__(*args, **kwargs)
-        print(user)
-        titulacion_user = Usuario.objects.get(email_academico=user).titulacion
+        titulacion_user = Usuario.objects.get(django_user=user).titulacion
         asignaturas = Asignatura.objects.filter(titulacion=titulacion_user)
         asignaturas_choices = tuple((a.id,a.nombre) for a in asignaturas)
         self.fields['asignatura'] = AsignaturaModelChoiceField(queryset=Asignatura.objects.filter(titulacion=titulacion_user))

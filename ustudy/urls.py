@@ -33,6 +33,7 @@ urlpatterns = [
     path('miscursos/', views.miscursos),
     path('cursosdisponibles/', views.cursosdisponibles),
     path('subir_contenido/', views.subir_contenido),
+    path('perfil/', views.perfil_usuario),
     path('suscripcion/<int:id>', views.suscripcion),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo),
     path('pago/',views.pago)

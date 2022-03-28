@@ -7,3 +7,4 @@ webdriver-manager
 gunicorn
 django-heroku
 paypal-checkout-serversdk
+Pillow
