@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
-from app.models import *
+from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, GetOrder
 from app.forms import *
 import json
 
-from django.http import FileResponse
 from django.conf import settings
 from django.core.exceptions import ValidationError
-import os
 import datetime
 from decouple import config
 
@@ -20,17 +18,17 @@ def inicio(request):
 
 def pago(request):
     if request.user.is_authenticated:
-         client_id = config('PAYPAL_CLIENT_ID')
-         id = request.GET.get('id')
-         try:
+        client_id = config('PAYPAL_CLIENT_ID')
+        id = request.GET.get('id')
+        try:
             curso = Curso.objects.get(pk=id)
-         except:
+        except:
             curso = None
 
-         if curso == None: # si no existe el curso al que se quiere apuntar
+        if curso == None:  # si no existe el curso al que se quiere apuntar
             return redirect("/login")
-         else:
-            return render(request,"pasarela_pago.html",context={"client_id":client_id,"curso":curso})
+        else:
+            return render(request, "pasarela_pago.html", context={"client_id": client_id, "curso": curso})
 
     else:
         return redirect("/login")
@@ -40,10 +38,9 @@ def suscripcion(request, id):
 
     alumno = Usuario.objects.get(django_user=request.user)
     curso = Curso.objects.get(pk=id)
-    
+
     data = json.loads(request.body)
     order_id = data['orderID']
-
 
     detalle = GetOrder().get_order(order_id)
     detalle_precio = float(detalle.result.purchase_units[0].amount.value)
@@ -61,7 +58,7 @@ def suscripcion(request, id):
         }
         return JsonResponse(data)
 
-    
+
 def login_user(request):
     if request.method == 'POST':
         usuario = request.POST['username']
@@ -84,21 +81,22 @@ def logout_user(request):
     logout(request)
     return render(request, "inicio.html")
 
+
 def perfil_usuario(request):
     if request.user.is_authenticated:
         usuarioActual = request.user.usuario
-        
-        nombre = request.user.first_name+' '+request.user.last_name
+
+        nombre = request.user.usuario.nombre+' '+request.user.usuario.apellidos
         titulacion = request.user.usuario.titulacion
         dinero = request.user.usuario.dinero
         foto = request.user.usuario.foto.url
         url = foto.replace("app/static/", "")
         boolPuntos = False
-        
+
         mediaPuntos = 0
         cursosUsuario = Curso.objects.all().filter(
-            propietario = usuarioActual)
-        
+            propietario=usuarioActual)
+
         for curso in cursosUsuario:
             valoraciones = Valoracion.objects.all().filter(curso=curso)
             puntos = 0
@@ -110,18 +108,18 @@ def perfil_usuario(request):
                 boolPuntos = True
             else:
                 mediaPuntos = 0
-                
-        return render(request, "perfil.html", {"boolPuntos": boolPuntos, "nombre": nombre, "titulacion":titulacion, "dinero":dinero, "valoracion": mediaPuntos, "foto":url}) 
-        
+
+        return render(request, "perfil.html", {"boolPuntos": boolPuntos, "nombre": nombre, "titulacion": titulacion, "dinero": dinero, "valoracion": mediaPuntos, "foto": url})
+
     else:
         return redirect("/login", {"mensaje_error": True})
-        
+
 
 def inicio_profesor(request):
     if request.user.is_authenticated:
 
         usuarioActual = request.user.usuario
-        
+
         cursosUsuario = Curso.objects.all().filter(
             propietario=usuarioActual).order_by('nombre')
 
@@ -142,7 +140,7 @@ def inicio_profesor(request):
             dicc[curso] = (len(archivos), mediaPuntos,
                            len(curso.suscriptores.all()))
 
-        return render(request, "inicio_profesor.html", {'nombre': request.user.first_name, 'dicc': dicc})
+        return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'dicc': dicc})
 
     else:
         return redirect("/login", {"mensaje_error": True})
@@ -152,25 +150,27 @@ def crearcurso(request):
 
     # si el usuario está autenticado
     if request.user.is_authenticated:
-        if request.method == 'POST': # si es una consulta post (enviando el formulario)
-            form = CursoForm(request.user,request.POST)
+        # si es una consulta post (enviando el formulario)
+        if request.method == 'POST':
+            form = CursoForm(request.user, request.POST)
             if form.is_valid():
                 curso = form.save(commit=False)
                 curso.fecha_publicacion = datetime.datetime.now()
-                curso.propietario = Usuario.objects.get(django_user=request.user)
+                curso.propietario = Usuario.objects.get(
+                    django_user=request.user)
                 curso.save()
 
                 return redirect('/inicio_profesor')
             else:
-                return render(request, 'crearcurso.html',{"form":form})
+                return render(request, 'crearcurso.html', {"form": form})
 
-            
-        else: # si es una consulta get vamos a la vista con el formulario vacio
+        else:  # si es una consulta get vamos a la vista con el formulario vacio
             form = CursoForm(user=request.user)
-            
-            return render(request, "crearcurso.html",{"form":form})
+
+            return render(request, "crearcurso.html", {"form": form})
     else:
-       return render(request, 'inicio.html')
+        return render(request, 'inicio.html')
+
 
 def curso(request, id):
     es_owner = False
@@ -189,25 +189,25 @@ def curso(request, id):
         if curso.propietario == usuario:
             es_owner = True
             if request.method == 'POST':
-              if form.is_valid():
-                file = request.FILES['file']
-                curso = Curso.objects.get(id=id)
-                archivo_instancia = Archivo(nombre=file.name, ruta=file, curso=curso)
-                try:
-                    archivo_instancia.full_clean()
-                    archivo_instancia.save()
-                except ValidationError as e:
-                    excede_tamano = True
-                    excede_mensaje = e.message_dict['ruta'][0]
-              else:
-                form = UploadFileForm()
-              
+                if form.is_valid():
+                    file = request.FILES['file']
+                    curso = Curso.objects.get(id=id)
+                    archivo_instancia = Archivo(
+                        nombre=file.name, ruta=file, curso=curso)
+                    try:
+                        archivo_instancia.full_clean()
+                        archivo_instancia.save()
+                    except ValidationError as e:
+                        excede_tamano = True
+                        excede_mensaje = e.message_dict['ruta'][0]
+                else:
+                    form = UploadFileForm()
+
         elif usuario in curso.suscriptores.all():
             es_suscriptor = True
-        
-            
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso":curso ,"contenido_curso": contenido_curso, "form":form, "excede_tamano":excede_tamano, "excede_mensaje":excede_mensaje})
-   
+
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje})
+
     else:
         return render(request, 'inicio.html')
 
@@ -262,14 +262,16 @@ def ver_archivo(request, id_curso, id_archivo):
             acceso = True
         if (usuario in curso.suscriptores.all()):
             acceso = True
-            
-        if request.method == 'POST': # si es una consulta post (enviando el formulario)
+
+        # si es una consulta post (enviando el formulario)
+        if request.method == 'POST':
             form = ReporteForm(request.POST)
             if form.is_valid():
                 reporteForm = form.cleaned_data
                 descripcion = reporteForm['descripcion']
                 tipo = reporteForm['tipo']
-                reporte_instancia = Reporte(descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
+                reporte_instancia = Reporte(
+                    descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
                 reporte_instancia.save()
                 return redirect('/curso/'+str(id_curso))
         else:
@@ -282,15 +284,17 @@ def ver_archivo(request, id_curso, id_archivo):
 def subir_contenido(request):
     return render(request, "subir_contenido.html")
 
+
 def error_404(request, exception):
     context = {"error": "Parece que esta página no existe..."}
-    return render(request,'error.html', context)
+    return render(request, 'error.html', context)
+
 
 def error_403(request, exception):
     context = {"error": "Parece que no tienes acceso a esta página..."}
-    return render(request,'error.html', context)
+    return render(request, 'error.html', context)
+
 
 def error_500(request):
     context = {"error": "Parece que hay un error en el servidor..."}
-    return render(request,'error.html', context)
-
+    return render(request, 'error.html', context)
