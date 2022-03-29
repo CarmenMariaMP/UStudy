@@ -10,6 +10,13 @@ from django.core.exceptions import ValidationError
 import os
 import datetime
 
+from django.core.paginator import Paginator
+
+def pagination(request,productos):
+    paginator = Paginator(productos, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return page_obj
 
 # Create your views here.
 def inicio(request):
@@ -187,19 +194,25 @@ def cursosdisponibles(request):
 
 def ver_archivo(request, id_curso, id_archivo):
     acceso = False
+    es_owner =False
+    es_plagio = False
+    es_error = False
     curso = Curso.objects.get(id=id_curso)
     contenido_curso = Archivo.objects.all().filter(curso=curso)
     comentarios = Comentario.objects.all().filter(archivo=id_archivo)
     archivo = Archivo.objects.get(id=id_archivo)
     url = archivo.ruta.url.replace("app/static/", "")
     reportes = None
+    page_obj = None
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
         usuario = Usuario.objects.get(email_academico=usuario_autenticado)
         if (curso.propietario == usuario):
             reportes = Reporte.objects.all().filter(archivo=archivo)
+            page_obj = pagination(request,reportes)
             acceso = True
+            es_owner =True
         if (usuario in curso.suscriptores.all()):
             acceso = True
             
@@ -211,13 +224,25 @@ def ver_archivo(request, id_curso, id_archivo):
                 tipo = reporteForm['tipo']
                 reporte_instancia = Reporte(descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
                 reporte_instancia.save()
-                return redirect('/curso/'+str(id_curso))
+                return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
         else:
             form = ReporteForm()
-        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'acceso': acceso, 'comentarios': comentarios, 'url': url, 'form': form, 'reportes': reportes})
+        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 
+        'acceso': acceso, 'comentarios': comentarios, 'url': url, 'form': form, 'page_obj':page_obj,'es_owner': es_owner,
+        'es_plagio': es_plagio,'es_error': es_error})
     else:
         return render(request, 'inicio.html')
 
+def eliminar_reporte(request, id_curso, id_archivo,id_reporte):
+    curso = Curso.objects.get(id=id_curso)
+    if request.user.is_authenticated:
+        # Comprobar si el usuario es profesor
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(email_academico=usuario_autenticado)
+        if (curso.propietario == usuario):
+            reporte = Reporte.objects.get(id=id_reporte)
+            reporte.delete()
+    return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
 
 def subir_contenido(request):
     return render(request, "subir_contenido.html")
