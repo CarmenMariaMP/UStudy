@@ -49,7 +49,10 @@
                         </div>
                     </div>
                     {% endfor %} {%else%}
-                    <div class="d-flex text-center">Actualmente no existen cursos disponibles</div>
+                     <div class="col">
+                        <p class="font-italic text-center lead">Actualmente no existen cursos disponibles</p>
+                        <p class="font-weight-lighter text-center"><ins><a href="/crearcurso" class="text-decoration text-dark">¿Quieres crear uno?</a></ins></p>
+                    </div>
                     {%endif%}
 
                 </div>
