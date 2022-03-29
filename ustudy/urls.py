@@ -16,11 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import handler404, handler500, handler403, handler400
-from django.views.static import serve
 #from django.conf.urls import url
 
 urlpatterns = [
@@ -39,6 +36,8 @@ urlpatterns = [
     path('suscripcion/', views.suscripcion),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>/reporte/<int:id_reporte>', views.eliminar_reporte),
+    path('perfil/', views.perfil_usuario),
+    path('pago/',views.pago)
 ]
 
 #urlpatterns += staticfiles_urlpatterns()

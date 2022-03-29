@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    {% extends 'base_navbar.html' %}{% load static %}{% block contenido %}
+    {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
 
@@ -40,7 +40,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     
                                     <div class="btn-group text-center">
-                                        <a href="/suscripcion?id={{curso.id}}" class="btn btn-sm btn-outline-secondary">Suscribirse</a>
+                                        <a href="/pago?id={{curso.id}}" class="btn btn-sm btn-outline-secondary">Suscribirse</a>
                                     </div>
 
                                 </form>
