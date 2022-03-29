@@ -10,8 +10,7 @@
 <div class="row d-flex justify-content-center">
     {% if es_owner %}
     <h2>Editar curso</h2>
-    {% endif %}
-    {% if es_suscriptor %}
+    {% endif %} {% if es_suscriptor %}
     <h2> Curso </h2>
     {% endif %}
 </div>
@@ -32,8 +31,7 @@
                 <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> {% elif ".pdf" in archivo.ruta.url %}
                 <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="26px" height="26px">
                 <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> {% endif %} {% if es_owner %}
-                <!-- <input class="btn boton col-sm-1" style="width: 20%; float: right;" type="button" class="editarContenido" value="Eliminar"> -->
-                {% endif %}
+                <input class="btn boton col-sm-1" style="width: 20%; float: right;" type="button" class="editarContenido" value="Eliminar"> {% endif %}
             </li>
             {% endfor %}
         </ul>
@@ -55,10 +53,10 @@
             <input class="btn boton col-sm-1 añadirContenido" form="myform" type="submit" style="margin: 20px;" value="Añadir Contenido">
         </div>
         <div class="col text-center">
-            <input class="btn boton col-sm-1 btn-info justify-content-center" class="atras" value="Atrás" onclick="history.back()"> {%endif%} {%if es_suscriptor%}
+            <a class="btn boton col-sm-1 btn-info justify-content-center" href="/inicio_profesor">Atrás</a> {%endif%} {%if es_suscriptor%}
         </div>
         <div class="col text-center">
-            <input class="btn boton col-sm-1 btn-info justify-content-center"  type="button" value="Atrás" onclick="history.back()"> {%endif%} {%if excede_tamano%}
+            <a class="btn boton col-sm-1 btn-info justify-content-center" href="/miscursos">Atrás</a>{%endif%} {%if excede_tamano%}
         </div>
         <h2> {{excede_mensaje}} </h2>
         {%endif%}
