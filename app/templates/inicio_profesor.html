@@ -12,7 +12,7 @@
             <div class="container">
 
                 <div class="row">
-                    {% for curso,archivos in dicc.items %}
+                    {%if cursos|length > 0 %}{% for curso,archivos in dicc.items %}
                     <div class="col-md-4">
                         <div class="card mb-4 box-shadow border-info standard_web_color">
                             <div class="card-body ">
@@ -44,7 +44,13 @@
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
+                    {% endfor %}{%else%}
+                    <div class="col">
+                        <p class="font-italic text-center lead">Actualmente no has creado ningún curso</p>
+                        <p class="font-weight-lighter text-center"><ins><a href="/crearcurso" class="text-decoration text-dark">¿Quieres
+                                    crear uno?</a></ins></p>
+                    </div>
+                    {%endif%}
                 </div>
             </div>
 
