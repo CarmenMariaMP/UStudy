@@ -12,9 +12,12 @@
         <div class="row">
           <div class="col-md-3">
             {% if foto == "None"%}
-              <img src="{% static "/media/avatar.png" %}" class="img-fluid img-thumbnail" style="display: block; margin: 0 auto; float:center; height:180px;"/>
+              <img src="{% static "/media/avatar.png" %}" class="img-fluid" style="display: block; margin: 0 auto; float:center; height:180px;"/>
             {%else%}
-              <img src="{% static foto %}" class="img-fluid img-thumbnail" style="display: block; margin: 0 auto; float:center"/>
+              <div class="image">
+                <img src="{% static foto %}" class="img-fluid img-thumbnail" style="display: block; margin: 0 auto; float:center"/>
+                <br>
+              </div>
             {%endif%}
           </div>
           <div class="col-md-6">
