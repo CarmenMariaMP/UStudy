@@ -1,3 +1,4 @@
+from traceback import print_list
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
@@ -66,7 +67,8 @@ def login_user(request):
 
         usuario_autenticado = authenticate(
             username=usuario, password=contrasena)
-
+        titulaciones = Asignatura.objects.all().values_list('titulacion', flat=True).distinct()
+        print(titulaciones)
         print(usuario_autenticado)
         if usuario_autenticado is not None:
             usuario = usuario_autenticado.usuario
@@ -171,6 +173,67 @@ def crearcurso(request):
     else:
         return render(request, 'inicio.html')
 
+def registro_usuario(request):
+
+    # si el usuario está autenticado
+    # si es una consulta post (enviando el formulario)
+    if request.user.is_authenticated:
+        return redirect("/miscursos")
+        
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST)
+        if form.is_valid():
+            usuario_form = form.cleaned_data
+            password = usuario_form['password']
+            usename = usuario_form['username']
+            name = usuario_form['name']
+            surname = usuario_form['surname']
+            email = usuario_form['email']
+            email_academico = usuario_form['email_academico']
+            titulacion = usuario_form['titulacion']
+            descripcion = usuario_form['descripcion']
+            dinero = 0.0
+            user_instancia = User(username = usename , email =  email, password =  password)
+            usuario_instancia = Usuario(
+                nombre=name, apellidos=surname, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero = dinero)
+            
+            #validación userjango
+            try:
+                user_instancia.full_clean()
+                user_django = User.objects.create_user(username=usename, email=email, password=password)
+                user_django.save()
+
+
+            except ValidationError as e:
+                for i in e.error_dict:
+                    form.add_error(i , e.error_dict[i])
+
+                return render(request, 'registro.html', {"mensaje_error": True, "form": form})
+
+            #validación Usuario Ustudy
+            try:
+                usuario_instancia.django_user = user_django
+
+                usuario_instancia.full_clean()
+                
+                usuario_instancia.save()
+                
+            except ValidationError as e:
+                user_django.delete()
+                for i in e.error_dict:
+                    form.add_error(i , e.error_dict[i])
+                
+                return render(request, 'registro.html', {"mensaje_error": True, "form": form})
+
+            return redirect('/login')
+        else:
+            return render(request, 'registro.html', {"form": form})
+
+    else:  # si es una consulta get vamos a la vista con el formulario vacio
+        form = UsuarioForm()
+
+        return render(request, "registro.html", {"form": form})
+    
 
 def curso(request, id):
     es_owner = False
