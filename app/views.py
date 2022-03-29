@@ -65,6 +65,8 @@ def suscripcion(request, id):
         }
         return JsonResponse(data)
 
+def registro(request):
+    return render(request, "registro.html")
 
 def login_user(request):
     if request.method == 'POST':
