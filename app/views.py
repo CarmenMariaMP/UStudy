@@ -13,7 +13,17 @@ from decouple import config
 
 # Create your views here.
 def inicio(request):
-    return render(request, "inicio.html")
+    if not request.user.is_authenticated:
+        return render(request, "inicio.html")
+    else:
+        user1 = request.user.usuario
+        cursos = user1.Suscriptores
+
+        cursosAlumno = list()
+
+        for curso in cursos.all():
+            cursosAlumno.append(curso)
+        return render(request, "miscursos.html", {'cursos': cursosAlumno})
 
 
 def pago(request):
@@ -60,21 +70,31 @@ def suscripcion(request, id):
 
 
 def login_user(request):
-    if request.method == 'POST':
-        usuario = request.POST['username']
-        contrasena = request.POST['contrasena']
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            usuario = request.POST['username']
+            contrasena = request.POST['contrasena']
 
-        usuario_autenticado = authenticate(
-            username=usuario, password=contrasena)
+            usuario_autenticado = authenticate(
+                username=usuario, password=contrasena)
 
-        print(usuario_autenticado)
-        if usuario_autenticado is not None:
-            usuario = usuario_autenticado.usuario
-            login(request, usuario_autenticado)
-            return redirect("/miscursos", {"nombre": usuario})
-        else:
-            return render(request, 'login.html', {"mensaje_error": True})
-    return render(request, "login.html")
+            print(usuario_autenticado)
+            if usuario_autenticado is not None:
+                usuario = usuario_autenticado.usuario
+                login(request, usuario_autenticado)
+                return redirect("/miscursos", {"nombre": usuario})
+            else:
+                return render(request, 'login.html', {"mensaje_error": True})
+        return render(request, "login.html")
+    else:
+        user1 = request.user.usuario
+        cursos = user1.Suscriptores
+
+        cursosAlumno = list()
+
+        for curso in cursos.all():
+            cursosAlumno.append(curso)
+        return render(request, "miscursos.html", {'cursos': cursosAlumno})
 
 
 def logout_user(request):
@@ -89,7 +109,12 @@ def perfil_usuario(request):
         nombre = request.user.usuario.nombre+' '+request.user.usuario.apellidos
         titulacion = request.user.usuario.titulacion
         dinero = request.user.usuario.dinero
-        foto = request.user.usuario.foto.url
+
+        try:
+            foto = request.user.usuario.foto.url
+        except:
+            foto = "None"
+
         url = foto.replace("app/static/", "")
         boolPuntos = False
 
