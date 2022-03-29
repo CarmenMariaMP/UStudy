@@ -244,6 +244,19 @@ def curso(request, id):
         return render(request, 'inicio.html')
 
 
+def borrar_archivo(request, id_curso, id_archivo):
+    curso = Curso.objects.get(id=id_curso)
+    print(curso)
+    if request.user.is_authenticated:
+        # Comprobar si el usuario es profesor
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(email_academico=usuario_autenticado)
+        if (curso.propietario == usuario):
+            archivo = Archivo.objects.get(id=id_archivo)
+            archivo.delete()
+    return redirect('/curso/'+str(id_curso))
+
+
 def miscursos(request):
 
     if request.user.is_authenticated:
