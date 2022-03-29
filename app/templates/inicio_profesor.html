@@ -8,7 +8,14 @@
         <div class="row d-flex justify-content-center">
             <h2>Cursos del profesor {{nombre}}</h2>
         </div>
-        <p>Mi valoración media es de: {{val}} / 5</p>
+        <p>
+            Mi valoración media es de: 
+            {% if val >= 0 %}
+            {{val}} / 5
+            {% else %}
+            Todavía no ha recibido valoraciones
+            {% endif %}
+        </p>
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
