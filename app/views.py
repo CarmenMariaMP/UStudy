@@ -124,11 +124,13 @@ def inicio_profesor(request):
             propietario=usuarioActual).order_by('nombre')
 
         dicc = dict()
+        val = 0
 
         for curso in cursosUsuario:
             archivos = Archivo.objects.all().filter(curso=curso)
             valoraciones = Valoracion.objects.all().filter(curso=curso)
             puntos = 0
+
             for valoracion in valoraciones:
                 puntos += valoracion.puntuacion
 
@@ -137,10 +139,11 @@ def inicio_profesor(request):
             else:
                 mediaPuntos = "No tiene valoraciones"
 
+            val += mediaPuntos / len(cursosUsuario)
             dicc[curso] = (len(archivos), mediaPuntos,
                            len(curso.suscriptores.all()))
 
-        return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'dicc': dicc})
+        return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'dicc': dicc, 'val': val})
 
     else:
         return redirect("/login", {"mensaje_error": True})

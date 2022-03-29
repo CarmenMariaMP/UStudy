@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html>
-
-
-{% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
-<br>
-<div class="row d-flex justify-content-center">
+  {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
+  <br />
+  <div class="row d-flex justify-content-center">
     <h2>Crear curso</h2>
-</div>
-<br>
-<form action="/crearcurso/" class="form-signin container col-auto " style="width:30%;margin-top: 20px;" method="POST">
-    {% csrf_token %} 
-    <!-- {{ form.as_p }} -->
+  </div>
+  <br />
+  <form
+    action="/crearcurso/"
+    class="form-signin container col-auto"
+    style="width: 30%; margin-top: 20px"
+    method="POST"
+  >
+    {% csrf_token %}
 
-            <label for="inputUsername" >Nombre del curso</label>
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre curso" required>
-            <label for="show_hide_password" class="mt-3">Descripción</label>
-            <textarea type="text" class="form-control" name="descripcion" placeholder="Proporciona una breve descripción del curso" required></textarea>
-            <label for="show_hide_password" class="mt-3">Asignatura</label>
-            <select  type="text" class="form-control" name="asignatura" required>
-                <option selected>Selecciona asignatura...</option>
-            </select >
-    <div class="text-center mt-3"> 
-        <button class="btn boton btn-info" type="submit">Crear</button>
+    <label>Nombre del curso</label>
+    <div>{{form.nombre}}</div>
+
+    <label class="mt-3">Descripción</label>
+    <div>{{form.descripcion}}</div>
+
+    <label class="mt-3">Asignatura</label>
+    <div>{{form.asignatura}}</div>
+
+    <div class="text-center mt-3">
+      <button class="btn boton btn-info" type="submit">Crear</button>
     </div>
-    
-</form>
-{% endblock %}
+  </form>
+  {% endblock %}
 
-<footer>
-    {% block pie %}{% endblock %}
-</footer>
-
+  <footer>{% block pie %}{% endblock %}</footer>
 </html>
