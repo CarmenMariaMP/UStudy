@@ -24,7 +24,7 @@ class AsignaturaModelTests(TestCase):
         
     def test_crear_asignatura_positiva(self):
 
-        asignatura=Asignatura.objects.get(id=1)
+        asignatura=Asignatura.objects.first()
         self.assertEquals(asignatura.nombre,'Nombre1')
         self.assertEquals(asignatura.titulacion,'Titulacion1')
         self.assertEquals(asignatura.anyo,2012)
@@ -72,7 +72,6 @@ class AsignaturaModelTests(TestCase):
             Asignatura.objects.create(nombre='Nombre7', titulacion='Titulacion7', anyo='')
         except Exception as e:
             self.assertTrue("Field 'anyo' expected a number but got ''" in e.args[0])
-    
 
 class UsuarioModelTests(TestCase):
 
@@ -122,7 +121,6 @@ class UsuarioModelTests(TestCase):
             usuario.full_clean()
         self.assertTrue('email_academico' in dict(context.exception))
             
-
 class NotificacionModelTests(TestCase):
 
     @classmethod
@@ -237,7 +235,6 @@ class ValoracionModelTests(TestCase):
         except Exception as e:
             self.assertTrue("el valor nulo en la columna «curso_id» de la relación «app_valoracion» viola la restricción de no nulo" in e.args[0])
 
-
 class CursoModelTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -275,7 +272,6 @@ class CursoModelTests(TestCase):
             Curso.objects.create(nombre="Curso1", descripcion="a"*501, fecha_publicacion=fecha, asignatura=Asignatura.objects.first(), propietario=Usuario.objects.first())
         self.assertTrue('el valor es demasiado largo para el tipo character varying(500)' in str(context.exception))
 
-
 class ComentarioModelTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -305,5 +301,31 @@ class ComentarioModelTests(TestCase):
             Comentario.objects.create(texto='a'*501,fecha=fecha,archivo=Archivo.objects.first())
         self.assertTrue('el valor es demasiado largo para el tipo character varying(500)' in str(context.exception))
 
-
+class ArchivoModelTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        fecha = datetime.datetime.now().date()
+        user = User.objects.create(username='User1', password='pass')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', email_academico='barranco@alum.us.es', titulacion='Titulación 1',descripcion='Descripcion 1', 
+        foto='foto.jpg', dinero=12.4, django_user=user)
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=fecha, asignatura=asignatura, propietario=usuario)
+        
     
+    def test_crear_archivo_positiva(self):
+        fecha = datetime.datetime.now()
+        Archivo.objects.create(nombre='Archivo1', fecha_publicacion=fecha, curso=Curso.objects.first(), ruta='ruta.pdf')
+        archivo = Archivo.objects.first()
+        self.assertEquals(archivo.nombre,'Archivo1')
+        self.assertEquals(archivo.fecha_publicacion,fecha.replace(tzinfo=timezone.utc))
+        self.assertEquals(archivo.curso,Curso.objects.first())
+        self.assertEquals(archivo.ruta,'ruta.pdf')
+
+    ## Longitud de texto mayor de 200 caracteres
+    def test_crear_comentario_negative_texto_longitud_max(self):
+        with self.assertRaises(Exception) as context:
+            fecha = datetime.datetime.now()
+            Archivo.objects.create(nombre='a'*201, fecha_publicacion=fecha, curso=Curso.objects.first(), ruta='ruta.pdf')
+        self.assertTrue('el valor es demasiado largo para el tipo character varying(200)' in str(context.exception))
+
