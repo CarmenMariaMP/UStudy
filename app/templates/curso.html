@@ -6,7 +6,10 @@
     <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
     <link href="{% static 'css/valoraciones.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
 </head>
+
 <br>
 <div class="row d-flex justify-content-center">
     {% if es_owner %}
@@ -47,13 +50,13 @@
         <h5>Para acceder al contenido de este curso debes unirte al mismo</h5>
         {%endif%} {%if es_owner%}
         <div style="display:flex; justify-content: center;">
-            <form class="boton" id="myform" method="post" enctype="multipart/form-data">
+            <form class="btn boton col-sm-3 btn-info justify-content-center" id="myform" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <br><br> {{form.file}}
             </form>
         </div>
         <div style="display:flex; justify-content: center;">
-            <input class="btn boton col-sm-1 añadirContenido" form="myform" type="submit" style="margin: 20px;" value="Añadir Contenido">
+            <input class="btn boton col-sm-3 btn-info justify-content-center" form="myform" type="submit" style="margin: 20px;" value="Añadir Contenido">
         </div>
         <h5>Valora este curso: </h5>
         <div class="rating">

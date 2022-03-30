@@ -4,8 +4,6 @@
 <head>
     {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
-
     <meta charset="utf-8" />
 </head>
 
@@ -30,7 +28,7 @@
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    {%if cursos|length > 0 %} {% for curso in cursos %}
+                    {%if page_obj|length > 0 %} {% for curso in page_obj %}
                     <div class="col-md-4">
                         <div class="card border-info mb-4">
                             <div class="card-body standard_web_color">
@@ -48,13 +46,30 @@
                             </div>
                         </div>
                     </div>
-                    {% endfor %} {%else%}
+                    {% endfor %} 
+                    
+                    {%else%}
                     <div class="d-flex text-center">Actualmente no existen cursos disponibles</div>
                     {%endif%}
-
                 </div>
 
             </div>
+            {%if page_obj|length > 0 %}
+            <nav class= "d-flex justify-content-center" aria-label="Page navigation example">
+                <ul class="pagination">
+                    <span class="step-links"></span>
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+                        {% endif %}
+                    <li class="page-item"><a class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+              {%endif%}
 
             {% endblock %}
 </body>

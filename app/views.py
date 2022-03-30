@@ -13,8 +13,8 @@ from decouple import config
 
 from django.core.paginator import Paginator
 
-def pagination(request,productos):
-    paginator = Paginator(productos, 5)
+def pagination(request,productos,num):
+    paginator = Paginator(productos, num)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return page_obj
@@ -31,7 +31,9 @@ def inicio(request):
 
         for curso in cursos.all():
             cursosAlumno.append(curso)
-        return render(request, "miscursos.html", {'cursos': cursosAlumno})
+
+        page_obj = pagination(request,cursosAlumno,9)
+        return render(request, "miscursos.html", {'page_obj': page_obj})
 
 
 def pago(request):
@@ -352,7 +354,8 @@ def cursosdisponibles(request):
             if (curso.propietario != usuario_actual):
                 if (usuario_actual not in suscriptores and usuario_actual.titulacion == curso.asignatura.titulacion):
                     cursos.append(curso)
-        return render(request, "cursosdisponibles.html", {'cursos': cursos})
+        page_obj = pagination(request,cursos,9)
+        return render(request, "cursosdisponibles.html", {'page_obj': page_obj})
     else:
         return redirect("/login")
 
@@ -376,7 +379,7 @@ def ver_archivo(request, id_curso, id_archivo):
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
             reportes = Reporte.objects.all().filter(archivo=archivo)
-            page_obj = pagination(request,reportes)
+            page_obj = pagination(request,reportes,5)
             acceso = True
             es_owner =True
         if (usuario in curso.suscriptores.all()):
