@@ -1,6 +1,9 @@
+from sqlite3 import Date
+from string import punctuation
 from django.test import TestCase
 from app.models import *
 import decimal
+import datetime
 
 ## Estrategia: crear una clase por cada modelo
 ## Ejemplo: class AsignaturaModelTest(TestCase):
@@ -9,6 +12,7 @@ import decimal
 ## https://developer.mozilla.org/es/docs/Learn/Server-side/Django/Testing
 
 
+    
 class AsignaturaModelTests(TestCase):
 
     @classmethod
@@ -118,12 +122,52 @@ class UsuarioModelTests(TestCase):
 
             
 
-            
+class NotificacionModelTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        #Set up non-modified objects used by all test methods
+        user = User.objects.create(username='nombreUsuario', password='password')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos1', email='nombreMail@gmail.com', 
+                               email_academico='nombreMail@alum.us.es', titulacion='Titulacion1', descripcion='Descripcion1', 
+                               foto=None, dinero=10.0, django_user=user)
+        Notificacion.objects.create(tipo=Notificacion.TipoNotificacion["COMENTARIO"], fecha='2020-01-01', visto=False, usuario=usuario)
+        
+    def test_crear_notificacion_positiva(self):
+        usuario = Usuario.objects.first()
+        notificacion = Notificacion.objects.get(id=1)
+        self.assertEquals(notificacion.tipo,Notificacion.TipoNotificacion["COMENTARIO"])
+        self.assertEquals(notificacion.fecha,datetime.date(2020, 1, 1))
+        self.assertEquals(notificacion.visto,False)
+        self.assertEquals(notificacion.usuario,usuario)
+        
+    def test_crear_notificacion_vacia(self):
+        usuario = Usuario.objects.first()
+        with self.assertRaises(Exception) as context:
+            Notificacion.objects.create(tipo=None, fecha=None, visto=None, usuario=None)
+        self.assertTrue('Field "tipo" cannot be null.' in str(context.exception))
+        self.assertTrue('Field "fecha" cannot be null.' in str(context.exception))
+        self.assertTrue('Field "visto" cannot be null.' in str(context.exception))
+        self.assertTrue('Field "usuario" cannot be null.' in str(context.exception))
         
 
+class ValoracionModelTests(TestCase):
 
-
-            
+    @classmethod
+    def setUpTestData(cls):
+        #Set up non-modified objects used by all test methods
+        user = User.objects.create(username='nombreUsuario1', password='password1')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos1', email='nombreMail@gmail.com', 
+                               email_academico='nombreMail@alum.us.es', titulacion='Titulacion1', descripcion='Descripcion1', 
+                               foto=None, dinero=10.0, django_user=user)
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now(), asignatura=asignatura, propietario=usuario)
+        Valoracion.objects.create(puntuacion=5, usuario=usuario, curso=curso)
         
-
-
+    def test_crear_valoracion_positiva(self):
+        valoracion = Valoracion.objects.first()
+        usuario = Usuario.objects.first()
+        curso = Curso.objects.first()
+        self.assertEquals(valoracion.puntuacion,5)
+        self.assertEquals(valoracion.usuario,usuario)
+        self.assertEquals(valoracion.curso,curso)
