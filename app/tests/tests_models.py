@@ -21,10 +21,13 @@ class AsignaturaModelTests(TestCase):
         Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         
     def test_crear_asignatura_positiva(self):
+
         asignatura=Asignatura.objects.get(id=1)
         self.assertEquals(asignatura.nombre,'Nombre1')
         self.assertEquals(asignatura.titulacion,'Titulacion1')
         self.assertEquals(asignatura.anyo,2012)
+           
+
 
     def test_crear_asignatura_nombre_negativa(self):
         try:
@@ -90,8 +93,6 @@ class UsuarioModelTests(TestCase):
         self.assertEquals(usuario.foto,'foto.jpg')
         self.assertEquals(usuario.dinero,decimal.Decimal(9.53))
 
-        with self.assertRaises(ValidationError) as context:
-            self.assertTrue(False)
 
 
     ## Longitud de nombre mayor de 40 caracteres
@@ -112,15 +113,17 @@ class UsuarioModelTests(TestCase):
 
     ## Email academico sin dominio de la US
     def test_email_academico_negative(self):
+
         user=User.objects.first()
-        print(user)
         usuario = Usuario.objects.create(nombre='Nombre', apellidos='Apellidos', email='email@hotmail.com', email_academico='email@hotmail.com',titulacion='Titulación 1',descripcion='Descripcion 1', 
             foto='foto.jpg', dinero=12.42, django_user=user)
+
         with self.assertRaises(ValidationError) as context:
             usuario.full_clean()
-        print("EXCEPTION",context.exception)
-
+        self.assertTrue('email_academico' in dict(context.exception))
             
+
+
 
 class NotificacionModelTests(TestCase):
 
