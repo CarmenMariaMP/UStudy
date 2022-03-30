@@ -1,5 +1,7 @@
 <header>
     {% extends 'base_navbar.html' %} {% block contenido %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="utf-8" />
 </header>
 
 <body>
@@ -14,14 +16,14 @@
                 <div class="row">
                     {% for curso,archivos in dicc.items %}
                     <div class="col-md-4">
-                        <div class="card mb-4 box-shadow border-info standard_web_color">
-                            <div class="card-body ">
+                        <div class="card mb-4 box-shadow border-info">
+                            <div class="card-body standard_web_color">
                                 <h5 class="card-title">{{curso.asignatura.nombre}}</h5>
                                 <p class="card-text">{{curso.descripcion}}</p>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item standard_web_color">Alumnos: {{archivos.2}}</li>
-                                    <li class="list-group-item standard_web_color">Archivos multimedia: {{archivos.0}}</li>
-                                    <li class="list-group-item standard_web_color">
+                                <ul class="list-group list-group-flush ">
+                                    <li class="list-group-item " style=" background-color: #F2F2F2;">Alumnos: {{archivos.2}}</li>
+                                    <li class="list-group-item" style=" background-color: #F2F2F2;">Archivos multimedia: {{archivos.0}}</li>
+                                    <li class="list-group-item" style=" background-color: #F2F2F2;">
                                         <div class="row justify-content-around">
                                             <div class="d-flex">
                                                 {% if archivos.1 >= 0 %}
@@ -47,6 +49,22 @@
                     {% endfor %}
                 </div>
             </div>
+            {%if page_obj|length > 0 %}
+            <nav class= "d-flex justify-content-center" aria-label="Page navigation example">
+                <ul class="pagination">
+                    <span class="step-links"></span>
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+                        {% endif %}
+                    <li class="page-item"><a class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+              {%endif%}
 
             {% endblock %}
 </body>

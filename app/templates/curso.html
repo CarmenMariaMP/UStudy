@@ -3,9 +3,11 @@
 
 <head>
     {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
-    <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
 </head>
+
 <br>
 <div class="row d-flex justify-content-center">
     {% if es_owner %}
@@ -46,19 +48,19 @@
         <h5>Para acceder al contenido de este curso debes unirte al mismo</h5>
         {%endif%} {%if es_owner%}
         <div style="display:flex; justify-content: center;">
-            <form class="boton" id="myform" method="post" enctype="multipart/form-data">
+            <form class="btn boton col-sm-3 btn-info justify-content-center" id="myform" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <br><br> {{form.file}}
             </form>
         </div>
         <div style="display:flex; justify-content: center;">
-            <input class="btn boton col-sm-1 añadirContenido" form="myform" type="submit" style="margin: 20px;" value="Añadir Contenido">
+            <input class="btn boton col-sm-3 btn-info justify-content-center" form="myform" type="submit" style="margin: 20px;" value="Añadir Contenido">
         </div>
         <div class="col text-center">
-            <input class="btn boton col-sm-1 btn-info justify-content-center" class="atras" value="Atrás" onclick="history.back()"> {%endif%} {%if es_suscriptor%}
+            <input class="btn boton col-sm-2 btn-info justify-content-center" class="atras" value="Atrás" onclick="history.back()"> {%endif%} {%if es_suscriptor%}
         </div>
         <div class="col text-center">
-            <input class="btn boton col-sm-1 btn-info justify-content-center"  type="button" value="Atrás" onclick="history.back()"> {%endif%} {%if excede_tamano%}
+            <input class="btn boton col-sm-2 btn-info justify-content-center"  type="button" value="Atrás" onclick="history.back()"> {%endif%} {%if excede_tamano%}
         </div>
         <h2> {{excede_mensaje}} </h2>
         {%endif%}
