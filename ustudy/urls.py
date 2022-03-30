@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls import handler404, handler500, handler403, handler400
+#from django.conf.urls import url
 
 urlpatterns = [
+    #url(r'^archivos/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    #url(r'^/static(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     path('', views.inicio),
     path('admin/', admin.site.urls),
     path('crearcurso/', views.crearcurso),
@@ -30,7 +32,18 @@ urlpatterns = [
     path('curso/<int:id>', views.curso),
     path('miscursos/', views.miscursos),
     path('cursosdisponibles/', views.cursosdisponibles),
-    path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo)
+    path('subir_contenido/', views.subir_contenido),
+    path('suscripcion/', views.suscripcion),
+    path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo),
+    path('registro/', views.registro_usuario)
+    path('curso/<int:id_curso>/archivo/<int:id_archivo>/reporte/<int:id_reporte>', views.eliminar_reporte),
+    path('perfil/', views.perfil_usuario),
+    path('pago/',views.pago)
 ]
-urlpatterns += staticfiles_urlpatterns()
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#urlpatterns += staticfiles_urlpatterns()
+#urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    
+handler404 = views.error_404
+handler403 = views.error_403
+handler500 = views.error_500

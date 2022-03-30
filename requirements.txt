@@ -2,3 +2,11 @@ psycopg2
 django-environ
 python-decouple
 pytest
+psutil
+webdriver-manager
+gunicorn
+django-heroku
+paypal-checkout-serversdk
+Pillow
+selenium
+coverage

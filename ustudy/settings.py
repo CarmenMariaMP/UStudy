@@ -14,6 +14,8 @@ from pathlib import Path
 from decouple import config
 import os
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,11 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
 
 
 # Application definition
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'paypalcheckoutsdk'
 ]
 
 MIDDLEWARE = [
@@ -88,6 +91,8 @@ DATABASES = {
 }
 
 
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -133,5 +138,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Media files
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-MEDIA_URL = '/archivos/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'archivos')
+MEDIA_URL = '/app/static/archivos/'
+
+STATIC_ROOT = 'app/static/'
+  
+MEDIA_ROOT = os.path.join(BASE_DIR, 'app/static/archivos')
