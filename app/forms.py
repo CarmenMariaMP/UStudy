@@ -16,8 +16,8 @@ class ReporteForm(forms.Form):
         ("PLAGIO", "PLAGIO"),
         ("ERROR", "ERROR"),
     )
-    descripcion = forms.CharField(max_length=100, required=False)
-    tipo = forms.ChoiceField(choices=TIPOS_REPORTE)
+    descripcion = forms.CharField(max_length=500, required=True,widget=forms.Textarea)
+    tipo = forms.ChoiceField(choices=TIPOS_REPORTE, widget=forms.Select(attrs={'class':'bootstrap-select'}))
 
 class UsuarioForm(forms.Form):
     titulaciones = list(Asignatura.objects.all().values_list('titulacion', flat=True).distinct())

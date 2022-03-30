@@ -122,8 +122,7 @@ class Reporte(models.Model):
     class TipoReporte(models.TextChoices):
         PLAGIO = "PLAGIO"
         ERROR = "ERROR"
-
-    descripcion = models.CharField(max_length=500)
+    descripcion = models.TextField(max_length=500)
     fecha = models.DateTimeField(default=now, blank=True)
     tipo = models.CharField(max_length=10, choices=TipoReporte.choices)
     usuario = models.ForeignKey(

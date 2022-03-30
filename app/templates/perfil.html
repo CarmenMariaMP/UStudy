@@ -10,13 +10,20 @@
     <br>
     <div class="container">
         <div class="row">
-          <div class="col-md-2">
-            <img src="{% static foto %}" class="img-fluid img-thumbnail"/>
+          <div class="col-md-3">
+            {% if foto == "None"%}
+              <img src="{% static "/media/avatar.png" %}" class="img-fluid" style="display: block; margin: 0 auto; float:center; height:180px;"/>
+            {%else%}
+              <div class="image">
+                <img src="{% static foto %}" class="img-fluid img-thumbnail" style="display: block; margin: 0 auto; float:center"/>
+                <br>
+              </div>
+            {%endif%}
           </div>
-          <div class="col-md-7">
+          <div class="col-md-6">
             <h3>{{nombre}}</h3>
             <p>Titulación: {{titulacion}}</p>
-            <p>Total ganado: {{dinero}}€</p>
+            <p>Monedero: {{dinero}}€</p>
           </div>
           <div class="col-md-3">
             {% if boolPuntos %}
@@ -32,26 +39,30 @@
         </div>
       </div>
       <br>
-      <div class="container">
-        <div class="row">
-            <div class="col-md-12" style="border: 2px solid grey">        
+      <div class="container" style="height:450px; overflow-y: scroll; border: 1px solid black">
+            <div class="col-md-12" style="border: 2px solid grey; border-radius: 25px;">        
                 <h5>Reporte</h5>
                 <p>Fecha: 27-03-2022</p>
                 <p>Descripción: La linea 22 tiene una errata</p>
             </div>
             <br>
-            <div class="col-md-12" style="border: 2px solid grey">         
+            <div class="col-md-12" style="border: 2px solid grey; border-radius: 25px;">         
                 <h5>Comentario</h5>
                 <p>Fecha: 27-03-2022</p>
                 <p>Descripción: No entiendo a que te refieres en la linea 22, no entiendo porque haces la recursion ahi cuando lo inteligente seria...</p>
             </div>
             <br>
-            <div class="col-md-12" style="border: 2px solid grey">       
+            <div class="col-md-12" style="border: 2px solid grey; border-radius: 25px;">       
                 <h5>Nuevo alumno</h5>
                 <p>Fecha: 14-02-2022</p>
                 <p>jesapaort se ha inscrito en tu curso</p>
             </div>
-        </div>
+            <br>
+            <div class="col-md-12" style="border: 2px solid grey; border-radius: 25px;">        
+                <h5>Comentario</h5>
+                <p>Fecha: 29-03-2022</p>
+                <p>Descripción: Podrias explicar de otra forma esto, es que no entiendo porque al compilar el archivo este da...</p>
+          </div>
        </div>
       </div>
 
