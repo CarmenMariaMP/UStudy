@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+
+{% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
+<br>
+<div class="row d-flex justify-content-center">
+    <h2>Registro Usuario</h2>
+</div>
+<br>
+<form action="/registro/" style="text-align: center;" method="POST">
+    {% csrf_token %} {{ form.as_p }}
+    <button class="btn boton btn-info" type="submit">Crear</button>
+</form>
+{% endblock %}
+
+<footer>
+    {% block pie %}{% endblock %}
+</footer>
+
+</html>
