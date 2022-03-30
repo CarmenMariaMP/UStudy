@@ -34,14 +34,14 @@
                     <div class="col-md-4">
                         <div class="card border-info mb-4">
                             <div class="card-body standard_web_color ">
-                                <h5 class="card-title">{{curso.asignatura.nombre}}</h5>
-                                <p class="card-text">{{curso.propietario.nombre}}</p>
-                                <p class="card-text">{{curso.descripcion}}</p>
+                                <h5 class="card-title">Asignatura: {{curso.asignatura.nombre}}</h5>
+                                <p class="card-text">Profesor: {{curso.propietario.nombre}}</p>
+                                <p class="card-text">Descripción: {{curso.descripcion}}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group text-center">
                                         <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Ocultar</button> -->
-                                        <input type="button" class="btn btn-sm btn-outline-secondary"
-                                            onclick="location.href='/curso/{{curso.id}}';" value="Acceder" />
+                                        <input type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='/curso/{{curso.id}}';" value="Acceder" />
+
                                     </div>
                                 </div>
                             </div>

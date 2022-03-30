@@ -3,6 +3,8 @@
 
 <head>
     {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
+    <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/valoraciones.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
@@ -12,8 +14,7 @@
 <div class="row d-flex justify-content-center">
     {% if es_owner %}
     <h2>Editar curso</h2>
-    {% endif %}
-    {% if es_suscriptor %}
+    {% endif %} {% if es_suscriptor %}
     <h2> Curso </h2>
     {% endif %}
 </div>
@@ -21,7 +22,8 @@
 <div style="align-content: center;">
     <div class="separado borde-azul standard_web_color">
         <p style="text-align: center; padding-top: 15px; font-size: 15px;"> <b>Curso:</b> {{curso.nombre}}
-            <br> <b>Profesor:</b> {{curso.propietario.nombre}}
+            <br> <b>Profesor:</b> {{curso.propietario.nombre}} <br>
+            <b>Valoración media: </b>
         </p>
     </div>
     {% if es_owner or es_suscriptor %}
@@ -34,8 +36,8 @@
                 <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> {% elif ".pdf" in archivo.ruta.url %}
                 <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="26px" height="26px">
                 <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> {% endif %} {% if es_owner %}
-                <!-- <input class="btn boton col-sm-1" style="width: 20%; float: right;" type="button" class="editarContenido" value="Eliminar"> -->
-                {% endif %}
+                <a type="submit" class="btn boton col-sm-1" style="width: 20%; float: right;" href="/curso/{{curso.id}}/{{archivo.id}}">
+                    Eliminar</a> {% endif %}
             </li>
             {% endfor %}
         </ul>
@@ -56,13 +58,23 @@
         <div style="display:flex; justify-content: center;">
             <input class="btn boton col-sm-3 btn-info justify-content-center" form="myform" type="submit" style="margin: 20px;" value="Añadir Contenido">
         </div>
-        <div class="col text-center">
-            <input class="btn boton col-sm-2 btn-info justify-content-center" class="atras" value="Atrás" onclick="history.back()"> {%endif%} {%if es_suscriptor%}
+        <h5>Valora este curso: </h5>
+        <div class="rating">
+            <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+            <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+            <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+            <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+            <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
         </div>
         <div class="col text-center">
-            <input class="btn boton col-sm-2 btn-info justify-content-center"  type="button" value="Atrás" onclick="history.back()"> {%endif%} {%if excede_tamano%}
+            <a class="btn boton col-sm-1 btn-info justify-content-center" href="/inicio_profesor">Atrás</a> {%endif%} {%if es_suscriptor%}
         </div>
+        <div class="col text-center">
+            <a class="btn boton col-sm-1 btn-info justify-content-center" href="/miscursos">Atrás</a>{%endif%} {%if excede_tamano%}
+        </div>
+
         <h2> {{excede_mensaje}} </h2>
+
         {%endif%}
     </div>
 </div>
