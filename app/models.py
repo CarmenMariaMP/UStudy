@@ -1,3 +1,4 @@
+from operator import contains
 from tabnanny import verbose
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -32,6 +33,9 @@ def validador_archivo(file):
     if(file.size > 1024*1024*20):
         raise ValidationError(
             _('El archivo es demasiado grande'), code='mensaje')
+    if not file.name[-4:] in ('.pdf', '.mp4', '.png', '.jpg', '.txt', 'jpeg'):
+        raise ValidationError(
+            _('El archivo no es un PDF, MP4, PNG, JPG, JPEG ó TXT'), code='mensaje3')
     if(psutil.virtual_memory()[1] < 1024 * 1024 * 40):
         raise ValidationError(
             _('No hay memoria suficiente para subir el archivo, conctacte con el soporte técnico'), code='mensaje2')

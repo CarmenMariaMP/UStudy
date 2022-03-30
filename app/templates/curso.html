@@ -6,7 +6,10 @@
     <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
 </head>
-<br>
+<body>
+    <div class="alert alert-danger" role="alert">
+        {{excede_mensaje}}
+    </div>
 <div class="row d-flex justify-content-center">
     {% if es_owner %}
     <h2>Editar curso</h2>
@@ -27,11 +30,20 @@
         <ul class="list-group list-group-flush">
             {% for archivo in contenido_curso %}
             <li class="list-group-item" style="border-radius: 50px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-                {% if ".mp4" in archivo.ruta.url %}
+                {% if ".mp4" in archivo.ruta.url|slice:"-4:"%}
                 <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="26px" height="19px">
-                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> {% elif ".pdf" in archivo.ruta.url %}
+                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> 
+                {% elif ".pdf" in archivo.ruta.url|slice:"-4:"%}
                 <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="26px" height="26px">
-                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> {% endif %} {% if es_owner %}
+                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
+                {% elif ".txt" in archivo.ruta.url|slice:"-4:"%}
+                <img src="https://i.postimg.cc/LsGDHX6t/txt-icon.png" width="26px" height="26px">
+                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
+                {% else %}
+                <img src="https://i.postimg.cc/nh4pKsNz/imagen-icon.png" width="26px" height="26px">
+                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
+                {% endif %} 
+                {% if es_owner %}
                 <!-- <input class="btn boton col-sm-1" style="width: 20%; float: right;" type="button" class="editarContenido" value="Eliminar"> -->
                 {% endif %}
             </li>
@@ -55,15 +67,15 @@
             <input class="btn boton col-sm-1 añadirContenido" form="myform" type="submit" style="margin: 20px;" value="Añadir Contenido">
         </div>
         <div class="col text-center">
-            <input class="btn boton col-sm-1 btn-info justify-content-center" class="atras" value="Atrás" onclick="history.back()"> {%endif%} {%if es_suscriptor%}
+            <input class="btn boton col-sm-1 btn-info justify-content-center" class="atras" value="Atrás" onclick="location.href = '/miscursos'"> {%endif%} {%if es_suscriptor%}
         </div>
         <div class="col text-center">
-            <input class="btn boton col-sm-1 btn-info justify-content-center"  type="button" value="Atrás" onclick="history.back()"> {%endif%} {%if excede_tamano%}
+            <input class="btn boton col-sm-1 btn-info justify-content-center"  class="atras" value="Atrás" onclick="location.href = '/miscursos'"> {%endif%} {%if excede_tamano%}
         </div>
-        <h2> {{excede_mensaje}} </h2>
         {%endif%}
     </div>
 </div>
+</body>
 {% endblock %}
 
 </html>

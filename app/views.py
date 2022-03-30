@@ -246,7 +246,7 @@ def curso(request, id):
         elif usuario in curso.suscriptores.all():
             es_suscriptor = True
 
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje})
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form,"excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje})
 
     else:
         return render(request, 'inicio.html')
