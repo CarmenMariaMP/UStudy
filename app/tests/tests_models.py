@@ -1,5 +1,6 @@
 from django.test import TestCase
-from app.models import Asignatura
+from app.models import *
+import decimal
 
 ## Estrategia: crear una clase por cada modelo
 ## Ejemplo: class AsignaturaModelTest(TestCase):
@@ -63,8 +64,65 @@ class AsignaturaModelTests(TestCase):
         except Exception as e:
             self.assertTrue("Field 'anyo' expected a number but got ''" in e.args[0])
     
-    
-          
+
+class UsuarioModelTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        user = User.objects.create(username='User1', password='pass')
+        print(user)
+        
+    def test_crear_usuario_positive(self):
+        user=User.objects.first()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', email_academico='barranco@alum.us.es', titulacion='Titulación 1',descripcion='Descripcion 1', 
+        foto='foto.jpg', dinero=decimal.Decimal(9.53), django_user=user)
+
+        self.assertEquals(usuario.nombre,'Nombre1')
+        self.assertEquals(usuario.apellidos,'Apellidos')
+        self.assertEquals(usuario.email,'email@hotmail.com')
+        self.assertEquals(usuario.email_academico,'barranco@alum.us.es')
+        self.assertEquals(usuario.titulacion,'Titulación 1')
+        self.assertEquals(usuario.descripcion,'Descripcion 1')
+        self.assertEquals(usuario.foto,'foto.jpg')
+        self.assertEquals(usuario.dinero,decimal.Decimal(9.53))
+
+        with self.assertRaises(ValidationError) as context:
+            self.assertTrue(False)
+
+
+    ## Longitud de nombre mayor de 40 caracteres
+    def test_crear_usuario_negative_nombre_longitud_max (self):
+        user=User.objects.first()
+        with self.assertRaises(Exception) as context:
+            usuario = Usuario.objects.create(nombre='a'*41, apellidos='Apellidos', email='email@hotmail.com', titulacion='Titulación 1',descripcion='Descripcion 1', 
+            foto='foto.jpg', dinero=12.4, django_user=user)
+        self.assertTrue('el valor es demasiado largo para el tipo character varying(40)' in str(context.exception))
+
+    ## Longitud de apellido mayor de 40 caracteres
+    def test_crear_usuario_negative_apellidos_longitud_max (self):
+        user=User.objects.first()
+        with self.assertRaises(Exception) as context:
+            usuario = Usuario.objects.create(nombre='Nombre', apellidos='a'*41, email='email@hotmail.com', titulacion='Titulación 1',descripcion='Descripcion 1', 
+            foto='foto.jpg', dinero=12.4, django_user=user)
+        self.assertTrue('el valor es demasiado largo para el tipo character varying(40)' in str(context.exception))
+
+    ## Email academico sin dominio de la US
+    def test_email_academico_negative(self):
+        user=User.objects.first()
+        print(user)
+        usuario = Usuario.objects.create(nombre='Nombre', apellidos='Apellidos', email='email@hotmail.com', email_academico='email@hotmail.com',titulacion='Titulación 1',descripcion='Descripcion 1', 
+            foto='foto.jpg', dinero=12.42, django_user=user)
+        with self.assertRaises(ValidationError) as context:
+            usuario.full_clean()
+        print("EXCEPTION",context.exception)
+
+            
+
+            
+        
+
+
+
             
         
 
