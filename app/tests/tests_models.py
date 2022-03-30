@@ -329,7 +329,6 @@ class ArchivoModelTests(TestCase):
             Archivo.objects.create(nombre='a'*201, fecha_publicacion=fecha, curso=Curso.objects.first(), ruta='ruta.pdf')
         self.assertTrue('el valor es demasiado largo para el tipo character varying(200)' in str(context.exception))
 
-
 class ReporteModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
