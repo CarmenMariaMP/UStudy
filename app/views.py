@@ -35,45 +35,51 @@ def inicio(request):
 
 def pago(request):
     if request.user.is_authenticated:
+        usuario = request.user.usuario
         client_id = config('PAYPAL_CLIENT_ID')
         id = request.GET.get('id')
         try:
             curso = Curso.objects.get(pk=id)
-        except:
-            curso = None
-
-        if curso == None:  # si no existe el curso al que se quiere apuntar
-            return redirect("/login")
-        else:
+            if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
+                return redirect('/cursosdisponibles')
             return render(request, "pasarela_pago.html", context={"client_id": client_id, "curso": curso})
+        except:
+            return redirect("/cursosdisponibles")
 
     else:
         return redirect("/login")
 
 
 def suscripcion(request, id):
+    if request.user.is_authenticated:
 
-    alumno = Usuario.objects.get(django_user=request.user)
-    curso = Curso.objects.get(pk=id)
+        alumno = Usuario.objects.get(django_user=request.user)
+        curso = Curso.objects.get(pk=id)
+        
+        usuario = request.user.usuario
+        if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
+                return redirect('/cursosdisponibles')
 
-    data = json.loads(request.body)
-    order_id = data['orderID']
+        data = json.loads(request.body)
+        order_id = data['orderID']
 
-    detalle = GetOrder().get_order(order_id)
-    detalle_precio = float(detalle.result.purchase_units[0].amount.value)
+        detalle = GetOrder().get_order(order_id)
+        detalle_precio = float(detalle.result.purchase_units[0].amount.value)
 
-    if detalle_precio == 10.0:
-        curso.suscriptores.add(alumno)
-        curso.save()
-        data = {
-            "mensaje": "Se ha suscrito al curso correctamente"
-        }
-        return JsonResponse(data)
+        if detalle_precio == 10.0:
+            curso.suscriptores.add(alumno)
+            curso.save()
+            data = {
+                "mensaje": "Se ha suscrito al curso correctamente"
+            }
+            return JsonResponse(data)
+        else:
+            data = {
+                "mensaje": "Error =("
+            }
+            return JsonResponse(data)
     else:
-        data = {
-            "mensaje": "Error =("
-        }
-        return JsonResponse(data)
+        return redirect("/login")
 
 
 def login_user(request):
@@ -215,6 +221,8 @@ def curso(request, id):
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
+        if usuario.titulacion != curso.asignatura.titulacion:
+            return redirect('/cursosdisponibles')
         form = UploadFileForm(request.POST, request.FILES)
         excede_tamano = False
         excede_mensaje = ""

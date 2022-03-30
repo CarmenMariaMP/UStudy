@@ -70,7 +70,7 @@ class Curso(models.Model):
         Asignatura, verbose_name="Asignatura", on_delete=models.DO_NOTHING)
     propietario = models.ForeignKey(
         Usuario, related_name="Propietario", on_delete=models.DO_NOTHING)
-    suscriptores = models.ManyToManyField(Usuario, related_name="Suscriptores")
+    suscriptores = models.ManyToManyField(Usuario, related_name="Suscriptores", blank=True)
 
 
 def user_directory_path(instance, filename):

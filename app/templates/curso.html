@@ -41,8 +41,8 @@
     <br> {% endif %}
     <div style="align-content: center;">
         {% if not es_suscriptor and not es_owner%}
-        <input class="btn boton col-sm-1 atras" style="margin-top: 20px;" type="button" value="Atrás" onclick="history.back()">
-        <input class=" btn boton col-sm-1 unirseCurso" style="margin-top: 20px;" type="button" value="Unirse"><br><br><br>
+        <a class="btn boton col-sm-1 atras" style="margin-top: 20px;" type="button" value="Atrás" href="/cursosdisponibles"><b>Atrás</b></a>
+        <a href="/pago?id={{curso.id}}" class=" btn boton col-sm-1 unirseCurso" style="margin-top: 20px;">Suscribirse</a>
         <h5>Para acceder al contenido de este curso debes unirte al mismo</h5>
         {%endif%} {%if es_owner%}
         <div style="display:flex; justify-content: center;">
