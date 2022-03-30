@@ -40,19 +40,26 @@
                 <div class="col-xs-6 col-md-offset-3">
                     <div class="col-md-12">
                         <h3>Datos personales</h3>
-                        <div class="form-group">
-                            <label class="control-label">Nombre</label>
-                            <input type="text" class="form-control" placeholder="Nombre" name="" required />
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Nombre de usuario</label>
+                                <input type="text" class="form-control" placeholder="Nombre de usuario" name="usename"
+                                    required />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Nombre</label>
+                                <input type="text" class="form-control" placeholder="Nombre" name="name" required />
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                             <label class="control-label">Apellidos</label>
-                            <input type="text" class="form-control" placeholder="Apellidos" name="" required />
+                            <input type="text" class="form-control" placeholder="Apellidos" name="surname" required />
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                             <label class="control-label">Contraseña</label>
-                            <input type="password" class="form-control" placeholder="Contraseña" name="" required />
+                            <input type="password" class="form-control" placeholder="Contraseña" name="password" required />
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                             <label class="control-label">Confirmar contraseña</label>
                             <input type="password" class="form-control" placeholder="Confirmar contraseña" name=""
                                 required />
@@ -65,13 +72,13 @@
                 <div class="col-xs-6 col-md-offset-3">
                     <div class="col-md-12">
                         <h3> Configuración del correo</h3>
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                             <label class="control-label">Correo electrónico</label>
-                            <input type="email" class="form-control" placeholder="user@domain.com" name="" required />
+                            <input type="email" class="form-control" placeholder="user@domain.com" name="email" required />
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                             <label class="control-label">Correo corporativo</label>
-                            <input type="email" class="form-control" placeholder="uvus@alum.us.es" name="" required />
+                            <input type="email" class="form-control" placeholder="uvus@alum.us.es" name="email_academico" required />
                         </div>
                         <button class="btn btn-info nextBtn btn-lg pull-right" type="button">Siguiente</button>
                     </div>
@@ -81,17 +88,17 @@
                 <div class="col-xs-6 col-md-offset-3">
                     <div class="col-md-12">
                         <h3>Titulación</h3>
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                             <label>Grado</label>
-                            <select class="form-control" required>
+                            <select name="titulacion" class="form-control" required>
                                 <option selected>Selecciona tu grado</option>
                                 <option>I.I.Software</option>
                                 <option>I.I.Hardware</option>
                             </select><br>
                         </div>
-                        <div>
+                        <div class="form-group col-md-12">
                             <label class="control-label">Descripción</label>
-                            <textarea class="form-control" placeholder="Descripción ..." name=""
+                            <textarea class="form-control" placeholder="Descripción ..." name="descripcion"
                                 required></textarea><br>
                         </div>
                         <button class="btn btn-info nextBtn btn-lg pull-right" type="submit">Registrarme</button>
