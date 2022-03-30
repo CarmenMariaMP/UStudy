@@ -250,7 +250,7 @@ def borrar_archivo(request, id_curso, id_archivo):
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
-        usuario = Usuario.objects.get(email_academico=usuario_autenticado)
+        usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
             archivo = Archivo.objects.get(id=id_archivo)
             archivo.delete()
@@ -338,7 +338,7 @@ def eliminar_reporte(request, id_curso, id_archivo,id_reporte):
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
-        usuario = Usuario.objects.get(email_academico=usuario_autenticado)
+        usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
             reporte = Reporte.objects.get(id=id_reporte)
             reporte.delete()
