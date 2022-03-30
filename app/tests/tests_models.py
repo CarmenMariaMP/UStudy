@@ -144,15 +144,41 @@ class NotificacionModelTests(TestCase):
         self.assertEquals(notificacion.visto,False)
         self.assertEquals(notificacion.usuario,usuario)
         
-    def test_crear_notificacion_vacia(self):
+    def test_crear_notificacion_fecha_vacia(self):
         usuario = Usuario.objects.first()
+        try:
+            Notificacion.objects.create(tipo=Notificacion.TipoNotificacion["COMENTARIO"], fecha=None, visto=False, usuario=usuario)
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «fecha» de la relación «app_notificacion» viola la restricción de no nulo" in e.args[0])
+    
+    def test_crear_notificacion_visto_vacio(self):
+        usuario = Usuario.objects.first()
+        try:
+            Notificacion.objects.create(tipo=Notificacion.TipoNotificacion["COMENTARIO"], fecha='2020-01-01', visto=None, usuario=usuario)
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «visto» de la relación «app_notificacion» viola la restricción de no nulo" in e.args[0])
+            
+    def test_crear_notificacion_usuario_vacio(self):
+        try:
+            Notificacion.objects.create(tipo=Notificacion.TipoNotificacion["COMENTARIO"], fecha='2020-01-01', visto=False, usuario=None)
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «usuario_id» de la relación «app_notificacion» viola la restricción de no nulo" in e.args[0])
+            
+    def test_crear_notificacion_usuario_vacio(self):
+        usuario = Usuario.objects.first()
+        try:
+            Notificacion.objects.create(tipo=None, fecha='2020-01-01', visto=False, usuario=usuario)
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «tipo» de la relación «app_notificacion» viola la restricción de no nulo" in e.args[0])
+
+
+    def test_crear_notificacion_negativa(self):
+        usuario = Usuario.objects.first()
+        notificacion = Notificacion.objects.create(tipo="", fecha='2020-01-01', visto=False, usuario=usuario)
         with self.assertRaises(Exception) as context:
-            Notificacion.objects.create(tipo=None, fecha=None, visto=None, usuario=None)
-        self.assertTrue('Field "tipo" cannot be null.' in str(context.exception))
-        self.assertTrue('Field "fecha" cannot be null.' in str(context.exception))
-        self.assertTrue('Field "visto" cannot be null.' in str(context.exception))
-        self.assertTrue('Field "usuario" cannot be null.' in str(context.exception))
-        
+            self.assertTrue(context.exception == {'id_refencia': ['This field cannot be blank.'], 'tipo': ['This field cannot be blank.']})
+            notificacion.full_clean()
+        print("EXCEPTION",context.exception)
 
 class ValoracionModelTests(TestCase):
 
@@ -174,3 +200,17 @@ class ValoracionModelTests(TestCase):
         self.assertEquals(valoracion.puntuacion,5)
         self.assertEquals(valoracion.usuario,usuario)
         self.assertEquals(valoracion.curso,curso)
+        
+    def test_crear_valoracion_negativa_puntuacion(self):
+        usuario = Usuario.objects.first()
+        curso = Curso.objects.first()
+        
+        valoracion = Valoracion.objects.create(puntuacion=6, usuario=usuario, curso=curso)
+        with self.assertRaises(Exception) as context:
+            self.assertTrue(context.exception == {'puntuacion': ['Ensure this value is less than or equal to 5.']})
+            valoracion.full_clean()
+        
+        valoracion = Valoracion.objects.create(puntuacion=0, usuario=usuario, curso=curso)
+        with self.assertRaises(Exception) as context:
+            self.assertTrue(context.exception == {'puntuacion': ['Ensure this value is greater than or equal to 1.']})
+            valoracion.full_clean()
