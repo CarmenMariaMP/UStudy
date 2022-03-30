@@ -46,25 +46,35 @@
                             <div class="form-group col-md-6">
                                 <label class="control-label">Nombre de usuario</label>
                                 {{ form.username }}
+                                {{ form.username.errors }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="control-label">Nombre</label>
                                 {{ form.name }}
+                                {{ form.name.errors }}
                             </div>
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Apellidos</label>
                             {{ form.surname }}
+                            {{ form.surname.errors }}
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Contraseña</label>
                             {{ form.password }}
+                            {{ form.password.errors }}
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Confirmar contraseña</label>
                             {{ form.confirm_password }}
+                            {{ form.confirm_password.errors }}
+                            
+
                         </div>
-                        <button class="btn btn-info nextBtn btn-lg center-block" type="button">Siguiente</button>
+                    
+                    </div>
+                    <div class= 'row' >
+                        <button class="btn btn-info nextBtn btn-lg center-block" type="button" >Siguiente</button>
                     </div>
                 </div>
             </div>
@@ -75,12 +85,14 @@
                         <div class="form-group col-md-12">
                             <label class="control-label">Correo electrónico</label>
                             {{ form.email }}
+                            {{ form.email.errors }}
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Correo corporativo</label>
                             {{ form.email_academico }}
+                            {{ form.email_academico.errors }}
                         </div>
-                        <button class="btn btn-info nextBtn btn-lg pull-right" type="button">Siguiente</button>
+                        <button class="btn btn-info nextBtn btn-lg center-block" type="button">Siguiente</button>
                     </div>
                 </div>
             </div>
@@ -91,12 +103,14 @@
                         <div class="form-group col-md-12">
                             <label>Grado</label>
                             {{ form.titulacion }}
+                            {{ form.titulacion.errors}}
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Descripción</label>
                             {{ form.descripcion }}
+                            {{ form.descripcion.errors }}
                         </div>
-                        <button class="btn btn-info nextBtn btn-lg pull-right" type="submit">Registrarme</button>
+                        <button class="btn btn-info nextBtn btn-lg center-block" type="submit">Registrarme</button>
                     </div>
                 </div>
             </div>
