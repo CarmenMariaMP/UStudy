@@ -37,7 +37,7 @@
             </div>
         </div>
         <form action="/registro/" method="POST">
-            {% csrf_token %} {{ form.as_p }}
+            {% csrf_token %}
             <div class="row setup-content" id="step-1">
                 <div class="col-xs-6 col-md-offset-3">
                     <div class="col-md-12">
@@ -45,28 +45,26 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="control-label">Nombre de usuario</label>
-                                <input type="text" class="form-control" placeholder="Nombre de usuario" name="usename"
-                                    required />
+                                {{ form.username }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="control-label">Nombre</label>
-                                <input type="text" class="form-control" placeholder="Nombre" name="name" required />
+                                {{ form.name }}
                             </div>
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Apellidos</label>
-                            <input type="text" class="form-control" placeholder="Apellidos" name="surname" required />
+                            {{ form.surname }}
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Contraseña</label>
-                            <input type="password" class="form-control" placeholder="Contraseña" name="password" required />
+                            {{ form.password }}
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Confirmar contraseña</label>
-                            <input type="password" class="form-control" placeholder="Confirmar contraseña" name=""
-                                required />
+                            {{ form.confirm_password }}
                         </div>
-                        <button class="btn btn-info nextBtn btn-lg pull-right" type="button">Siguiente</button>
+                        <button class="btn btn-info nextBtn btn-lg center-block" type="button">Siguiente</button>
                     </div>
                 </div>
             </div>
@@ -76,11 +74,11 @@
                         <h3> Configuración del correo</h3>
                         <div class="form-group col-md-12">
                             <label class="control-label">Correo electrónico</label>
-                            <input type="email" class="form-control" placeholder="user@domain.com" name="email" required />
+                            {{ form.email }}
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Correo corporativo</label>
-                            <input type="email" class="form-control" placeholder="uvus@alum.us.es" name="email_academico" required />
+                            {{ form.email_academico }}
                         </div>
                         <button class="btn btn-info nextBtn btn-lg pull-right" type="button">Siguiente</button>
                     </div>
@@ -92,16 +90,11 @@
                         <h3>Titulación</h3>
                         <div class="form-group col-md-12">
                             <label>Grado</label>
-                            <select name="titulacion" class="form-control" required>
-                                <option selected>Selecciona tu grado</option>
-                                <option>I.I.Software</option>
-                                <option>I.I.Hardware</option>
-                            </select><br>
+                            {{ form.titulacion }}
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Descripción</label>
-                            <textarea class="form-control" placeholder="Descripción ..." name="descripcion"
-                                required></textarea><br>
+                            {{ form.descripcion }}
                         </div>
                         <button class="btn btn-info nextBtn btn-lg pull-right" type="submit">Registrarme</button>
                     </div>
