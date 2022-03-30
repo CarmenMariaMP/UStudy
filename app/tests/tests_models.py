@@ -160,7 +160,7 @@ class NotificacionModelTests(TestCase):
         except Exception as e:
             self.assertTrue("el valor nulo en la columna «usuario_id» de la relación «app_notificacion» viola la restricción de no nulo" in e.args[0])
             
-    def test_crear_notificacion_usuario_vacio(self):
+    def test_crear_notificacion_tipo_vacio(self):
         usuario = Usuario.objects.first()
         try:
             Notificacion.objects.create(tipo=None, fecha='2020-01-01', visto=False, usuario=usuario)
