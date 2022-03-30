@@ -54,7 +54,7 @@ class Usuario(models.Model):
     email_academico = models.EmailField(
         primary_key=True, unique=True, validators=[validador_email])
     titulacion = models.CharField(max_length=200)
-    descripcion = models.TextField(max_length=500)
+    descripcion = models.TextField(max_length=500, blank = True)
     foto = models.ImageField(null=True, blank=True,
                              upload_to=image_directory_path)
     dinero = models.DecimalField(max_digits=12, decimal_places=2)

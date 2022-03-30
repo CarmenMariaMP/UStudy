@@ -32,7 +32,7 @@ class UsuarioForm(forms.Form):
     email = forms.EmailField(max_length=254, required=True)
     email_academico = forms.EmailField(max_length=254, required=True)
     titulacion = forms.ChoiceField(choices=opciones, required=True)
-    descripcion = forms.CharField(max_length=500, required=True)
+    descripcion = forms.CharField(max_length=500, required=False)
 
 class CursoForm(ModelForm):
 
