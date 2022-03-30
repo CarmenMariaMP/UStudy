@@ -16,20 +16,20 @@
 <body>
     {% block contenido %}
     <div class="container">
-        <div class="container text-center">
-            <img src="{% static 'media/logo.png' %}" width="72" height="72">
-        </div><br>
-        <div class="stepwizard col-md-offset-3">
+        <div class="col-md-2 col-md-offset-5 text-center">
+            <a href="/"><img src="{% static 'media/logo.png' %}" width="72" height="72"></a>
+        </div>
+        <div class="stepwizard center-block">
             <div class="stepwizard-row setup-panel">
-                <div class="stepwizard-step">
-                    <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
+                <div class="stepwizard-step col-xs-4">
+                    <a href="#step-1" type="button" class="btn btn-info btn-circle">1</a>
                     <p>Datos personales</p>
                 </div>
-                <div class="stepwizard-step">
+                <div class="stepwizard-step col-xs-4">
                     <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
                     <p>Configuración del correo</p>
                 </div>
-                <div class="stepwizard-step">
+                <div class="stepwizard-step col-xs-4">
                     <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
                     <p>Titulación</p>
                 </div>
@@ -57,7 +57,7 @@
                             <input type="password" class="form-control" placeholder="Confirmar contraseña" name=""
                                 required />
                         </div>
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Siguiente</button>
+                        <button class="btn btn-info nextBtn btn-lg pull-right" type="button">Siguiente</button>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                             <label class="control-label">Correo corporativo</label>
                             <input type="email" class="form-control" placeholder="uvus@alum.us.es" name="" required />
                         </div>
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Siguiente</button>
+                        <button class="btn btn-info nextBtn btn-lg pull-right" type="button">Siguiente</button>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                         <h3>Titulación</h3>
                         <div class="form-group">
                             <label>Grado</label>
-                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" required>
+                            <select class="form-control" required>
                                 <option selected>Selecciona tu grado</option>
                                 <option>I.I.Software</option>
                                 <option>I.I.Hardware</option>
@@ -91,9 +91,10 @@
                         </div>
                         <div>
                             <label class="control-label">Descripción</label>
-                            <textarea class="form-control" placeholder="Descripción ..." name="" required></textarea><br>
+                            <textarea class="form-control" placeholder="Descripción ..." name=""
+                                required></textarea><br>
                         </div>
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="submit">Resgistrarme</button>
+                        <button class="btn btn-info nextBtn btn-lg pull-right" type="submit">Registrarme</button>
                     </div>
                 </div>
             </div>
@@ -114,8 +115,8 @@
                     $item = $(this);
 
                 if (!$item.hasClass('disabled')) {
-                    navListItems.removeClass('btn-primary').addClass('btn-default');
-                    $item.addClass('btn-primary');
+                    navListItems.removeClass('btn-info').addClass('btn-default');
+                    $item.addClass('btn-info');
                     allWells.hide();
                     $target.show();
                     $target.find('input:eq(0)').focus();
@@ -126,7 +127,7 @@
                 var curStep = $(this).closest(".setup-content"),
                     curStepBtn = curStep.attr("id"),
                     nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-                    curInputs = curStep.find("input[type='text'],input[type='url'],textarea[textarea]"),
+                    curInputs = curStep.find("input[type='text'],input[type='url'],textarea[textarea],input[type='password'], input[type='email'], select[select]"),
                     isValid = true;
 
                 $(".form-group").removeClass("has-error");
@@ -141,7 +142,7 @@
                     nextStepWizard.removeAttr('disabled').trigger('click');
             });
 
-            $('div.setup-panel div a.btn-primary').trigger('click');
+            $('div.setup-panel div a.btn-info').trigger('click');
         });
     </script>
     {% endblock %}
