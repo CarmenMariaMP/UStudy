@@ -1,9 +1,11 @@
+from email import charset
 from sqlite3 import Date
 from string import punctuation
 from django.test import TestCase
 from app.models import *
 import decimal
 import datetime
+from datetime import timezone
 
 ## Estrategia: crear una clase por cada modelo
 ## Ejemplo: class AsignaturaModelTest(TestCase):
@@ -17,7 +19,7 @@ class AsignaturaModelTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        #Set up non-modified objects used by all test methods
+        #Instanciar objetos sin modificar que se usan en todos los métodos
         Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         
     def test_crear_asignatura_positiva(self):
@@ -125,7 +127,7 @@ class NotificacionModelTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        #Set up non-modified objects used by all test methods
+        #Instanciar objetos sin modificar que se usan en todos los métodos
         user = User.objects.create(username='nombreUsuario', password='password')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos1', email='nombreMail@gmail.com', 
                                email_academico='nombreMail@alum.us.es', titulacion='Titulacion1', descripcion='Descripcion1', 
@@ -179,7 +181,7 @@ class ValoracionModelTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        #Set up non-modified objects used by all test methods
+        #Instanciar objetos sin modificar que se usan en todos los métodos
         user = User.objects.create(username='nombreUsuario1', password='password1')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos1', email='nombreMail@gmail.com', 
                                email_academico='nombreMail@alum.us.es', titulacion='Titulacion1', descripcion='Descripcion1', 
@@ -214,7 +216,7 @@ class ValoracionModelTests(TestCase):
 class CursoModelTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        #Set up non-modified objects used by all test methods
+        #Instanciar objetos sin modificar que se usan en todos los métodos
         user = User.objects.create(username='User1', password='pass')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', email_academico='barranco@alum.us.es', titulacion='Titulación 1',descripcion='Descripcion 1', 
         foto='foto.jpg', dinero=12.4, django_user=user)
@@ -247,3 +249,36 @@ class CursoModelTests(TestCase):
             fecha = datetime.datetime.now().date()
             Curso.objects.create(nombre="Curso1", descripcion="a"*501, fecha_publicacion=fecha, asignatura=Asignatura.objects.first(), propietario=Usuario.objects.first())
         self.assertTrue('el valor es demasiado largo para el tipo character varying(500)' in str(context.exception))
+
+
+class ComentarioModelTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        fecha = datetime.datetime.now().date()
+        user = User.objects.create(username='User1', password='pass')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', email_academico='barranco@alum.us.es', titulacion='Titulación 1',descripcion='Descripcion 1', 
+        foto='foto.jpg', dinero=12.4, django_user=user)
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=fecha, asignatura=asignatura, propietario=usuario)
+        Archivo.objects.create(nombre='Archivo1', fecha_publicacion=fecha, curso=curso, ruta='ruta.pdf')
+    
+    def test_crear_comentario_positiva(self):
+        fecha = datetime.datetime.now()
+        Comentario.objects.create(texto='Texto1',fecha=fecha,archivo=Archivo.objects.first())
+
+        comentario = Comentario.objects.first()
+        self.assertEquals(comentario.texto,'Texto1')
+        self.assertEquals(comentario.fecha,fecha.replace(tzinfo=timezone.utc))
+        self.assertEquals(comentario.archivo,Archivo.objects.first())
+
+    ## Longitud de texto mayor de 500 caracteres
+    def test_crear_comentario_negative_texto_longitud_max(self):
+
+        with self.assertRaises(Exception) as context:
+            fecha = datetime.datetime.now()
+            Comentario.objects.create(texto='a'*501,fecha=fecha,archivo=Archivo.objects.first())
+        self.assertTrue('el valor es demasiado largo para el tipo character varying(500)' in str(context.exception))
+
+
+    
