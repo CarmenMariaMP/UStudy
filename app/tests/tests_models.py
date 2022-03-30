@@ -185,7 +185,7 @@ class ValoracionModelTests(TestCase):
                                email_academico='nombreMail@alum.us.es', titulacion='Titulacion1', descripcion='Descripcion1', 
                                foto=None, dinero=10.0, django_user=user)
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
-        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now(), asignatura=asignatura, propietario=usuario)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
         Valoracion.objects.create(puntuacion=5, usuario=usuario, curso=curso)
         
     def test_crear_valoracion_positiva(self):
@@ -282,22 +282,22 @@ class ComentarioModelTests(TestCase):
         foto='foto.jpg', dinero=12.4, django_user=user)
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=fecha, asignatura=asignatura, propietario=usuario)
-        Archivo.objects.create(nombre='Archivo1', fecha_publicacion=fecha, curso=curso, ruta='ruta.pdf')
+        Archivo.objects.create(nombre='Archivo1', fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), curso=curso, ruta='ruta.pdf')
     
     def test_crear_comentario_positiva(self):
-        fecha = datetime.datetime.now()
+        fecha = datetime.datetime.now().replace(tzinfo=timezone.utc)
         Comentario.objects.create(texto='Texto1',fecha=fecha,archivo=Archivo.objects.first())
 
         comentario = Comentario.objects.first()
         self.assertEquals(comentario.texto,'Texto1')
-        self.assertEquals(comentario.fecha,fecha.replace(tzinfo=timezone.utc))
+        self.assertEquals(comentario.fecha,fecha)
         self.assertEquals(comentario.archivo,Archivo.objects.first())
 
     ## Longitud de texto mayor de 500 caracteres
     def test_crear_comentario_negative_texto_longitud_max(self):
 
         with self.assertRaises(Exception) as context:
-            fecha = datetime.datetime.now()
+            fecha = datetime.datetime.now().replace(tzinfo=timezone.utc)
             Comentario.objects.create(texto='a'*501,fecha=fecha,archivo=Archivo.objects.first())
         self.assertTrue('el valor es demasiado largo para el tipo character varying(500)' in str(context.exception))
 
@@ -314,18 +314,18 @@ class ArchivoModelTests(TestCase):
         
     
     def test_crear_archivo_positiva(self):
-        fecha = datetime.datetime.now()
+        fecha = datetime.datetime.now().replace(tzinfo=timezone.utc)
         Archivo.objects.create(nombre='Archivo1', fecha_publicacion=fecha, curso=Curso.objects.first(), ruta='ruta.pdf')
         archivo = Archivo.objects.first()
         self.assertEquals(archivo.nombre,'Archivo1')
-        self.assertEquals(archivo.fecha_publicacion,fecha.replace(tzinfo=timezone.utc))
+        self.assertEquals(archivo.fecha_publicacion,fecha)
         self.assertEquals(archivo.curso,Curso.objects.first())
         self.assertEquals(archivo.ruta,'ruta.pdf')
 
     ## Longitud de texto mayor de 200 caracteres
     def test_crear_comentario_negative_texto_longitud_max(self):
         with self.assertRaises(Exception) as context:
-            fecha = datetime.datetime.now()
+            fecha = datetime.datetime.now().replace(tzinfo=timezone.utc)
             Archivo.objects.create(nombre='a'*201, fecha_publicacion=fecha, curso=Curso.objects.first(), ruta='ruta.pdf')
         self.assertTrue('el valor es demasiado largo para el tipo character varying(200)' in str(context.exception))
 
@@ -339,31 +339,31 @@ class ReporteModelTest(TestCase):
                                foto=None, dinero=10.0, django_user=user)  
         
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
-        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion="2022-03-29", asignatura=asignatura, propietario=usuario)
-        archivo = Archivo.objects.create(nombre="Archivo1", fecha_publicacion="2022-03-29", curso=curso, ruta="ruta.pdf")
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime(2022, 3, 29, 0, 0, 0).replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
+        archivo = Archivo.objects.create(nombre="Archivo1", fecha_publicacion=datetime.datetime(2022, 3, 29, 0, 0, 0).replace(tzinfo=timezone.utc), curso=curso, ruta="ruta.pdf")
         
-        Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=Reporte.TipoReporte["PLAGIO"], usuario=usuario, archivo=archivo)
+        Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 31, 0, 0, 0).replace(tzinfo=timezone.utc), tipo=Reporte.TipoReporte["PLAGIO"], usuario=usuario, archivo=archivo)
         
     def test_crear_reporte_positivo(self):
         usuario = Usuario.objects.first()
         archivo = Archivo.objects.first()
         reporte = Reporte.objects.get(id=1)
-        fecha = datetime.datetime(2022, 3, 30, 0, 0, 0)
+        fecha = datetime.datetime(2022, 3, 31, 0, 0, 0).replace(tzinfo=timezone.utc)
         self.assertEquals(reporte.descripcion, "Descripcion1")
-        self.assertEquals(reporte.fecha, fecha.replace(tzinfo=timezone.utc))
+        self.assertEquals(reporte.fecha, fecha)
         self.assertEquals(reporte.tipo, Reporte.TipoReporte["PLAGIO"])
         self.assertEquals(reporte.usuario, usuario)
         self.assertEquals(reporte.archivo, archivo)
         
     def test_crear_reporte_negativo_descripcion_longitud_max(self):
         try:
-            Reporte.objects.create(descripcion='a'*501, fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
+            Reporte.objects.create(descripcion='a'*501, fecha=datetime.datetime(2022, 3, 30, 0, 0, 0).replace(tzinfo=timezone.utc), tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
         except Exception as e:
             self.assertTrue('el valor es demasiado largo para el tipo character varying(500)' in e.args[0])
             
     def test_crear_reporte_descripcion_vacia(self):
         try:
-            Reporte.objects.create(descripcion=None, fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
+            Reporte.objects.create(descripcion=None, fecha=datetime.datetime(2022, 3, 30, 0, 0, 0).replace(tzinfo=timezone.utc), tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
         except Exception as e:
             self.assertTrue("el valor nulo en la columna «descripcion» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0])
             
@@ -375,19 +375,19 @@ class ReporteModelTest(TestCase):
             
     def test_crear_reporte_tipo_vacio(self):
         try:
-            Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=None, usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
+            Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0).replace(tzinfo=timezone.utc), tipo=None, usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
         except Exception as e:
             self.assertTrue("el valor nulo en la columna «tipo» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0])
             
     def test_crear_reporte_usuario_vacio(self):
         try:
-            Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=Reporte.TipoReporte["PLAGIO"], usuario=None, archivo=Archivo.objects.first())
+            Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0).replace(tzinfo=timezone.utc), tipo=Reporte.TipoReporte["PLAGIO"], usuario=None, archivo=Archivo.objects.first())
         except Exception as e:
             self.assertTrue("el valor nulo en la columna «usuario_id» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0])
             
     def test_crear_reporte_archivo_vacio(self):
         try:
-            Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=None)
+            Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0).replace(tzinfo=timezone.utc), tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=None)
         except Exception as e:
             self.assertTrue("el valor nulo en la columna «archivo_id» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0])
             
