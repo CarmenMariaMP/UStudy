@@ -77,7 +77,6 @@ class UsuarioModelTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         user = User.objects.create(username='User1', password='pass')
-        print(user)
         
     def test_crear_usuario_positive(self):
         user=User.objects.first()
@@ -175,7 +174,6 @@ class NotificacionModelTests(TestCase):
         with self.assertRaises(Exception) as context:
             self.assertTrue(context.exception == {'id_refencia': ['This field cannot be blank.'], 'tipo': ['This field cannot be blank.']})
             notificacion.full_clean()
-        print("EXCEPTION",context.exception)
 
 class ValoracionModelTests(TestCase):
 
@@ -211,6 +209,7 @@ class ValoracionModelTests(TestCase):
         with self.assertRaises(Exception) as context:
             self.assertTrue(context.exception == {'puntuacion': ['Ensure this value is greater than or equal to 1.']})
             valoracion.full_clean()
+
 
 class CursoModelTests(TestCase):
     @classmethod
