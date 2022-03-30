@@ -185,6 +185,7 @@ def registro_usuario(request):
         if form.is_valid():
             usuario_form = form.cleaned_data
             password = usuario_form['password']
+            confirm_password = usuario_form['confirm_password']
             usename = usuario_form['username']
             name = usuario_form['name']
             surname = usuario_form['surname']
@@ -193,6 +194,11 @@ def registro_usuario(request):
             titulacion = usuario_form['titulacion']
             descripcion = usuario_form['descripcion']
             dinero = 0.0
+            #Comprobación contraseña
+            if(password != confirm_password):
+                form.add_error("confirm_password" , "las contraseñas no coinciden")
+                return render(request, 'registro.html', {"mensaje_error": True, "form": form})
+
             user_instancia = User(username = usename , email =  email, password =  password)
             usuario_instancia = Usuario(
                 nombre=name, apellidos=surname, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero = dinero)

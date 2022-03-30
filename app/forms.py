@@ -26,6 +26,7 @@ class UsuarioForm(forms.Form):
     #atributos
     username = forms.CharField(max_length=50, required=True)
     password = forms.CharField(max_length=50,widget=forms.PasswordInput, required=True)
+    confirm_password = forms.CharField(max_length=50,widget=forms.PasswordInput, required=True)
     name = forms.CharField(max_length=40, required=True)
     surname = forms.CharField(max_length=40, required=True)
     email = forms.EmailField(max_length=254, required=True)
