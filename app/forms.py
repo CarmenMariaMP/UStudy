@@ -3,6 +3,7 @@ from app.models import *
 from django.forms import ModelForm
 
 
+
 class AsignaturaModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
          return obj.nombre
@@ -17,6 +18,21 @@ class ReporteForm(forms.Form):
     )
     descripcion = forms.CharField(max_length=500, required=True,widget=forms.Textarea)
     tipo = forms.ChoiceField(choices=TIPOS_REPORTE, widget=forms.Select(attrs={'class':'bootstrap-select'}))
+
+class UsuarioForm(forms.Form):
+    titulaciones = list(Asignatura.objects.all().values_list('titulacion', flat=True).distinct())
+    opciones = ( (x,x) for x in titulaciones)
+
+    #atributos
+    username = forms.CharField(max_length=50, required=True)
+    password = forms.CharField(max_length=50,widget=forms.PasswordInput, required=True)
+    confirm_password = forms.CharField(max_length=50,widget=forms.PasswordInput, required=True)
+    name = forms.CharField(max_length=40, required=True)
+    surname = forms.CharField(max_length=40, required=True)
+    email = forms.EmailField(max_length=254, required=True)
+    email_academico = forms.EmailField(max_length=254, required=True)
+    titulacion = forms.ChoiceField(choices=opciones, required=True)
+    descripcion = forms.CharField(max_length=500, required=False)
 
 class CursoForm(ModelForm):
 
