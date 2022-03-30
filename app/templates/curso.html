@@ -5,6 +5,12 @@
     {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
     <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/valoraciones.css' %}" rel="stylesheet" />
+    <script type="text/javascript">var valoracion = "{{valoracion}}"</script>
+    <script src="{% static 'js/valoraciones.js' %}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
 </head>
 <br>
 <div class="row d-flex justify-content-center">
@@ -56,14 +62,27 @@
         </div>
         <div class="col text-center">
             <input class="btn boton col-sm-1 btn-info justify-content-center" class="atras" value="Atrás" onclick="history.back()"> {%endif%} {%if es_suscriptor%}
-        </div>
+            </div>
         <div class="col text-center">
             <input class="btn boton col-sm-1 btn-info justify-content-center"  type="button" value="Atrás" onclick="history.back()"> {%endif%} {%if excede_tamano%}
         </div>
         <h2> {{excede_mensaje}} </h2>
         {%endif%}
     </div>
-</div>
+    </div>
+    {%if es_suscriptor %}
+        <h5>Valora este curso: </h5>
+        <div class="rating">
+            <form class="rate-form" action="" method="POST" id="{{ curso.id }}">   
+                {% csrf_token %}
+                <button type="submit" class="fa fa-star fa-2x boton-estrella"  id="first"></button>
+                <button type="submit" class="fa fa-star fa-2x boton-estrella"  id="second"></button>
+                <button type="submit" class="fa fa-star fa-2x boton-estrella"  id="third"></button>
+                <button type="submit" class="fa fa-star fa-2x boton-estrella"  id="fourth"></button>
+                <button type="submit" class="fa fa-star fa-2x boton-estrella"  id="fifth"></button>
+            </form> 
+        </div>
+        <div id="confirma-valoracion-box"></div>
+    {%endif%}
 {% endblock %}
-
 </html>
