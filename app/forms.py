@@ -2,6 +2,11 @@ from django import forms
 from app.models import *
 from django.forms import ModelForm
 
+def get_choices():
+    try:
+        return list(Asignatura.objects.all().values_list('titulacion', flat=True).distinct())
+    except:
+        return []
 
 
 class AsignaturaModelChoiceField(forms.ModelChoiceField):
@@ -20,7 +25,7 @@ class ReporteForm(forms.Form):
     tipo = forms.ChoiceField(choices=TIPOS_REPORTE, widget=forms.Select(attrs={'class':'bootstrap-select'}))
 
 class UsuarioForm(forms.Form):
-    titulaciones = list(Asignatura.objects.all().values_list('titulacion', flat=True).distinct())
+    titulaciones = get_choices()
     opciones = ( (x,x) for x in titulaciones)
 
     #atributos
