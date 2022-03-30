@@ -329,3 +329,67 @@ class ArchivoModelTests(TestCase):
             Archivo.objects.create(nombre='a'*201, fecha_publicacion=fecha, curso=Curso.objects.first(), ruta='ruta.pdf')
         self.assertTrue('el valor es demasiado largo para el tipo character varying(200)' in str(context.exception))
 
+
+class ReporteModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        #Instanciar objetos sin modificar que se usan en todos los métodos        
+        user = User.objects.create(username='nombreUsuario', password='password')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos1', email='nombreMail@gmail.com', 
+                               email_academico='nombreMail@alum.us.es', titulacion='Titulacion1', descripcion='Descripcion1', 
+                               foto=None, dinero=10.0, django_user=user)  
+        
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion="2022-03-29", asignatura=asignatura, propietario=usuario)
+        archivo = Archivo.objects.create(nombre="Archivo1", fecha_publicacion="2022-03-29", curso=curso, ruta="ruta.pdf")
+        
+        Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=Reporte.TipoReporte["PLAGIO"], usuario=usuario, archivo=archivo)
+        
+    def test_crear_reporte_positivo(self):
+        usuario = Usuario.objects.first()
+        archivo = Archivo.objects.first()
+        reporte = Reporte.objects.get(id=1)
+        fecha = datetime.datetime(2022, 3, 30, 0, 0, 0)
+        self.assertEquals(reporte.descripcion, "Descripcion1")
+        self.assertEquals(reporte.fecha, fecha.replace(tzinfo=timezone.utc))
+        self.assertEquals(reporte.tipo, Reporte.TipoReporte["PLAGIO"])
+        self.assertEquals(reporte.usuario, usuario)
+        self.assertEquals(reporte.archivo, archivo)
+        
+    def test_crear_reporte_negativo_descripcion_longitud_max(self):
+        try:
+            Reporte.objects.create(descripcion='a'*501, fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
+        except Exception as e:
+            self.assertTrue('el valor es demasiado largo para el tipo character varying(500)' in e.args[0])
+            
+    def test_crear_reporte_descripcion_vacia(self):
+        try:
+            Reporte.objects.create(descripcion=None, fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «descripcion» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0])
+            
+    def test_crear_reporte_fecha_vacia(self):
+        try:
+            Reporte.objects.create(descripcion="Descripcion1", fecha=None, tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «fecha» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0])
+            
+    def test_crear_reporte_tipo_vacio(self):
+        try:
+            Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=None, usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «tipo» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0])
+            
+    def test_crear_reporte_usuario_vacio(self):
+        try:
+            Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=Reporte.TipoReporte["PLAGIO"], usuario=None, archivo=Archivo.objects.first())
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «usuario_id» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0])
+            
+    def test_crear_reporte_archivo_vacio(self):
+        try:
+            Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0), tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=None)
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «archivo_id» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0])
+            
+    
