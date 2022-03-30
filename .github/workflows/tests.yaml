@@ -1,10 +1,15 @@
 name: Tests
 
+env:
+  SECRET_KEY: ${{ secrets.PAYPAL_CLIENT_ID }}
+  PAYPAL_SECRET_ID: ${{ secrets.PAYPAL_SECRET_ID }} 
+  PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
+
 on:
-  workflow_run:
-      workflows: ["Commits"]
-      types:
-        - completed
+  # workflow_run:
+  #     workflows: ["Commits"]
+  #     types:
+  #       - completed
   pull_request:
     types:
       - "opened"
@@ -35,9 +40,10 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
-    # - name: psycopg2 prerequisites
-    #   run: sudo apt-get install libpq-dev
-    # - name: Install dependencies
-    #   run: 
-    #     python -m pip install --upgrade pip
-    #     pip install -r requirements.txt
+    - name: psycopg2 prerequisites
+      run: sudo apt-get install libpq-dev
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        python manage.py test
