@@ -210,6 +210,31 @@ class ValoracionModelTests(TestCase):
             self.assertTrue(context.exception == {'puntuacion': ['Ensure this value is greater than or equal to 1.']})
             valoracion.full_clean()
 
+    def test_crear_valoracion_usuario_vacio(self):
+        curso = Curso.objects.first()
+    
+        try:
+            Valoracion.objects.create(puntuacion=6, usuario=None, curso=curso)
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «usuario_id» de la relación «app_valoracion» viola la restricción de no nulo" in e.args[0])
+    
+    def test_crear_valoracion_curso_vacio(self):
+        usuario = Usuario.objects.first()
+        curso = Curso.objects.first()
+        
+        try:
+            Valoracion.objects.create(puntuacion=None, usuario=usuario, curso=curso)
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «puntuacion» de la relación «app_valoracion» viola la restricción de no nulo" in e.args[0])
+
+    def test_crear_valoracion_puntuacion_vacia(self):
+        usuario = Usuario.objects.first()
+        
+        try:
+            Valoracion.objects.create(puntuacion=6, usuario=usuario, curso=None)
+        except Exception as e:
+            self.assertTrue("el valor nulo en la columna «curso_id» de la relación «app_valoracion» viola la restricción de no nulo" in e.args[0])
+
 
 class CursoModelTests(TestCase):
     @classmethod
