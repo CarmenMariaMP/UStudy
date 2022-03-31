@@ -46,35 +46,32 @@
                             <div class="form-group col-md-6">
                                 <label class="control-label">Nombre de usuario</label>
                                 {{ form.username }}
-                                {{ form.username.errors }}
+                                <div class="alert-danger">{{ form.username.errors }}</div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="control-label">Nombre</label>
                                 {{ form.name }}
-                                {{ form.name.errors }}
+                                <div class="alert-danger">{{ form.name.errors }}</div>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Apellidos</label>
                             {{ form.surname }}
-                            {{ form.surname.errors }}
+                            <div class="alert-danger">{{ form.surname.errors }}</div>
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Contraseña</label>
                             {{ form.password }}
-                            {{ form.password.errors }}
+                            <div class="alert-danger">{{form.password.errors }}</div>
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Confirmar contraseña</label>
-                            {{ form.confirm_password }}
-                            {{ form.confirm_password.errors }}
-                            
-
+                            {{form.confirm_password }}
+                            <div class="alert-danger">{{form.confirm_password.errors }}</div>
                         </div>
-                    
                     </div>
-                    <div class= 'row' >
-                        <button class="btn btn-info nextBtn btn-lg center-block" type="button" >Siguiente</button>
+                    <div class='row'>
+                        <button class="btn btn-info nextBtn btn-lg center-block" type="button">Siguiente</button>
                     </div>
                 </div>
             </div>
@@ -85,12 +82,12 @@
                         <div class="form-group col-md-12">
                             <label class="control-label">Correo electrónico</label>
                             {{ form.email }}
-                            {{ form.email.errors }}
+                            <div class="alert-danger">{{ form.email.errors }}</div>
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Correo corporativo</label>
                             {{ form.email_academico }}
-                            {{ form.email_academico.errors }}
+                            <div class="alert-danger">{{ form.email_academico.errors }}</div>
                         </div>
                         <button class="btn btn-info nextBtn btn-lg center-block" type="button">Siguiente</button>
                     </div>
@@ -103,12 +100,12 @@
                         <div class="form-group col-md-12">
                             <label>Grado</label>
                             {{ form.titulacion }}
-                            {{ form.titulacion.errors}}
+                            <div class="alert-danger">{{ form.titulacion.errors}}</div>
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Descripción</label>
                             {{ form.descripcion }}
-                            {{ form.descripcion.errors }}
+                            <div class="alert-danger">{{ form.descripcion.errors }}</div>
                         </div>
                         <button class="btn btn-info nextBtn btn-lg center-block" type="submit">Registrarme</button>
                     </div>

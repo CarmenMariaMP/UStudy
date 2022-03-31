@@ -228,7 +228,7 @@ def registro_usuario(request):
             dinero = 0.0
             #Comprobación contraseña
             if(password != confirm_password):
-                form.add_error("confirm_password" , "las contraseñas no coinciden")
+                form.add_error("confirm_password" , "Las contraseñas no coinciden")
                 return render(request, 'registro.html', {"mensaje_error": True, "form": form})
 
             user_instancia = User(username = usename , email =  email, password =  password)
