@@ -39,7 +39,7 @@ urlpatterns = [
     path('registro/', views.registro_usuario),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>/reporte/<int:id_reporte>', views.eliminar_reporte),
     path('perfil/', views.perfil_usuario),
-    path('pago/',views.pago)
+    path('pago/',views.pago),
 ]
 
 #urlpatterns += staticfiles_urlpatterns()
