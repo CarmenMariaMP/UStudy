@@ -23,7 +23,7 @@
     <div class="separado borde-azul standard_web_color">
         <p style="text-align: center; padding-top: 15px; font-size: 15px;"> <b>Curso:</b> {{curso.nombre}}
             <br> <b>Profesor:</b> {{curso.propietario.nombre}} <br>
-            <b>Valoración media: </b>
+            <b>Valoración media: {{valoracion}}</b>
         </p>
     </div>
     {% if es_owner or es_suscriptor %}

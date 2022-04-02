@@ -28,26 +28,26 @@
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    {%if page_obj|length > 0 %} {% for curso in page_obj %}
-                    <div class="col-md-4">
-                        <div class="card border-info mb-4">
-                            <div class="card-body standard_web_color">
-                                <h5 class="card-title">Asignatura: {{curso.asignatura.nombre}}</h5>
-                                <p class="card-text">Profesor: {{curso.propietario.nombre}}</p>
-                                <p class="card-text">Descripción: {{curso.descripcion}}</p>
-                                <p class="card-text">Valoraciones: </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group text-center">
-                                        <a href="/pago?id={{curso.id}}" class="btn btn-sm btn-outline-secondary">Suscribirse</a>
+                    {%if page_obj|length > 0 %} {% for cursoYvaloracion in page_obj %}
+                        <div class="col-md-4">
+                            <div class="card border-info mb-4">
+                                <div class="card-body standard_web_color">
+                                    <h5 class="card-title">Asignatura: {{cursoYvaloracion.0.asignatura.nombre}}</h5>
+                                    <p class="card-text">Profesor: {{cursoYvaloracion.0.propietario.nombre}}</p>
+                                    <p class="card-text">Descripción: {{cursoYvaloracion.0.descripcion}}</p>
+                                    <p class="card-text">Valoraciones: {{cursoYvaloracion.1}}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group text-center">
+                                            <a href="/pago?id={{cursoYvaloracion.0.id}}" class="btn btn-sm btn-outline-secondary">Suscribirse</a>
+                                        </div>
+                                        <small class="text-muted">Fecha publicación: {{cursoYvaloracion.0.fecha_publicacion|date:"d/m/Y"}}</small>
+                                        </form>
                                     </div>
-                                    <small class="text-muted">Fecha publicación: {{curso.fecha_publicacion|date:"d/m/Y"}}</small>
-                                    </form>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    {% endfor %} 
-                    
+                        {% endfor %} 
+                        
                     {%else%}
                     <div class="d-flex text-center">Actualmente no existen cursos disponibles</div>
                     {%endif%}
