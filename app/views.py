@@ -288,7 +288,7 @@ def registro_usuario(request):
 def curso(request, id):
     es_owner = False
     es_suscriptor = False
-
+    valoracion=0
     curso = Curso.objects.get(id=id)
     contenido_curso = Archivo.objects.all().filter(curso=curso)
 
@@ -318,12 +318,41 @@ def curso(request, id):
 
         elif usuario in curso.suscriptores.all():
             es_suscriptor = True
+            valoracion = 0
+            try:
+                valoracion = Valoracion.objects.get(
+                    curso=curso, usuario=usuario).puntuacion
+                print(valoracion)
+            except:
+                pass
 
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje})
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracion": valoracion})
 
     else:
         return render(request, 'inicio.html')
 
+def valorar_curso(request):
+    if request.method == "POST":
+        el_id = request.POST.get('id')
+        val = request.POST.get('valoracion')
+
+        curso = Curso.objects.get(id=el_id)
+        usuario = Usuario.objects.get(django_user=request.user)
+
+        if Valoracion.objects.filter(curso=curso, usuario=usuario).count()==0:
+            valoracion = Valoracion()
+            valoracion.puntuacion = val
+            valoracion.curso = curso
+            valoracion.usuario = usuario
+            valoracion.save()
+        else:
+            valoracion = Valoracion.objects.get(curso=curso, usuario=usuario)
+            valoracion.puntuacion = val
+            valoracion.save()
+        
+        
+        return JsonResponse({'succes': 'true', 'score':val}, safe=False)
+    return JsonResponse({'succes': 'false'})
 
 def borrar_archivo(request, id_curso, id_archivo):
     curso = Curso.objects.get(id=id_curso)
