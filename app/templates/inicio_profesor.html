@@ -1,5 +1,5 @@
 <header>
-    {% extends 'base_navbar.html' %} {% block contenido %}
+    {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <meta charset="utf-8" />
 </header>
@@ -10,21 +10,28 @@
         <div class="row d-flex justify-content-center">
             <h2>Cursos del profesor {{nombre}}</h2>
         </div>
-        <p>Mi valoración media es de: </p>
+        <p>
+            Mi valoración media es de: 
+            {% if ac > 0 %}
+            {{val}} / 5
+            {% else %}
+            Todavía no ha recibido valoraciones
+            {% endif %}
+        </p>
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    {% for curso,archivos in dicc.items %}
-                    <div class="col-md-4">
-
-                        <div class="card mb-4 box-shadow border-info">
-                            <div class="card-body standard_web_color">
-                                <h5 class="card-title">Asignatura: {{curso.asignatura.nombre}}</h5>
-                                <p class="card-text">Descripción: {{curso.descripcion}}</p>
-                                <ul class="list-group list-group-flush ">
-                                    <li class="list-group-item " style=" background-color: #F2F2F2;">Alumnos: {{archivos.2}}</li>
-                                    <li class="list-group-item" style=" background-color: #F2F2F2;">Archivos multimedia: {{archivos.0}}</li>
-                                    <li class="list-group-item" style=" background-color: #F2F2F2;">
+                    {%if dicc.items|length > 0 %} {% for curso,archivos in dicc.items %}
+                    <div class="col-md-4 mb-5">
+                        <div class="card h-100 box-shadow border-info standard_web_color">
+                            <div class="card-body ">
+                                <h4 class="card-title">Asignatura: {{curso.asignatura.nombre}}</h5>
+                                <h5 class="card-title text-truncate">Nombre del Curso: {{curso.nombre}}</h5>
+                                <p class="card-text text-truncate">Descripción: {{curso.descripcion}}</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item standard_web_color">Alumnos: {{archivos.2}}</li>
+                                    <li class="list-group-item standard_web_color">Archivos multimedia: {{archivos.0}}</li>
+                                    <li class="list-group-item standard_web_color">
                                         <div class="row justify-content-around">
                                             <div class="d-flex">
                                                 {% if archivos.1 >= 0 %}
@@ -47,6 +54,12 @@
                         </div>
                     </div>
                     {% endfor %}
+                    {%else%}
+                     <div class="col">
+                        <p class="font-italic text-center lead">Actualmente no has creado ningún curso</p>
+                        <p class="font-weight-lighter text-center"><ins><a href="/crearcurso" class="text-decoration text-dark">¿Quieres crear uno?</a></ins></p>
+                    </div>
+                    {%endif%}
                 </div>
             </div>
             {%if page_obj|length > 0 %}
