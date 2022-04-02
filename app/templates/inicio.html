@@ -2,14 +2,17 @@
 <br>
 <a class="btn boton btn-info btn-lg float-right mr-5"  href="/login">Login</a>
 <!-- <a class="btn btn-secondary btn-lg float-right" href="#">Registrate aquí</a> -->
-
-<form class="form-signin container col-auto p-5 text-center" style="width:30%;margin-top: 50px;" method="post">
-    {% csrf_token %}
+<div class="form-signin container col-auto p-5 text-center display:flex; justify-content: center;">
     <img class="mb-4" src="{% static 'media/logo.png' %}" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Bienvenido a UStudy</h1>
     <h5 style="text-align: center;">Crea y comparte contenido multimedia con tus compañeros. </h5>
-    <a class="btn boton btn-info btn-lg btn-block"  href="/registro">Registrarme</a>
+
+    <form class="form-signin container col-auto p-5 text-center" style="width:30%;margin-top: 50px;" method="post">
+        {% csrf_token %}
+        <a class="btn boton btn-info btn-lg btn-block"  href="/registro">Registrarme</a>
+    </form>
+
     <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
-</form>
+</div>
 {% endblock %}
 </body>
