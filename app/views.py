@@ -378,7 +378,8 @@ def miscursos(request):
         for curso in cursos.all():
             cursosAlumno.append(curso)
 
-        return render(request, "miscursos.html", {'cursos': cursosAlumno})
+        page_obj = pagination(request,cursosAlumno,9)
+        return render(request, "miscursos.html", {'page_obj': page_obj})
 
     else:
         return redirect("/login", {"mensaje_error": True})
