@@ -1,4 +1,3 @@
-from traceback import print_list
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
@@ -6,7 +5,6 @@ from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte,
 from app.forms import *
 import json
 
-from django.conf import settings
 from django.core.exceptions import ValidationError
 import datetime
 from decouple import config
@@ -57,10 +55,9 @@ def pago(request):
         return redirect("/login")
 
 
-def suscripcion(request, id):
-
+def suscripcion(request, id_request):
     alumno = Usuario.objects.get(django_user=request.user)
-    curso = Curso.objects.get(pk=id)
+    curso = Curso.objects.get(pk=id_request)
 
     data = json.loads(request.body)
     order_id = data['orderID']
@@ -163,7 +160,7 @@ def inicio_profesor(request):
         dicc = dict()
         val = 0
         ac = 0
-        sum = 0
+        acc_sum = 0
 
         for curso in cursosUsuario:
             archivos = Archivo.objects.all().filter(curso=curso)
@@ -175,7 +172,7 @@ def inicio_profesor(request):
 
             if len(valoraciones) > 0:
                 mediaPuntos = puntos/len(valoraciones)
-                sum += mediaPuntos
+                acc_sum += mediaPuntos
                 ac += 1
 
             else:
@@ -184,7 +181,7 @@ def inicio_profesor(request):
             dicc[curso] = (len(archivos), mediaPuntos,
                            len(curso.suscriptores.all()))
             if (ac > 0):
-                val = sum / ac
+                val = acc_sum / ac
 
         return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'dicc': dicc, 'val': val, 'ac':ac})
 
@@ -223,7 +220,6 @@ def registro_usuario(request):
     # si es una consulta post (enviando el formulario)
     if request.user.is_authenticated:
         return redirect("/miscursos")
-        
     if request.method == 'POST':
         form = UsuarioForm(request.POST)
         if form.is_valid():

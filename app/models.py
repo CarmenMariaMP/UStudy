@@ -1,4 +1,3 @@
-from tabnanny import verbose
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
@@ -6,7 +5,6 @@ from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
 from paypalcheckoutsdk.orders import OrdersGetRequest, OrdersCaptureRequest
 from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now
-from pytest import param
 from django.contrib.auth.models import User
 import psutil
 from decouple import config
