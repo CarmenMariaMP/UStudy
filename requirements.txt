@@ -8,3 +8,5 @@ gunicorn
 django-heroku
 paypal-checkout-serversdk
 Pillow
+selenium
+coverage
