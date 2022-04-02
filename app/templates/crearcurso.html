@@ -1,5 +1,27 @@
 <!DOCTYPE html>
 <html>
+  {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
+  <br />
+  <div class="row d-flex justify-content-center">
+    <h2>Crear curso</h2>
+  </div>
+  <br />
+  <form
+    action="/crearcurso/"
+    class="form-signin container col-auto"
+    style="width: 30%; margin-top: 20px"
+    method="POST"
+  >
+    {% csrf_token %}
+
+    <label>Nombre del curso</label>
+    <div>{{form.nombre}}</div>
+
+    <label class="mt-3">Descripción</label>
+    <div>{{form.descripcion}}</div>
+
+    <label class="mt-3">Asignatura</label>
+    <div>{{form.asignatura}}</div>
 <header>
     {% extends 'base_navbar.html' %}{% load static %}{% block contenido %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
@@ -16,8 +38,13 @@
 </form>
 {% endblock %}
 
-<footer>
-    {% block pie %}{% endblock %}
-</footer>
+    <div class="text-center mt-3">
+      <button class="btn boton btn-info btn-lg btn-block" type="submit">
+        Crear
+      </button>
+    </div>
+  </form>
+  {% endblock %}
 
+  <footer>{% block pie %}{% endblock %}</footer>
 </html>
