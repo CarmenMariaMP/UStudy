@@ -26,8 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -87,7 +86,7 @@ DATABASES = {
         'USER': config('DATABASE_USER'),
         'PASSWORD': config('DATABASE_PASS'),
         'HOST': config('DATABASE_HOST'),
-        'DATABASE_PORT': config('DATABASE_PORT'),
+        'PORT': config('DATABASE_PORT'),
     }
 }
 
@@ -116,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-ES'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
