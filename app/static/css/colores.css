@@ -1,0 +1,14 @@
+.standard_web_color {
+    background-color: #F2F2F2;
+}
+
+.blue_standard {
+    background-color: #2685BF;
+}
+
+.borde-azul {
+    border: solid;
+    border-radius: 25px;
+    border-color: #2694BF;
+    font-size: small;
+}

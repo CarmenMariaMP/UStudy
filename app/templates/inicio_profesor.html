@@ -1,5 +1,7 @@
 <header>
     {% extends 'base_navbar.html' %} {% block contenido %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="utf-8" />
 </header>
 
 <body>
@@ -45,7 +47,7 @@
                                     <div class="btn-group">
                                         <a type="button" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}">Editar</a>
                                     </div>
-                                    <small class="text-muted">Última actualización: {{curso.fecha_publicacion}}</small>
+                                    <small class="text-muted">Fecha publicación: {{curso.fecha_publicacion|date:"d/m/Y"}}</small>
                                 </div>
                             </div>
                         </div>
@@ -59,6 +61,22 @@
                     {%endif%}
                 </div>
             </div>
+            {%if page_obj|length > 0 %}
+            <nav class= "d-flex justify-content-center" aria-label="Page navigation example">
+                <ul class="pagination">
+                    <span class="step-links"></span>
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+                        {% endif %}
+                    <li class="page-item"><a class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+              {%endif%}
 
             {% endblock %}
 </body>
