@@ -1,6 +1,13 @@
+from logging import PlaceHolder
 from django import forms
 from app.models import *
 from django.forms import ModelForm
+
+def get_choices():
+    try:
+        return list(Asignatura.objects.all().values_list('titulacion', flat=True).distinct())
+    except:
+        return []
 
 
 class AsignaturaModelChoiceField(forms.ModelChoiceField):
@@ -17,6 +24,21 @@ class ReporteForm(forms.Form):
     )
     descripcion = forms.CharField(max_length=500, required=True,widget=forms.Textarea)
     tipo = forms.ChoiceField(choices=TIPOS_REPORTE, widget=forms.Select(attrs={'class':'bootstrap-select'}))
+
+class UsuarioForm(forms.Form):
+    titulaciones = get_choices()
+    opciones = ( (x,x) for x in titulaciones)
+
+    #atributos
+    username = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de usuario'}))
+    password = forms.CharField(max_length=50, required=True, widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña'}))
+    confirm_password = forms.CharField(max_length=50, required=True, widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirmar contraseña'}))
+    name = forms.CharField(max_length=40, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}))
+    surname = forms.CharField(max_length=40, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellidos'}))
+    email = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'user@domain.com'}))
+    email_academico = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'uvus@alum.us.es'}))
+    titulacion = forms.ChoiceField(choices=opciones, required=True, widget=forms.Select(attrs={'class': 'form-control'}))
+    descripcion = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción ...'}))
 
 class CursoForm(ModelForm):
 

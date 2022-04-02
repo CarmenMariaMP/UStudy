@@ -17,7 +17,7 @@
 
     <form class="form-signin container col-auto p-5 text-center" style="width:30%;margin-top: 50px;" method="post">
         {% csrf_token %}
-        <img class="mb-4" src="{% static 'media/logo.png' %}" alt="" width="72" height="72">
+        <a href="/"><img class="mb-4" src="{% static 'media/logo.png' %}" width="72" height="72"></a>
         <h1 class="h3 mb-3 font-weight-normal">Bienvenido a UStudy</h1>
         <label for="inputUsername" class="sr-only">Nombre de usuario</label>
         <input type="text" id="inputUsername" class="form-control" name="username" placeholder="Usuario" required>

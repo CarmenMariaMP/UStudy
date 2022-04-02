@@ -1,3 +1,4 @@
+from traceback import print_list
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
@@ -12,8 +13,8 @@ from decouple import config
 
 from django.core.paginator import Paginator
 
-def pagination(request,productos):
-    paginator = Paginator(productos, 5)
+def pagination(request,productos,num):
+    paginator = Paginator(productos, num)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return page_obj
@@ -30,7 +31,9 @@ def inicio(request):
 
         for curso in cursos.all():
             cursosAlumno.append(curso)
-        return render(request, "miscursos.html", {'cursos': cursosAlumno})
+
+        page_obj = pagination(request,cursosAlumno,9)
+        return render(request, "miscursos.html", {'page_obj': page_obj})
 
 
 def pago(request):
@@ -80,7 +83,6 @@ def suscripcion(request, id):
             return JsonResponse(data)
     else:
         return redirect("/login")
-
 
 def login_user(request):
     if not request.user.is_authenticated:
@@ -209,6 +211,73 @@ def crearcurso(request):
     else:
         return render(request, 'inicio.html')
 
+def registro_usuario(request):
+
+    # si el usuario está autenticado
+    # si es una consulta post (enviando el formulario)
+    if request.user.is_authenticated:
+        return redirect("/miscursos")
+        
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST)
+        if form.is_valid():
+            usuario_form = form.cleaned_data
+            password = usuario_form['password']
+            confirm_password = usuario_form['confirm_password']
+            usename = usuario_form['username']
+            name = usuario_form['name']
+            surname = usuario_form['surname']
+            email = usuario_form['email']
+            email_academico = usuario_form['email_academico']
+            titulacion = usuario_form['titulacion']
+            descripcion = usuario_form['descripcion']
+            dinero = 0.0
+            #Comprobación contraseña
+            if(password != confirm_password):
+                form.add_error("confirm_password" , "Las contraseñas no coinciden")
+                return render(request, 'registro.html', {"mensaje_error": True, "form": form})
+
+            user_instancia = User(username = usename , email =  email, password =  password)
+            usuario_instancia = Usuario(
+                nombre=name, apellidos=surname, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero = dinero)
+            
+            #validación userjango
+            try:
+                user_instancia.full_clean()
+                user_django = User.objects.create_user(username=usename, email=email, password=password)
+                user_django.save()
+
+
+            except ValidationError as e:
+                for i in e.error_dict:
+                    form.add_error(i , e.error_dict[i])
+
+                return render(request, 'registro.html', {"mensaje_error": True, "form": form})
+
+            #validación Usuario Ustudy
+            try:
+                usuario_instancia.django_user = user_django
+
+                usuario_instancia.full_clean()
+                
+                usuario_instancia.save()
+                
+            except ValidationError as e:
+                user_django.delete()
+                for i in e.error_dict:
+                    form.add_error(i , e.error_dict[i])
+                
+                return render(request, 'registro.html', {"mensaje_error": True, "form": form})
+
+            return redirect('/login')
+        else:
+            return render(request, 'registro.html', {"form": form})
+
+    else:  # si es una consulta get vamos a la vista con el formulario vacio
+        form = UsuarioForm()
+
+        return render(request, "registro.html", {"form": form})
+    
 
 def curso(request, id):
     es_owner = False
@@ -252,6 +321,19 @@ def curso(request, id):
         return render(request, 'inicio.html')
 
 
+def borrar_archivo(request, id_curso, id_archivo):
+    curso = Curso.objects.get(id=id_curso)
+    print(curso)
+    if request.user.is_authenticated:
+        # Comprobar si el usuario es profesor
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(django_user=usuario_autenticado)
+        if (curso.propietario == usuario):
+            archivo = Archivo.objects.get(id=id_archivo)
+            archivo.delete()
+    return redirect('/curso/'+str(id_curso))
+
+
 def miscursos(request):
 
     if request.user.is_authenticated:
@@ -279,7 +361,8 @@ def cursosdisponibles(request):
             if (curso.propietario != usuario_actual):
                 if (usuario_actual not in suscriptores and usuario_actual.titulacion == curso.asignatura.titulacion):
                     cursos.append(curso)
-        return render(request, "cursosdisponibles.html", {'cursos': cursos})
+        page_obj = pagination(request,cursos,9)
+        return render(request, "cursosdisponibles.html", {'page_obj': page_obj})
     else:
         return redirect("/login")
 
@@ -303,7 +386,7 @@ def ver_archivo(request, id_curso, id_archivo):
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
             reportes = Reporte.objects.all().filter(archivo=archivo)
-            page_obj = pagination(request,reportes)
+            page_obj = pagination(request,reportes,5)
             acceso = True
             es_owner =True
         if (usuario in curso.suscriptores.all()):
@@ -333,7 +416,7 @@ def eliminar_reporte(request, id_curso, id_archivo,id_reporte):
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
-        usuario = Usuario.objects.get(email_academico=usuario_autenticado)
+        usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
             reporte = Reporte.objects.get(id=id_reporte)
             reporte.delete()
