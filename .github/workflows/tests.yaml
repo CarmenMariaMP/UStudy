@@ -1,10 +1,21 @@
 name: Tests
 
+env:
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  PAYPAL_SECRET_ID: ${{ secrets.PAYPAL_SECRET_ID }} 
+  PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
+  DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+  DATABASE_USER: ${{ secrets.DATABASE_USER }}
+  DATABASE_PASS: ${{ secrets.DATABASE_PASS }}
+  DATABASE_HOST: '127.0.0.1'
+  DATABASE_PORT: '5432'
+
+
 on:
-  workflow_run:
-      workflows: ["Commits"]
-      types:
-        - completed
+  # workflow_run:
+  #     workflows: ["Commits"]
+  #     types:
+  #       - completed
   pull_request:
     types:
       - "opened"
@@ -22,9 +33,9 @@ jobs:
       postgres:
         image: postgres:10.8
         env:
-          POSTGRES_USER: ustudy
-          POSTGRES_PASSWORD: ustudy
-          POSTGRES_DB: ustudy
+          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASS }}
+          POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -35,9 +46,13 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
-    # - name: psycopg2 prerequisites
-    #   run: sudo apt-get install libpq-dev
-    # - name: Install dependencies
-    #   run: 
-    #     python -m pip install --upgrade pip
-    #     pip install -r requirements.txt
+    - name: psycopg2 prerequisites
+      run: sudo apt-get install libpq-dev
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Migrate Database
+      run: python manage.py migrate
+    - name: Populate Database
+      run: python manage.py loaddata datos_populate_asignaturas.json
+    - name: Run Tests
+      run: python manage.py test

@@ -1,42 +1,80 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     {% extends 'base.html' %} {% load i18n static %} {% block extrahead %}
-    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" /> {% endblock %}
-</head>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{% static 'css/style.css' %}"
+    />
+    {% endblock %}
+  </head>
 
-<body>
+  <body>
     {% block contenido %} {% if mensaje_error %}
-    <div class="alert alert-danger" role="alert">
-        Credenciales incorrectas
-    </div>
+    <div class="alert alert-danger" role="alert">Credenciales incorrectas</div>
     {% endif %}
 
-    <form class="form-signin container col-auto p-5 text-center" style="width:30%;margin-top: 50px;" method="post">
-        {% csrf_token %}
-        <img class="mb-4" src="{% static 'media/logo.png' %}" alt="" width="72" height="72">
+    <form
+      class="form-signin container col-auto p-5"
+      style="width: 30%; margin-top: 50px"
+      method="post"
+    >
+      {% csrf_token %}
+      <div class="text-center">
+        <img
+          class="mb-4"
+          src="{% static 'media/logo.png' %}"
+          alt=""
+          width="72"
+          height="72"
+        />
         <h1 class="h3 mb-3 font-weight-normal">Bienvenido a UStudy</h1>
-        <label for="inputUsername" class="sr-only">Nombre de usuario</label>
-        <input type="text" id="inputUsername" class="form-control" name="username" placeholder="Usuario" required>
-        <label for="show_hide_password" class="sr-only">Contraseña</label>
-        <input id="show_hide_password" type="password" class="form-control" name="contrasena" placeholder="Contraseña" required><br>
-        <!-- <a href="" class="text-muted">Olvidé mi contraseña</a><br> -->
-        <!-- <div class="checkbox mb-3">
+      </div>
+
+      <label for="inputUsername" class="">Nombre de usuario</label>
+      <input
+        type="text"
+        id="inputUsername"
+        class="form-control"
+        name="username"
+        placeholder="Usuario"
+        required
+      />
+      <label for="show_hide_password" class="mt-3">Contraseña</label>
+      <input
+        id="show_hide_password"
+        type="password"
+        class="form-control"
+        name="contrasena"
+        placeholder="Contraseña"
+        required
+      /><br />
+      <!-- <a href="" class="text-muted">Olvidé mi contraseña</a><br> -->
+      <!-- <div class="checkbox mb-3">
             <label>
         <input type="checkbox" value="remember-me"> Recordar contraseña
       </label>
         </div> -->
-        <button class="btn boton btn-info btn-lg btn-block" type="submit">Iniciar sesión</button>
+      <div class="text-center mt-3">
+        <button class="btn boton btn-info btn-lg btn-block" type="submit">
+          Iniciar sesion
+        </button>
         <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+      </div>
     </form>
     {% endblock %}
-</body>
+  </body>
 
-<footer>
-    {% block pie %}{% endblock %}
-</footer>
-
+  <footer>{% block pie %}{% endblock %}</footer>
 </html>
