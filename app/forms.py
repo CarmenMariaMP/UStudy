@@ -1,5 +1,5 @@
 from django import forms
-from app.models import *
+from app.models import Asignatura,Curso,Usuario
 from django.forms import ModelForm
 
 def get_choices():
