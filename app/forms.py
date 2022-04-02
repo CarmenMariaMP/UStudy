@@ -40,6 +40,19 @@ class UsuarioForm(forms.Form):
     titulacion = forms.ChoiceField(choices=opciones, required=True, widget=forms.Select(attrs={'class': 'form-control'}))
     descripcion = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción ...'}))
 
+class CursoEditForm(ModelForm):
+ 
+    def __init__(self,  *args, **kwargs):
+        super(CursoEditForm, self).__init__(*args, **kwargs)
+        self.fields['nombre'].error_messages['required'] = 'Este campo es obligatorio'
+        self.fields['descripcion'].error_messages['required'] = 'Este campo es obligatorio'    
+    class Meta:
+        model = Curso
+        fields = ('nombre', 'descripcion')
+
+
+
+
 class CursoForm(ModelForm):
 
     def __init__(self, user, *args, **kwargs):

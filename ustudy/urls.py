@@ -40,6 +40,7 @@ urlpatterns = [
     path('curso/<int:id_curso>/archivo/<int:id_archivo>/reporte/<int:id_reporte>', views.eliminar_reporte),
     path('perfil/', views.perfil_usuario),
     path('pago/',views.pago),
+    path("editarcurso/<int:id_curso>" , views.editar_curso),
 ]
 
 #urlpatterns += staticfiles_urlpatterns()

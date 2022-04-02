@@ -278,6 +278,29 @@ def registro_usuario(request):
 
         return render(request, "registro.html", {"form": form})
     
+def editar_curso(request, id_curso):
+    if request.user.is_authenticated:
+        curso = Curso.objects.get(id=id_curso)
+        if request.user.usuario == curso.propietario:
+            if request.method == 'POST':
+                form = CursoEditForm( request.POST, instance=curso)
+                if form.is_valid():
+                    curso_form = form.cleaned_data
+                    nombre = curso_form['nombre']
+                    descripcion= curso_form['descripcion']
+                    curso.nombre = nombre 
+                    curso.descripcion = descripcion
+                    curso.save()
+                    return redirect("/inicio_profesor")
+                else:
+                    return render(request, 'editarcurso.html', {"form": form})
+            else:
+                form = CursoEditForm( instance=curso)
+                return render(request, "editarcurso.html", {"form": form, "curso": curso})
+        else:
+            return redirect("/miscursos")
+    else:
+        return redirect("/login")
 
 def curso(request, id):
     es_owner = False
@@ -421,6 +444,8 @@ def eliminar_reporte(request, id_curso, id_archivo,id_reporte):
             reporte = Reporte.objects.get(id=id_reporte)
             reporte.delete()
     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+
+
 
 def subir_contenido(request):
     return render(request, "subir_contenido.html")
