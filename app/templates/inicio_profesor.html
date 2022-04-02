@@ -1,5 +1,5 @@
 <header>
-    {% extends 'base_navbar.html' %} {% block contenido %}
+    {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <meta charset="utf-8" />
 </header>
@@ -22,11 +22,12 @@
             <div class="container">
                 <div class="row">
                     {%if dicc.items|length > 0 %} {% for curso,archivos in dicc.items %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 box-shadow border-info standard_web_color">
+                    <div class="col-md-4 mb-5">
+                        <div class="card h-100 box-shadow border-info standard_web_color">
                             <div class="card-body ">
-                                <h5 class="card-title">Asignatura: {{curso.asignatura.nombre}}</h5>
-                                <p class="card-text">Descripción: {{curso.descripcion}}</p>
+                                <h4 class="card-title">Asignatura: {{curso.asignatura.nombre}}</h5>
+                                <h5 class="card-title text-truncate">Nombre del Curso: {{curso.nombre}}</h5>
+                                <p class="card-text text-truncate">Descripción: {{curso.descripcion}}</p>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item standard_web_color">Alumnos: {{archivos.2}}</li>
                                     <li class="list-group-item standard_web_color">Archivos multimedia: {{archivos.0}}</li>

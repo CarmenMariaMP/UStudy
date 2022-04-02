@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
-  {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
+  <header>
+    {% extends 'base_navbar.html' %}{% load static %} {% block contenido %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+</header>
   <br />
   <div class="row d-flex justify-content-center">
     <h2>Crear curso</h2>
@@ -22,22 +26,8 @@
 
     <label class="mt-3">Asignatura</label>
     <div>{{form.asignatura}}</div>
-<header>
-    {% extends 'base_navbar.html' %}{% load static %}{% block contenido %}
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
-    <meta charset="utf-8" />
-</header>
-<br>
-<div class="row d-flex justify-content-center">
-    <h2>Crear curso</h2>
-</div>
-<br>
-<form action="/crearcurso/" style="text-align: center;" method="POST">
-    {% csrf_token %} {{ form.as_p }}
-    <button class="btn boton btn-info" type="submit">Crear</button>
-</form>
-{% endblock %}
 
+<br>
     <div class="text-center mt-3">
       <button class="btn boton btn-info btn-lg btn-block" type="submit">
         Crear

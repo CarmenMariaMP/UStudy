@@ -54,10 +54,9 @@
         <input class=" btn boton col-sm-1 unirseCurso" style="margin-top: 20px;" type="button" value="Unirse"><br><br><br>
         <h5>Para acceder al contenido de este curso debes unirte al mismo</h5>
         {%endif%} {%if es_owner%}
-        <div style="display:flex; justify-content: center;">
+        <div style="display:flex; justify-content: center">
             <form class="btn boton col-sm-3 btn-info justify-content-center" id="myform" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <br><br> {{form.file}}
+                {% csrf_token %} {{form.file}}
             </form>
         </div>
         <div style="display:flex; justify-content: center;">
