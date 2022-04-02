@@ -39,6 +39,23 @@ h1 {
     text-align: center;
 }
 
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.boton {
+    background-color: #2694BF;
+    color:white;
+}
+
+.separado {
+    margin-top: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
 @media screen and (max-width: 800px) {
     .image img {
         width:65%; 
