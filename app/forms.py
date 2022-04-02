@@ -60,7 +60,7 @@ class CursoForm(ModelForm):
         self.fields['nombre'] = forms.CharField(
             widget=forms.TextInput(attrs={'style': 'width: 100%;', 'class': 'form-control'}))
         self.fields['descripcion'] = forms.CharField(
-            widget=forms.Textarea(attrs={'style': 'width: 100%;', 'class': 'form-control', 'rows': "3", 'placeholder': 'Proporciona una breve descripcion'}))
+            widget=forms.Textarea(attrs={'style': 'width: 100%;', 'class': 'form-control', 'rows': "5", 'placeholder': 'Proporciona una breve descripcion'}))
 
         # mensajes de error
         self.fields['nombre'].error_messages['required'] = 'Este campo es obligatorio'
