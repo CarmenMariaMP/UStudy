@@ -1,8 +1,6 @@
-from select import select
-from logging import PlaceHolder
 from django import forms
 from app.models import *
-from django.forms import CharField, ModelForm
+from django.forms import ModelForm
 
 def get_choices():
     try:
@@ -52,7 +50,7 @@ class CursoForm(ModelForm):
         super(CursoForm, self).__init__(*args, **kwargs)
         titulacion_user = Usuario.objects.get(django_user=user).titulacion
         asignaturas = Asignatura.objects.filter(titulacion=titulacion_user)
-        asignaturas_choices = tuple((a.id, a.nombre) for a in asignaturas)
+        # asignaturas_choices = tuple((a.id, a.nombre) for a in asignaturas)
         # asignatura = forms.CharField(
         #     label='Elige', widget=forms.Select(choices=asignaturas))
         self.fields['asignatura'] = AsignaturaModelChoiceField(
