@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, GetOrder,User
-from app.forms import UsuarioForm,CursoForm,ReporteForm,UploadFileForm
+from app.forms import UsuarioForm,CursoForm,ReporteForm,UploadFileForm,CursoEditForm
 import json
 
 from django.core.exceptions import ValidationError
