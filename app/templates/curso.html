@@ -4,15 +4,14 @@
 <head>
     {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
     <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/valoraciones.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{% static 'css/valoraciones.css' %}" rel="stylesheet" />
     <script type="text/javascript">var valoracionUsuario = "{{valoracionUsuario}}"</script>
     <script src="{% static 'js/valoraciones.js' %}" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/colores.css' %}" rel="stylesheet" />
 </head>
 
 <body>
@@ -116,7 +115,7 @@
                 <button type="submit" class="fa fa-star fa-2x boton-estrella"  id="fifth"></button>
             </form> 
         </div>
-        <h5><div id="confirma-valoracion-box"></div></h5>
+        <h5 ><div id="confirma-valoracion-box"></div></h5>
     {%endif%}
 
 {% endblock %}
