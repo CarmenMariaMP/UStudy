@@ -1,10 +1,15 @@
 from traceback import print_list
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
+from matplotlib.style import use
 from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, GetOrder
 from app.forms import *
 import json
+import os
+import shutil
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -14,7 +19,7 @@ from decouple import config
 from django.core.paginator import Paginator
 
 
-def pagination(request,productos,num):
+def pagination(request, productos, num):
     paginator = Paginator(productos, num)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -35,7 +40,7 @@ def inicio(request):
         for curso in cursos.all():
             cursosAlumno.append(curso)
 
-        page_obj = pagination(request,cursosAlumno,9)
+        page_obj = pagination(request, cursosAlumno, 9)
         return render(request, "miscursos.html", {'page_obj': page_obj})
 
 
@@ -81,6 +86,7 @@ def suscripcion(request, id):
         }
         return JsonResponse(data)
 
+
 def login_user(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
@@ -90,7 +96,6 @@ def login_user(request):
             usuario_autenticado = authenticate(
                 username=usuario, password=contrasena)
 
-            print(usuario_autenticado)
             if usuario_autenticado is not None:
                 usuario = usuario_autenticado.usuario
                 login(request, usuario_autenticado)
@@ -113,6 +118,13 @@ def logout_user(request):
     logout(request)
     return render(request, "inicio.html")
 
+def borrar_foto(request):
+    if request.user.is_authenticated:
+        usuarioActual = request.user.usuario
+        usuarioActual.foto.delete(save=True)
+        return redirect("/actualizar_perfil")
+    else:
+        return redirect("/login")
 
 def perfil_usuario(request):
     if request.user.is_authenticated:
@@ -186,7 +198,7 @@ def inicio_profesor(request):
             if (ac > 0):
                 val = sum / ac
 
-        return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'dicc': dicc, 'val': val, 'ac':ac})
+        return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'dicc': dicc, 'val': val, 'ac': ac})
 
     else:
         return redirect("/login", {"mensaje_error": True})
@@ -217,13 +229,14 @@ def crearcurso(request):
     else:
         return render(request, 'inicio.html')
 
+
 def registro_usuario(request):
 
     # si el usuario está autenticado
     # si es una consulta post (enviando el formulario)
     if request.user.is_authenticated:
         return redirect("/miscursos")
-        
+
     if request.method == 'POST':
         form = UsuarioForm(request.POST)
         if form.is_valid():
@@ -238,41 +251,43 @@ def registro_usuario(request):
             titulacion = usuario_form['titulacion']
             descripcion = usuario_form['descripcion']
             dinero = 0.0
-            #Comprobación contraseña
+            # Comprobación contraseña
             if(password != confirm_password):
-                form.add_error("confirm_password" , "Las contraseñas no coinciden")
+                form.add_error("confirm_password",
+                               "Las contraseñas no coinciden")
                 return render(request, 'registro.html', {"mensaje_error": True, "form": form})
 
-            user_instancia = User(username = usename , email =  email, password =  password)
+            user_instancia = User(
+                username=usename, email=email, password=password)
             usuario_instancia = Usuario(
-                nombre=name, apellidos=surname, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero = dinero)
-            
-            #validación userjango
+                nombre=name, apellidos=surname, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero)
+
+            # validación userjango
             try:
                 user_instancia.full_clean()
-                user_django = User.objects.create_user(username=usename, email=email, password=password)
+                user_django = User.objects.create_user(
+                    username=usename, email=email, password=password)
                 user_django.save()
-
 
             except ValidationError as e:
                 for i in e.error_dict:
-                    form.add_error(i , e.error_dict[i])
+                    form.add_error(i, e.error_dict[i])
 
                 return render(request, 'registro.html', {"mensaje_error": True, "form": form})
 
-            #validación Usuario Ustudy
+            # validación Usuario Ustudy
             try:
                 usuario_instancia.django_user = user_django
 
                 usuario_instancia.full_clean()
-                
+
                 usuario_instancia.save()
-                
+
             except ValidationError as e:
                 user_django.delete()
                 for i in e.error_dict:
-                    form.add_error(i , e.error_dict[i])
-                
+                    form.add_error(i, e.error_dict[i])
+
                 return render(request, 'registro.html', {"mensaje_error": True, "form": form})
 
             return redirect('/login')
@@ -283,12 +298,156 @@ def registro_usuario(request):
         form = UsuarioForm()
 
         return render(request, "registro.html", {"form": form})
-    
+
+
+def actualizar_usuario(request):
+
+    # si el usuario está autenticado
+    # si es una consulta post (enviando el formulario)
+    if request.user.is_authenticated:
+
+        if request.method == 'POST':
+            form = ActualizarUsuarioForm(request.POST, request.FILES)
+            try:
+                kkk = request.user.usuario.foto.url
+            except:
+                kkk = "None"
+
+            url = kkk.replace("app/static/", "")
+            if form.is_valid():
+                usuario_form = form.cleaned_data
+                contrasena = usuario_form['contrasena']
+                confirmar_contrasena = usuario_form['confirmar_contrasena']
+                username = usuario_form['username']
+                nombre = usuario_form['nombre']
+                apellidos = usuario_form['apellidos']
+                email = usuario_form['email']
+                email_academico = Usuario.objects.get(
+                    django_user=request.user).email_academico
+                titulacion = usuario_form['titulacion']
+                descripcion = usuario_form['descripcion']
+                foto = usuario_form['foto']
+                dinero = Usuario.objects.get(django_user=request.user).dinero
+                # Comprobación contraseña
+
+                if(contrasena != confirmar_contrasena):
+                    form.add_error("confirmar_contrasena",
+                                   "Las contraseñas no coinciden")
+                    return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, 'url': url})
+
+                check = False
+                try:
+                    if(foto != None and os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
+                        os.remove("app/static/archivos/" +
+                                  request.user.username + ".jpg")
+                        foto.name = username + ".jpg"
+                        # save foto in static/archivos
+                        path = default_storage.save(
+                            foto.name, ContentFile(foto.read()))
+                        os.path.join(settings.MEDIA_ROOT, path)
+                        check = True
+
+                    elif (foto != None and not os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
+                        foto.name = username + ".jpg"
+                        # save foto in static/archivos
+                        path = default_storage.save(
+                            foto.name, ContentFile(foto.read()))
+                        os.path.join(settings.MEDIA_ROOT, path)
+                        check = True
+
+                except:
+                    pass
+
+                user_old = request.user
+                usuario_instancia = Usuario(
+                    nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, foto=foto)
+
+                # validación usuario
+                try:
+                    usuario_instancia.full_clean(
+                        exclude=['django_user', 'email', 'email_academico'])
+                    if(request.user.usuario.email != email and Usuario.objects.filter(email=email).exists()):
+                        form.add_error("email", "Este email ya existe")
+                        return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, "url": url})
+
+                except ValidationError as e:
+                    for i in e.error_dict:
+                        form.add_error(i, e.error_dict[i])
+
+                    return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, "url": url})
+
+                try:
+                    comprobacion = 0
+                    # validación usuario django
+                    if(user_old.username != username and User.objects.filter(username=username).exists()):
+                        form.add_error("username", "Este username ya existe")
+                        return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, "url": url})
+
+                    elif(user_old.username != username and not User.objects.filter(username=username).exists()):
+                        request.user.username = username
+                        comprobacion += 1
+
+                    if(contrasena != "" and confirmar_contrasena != ""):
+                        request.user.set_password(contrasena)
+                        comprobacion += 1
+
+                    if comprobacion > 0:
+                        request.user.save()
+
+                except ValidationError as e:
+                    for i in e.error_dict:
+                        form.add_error(i, e.error_dict[i])
+
+                    return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, "url": url})
+
+                # actualizar usuario Ustudy
+                try:
+                    if(check):
+                        Usuario.objects.filter(django_user=request.user).update(
+                            nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, foto=foto)
+                    else:
+                        Usuario.objects.filter(django_user=request.user).update(
+                            nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, foto=Usuario.objects.get(django_user=request.user).foto)
+
+                except ValidationError as e:
+                    for i in e.error_dict:
+                        form.add_error(i, e.error_dict[i])
+
+                    return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, "url": url})
+
+                return redirect('/login')
+            else:
+                return render(request, 'actualizar.html', {"form": form, "url": url})
+
+        else:  # si es una consulta get vamos a la vista con el formulario vacio
+            usuario = Usuario.objects.get(django_user=request.user)
+            try:
+                foto = request.user.usuario.foto.url
+            except:
+                foto = "None"
+
+            url = foto.replace("app/static/", "")
+
+            form = ActualizarUsuarioForm(initial={
+                'username': usuario.django_user.username,
+                'nombre': usuario.nombre,
+                'apellidos': usuario.apellidos,
+                'email': usuario.email,
+                'email_academico': usuario.email_academico,
+                'titulacion': usuario.titulacion,
+                'descripcion': usuario.descripcion,
+                'foto': usuario.foto
+            })
+
+            return render(request, "actualizar.html", {"form": form, "url": url})
+    else:
+        return render(request, 'inicio.html')
+
 
 def curso(request, id):
     es_owner = False
     es_suscriptor = False
-    valoracion=0
+    valoracion = 0
     curso = Curso.objects.get(id=id)
     contenido_curso = Archivo.objects.all().filter(curso=curso)
 
@@ -331,6 +490,7 @@ def curso(request, id):
     else:
         return render(request, 'inicio.html')
 
+
 def valorar_curso(request):
     if request.method == "POST":
         el_id = request.POST.get('id')
@@ -339,7 +499,7 @@ def valorar_curso(request):
         curso = Curso.objects.get(id=el_id)
         usuario = Usuario.objects.get(django_user=request.user)
 
-        if Valoracion.objects.filter(curso=curso, usuario=usuario).count()==0:
+        if Valoracion.objects.filter(curso=curso, usuario=usuario).count() == 0:
             valoracion = Valoracion()
             valoracion.puntuacion = val
             valoracion.curso = curso
@@ -349,10 +509,10 @@ def valorar_curso(request):
             valoracion = Valoracion.objects.get(curso=curso, usuario=usuario)
             valoracion.puntuacion = val
             valoracion.save()
-        
-        
-        return JsonResponse({'succes': 'true', 'score':val}, safe=False)
+
+        return JsonResponse({'succes': 'true', 'score': val}, safe=False)
     return JsonResponse({'succes': 'false'})
+
 
 def borrar_archivo(request, id_curso, id_archivo):
     curso = Curso.objects.get(id=id_curso)
@@ -378,7 +538,8 @@ def miscursos(request):
         for curso in cursos.all():
             cursosAlumno.append(curso)
 
-        return render(request, "miscursos.html", {'cursos': cursosAlumno})
+        page_obj = pagination(request, cursosAlumno, 9)
+        return render(request, "miscursos.html", {'page_obj': page_obj})
 
     else:
         return redirect("/login", {"mensaje_error": True})
@@ -394,7 +555,7 @@ def cursosdisponibles(request):
             if (curso.propietario != usuario_actual):
                 if (usuario_actual not in suscriptores and usuario_actual.titulacion == curso.asignatura.titulacion):
                     cursos.append(curso)
-        page_obj = pagination(request,cursos,9)
+        page_obj = pagination(request, cursos, 9)
         return render(request, "cursosdisponibles.html", {'page_obj': page_obj})
     else:
         return redirect("/login")
@@ -419,7 +580,7 @@ def ver_archivo(request, id_curso, id_archivo):
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
             reportes = Reporte.objects.all().filter(archivo=archivo)
-            page_obj = pagination(request,reportes,5)
+            page_obj = pagination(request, reportes, 5)
             acceso = True
             es_owner = True
         if (usuario in curso.suscriptores.all()):
