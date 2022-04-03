@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{% static 'css/valoraciones.css' %}" rel="stylesheet" />
-    <script type="text/javascript">var valoracion = "{{valoracion}}"</script>
+    <script type="text/javascript">var valoracionUsuario = "{{valoracionUsuario}}"</script>
     <script src="{% static 'js/valoraciones.js' %}" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
@@ -36,8 +36,9 @@
 <div style="align-content: center;">
     <div class="separado borde-azul standard_web_color">
         <p style="text-align: center; padding-top: 15px; font-size: 15px;"> <b>Curso:</b> {{curso.nombre}}
-            <br> <b>Profesor:</b> {{curso.propietario.nombre}} <br>
-            <b>Valoración media: {{valoracion}}</b>
+            <br> <b>Profesor:</b> {{curso.propietario.nombre}} 
+            <br> <b>Descripción:</b> {{curso.descripcion}} 
+            <br> <b>Valoración media: {{valoracionCurso}}</b>
         </p>
     </div>
     {% if es_owner or es_suscriptor %}
@@ -115,7 +116,7 @@
                 <button type="submit" class="fa fa-star fa-2x boton-estrella"  id="fifth"></button>
             </form> 
         </div>
-        <div id="confirma-valoracion-box"></div>
+        <h5><div id="confirma-valoracion-box"></div></h5>
     {%endif%}
 
 {% endblock %}
