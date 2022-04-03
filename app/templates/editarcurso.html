@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<header>
+    {% extends 'base_navbar.html' %}{% load static %}{% block contenido %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+</header>
+<br>
+<div class="row d-flex justify-content-center">
+    <h2>Editar curso</h2>
+</div>
+<br>
+<form action="" style="text-align: center;" method="POST">
+    {% csrf_token %} {{ form.as_p }}
+    <button class="btn boton btn-info" type="submit">Editar</button>
+</form>
+{% endblock %}
+
+<footer>
+    {% block pie %}{% endblock %}
+</footer>
+
+</html>

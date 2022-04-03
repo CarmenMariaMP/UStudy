@@ -15,7 +15,16 @@
     <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
 </head>
 
+<body>
+    {% if excede_mensaje %}
+    <div class="alert alert-danger" role="alert">
+        {{excede_mensaje}}
+    </div>
+    {% endif %}
+
+
 <br>
+
 <div class="row d-flex justify-content-center">
     {% if es_owner %}
     <h2>Editar curso</h2>
@@ -36,13 +45,26 @@
         <ul class="list-group list-group-flush">
             {% for archivo in contenido_curso %}
             <li class="list-group-item" style="border-radius: 50px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-                {% if ".mp4" in archivo.ruta.url %}
+                {% if ".mp4" in archivo.ruta.url|slice:"-4:"%}
                 <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="26px" height="19px">
-                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> {% elif ".pdf" in archivo.ruta.url %}
+                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> 
+                {% elif ".pdf" in archivo.ruta.url|slice:"-4:"%}
                 <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="26px" height="26px">
-                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> {% endif %} {% if es_owner %}
+
+                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
+                {% elif ".txt" in archivo.ruta.url|slice:"-4:"%}
+                <img src="https://i.postimg.cc/LsGDHX6t/txt-icon.png" width="26px" height="26px">
+                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
+                {% else %}
+                <img src="https://i.postimg.cc/nh4pKsNz/imagen-icon.png" width="26px" height="26px">
+                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
+                {% endif %} 
+
+                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
+                {% if es_owner %}
                 <a type="submit" class="btn boton col-sm-1" style="width: 20%; float: right;" href="/curso/{{curso.id}}/{{archivo.id}}">
                     Eliminar</a> {% endif %}
+
             </li>
             {% endfor %}
         </ul>
@@ -50,10 +72,11 @@
     <br> {% endif %}
     <div style="align-content: center;">
         {% if not es_suscriptor and not es_owner%}
-        <input class="btn boton col-sm-1 atras" style="margin-top: 20px;" type="button" value="Atrás" onclick="history.back()">
-        <input class=" btn boton col-sm-1 unirseCurso" style="margin-top: 20px;" type="button" value="Unirse"><br><br><br>
+        <a class="btn boton col-sm-1 atras" style="margin-top: 20px;" type="button" value="Atrás" href="/cursosdisponibles"><b>Atrás</b></a>
+        <a href="/pago?id={{curso.id}}" class=" btn boton col-sm-1 unirseCurso" style="margin-top: 20px;">Suscribirse</a>
         <h5>Para acceder al contenido de este curso debes unirte al mismo</h5>
         {%endif%} {%if es_owner%}
+
         <div style="display:flex; justify-content: center">
             <form class="btn boton col-sm-3 btn-info justify-content-center" id="myform" method="post" enctype="multipart/form-data">
                 {% csrf_token %} {{form.file}}
@@ -61,6 +84,7 @@
         </div>
         <div style="display:flex; justify-content: center;">
             <input class="btn boton col-sm-1 añadirContenido justify-content-center" form="myform" type="submit" style="margin: 20px;" value="Añadir Contenido">
+
         </div>
         <h5>Valora este curso: </h5>
         <div class="rating">
@@ -78,10 +102,9 @@
             <a class="btn boton col-sm-1 btn-info justify-content-center" href="/miscursos">Atrás</a>{%endif%} {%if excede_tamano%}
         </div>
 
-        <h2> {{excede_mensaje}} </h2>
-
         {%endif%}
     </div>
+
     </div>
     {%if es_suscriptor %}
         <h5>Valora este curso: </h5>
@@ -97,5 +120,6 @@
         </div>
         <div id="confirma-valoracion-box"></div>
     {%endif%}
+
 {% endblock %}
 </html>

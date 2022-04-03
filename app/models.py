@@ -30,6 +30,9 @@ def validador_archivo(file):
     if(file.size > 1024*1024*20):
         raise ValidationError(
             _('El archivo es demasiado grande'), code='mensaje')
+    if not file.name[-4:] in ('.pdf', '.mp4', '.png', '.jpg', '.txt', 'jpeg'):
+        raise ValidationError(
+            _('El archivo no es un PDF, MP4, PNG, JPG, JPEG ó TXT'), code='mensaje3')
     if(psutil.virtual_memory()[1] < 1024 * 1024 * 40):
         raise ValidationError(
             _('No hay memoria suficiente para subir el archivo, conctacte con el soporte técnico'), code='mensaje2')
@@ -68,7 +71,7 @@ class Curso(models.Model):
         Asignatura, verbose_name="Asignatura", on_delete=models.DO_NOTHING)
     propietario = models.ForeignKey(
         Usuario, related_name="Propietario", on_delete=models.DO_NOTHING)
-    suscriptores = models.ManyToManyField(Usuario, related_name="Suscriptores")
+    suscriptores = models.ManyToManyField(Usuario, related_name="Suscriptores", blank=True)
 
 
 def user_directory_path(instance, filename):
