@@ -2,8 +2,9 @@ from email import charset
 from sqlite3 import Date
 from string import punctuation
 from django.test import TestCase
-from app.models import Asignatura,Archivo,Curso,Comentario,Notificacion,Valoracion,Usuario,Reporte
+from app.models import Asignatura,Archivo,Curso,Comentario,Notificacion,Valoracion,Usuario,Reporte,User
 import decimal
+from django.core.exceptions import ValidationError
 import datetime
 from datetime import timezone
 
