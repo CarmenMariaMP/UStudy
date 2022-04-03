@@ -3,6 +3,9 @@ from app.models import Asignatura,Archivo,Curso,Comentario,Notificacion,Valoraci
 from app.forms import UsuarioForm,CursoForm,ReporteForm,UploadFileForm,CursoEditForm
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.utils.timezone import now
+import datetime
+from datetime import timezone
 
 ## Estrategia: crear una clase por cada formulario
 ## Ejemplo: class AddCursoFormTest(TestCase):
@@ -88,22 +91,7 @@ class addUsuarioFormTest(TestCase):
         }
         form = UsuarioForm(data=form_data)
         self.assertTrue('<ul class="errorlist"><li>username<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>password<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>confirm_password<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>name<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>surname<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>email<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>email_academico<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>titulacion<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li></ul>' in str(form.errors))
-        
-    def test_user_form_different_passwords(self):
-        form_data = {
-            'username': 'davbrican',
-            'password': 'contrasenha',
-            'confirm_password': 'contrasenhaMal',
-            'name': 'David',
-            'surname': 'Brincau Cano',
-            'email': 'david.brincau@htomail.com',
-            'email_academico': 'davbrican@alum.us.es',
-            'titulacion': 'Grado en Ingeniería Informática-Ingeniería del Software',
-            'descripcion': 'Esto es una descripción de prueba'
-        }
-        form = UsuarioForm(data=form_data)
-        # TODO: Comprobar que el error es correcto (contraseñas de confirmación no coinciden)
-        
+                
     def test_user_form_fields_too_large(self):
         form_data = {
             'username': 'a'*51,
@@ -177,27 +165,100 @@ class addFileFormTest(TestCase):
             )
             self.assertTrue('<ul class="errorlist"><li>file<ul class="errorlist"><li>El fichero enviado está vacío.</li></ul></li></ul>' in str(form.errors))
 
-    def test_file_form_file_bad(self):
-        with open('app/tests/test.png', 'rb') as upload_file:
-            form = UploadFileForm(
-                data={}, 
-                files={
-                    'file': SimpleUploadedFile(upload_file.name, upload_file.read()),
-                }
-            )
-            print("Errors:",str(form.errors))# TODO Comprobar que el error es correcto
 
-'''
 class addCursoFormTest(TestCase):
+    
+    @classmethod
+    def setUpTestData(cls):
+        Asignatura.objects.create(nombre="Prueba", titulacion='Grado en Ingeniería Informática-Ingeniería del Software', anyo=2022)
+        user = User.objects.create(username='davbrican', password='contrasenha')
+        Usuario.objects.create(nombre='David', apellidos='Brincau', email='david.brincau@hotmail.com', 
+                               email_academico='davbrican@alum.us.es', titulacion='Grado en Ingeniería Informática-Ingeniería del Software', descripcion='Descripcion1', 
+                               foto=None, dinero=12.0, django_user=user)  
+        
     def test_curso_form_is_valid(self):
         form_data = {
-            
+            "nombre": "Curso de prueba",
+            "descripcion": "Esto es una descripción de prueba",
+            "asignatura": "1"
         }
-        user = User.objects.create(username='nombreUsuario', password='password')
-        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos1', email='nombreMail@gmail.com', 
-                               email_academico='nombreMail@alum.us.es', titulacion='Titulacion1', descripcion='Descripcion1', 
-                               foto=None, dinero=10.0, django_user=user)  
-        user_sent = Usuario.objects.first()
-        form = CursoForm(user_sent,data=form_data)
-        print(str(form.errors))
-'''
+        
+        user_sent = User.objects.first()
+        form = CursoForm(user_sent,form_data)
+        self.assertTrue(form.is_valid())
+        
+    def test_curso_form_empty_fields(self):
+        form_data = {
+            "nombre": None,
+            "descripcion": None,
+            "asignatura": None
+        }
+        
+        user_sent = User.objects.first()
+        form = CursoForm(user_sent,form_data)
+        self.assertTrue('<ul class="errorlist"><li>nombre<ul class="errorlist"><li>Este campo es obligatorio</li></ul></li><li>descripcion<ul class="errorlist"><li>Este campo es obligatorio</li></ul></li><li>asignatura<ul class="errorlist"><li>Este campo es obligatorio</li></ul></li></ul>' in str(form.errors))
+
+    def test_curso_form_invalid_asignatura(self):
+        form_data = {
+            "nombre": "Curso de prueba",
+            "descripcion": "Esto es una descripción de prueba",
+            "asignatura": "Asignatura de prueba"
+        }
+        
+        user_sent = User.objects.first()
+        form = CursoForm(user_sent,form_data)
+        self.assertTrue('<ul class="errorlist"><li>asignatura<ul class="errorlist"><li>Selecciona una opción válida</li></ul></li></ul>' in str(form.errors))
+        
+    def test_curso_form_maxlength_error(self):
+        form_data = {
+            "nombre": "a"*101,
+            "descripcion": "a"*501,
+            "asignatura": "Asignatura de prueba"
+        }
+        
+        user_sent = User.objects.first()
+        form = CursoForm(user_sent,form_data)
+        self.assertTrue('<ul class="errorlist"><li>asignatura<ul class="errorlist"><li>Selecciona una opción válida</li></ul></li><li>nombre<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 100 caracteres (tiene 101).</li></ul></li><li>descripcion<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 500 caracteres (tiene 501).</li></ul></li></ul>' in str(form.errors))
+
+
+class putCursoFormTest(TestCase):
+    
+    @classmethod
+    def setUpTestData(cls):
+        asignatura = Asignatura.objects.create(nombre="Prueba", titulacion='Grado en Ingeniería Informática-Ingeniería del Software', anyo=2022)
+        user = User.objects.create(username='davbrican', password='contrasenha')
+        usuario = Usuario.objects.create(nombre='David', apellidos='Brincau', email='david.brincau@hotmail.com', 
+                               email_academico='davbrican@alum.us.es', titulacion='Grado en Ingeniería Informática-Ingeniería del Software', descripcion='Descripcion1', 
+                               foto=None, dinero=12.0, django_user=user)  
+        Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
+        
+    def test_put_curso_form_is_valid(self):
+        form_data = {
+            "nombre": "Nuevo nombre",
+            "descripcion": "Nueva Descripcion"
+        }
+        
+        curso_sent = Curso.objects.get(id=1)
+        form = CursoEditForm(form_data, instance=curso_sent)
+        self.assertTrue(form.is_valid())
+        
+    def test_put_curso_form_empty_fields(self):
+        form_data = {
+            "nombre": None,
+            "descripcion": None
+        }
+        
+        curso_sent = Curso.objects.get(id=1)
+        form = CursoEditForm(form_data, instance=curso_sent)
+        self.assertTrue('<ul class="errorlist"><li>nombre<ul class="errorlist"><li>Este campo es obligatorio</li></ul></li><li>descripcion<ul class="errorlist"><li>Este campo es obligatorio</li></ul></li></ul>' in str(form.errors))
+        
+        
+    def test_put_curso_form_maxlength_error(self):
+        form_data = {
+            "nombre": "a"*101,
+            "descripcion": "a"*501
+        }
+        
+        curso_sent = Curso.objects.get(id=1)
+        form = CursoEditForm(form_data, instance=curso_sent)
+        self.assertTrue('<ul class="errorlist"><li>nombre<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 100 caracteres (tiene 101).</li></ul></li><li>descripcion<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 500 caracteres (tiene 501).</li></ul></li></ul>' in str(form.errors))
