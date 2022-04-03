@@ -37,14 +37,19 @@ jobs:
           POSTGRES_USER: ${{ secrets.DATABASE_USER }}
           POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
           LANG: 'es_ES.UTF-8'
-          LANGUAGE: 'es_ES.UTF-8'
-          LC_ALL: 'es_ES.UTF-8'
-          LC_COLLATE: 'es_ES.UTF-8'
-          LC_CTYPE: 'es_ES.UTF-8'
         ports:
           - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
+    - name: Set Locale
+      run: |
+              apt-get clean && apt-get update && apt-get install -y locales
+              locale-gen es_ES.UTF-8  && update-locale LC_ALL=es_ES.UTF-8 LANG=es_ES.UTF-8
     - uses: actions/checkout@v1
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
