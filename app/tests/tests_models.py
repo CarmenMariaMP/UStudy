@@ -2,10 +2,11 @@ from email import charset
 from sqlite3 import Date
 from string import punctuation
 from django.test import TestCase
-from app.models import Asignatura,Archivo,Curso,Comentario,Notificacion,Valoracion,Usuario,Reporte
+from app.models import Asignatura,Archivo,Curso,Comentario,Notificacion,Valoracion,Usuario,Reporte,User
 import decimal
 import datetime
 from datetime import timezone
+from django.core.exceptions import ValidationError
 
 ## Estrategia: crear una clase por cada modelo
 ## Ejemplo: class AsignaturaModelTest(TestCase):
@@ -14,7 +15,7 @@ from datetime import timezone
 ## https://developer.mozilla.org/es/docs/Learn/Server-side/Django/Testing
 
 
-    
+'''
 class AsignaturaModelTests(TestCase):
 
     @classmethod
@@ -391,4 +392,4 @@ class ReporteModelTest(TestCase):
         except Exception as e:
             self.assertTrue("el valor nulo en la columna «archivo_id» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0])
             
-    
+'''
