@@ -36,7 +36,6 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASS }}
           POSTGRES_USER: ${{ secrets.DATABASE_USER }}
           POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
-          LANG: 'es_ES.UTF-8'
         ports:
           - 5432:5432
         options: >-
