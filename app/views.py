@@ -333,7 +333,7 @@ def editar_curso(request, id_curso):
 def curso(request, id):
     es_owner = False
     es_suscriptor = False
-    valoracion=0
+    valoracionCurso = 0
     curso = Curso.objects.get(id=id)
     contenido_curso = Archivo.objects.all().filter(curso=curso)
 
@@ -346,7 +346,8 @@ def curso(request, id):
         form = UploadFileForm(request.POST, request.FILES)
         excede_tamano = False
         excede_mensaje = ""
-        valoracion = get_valoracion(curso)
+        valoracionCurso = get_valoracion(curso)
+        valoracionUsuario = "No has valorado este curso"
         if curso.propietario == usuario:
             es_owner = True
             if request.method == 'POST':
@@ -363,18 +364,15 @@ def curso(request, id):
                         excede_mensaje = e.message_dict['ruta'][0]
                 else:
                     form = UploadFileForm()
-
         elif usuario in curso.suscriptores.all():
             es_suscriptor = True
-            valoracion = 0
             try:
-                valoracion = Valoracion.objects.get(
+                valoracionUsuario = Valoracion.objects.get(
                     curso=curso, usuario=usuario).puntuacion
-                print(valoracion)
             except:
                 pass
 
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracion": valoracion})
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario})
 
     else:
         return render(request, 'inicio.html')
@@ -404,7 +402,6 @@ def valorar_curso(request):
 
 def borrar_archivo(request, id_curso, id_archivo):
     curso = Curso.objects.get(id=id_curso)
-    print(curso)
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
