@@ -15,7 +15,6 @@ from django.core.exceptions import ValidationError
 ## https://developer.mozilla.org/es/docs/Learn/Server-side/Django/Testing
 
 
-'''
 class AsignaturaModelTests(TestCase):
 
     @classmethod
@@ -391,5 +390,3 @@ class ReporteModelTest(TestCase):
             Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0).replace(tzinfo=timezone.utc), tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=None)
         except Exception as e:
             self.assertTrue("el valor nulo en la columna «archivo_id» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0])
-            
-'''

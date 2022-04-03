@@ -1,6 +1,8 @@
 from django.test import TestCase
-from app.models import Asignatura,Archivo,Curso,Comentario,Notificacion,Valoracion,Usuario,Reporte
-from app.forms import UsuarioForm,CursoForm,ReporteForm,UploadFileForm
+from app.models import Asignatura,Archivo,Curso,Comentario,Notificacion,Valoracion,Usuario,Reporte,User
+from app.forms import UsuarioForm,CursoForm,ReporteForm,UploadFileForm,CursoEditForm
+from django.core.files import File
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 ## Estrategia: crear una clase por cada formulario
 ## Ejemplo: class AddCursoFormTest(TestCase):
@@ -9,7 +11,7 @@ from app.forms import UsuarioForm,CursoForm,ReporteForm,UploadFileForm
 ## https://adamj.eu/tech/2020/06/15/how-to-unit-test-a-django-form/
 ## Implementar como en la SECCION "Unit Tests" de dicho enlace
 
-'''
+
 class addReportFormTests(TestCase):
     def test_report_form_is_valid(self):
         form_data = {
@@ -132,12 +134,70 @@ class addUsuarioFormTest(TestCase):
         }
         form = UsuarioForm(data=form_data)
         self.assertTrue('<ul class="errorlist"><li>titulacion<ul class="errorlist"><li>Escoja una opción válida. Grado inventado no es una de las opciones disponibles.</li></ul></li></ul>' in str(form.errors))
-'''
+
 
 class addFileFormTest(TestCase):
     def test_file_form_is_valid(self):
+        with open('app/tests/test.pdf', 'rb') as upload_file:
+            form = UploadFileForm(
+                data={}, 
+                files={
+                    'file': SimpleUploadedFile(upload_file.name, upload_file.read()),
+                }
+            )
+            self.assertTrue(form.is_valid())
+    
+    def test_file_form_file_none(self):
+        with open('app/tests/test.pdf', 'rb') as upload_file:
+            form = UploadFileForm(
+                data={}, 
+                files={
+                    'file': None,
+                }
+            )
+            self.assertTrue('<ul class="errorlist"><li>file<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li></ul>' in str(form.errors))
+    
+    def test_file_form_file_bad_codification(self):
+        with open('app/tests/test.pdf', 'rb') as upload_file:
+            form = UploadFileForm(
+                data={}, 
+                files={
+                    'file': upload_file,
+                }
+            )
+            self.assertTrue('<ul class="errorlist"><li>file<ul class="errorlist"><li>No se ha enviado ningún fichero. Compruebe el tipo de codificación en el formulario.</li></ul></li></ul>' in str(form.errors))
+
+    def test_file_form_file_empty(self):
+        with open('app/tests/test.txt', 'rb') as upload_file:
+            form = UploadFileForm(
+                data={}, 
+                files={
+                    'file': SimpleUploadedFile(upload_file.name, upload_file.read()),
+                }
+            )
+            self.assertTrue('<ul class="errorlist"><li>file<ul class="errorlist"><li>El fichero enviado está vacío.</li></ul></li></ul>' in str(form.errors))
+
+    def test_file_form_file_bad(self):
+        with open('app/tests/test.png', 'rb') as upload_file:
+            form = UploadFileForm(
+                data={}, 
+                files={
+                    'file': SimpleUploadedFile(upload_file.name, upload_file.read()),
+                }
+            )
+            print("Errors:",str(form.errors))# TODO Comprobar que el error es correcto
+
+'''
+class addCursoFormTest(TestCase):
+    def test_curso_form_is_valid(self):
         form_data = {
-            'file': 'test.txt'
+            
         }
-        form = UploadFileForm(data=form_data)
-        print(form.errors)
+        user = User.objects.create(username='nombreUsuario', password='password')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos1', email='nombreMail@gmail.com', 
+                               email_academico='nombreMail@alum.us.es', titulacion='Titulacion1', descripcion='Descripcion1', 
+                               foto=None, dinero=10.0, django_user=user)  
+        user_sent = Usuario.objects.first()
+        form = CursoForm(user_sent,data=form_data)
+        print(str(form.errors))
+'''
