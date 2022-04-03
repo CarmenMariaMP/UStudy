@@ -48,6 +48,7 @@ class AsignaturaModelTests(TestCase):
         try:
             Asignatura.objects.create(nombre='Nombre3', titulacion='Titulacion3', anyo=60000)
         except Exception as e:
+            print("EXCEPCION",e.args[0])
             self.assertTrue(e.args[0] == "smallint fuera de rango\n")
 
     def test_crear_asignatura_nombre_vacio(self):
@@ -66,6 +67,7 @@ class AsignaturaModelTests(TestCase):
         try:
             Asignatura.objects.create(nombre='Nombre6', titulacion='Titulacion6', anyo=None)
         except Exception as e:
+            print("EXCEPCION",e.args[0])
             self.assertTrue("el valor nulo en la columna «anyo» de la relación «app_asignatura» viola la restricción de no nulo" in e.args[0])
 
     def test_crear_asignatura_anyo_string(self):
