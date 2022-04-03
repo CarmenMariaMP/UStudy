@@ -202,10 +202,14 @@ def inicio_profesor(request):
 
             dicc[curso] = (len(archivos), mediaPuntos,
                            len(curso.suscriptores.all()))
+            
             if (ac > 0):
                 val = acc_sum / ac
 
-        return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'dicc': dicc, 'val': val, 'ac':ac})
+        lista_pagination = [(x, dicc[x]) for x in dicc]
+        page_obj = pagination(request,lista_pagination,9)
+
+        return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'val': val, 'ac':ac, 'page_obj': page_obj})
 
     else:
         return redirect("/login", {"mensaje_error": True})

@@ -14,7 +14,7 @@
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    {%if dicc.items|length > 0 %} {% for curso,archivos in dicc.items %}
+                    {%if page_obj|length > 0 %} {% for curso,archivos in page_obj %}
                     <div class="col-md-4 mb-5">
                         <div class="card h-100 box-shadow border-info standard_web_color">
                             <div class="card-body ">
