@@ -1,9 +1,7 @@
 <header>
     {% extends 'base_navbar.html' %} {% block contenido %}{%load static%}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
-    <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
 </header>
 
 <body>
@@ -20,7 +18,7 @@
               </div>
             {%endif%}
           </div>
-          <div class="col-md-6">
+          <div class="col-md-5">
             <h3>{{nombre}}</h3>
             <p>Titulación: {{titulacion}}</p>
             <p>Monedero: {{dinero}}€</p>
@@ -34,7 +32,7 @@
             {% else %}
                 <h3>No tienes valoraciones</h3>
             {%endif%}
-            <a class="btn btn-outline-secondary"  href="actualizar">Actualizar Perfil</a>
+            <a class="btn btn-outline-secondary mt-3"  href="">Actualizar Perfil</a>
           </div>
         </div>
       </div>

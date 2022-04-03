@@ -1,25 +1,36 @@
-from traceback import print_list
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
-from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, GetOrder
-from app.forms import *
+from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, GetOrder,User
+from app.forms import UsuarioForm,CursoForm,ReporteForm,UploadFileForm
 import json
 
-from django.conf import settings
 from django.core.exceptions import ValidationError
 import datetime
 from decouple import config
 
 from django.core.paginator import Paginator
 
-def pagination(request,productos):
-    paginator = Paginator(productos, 5)
+
+def pagination(request,productos,num):
+    paginator = Paginator(productos, num)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return page_obj
 
+def get_valoracion(curso):
+    valoraciones = Valoracion.objects.all().filter(curso=curso)
+    puntos = 0
+    mediaPuntos = "No tiene valoraciones"
+    for valoracion in valoraciones:
+        puntos += valoracion.puntuacion
+    if len(valoraciones) > 0:
+        mediaPuntos = round(puntos/len(valoraciones), 2)
+    return mediaPuntos
+
 # Create your views here.
+
+
 def inicio(request):
     if not request.user.is_authenticated:
         return render(request, "inicio.html")
@@ -28,54 +39,63 @@ def inicio(request):
         cursos = user1.Suscriptores
 
         cursosAlumno = list()
-
+        
         for curso in cursos.all():
-            cursosAlumno.append(curso)
-        return render(request, "miscursos.html", {'cursos': cursosAlumno})
+            valoracion = get_valoracion(curso)
+            cursosAlumno.append((curso, valoracion))
+
+        page_obj = pagination(request,cursosAlumno,9)
+        return render(request, "miscursos.html", {'page_obj': page_obj})
 
 
 def pago(request):
     if request.user.is_authenticated:
+        usuario = request.user.usuario
         client_id = config('PAYPAL_CLIENT_ID')
         id = request.GET.get('id')
         try:
             curso = Curso.objects.get(pk=id)
-        except:
-            curso = None
-
-        if curso == None:  # si no existe el curso al que se quiere apuntar
-            return redirect("/login")
-        else:
+            if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
+                return redirect('/cursosdisponibles')
             return render(request, "pasarela_pago.html", context={"client_id": client_id, "curso": curso})
+        except:
+            return redirect("/cursosdisponibles")
 
     else:
         return redirect("/login")
 
 
+
 def suscripcion(request, id):
+    if request.user.is_authenticated:
 
-    alumno = Usuario.objects.get(django_user=request.user)
-    curso = Curso.objects.get(pk=id)
+        alumno = Usuario.objects.get(django_user=request.user)
+        curso = Curso.objects.get(pk=id)
+        
+        usuario = request.user.usuario
+        if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
+                return redirect('/cursosdisponibles')
 
-    data = json.loads(request.body)
-    order_id = data['orderID']
+        data = json.loads(request.body)
+        order_id = data['orderID']
 
-    detalle = GetOrder().get_order(order_id)
-    detalle_precio = float(detalle.result.purchase_units[0].amount.value)
+        detalle = GetOrder().get_order(order_id)
+        detalle_precio = float(detalle.result.purchase_units[0].amount.value)
 
-    if detalle_precio == 10.0:
-        curso.suscriptores.add(alumno)
-        curso.save()
-        data = {
-            "mensaje": "Se ha suscrito al curso correctamente"
-        }
-        return JsonResponse(data)
+        if detalle_precio == 10.0:
+            curso.suscriptores.add(alumno)
+            curso.save()
+            data = {
+                "mensaje": "Se ha suscrito al curso correctamente"
+            }
+            return JsonResponse(data)
+        else:
+            data = {
+                "mensaje": "Error =("
+            }
+            return JsonResponse(data)
     else:
-        data = {
-            "mensaje": "Error =("
-        }
-        return JsonResponse(data)
-
+        return redirect("/login")
 
 def login_user(request):
     if not request.user.is_authenticated:
@@ -101,8 +121,11 @@ def login_user(request):
         cursosAlumno = list()
 
         for curso in cursos.all():
-            cursosAlumno.append(curso)
-        return render(request, "miscursos.html", {'cursos': cursosAlumno})
+            valoracion = get_valoracion(curso)
+            cursosAlumno.append((curso,valoracion))
+
+        page_obj = pagination(request,cursosAlumno,9)
+        return render(request, "miscursos.html", {'page_obj': page_obj})
 
 
 def logout_user(request):
@@ -157,23 +180,32 @@ def inicio_profesor(request):
             propietario=usuarioActual).order_by('nombre')
 
         dicc = dict()
+        val = 0
+        ac = 0
+        acc_sum = 0
 
         for curso in cursosUsuario:
             archivos = Archivo.objects.all().filter(curso=curso)
             valoraciones = Valoracion.objects.all().filter(curso=curso)
             puntos = 0
+
             for valoracion in valoraciones:
                 puntos += valoracion.puntuacion
 
             if len(valoraciones) > 0:
                 mediaPuntos = puntos/len(valoraciones)
+                acc_sum += mediaPuntos
+                ac += 1
+
             else:
                 mediaPuntos = "No tiene valoraciones"
 
             dicc[curso] = (len(archivos), mediaPuntos,
                            len(curso.suscriptores.all()))
+            if (ac > 0):
+                val = acc_sum / ac
 
-        return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'dicc': dicc})
+        return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'dicc': dicc, 'val': val, 'ac':ac})
 
     else:
         return redirect("/login", {"mensaje_error": True})
@@ -210,7 +242,6 @@ def registro_usuario(request):
     # si es una consulta post (enviando el formulario)
     if request.user.is_authenticated:
         return redirect("/miscursos")
-        
     if request.method == 'POST':
         form = UsuarioForm(request.POST)
         if form.is_valid():
@@ -227,7 +258,7 @@ def registro_usuario(request):
             dinero = 0.0
             #Comprobación contraseña
             if(password != confirm_password):
-                form.add_error("confirm_password" , "las contraseñas no coinciden")
+                form.add_error("confirm_password" , "Las contraseñas no coinciden")
                 return render(request, 'registro.html', {"mensaje_error": True, "form": form})
 
             user_instancia = User(username = usename , email =  email, password =  password)
@@ -271,11 +302,34 @@ def registro_usuario(request):
 
         return render(request, "registro.html", {"form": form})
     
+def editar_curso(request, id_curso):
+    if request.user.is_authenticated:
+        curso = Curso.objects.get(id=id_curso)
+        if request.user.usuario == curso.propietario:
+            if request.method == 'POST':
+                form = CursoEditForm( request.POST, instance=curso)
+                if form.is_valid():
+                    curso_form = form.cleaned_data
+                    nombre = curso_form['nombre']
+                    descripcion= curso_form['descripcion']
+                    curso.nombre = nombre 
+                    curso.descripcion = descripcion
+                    curso.save()
+                    return redirect("/inicio_profesor")
+                else:
+                    return render(request, 'editarcurso.html', {"form": form})
+            else:
+                form = CursoEditForm( instance=curso)
+                return render(request, "editarcurso.html", {"form": form, "curso": curso})
+        else:
+            return redirect("/miscursos")
+    else:
+        return redirect("/login")
 
 def curso(request, id):
     es_owner = False
     es_suscriptor = False
-
+    valoracion=0
     curso = Curso.objects.get(id=id)
     contenido_curso = Archivo.objects.all().filter(curso=curso)
 
@@ -283,9 +337,12 @@ def curso(request, id):
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
+        if usuario.titulacion != curso.asignatura.titulacion:
+            return redirect('/cursosdisponibles')
         form = UploadFileForm(request.POST, request.FILES)
         excede_tamano = False
         excede_mensaje = ""
+        valoracion = get_valoracion(curso)
         if curso.propietario == usuario:
             es_owner = True
             if request.method == 'POST':
@@ -305,11 +362,53 @@ def curso(request, id):
 
         elif usuario in curso.suscriptores.all():
             es_suscriptor = True
+            valoracion = 0
+            try:
+                valoracion = Valoracion.objects.get(
+                    curso=curso, usuario=usuario).puntuacion
+                print(valoracion)
+            except:
+                pass
 
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje})
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracion": valoracion})
 
     else:
         return render(request, 'inicio.html')
+
+def valorar_curso(request):
+    if request.method == "POST":
+        el_id = request.POST.get('id')
+        val = request.POST.get('valoracion')
+
+        curso = Curso.objects.get(id=el_id)
+        usuario = Usuario.objects.get(django_user=request.user)
+
+        if Valoracion.objects.filter(curso=curso, usuario=usuario).count()==0:
+            valoracion = Valoracion()
+            valoracion.puntuacion = val
+            valoracion.curso = curso
+            valoracion.usuario = usuario
+            valoracion.save()
+        else:
+            valoracion = Valoracion.objects.get(curso=curso, usuario=usuario)
+            valoracion.puntuacion = val
+            valoracion.save()
+        
+        
+        return JsonResponse({'succes': 'true', 'score':val}, safe=False)
+    return JsonResponse({'succes': 'false'})
+
+def borrar_archivo(request, id_curso, id_archivo):
+    curso = Curso.objects.get(id=id_curso)
+    print(curso)
+    if request.user.is_authenticated:
+        # Comprobar si el usuario es profesor
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(django_user=usuario_autenticado)
+        if (curso.propietario == usuario):
+            archivo = Archivo.objects.get(id=id_archivo)
+            archivo.delete()
+    return redirect('/curso/'+str(id_curso))
 
 
 def miscursos(request):
@@ -317,13 +416,14 @@ def miscursos(request):
     if request.user.is_authenticated:
         user1 = request.user.usuario
         cursos = user1.Suscriptores
-
         cursosAlumno = list()
 
         for curso in cursos.all():
-            cursosAlumno.append(curso)
+            valoracion = get_valoracion(curso)
+            cursosAlumno.append((curso,valoracion))
 
-        return render(request, "miscursos.html", {'cursos': cursosAlumno})
+        page_obj = pagination(request,cursosAlumno,9)
+        return render(request, "miscursos.html", {'page_obj': page_obj})
 
     else:
         return redirect("/login", {"mensaje_error": True})
@@ -338,15 +438,17 @@ def cursosdisponibles(request):
             suscriptores = curso.suscriptores.all()
             if (curso.propietario != usuario_actual):
                 if (usuario_actual not in suscriptores and usuario_actual.titulacion == curso.asignatura.titulacion):
-                    cursos.append(curso)
-        return render(request, "cursosdisponibles.html", {'cursos': cursos})
+                    valoracion = get_valoracion(curso)
+                    cursos.append((curso, valoracion))
+        page_obj = pagination(request,cursos,9)
+        return render(request, "cursosdisponibles.html", {'page_obj': page_obj})
     else:
         return redirect("/login")
 
 
 def ver_archivo(request, id_curso, id_archivo):
     acceso = False
-    es_owner =False
+    es_owner = False
     es_plagio = False
     es_error = False
     curso = Curso.objects.get(id=id_curso)
@@ -363,9 +465,9 @@ def ver_archivo(request, id_curso, id_archivo):
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
             reportes = Reporte.objects.all().filter(archivo=archivo)
-            page_obj = pagination(request,reportes)
+            page_obj = pagination(request,reportes,5)
             acceso = True
-            es_owner =True
+            es_owner = True
         if (usuario in curso.suscriptores.all()):
             acceso = True
 
@@ -382,18 +484,19 @@ def ver_archivo(request, id_curso, id_archivo):
                 return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
         else:
             form = ReporteForm()
-        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 
-        'acceso': acceso, 'comentarios': comentarios, 'url': url, 'form': form, 'page_obj':page_obj,'es_owner': es_owner,
-        'es_plagio': es_plagio,'es_error': es_error})
+        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso,
+                                                'acceso': acceso, 'comentarios': comentarios, 'url': url, 'form': form, 'page_obj': page_obj, 'es_owner': es_owner,
+                                                'es_plagio': es_plagio, 'es_error': es_error})
     else:
         return render(request, 'inicio.html')
 
-def eliminar_reporte(request, id_curso, id_archivo,id_reporte):
+
+def eliminar_reporte(request, id_curso, id_archivo, id_reporte):
     curso = Curso.objects.get(id=id_curso)
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
-        usuario = Usuario.objects.get(email_academico=usuario_autenticado)
+        usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
             reporte = Reporte.objects.get(id=id_reporte)
             reporte.delete()
