@@ -48,6 +48,12 @@ class CursoEditForm(ModelForm):
  
     def __init__(self,  *args, **kwargs):
         super(CursoEditForm, self).__init__(*args, **kwargs)
+        self.fields['nombre'] = forms.CharField(
+            widget=forms.TextInput(attrs={'style': 'width: 100%;', 'class': 'form-control'}))
+        self.fields['descripcion'] = forms.CharField(
+            widget=forms.Textarea(attrs={'style': 'width: 100%;', 'class': 'form-control', 'rows': "5"}))
+
+        # mensajes de error
         self.fields['nombre'].error_messages['required'] = 'Este campo es obligatorio'
         self.fields['descripcion'].error_messages['required'] = 'Este campo es obligatorio'    
     class Meta:
