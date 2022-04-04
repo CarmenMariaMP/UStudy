@@ -30,7 +30,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
+LANGUAGES = (
+    ('es-es', 'Spanish'),
+    ('es', 'Spanish'),
+)
 
 # Application definition
 
