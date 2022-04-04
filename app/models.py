@@ -45,8 +45,7 @@ class Asignatura(models.Model):
 
 
 def image_directory_path(instance, filename):
-    return 'user_images/{0}.jpg'.format(instance.django_user)
-
+    return '{0}.jpg'.format(instance.django_user)
 
 class Usuario(models.Model):
     nombre = models.CharField(max_length=40)
