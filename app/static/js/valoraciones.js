@@ -1,10 +1,10 @@
-const uno = document.getElementById("first")
-const dos = document.getElementById("second")
-const tres = document.getElementById("third")
-const cuatro = document.getElementById("fourth")
-const cinco = document.getElementById("fifth")
+const uno = document.getElementById("first");
+const dos = document.getElementById("second");
+const tres = document.getElementById("third");
+const cuatro = document.getElementById("fourth");
+const cinco = document.getElementById("fifth");
 
-var valoraciona =valoracion
+var valoraciona = valoracionUsuario
 const form = document.querySelector(".rate-form")
 const confirmBox = document.getElementById("confirma-valoracion-box")
 const csrf = document.getElementsByName("csrfmiddlewaretoken") 
@@ -18,28 +18,28 @@ const handleStarSelect = (seleccion) => {
         }
     }
 }
-handleStarSelect(valoraciona)
+handleStarSelect(valoraciona);
 
 const handleSelect = (seleccion) => {
     switch(seleccion){
         case "first":{
-            handleStarSelect(1)
+            handleStarSelect(1);
             return
         }
         case "second":{
-            handleStarSelect(2)
+            handleStarSelect(2);
             return
         }
         case "third":{
-            handleStarSelect(3)
+            handleStarSelect(3);
             return
         }
         case "fourth":{
-            handleStarSelect(4)
+            handleStarSelect(4);
             return
         }
         case "fifth":{
-            handleStarSelect(5)
+            handleStarSelect(5);
             return
         }
     }
@@ -48,26 +48,26 @@ const handleSelect = (seleccion) => {
 const getNumericValue = (stringValue) => {
     let numericValue;
     if(stringValue === "first"){
-        numericValue = 1
+        numericValue = 1;
     }else if(stringValue === "second"){
-        numericValue = 2
+        numericValue = 2;
     }else if(stringValue === "third"){
-        numericValue = 3
+        numericValue = 3;
     }else if(stringValue === "fourth"){
-        numericValue = 4
+        numericValue = 4;
     }else if(stringValue === "fifth"){
-        numericValue = 5
+        numericValue = 5;
     }else{
-        numericValue = 0
+        numericValue = 0;
     }
     return numericValue
 } 
 
 const arr = [uno, dos, tres, cuatro, cinco]
-arr.forEach(element =>{ element.addEventListener("mouseover", (event)=>{handleSelect(event.target.id)})})
+arr.forEach(element =>{ element.addEventListener("mouseover", (event)=>{handleSelect(event.target.id)})});
 
 arr.forEach(element =>{ element.addEventListener("click", (event)=>{
-    const seleccion = event.target.id
+    const seleccion = event.target.id;
     
     form.addEventListener("submit", (event)=>{
         event.preventDefault()
@@ -75,12 +75,12 @@ arr.forEach(element =>{ element.addEventListener("click", (event)=>{
         const valoracion = getNumericValue(seleccion)
 
         $.ajax({ 
-            type: 'POST',
+            type: "POST",
             url: '/valorar_curso/',
             data: {
                 'csrfmiddlewaretoken': csrf[0].value,
                 'id': id,
-                'valoracion': valoracion,
+                "valoracion": valoracion,
             },
             success: function(response){
                 valoraciona=valoracion

@@ -30,7 +30,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
+LANGUAGES = (
+    ('es-es', 'Spanish'),
+    ('es', 'Spanish'),
+)
 
 # Application definition
 
@@ -139,7 +142,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media files
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 MEDIA_URL = '/app/static/archivos/'
-
 STATIC_ROOT = 'app/static/'
-  
 MEDIA_ROOT = os.path.join(BASE_DIR, 'app/static/archivos')

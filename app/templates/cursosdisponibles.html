@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
+    {% extends 'base_navbar.html' %}{% load static %}{% block contenido %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <meta charset="utf-8" />
 </head>
@@ -11,8 +11,9 @@
 <body>
     <br>
     <div class="row d-flex justify-content-center">
-        <h2>Cursos disponibles</h2>
+        <h2>Mis cursos</h2>
     </div>
+
     <!-- <form role="search" class="center" id="form">
         <div class="row">
             <input class="col-sm-8" type="search" id="query" name="q" placeholder="  Buscar cursos..." aria-label="Search through site content">
@@ -23,38 +24,38 @@
     </form> -->
     <br>
     <div class="container">
-
         <br>
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    {%if page_obj|length > 0 %} {% for curso in page_obj %}
-                    <div class="col-md-4">
-                        <div class="card border-info mb-4">
-                            <div class="card-body standard_web_color">
-                                <h5 class="card-title">Asignatura: {{curso.asignatura.nombre}}</h5>
-                                <p class="card-text">Profesor: {{curso.propietario.nombre}}</p>
-                                <p class="card-text">Descripción: {{curso.descripcion}}</p>
-                                <p class="card-text">Valoraciones: </p>
+                    {%if page_obj|length > 0 %} {% for cursoYvaloracion in page_obj %}
+                    <div class="col-md-4 mb-5">
+                        <div class="card h-100 box-shadow border-info standard_web_color">
+                            <div class="card-body standard_web_color ">
+                                <h5 class="card-title text-truncate">Asignatura: {{cursoYvaloracion.0.asignatura.nombre}}</h5>
+                                <p class="card-text">Profesor: {{cursoYvaloracion.0.propietario.nombre}}</p>
+                                <p class="card-text text-truncate">Descripción: {{cursoYvaloracion.0.descripcion}}</p>
+                                <p class="card-text">Valoración: {{cursoYvaloracion.1}}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group text-center">
-                                        <a href="/pago?id={{curso.id}}" class="btn btn-sm btn-outline-secondary">Suscribirse</a>
+                                        <div class="btn-group text-center">
+                                            <a href="/pago?id={{cursoYvaloracion.0.id}}" class="btn btn-sm btn-outline-secondary">Suscribirse</a>
+                                        </div>
                                     </div>
-                                    <small class="text-muted">Fecha publicación: {{curso.fecha_publicacion|date:"d/m/Y"}}</small>
-                                    </form>
+                                    <small class="text-muted">Fecha publicación: {{cursoYvaloracion.0.fecha_publicacion|date:"d/m/Y"}}</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {% endfor %} {%else%}
-                     <div class="col">
-                        <p class="font-italic text-center lead">Actualmente no existen cursos disponibles</p>
-                        <p class="font-weight-lighter text-center"><ins><a href="/crearcurso" class="text-decoration text-dark">¿Quieres crear uno?</a></ins></p>
+                    {% endfor %}{%else%}
+                    <div class="col">
+                        <p class="font-italic text-center lead">Actualmente no te has suscrito a ningún curso</p>
+                        <p class="font-weight-lighter text-center"><ins><a href="/cursosdisponibles" class="text-decoration text-dark">Descubre los cursos disponibles</a></ins></p>
                     </div>
                     {%endif%}
                 </div>
-
             </div>
+            <br>
             {%if page_obj|length > 0 %}
             <nav class= "d-flex justify-content-center" aria-label="Page navigation example">
                 <ul class="pagination">
@@ -71,10 +72,8 @@
                 </ul>
             </nav>
               {%endif%}
-
             {% endblock %}
 </body>
-
 <footer>
     {% block pie %}{% endblock %}
 </footer>

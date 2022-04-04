@@ -1,6 +1,7 @@
 <header>
-    {% extends 'base_navbar.html' %} {% block contenido %}
+    {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{% static 'css/colores.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
 </header>
 
@@ -10,23 +11,16 @@
         <div class="row d-flex justify-content-center">
             <h2>Cursos del profesor {{nombre}}</h2>
         </div>
-        <p>
-            Mi valoración media es de: 
-            {% if ac > 0 %}
-            {{val}} / 5
-            {% else %}
-            Todavía no ha recibido valoraciones
-            {% endif %}
-        </p>
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    {%if dicc.items|length > 0 %} {% for curso,archivos in dicc.items %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 box-shadow border-info standard_web_color">
+                    {%if page_obj|length > 0 %} {% for curso,archivos in page_obj %}
+                    <div class="col-md-4 mb-5">
+                        <div class="card h-100 box-shadow border-info standard_web_color">
                             <div class="card-body ">
-                                <h5 class="card-title">Asignatura: {{curso.asignatura.nombre}}</h5>
-                                <p class="card-text">Descripción: {{curso.descripcion}}</p>
+                                <h4 class="card-title">Asignatura: {{curso.asignatura.nombre}}</h5>
+                                <h5 class="card-title text-truncate">Nombre del Curso: {{curso.nombre}}</h5>
+                                <p class="card-text text-truncate">Descripción: {{curso.descripcion}}</p>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item standard_web_color">Alumnos: {{archivos.2}}</li>
                                     <li class="list-group-item standard_web_color">Archivos multimedia: {{archivos.0}}</li>
@@ -43,11 +37,17 @@
                                     </li>
                                 </ul>
                                 <br>
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center container">
                                     <div class="btn-group">
-                                        <a type="button" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}">Editar</a>
+                                        <a type="button" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}">Acceder</a>
                                     </div>
-                                    <small class="text-muted">Fecha publicación: {{curso.fecha_publicacion|date:"d/m/Y"}}</small>
+                                    <div class="btn-group">
+                                        <a type="button" class="btn btn-sm btn-outline-secondary" href="/editarcurso/{{curso.id}}">Editar</a>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="d-flex flex-row-reverse bd-highlight">
+                                    <small class="text-muted p-2 bd-highlight">Fecha publicación: {{curso.fecha_publicacion|date:"d/m/Y"}}</small>
                                 </div>
                             </div>
                         </div>

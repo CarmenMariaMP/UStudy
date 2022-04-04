@@ -16,8 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
-from django.conf import settings
-from django.conf.urls import handler404, handler500, handler403, handler400
 #from django.conf.urls import url
 
 urlpatterns = [
@@ -33,7 +31,7 @@ urlpatterns = [
     path('miscursos/', views.miscursos),
     path('cursosdisponibles/', views.cursosdisponibles),
     path('subir_contenido/', views.subir_contenido),
-    path('suscripcion/', views.suscripcion),
+    path('suscripcion/<int:id>', views.suscripcion),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo),
     path('valorar_curso/',views.valorar_curso),
     path('curso/<int:id_curso>/<int:id_archivo>', views.borrar_archivo),
@@ -43,11 +41,11 @@ urlpatterns = [
     path('perfil/', views.perfil_usuario),
     path('borrar_foto/', views.borrar_foto),
     path('pago/',views.pago),
+    path("editarcurso/<int:id_curso>" , views.editar_curso),
 ]
-
 #urlpatterns += staticfiles_urlpatterns()
 #urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
-    
+
 handler404 = views.error_404
 handler403 = views.error_403
 handler500 = views.error_500

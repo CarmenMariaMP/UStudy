@@ -5,7 +5,8 @@
     background-color: inherit !important;
     border: 0  !important;
 
-.rating {
+}
+.rating{
     display: flex;
     flex-direction: row-reverse;
     justify-content: center
