@@ -1,16 +1,14 @@
-from traceback import print_list
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
-from matplotlib.style import use
-from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, GetOrder,User
-from app.forms import UsuarioForm,CursoForm,ReporteForm,UploadFileForm,CursoEditForm,ActualizarUsuarioForm
+from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, GetOrder, User
+from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm
 import json
 import os
-import shutil
 
+from django.conf import settings
 from django.core.exceptions import ValidationError
 import datetime
 from decouple import config
@@ -23,6 +21,7 @@ def pagination(request, productos, num):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return page_obj
+
 
 def get_valoracion(curso):
     valoraciones = Valoracion.objects.all().filter(curso=curso)
@@ -45,7 +44,7 @@ def inicio(request):
         cursos = user1.Suscriptores
 
         cursosAlumno = list()
-        
+
         for curso in cursos.all():
             valoracion = get_valoracion(curso)
             cursosAlumno.append((curso, valoracion))
@@ -71,16 +70,15 @@ def pago(request):
         return redirect("/login")
 
 
-
 def suscripcion(request, id):
     if request.user.is_authenticated:
 
         alumno = Usuario.objects.get(django_user=request.user)
         curso = Curso.objects.get(pk=id)
-        
+
         usuario = request.user.usuario
         if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
-                return redirect('/cursosdisponibles')
+            return redirect('/cursosdisponibles')
 
         data = json.loads(request.body)
         order_id = data['orderID']
@@ -128,9 +126,9 @@ def login_user(request):
 
         for curso in cursos.all():
             valoracion = get_valoracion(curso)
-            cursosAlumno.append((curso,valoracion))
+            cursosAlumno.append((curso, valoracion))
 
-        page_obj = pagination(request,cursosAlumno,9)
+        page_obj = pagination(request, cursosAlumno, 9)
         return render(request, "miscursos.html", {'page_obj': page_obj})
 
 
@@ -217,15 +215,14 @@ def inicio_profesor(request):
 
             dicc[curso] = (len(archivos), mediaPuntos,
                            len(curso.suscriptores.all()))
-            
+
             if (ac > 0):
                 val = acc_sum / ac
 
         lista_pagination = [(x, dicc[x]) for x in dicc]
-        page_obj = pagination(request,lista_pagination,9)
+        page_obj = pagination(request, lista_pagination, 9)
 
-        return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'val': val, 'ac':ac, 'page_obj': page_obj})
-
+        return render(request, "inicio_profesor.html", {'nombre': usuarioActual.nombre, 'val': val, 'ac': ac, 'page_obj': page_obj})
 
     else:
         return redirect("/login", {"mensaje_error": True})
@@ -355,7 +352,7 @@ def actualizar_usuario(request):
                 descripcion = usuario_form['descripcion']
                 foto = usuario_form['foto']
                 dinero = Usuario.objects.get(django_user=request.user).dinero
-                
+
                 # Comprobación contraseña
                 if(contrasena != confirmar_contrasena):
                     form.add_error("confirmar_contrasena",
@@ -363,11 +360,12 @@ def actualizar_usuario(request):
                     return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, 'url': url})
                 if foto != None:
                     if not any(foto.name[-4:] in item for item in ['.jpg', '.png', 'jpeg']):
-                        form.add_error("foto", "Formato de imagen no válido, solo se permiten .jpg, .png y .jpeg")
+                        form.add_error(
+                            "foto", "Formato de imagen no válido, solo se permiten .jpg, .png y .jpeg")
                         return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, 'url': url})
 
-
-                user_instancia = User(username=request.user.username, password=contrasena)
+                user_instancia = User(
+                    username=request.user.username, password=contrasena)
                 usuario_instancia = Usuario(
                     nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, foto=foto)
 
@@ -413,7 +411,7 @@ def actualizar_usuario(request):
                 only_username = False
                 if(foto != None and os.path.exists('app/static/archivos/'+user_instancia.username+'.jpg')):
                     os.remove("app/static/archivos/" +
-                                user_instancia.username + ".jpg")
+                              user_instancia.username + ".jpg")
                     foto.name = username + ".jpg"
                     # save foto in static/archivos
                     path = default_storage.save(
@@ -428,20 +426,19 @@ def actualizar_usuario(request):
                         foto.name, ContentFile(foto.read()))
                     os.path.join(settings.MEDIA_ROOT, path)
                     check = True
-                    
-                   
+
                 elif (foto == None and user_instancia.username != username and os.path.exists('app/static/archivos/'+user_instancia.username+'.jpg')):
                     os.rename("app/static/archivos/" +
-                                user_instancia.username + ".jpg", "app/static/archivos/" + username + ".jpg")
+                              user_instancia.username + ".jpg", "app/static/archivos/" + username + ".jpg")
                     only_username = True
                 # actualizar usuario Ustudy
                 try:
                     if(check):
                         Usuario.objects.filter(django_user=request.user).update(
-                            nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, foto=foto)            
+                            nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, foto=foto)
                     elif(only_username):
                         Usuario.objects.filter(django_user=request.user).update(
-                            nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, 
+                            nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero,
                             foto=username+'.jpg')
                     else:
                         Usuario.objects.filter(django_user=request.user).update(
@@ -481,25 +478,25 @@ def actualizar_usuario(request):
     else:
         return render(request, 'inicio.html')
 
-    
+
 def editar_curso(request, id_curso):
     if request.user.is_authenticated:
         curso = Curso.objects.get(id=id_curso)
         if request.user.usuario == curso.propietario:
             if request.method == 'POST':
-                form = CursoEditForm( request.POST, instance=curso)
+                form = CursoEditForm(request.POST, instance=curso)
                 if form.is_valid():
                     curso_form = form.cleaned_data
                     nombre = curso_form['nombre']
-                    descripcion= curso_form['descripcion']
-                    curso.nombre = nombre 
+                    descripcion = curso_form['descripcion']
+                    curso.nombre = nombre
                     curso.descripcion = descripcion
                     curso.save()
                     return redirect("/inicio_profesor")
                 else:
                     return render(request, 'editarcurso.html', {"form": form})
             else:
-                form = CursoEditForm( instance=curso)
+                form = CursoEditForm(instance=curso)
                 return render(request, "editarcurso.html", {"form": form, "curso": curso})
         else:
             return redirect("/miscursos")
@@ -512,7 +509,7 @@ def curso(request, id):
     es_suscriptor = False
 
     valoracionCurso = 0
-    
+
     curso = Curso.objects.get(id=id)
     contenido_curso = Archivo.objects.all().filter(curso=curso)
 
@@ -601,7 +598,7 @@ def miscursos(request):
 
         for curso in cursos.all():
             valoracion = get_valoracion(curso)
-            cursosAlumno.append((curso,valoracion))
+            cursosAlumno.append((curso, valoracion))
 
         page_obj = pagination(request, cursosAlumno, 9)
 
@@ -622,7 +619,7 @@ def cursosdisponibles(request):
                 if (usuario_actual not in suscriptores and usuario_actual.titulacion == curso.asignatura.titulacion):
                     valoracion = get_valoracion(curso)
                     cursos.append((curso, valoracion))
-        page_obj = pagination(request,cursos,9)
+        page_obj = pagination(request, cursos, 9)
         return render(request, "cursosdisponibles.html", {'page_obj': page_obj})
     else:
         return redirect("/login")
@@ -683,6 +680,7 @@ def eliminar_reporte(request, id_curso, id_archivo, id_reporte):
             reporte = Reporte.objects.get(id=id_reporte)
             reporte.delete()
     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+
 
 def subir_contenido(request):
     return render(request, "subir_contenido.html")
