@@ -68,3 +68,8 @@ jobs:
       run: yes | coverage run --source . manage.py test -v 2
     - name: Report Coverage
       run: coverage report -m
+    - name: Run codacy-coverage-reporter
+      uses: codacy/codacy-coverage-reporter-action@v1
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        coverage-reports: cobertura.xml
