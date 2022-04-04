@@ -35,6 +35,7 @@
                     <div class="col-md-9">
                         <label class="control-label">Añade una nueva foto de perfil</label>
                         {{form.foto}}
+                        <div class="alert-danger">{{ form.foto.errors }}</div>
                         {% if url != "None"%}
                             <a class="btn btn-outline-secondary mt-3"  href="/borrar_foto">Eliminar foto</a>
                         {%endif%}

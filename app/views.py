@@ -118,6 +118,7 @@ def logout_user(request):
     logout(request)
     return render(request, "inicio.html")
 
+
 def borrar_foto(request):
     if request.user.is_authenticated:
         usuarioActual = request.user.usuario
@@ -125,6 +126,7 @@ def borrar_foto(request):
         return redirect("/actualizar_perfil")
     else:
         return redirect("/login")
+
 
 def perfil_usuario(request):
     if request.user.is_authenticated:
@@ -328,35 +330,41 @@ def actualizar_usuario(request):
                 descripcion = usuario_form['descripcion']
                 foto = usuario_form['foto']
                 dinero = Usuario.objects.get(django_user=request.user).dinero
+                
                 # Comprobación contraseña
-
                 if(contrasena != confirmar_contrasena):
                     form.add_error("confirmar_contrasena",
                                    "Las contraseñas no coinciden")
                     return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, 'url': url})
+                if foto != None:
+                    if not any(foto.name[-4:] in item for item in ['.jpg', '.png', 'jpeg']):
+                        form.add_error("foto", "Formato de imagen no válido")
+                        return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, 'url': url})
 
                 check = False
-                try:
-                    if(foto != None and os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
-                        os.remove("app/static/archivos/" +
-                                  request.user.username + ".jpg")
-                        foto.name = username + ".jpg"
-                        # save foto in static/archivos
-                        path = default_storage.save(
-                            foto.name, ContentFile(foto.read()))
-                        os.path.join(settings.MEDIA_ROOT, path)
-                        check = True
+                only_username = False
+                if(foto != None and os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
+                    os.remove("app/static/archivos/" +
+                                request.user.username + ".jpg")
+                    foto.name = username + ".jpg"
+                    # save foto in static/archivos
+                    path = default_storage.save(
+                        foto.name, ContentFile(foto.read()))
+                    os.path.join(settings.MEDIA_ROOT, path)
+                    check = True
 
-                    elif (foto != None and not os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
-                        foto.name = username + ".jpg"
-                        # save foto in static/archivos
-                        path = default_storage.save(
-                            foto.name, ContentFile(foto.read()))
-                        os.path.join(settings.MEDIA_ROOT, path)
-                        check = True
+                elif (foto != None and not os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
+                    foto.name = username + ".jpg"
+                    # save foto in static/archivos
+                    path = default_storage.save(
+                        foto.name, ContentFile(foto.read()))
+                    os.path.join(settings.MEDIA_ROOT, path)
+                    check = True
 
-                except:
-                    pass
+                elif(foto == None and request.user.username != username and os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
+                    os.rename("app/static/archivos/" +
+                                request.user.username + ".jpg", "app/static/archivos/" + username + ".jpg")
+                    only_username = True
 
                 user_old = request.user
                 usuario_instancia = Usuario(
@@ -404,7 +412,11 @@ def actualizar_usuario(request):
                 try:
                     if(check):
                         Usuario.objects.filter(django_user=request.user).update(
-                            nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, foto=foto)
+                            nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, foto=foto)            
+                    elif(only_username):
+                        Usuario.objects.filter(django_user=request.user).update(
+                            nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, 
+                            foto=username+'.jpg')
                     else:
                         Usuario.objects.filter(django_user=request.user).update(
                             nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, foto=Usuario.objects.get(django_user=request.user).foto)
