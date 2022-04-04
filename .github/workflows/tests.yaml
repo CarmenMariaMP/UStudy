@@ -54,7 +54,9 @@ jobs:
       run: sudo apt-get install libpq-dev
     - name: Install dependencies
       run: pip install -r requirements.txt
-    - name: Make Migrations
+    - name: Make Migrations with Merge
+      run: yes | python manage.py makemigrations --merge
+    - name: Make Migrations Normal
       run: python manage.py makemigrations
     - name: Migrate Database
       run: python manage.py migrate
@@ -62,3 +64,7 @@ jobs:
       run: python manage.py loaddata datos_populate_asignaturas.json
     - name: Run Tests
       run: python manage.py test
+    # - name: Run Tests and Analize Coverage
+    #   run: coverage run -m test
+    # - name: Report Coverage
+    #   run: coverage report -m
