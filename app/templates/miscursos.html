@@ -24,13 +24,12 @@
     </form> -->
     <br>
     <div class="container">
-
         <br>
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
                     {%if page_obj|length > 0 %} {% for cursoYvaloracion in page_obj %}
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-5">
                         <div class="card h-100 box-shadow border-info standard_web_color">
                             <div class="card-body standard_web_color ">
                                 <h5 class="card-title text-truncate">Asignatura: {{cursoYvaloracion.0.asignatura.nombre}}</h5>

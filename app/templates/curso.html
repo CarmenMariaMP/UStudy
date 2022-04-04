@@ -48,15 +48,12 @@
             <li class="list-group-item" style="border-radius: 25px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
                 {% if ".mp4" in archivo.ruta.url|slice:"-4:"%}
                 <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="26px" height="19px">
-                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> 
                 {% elif ".pdf" in archivo.ruta.url|slice:"-4:"%}
                 <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="26px" height="26px">
                 {% elif ".txt" in archivo.ruta.url|slice:"-4:"%}
                 <img src="https://i.postimg.cc/LsGDHX6t/txt-icon.png" width="26px" height="26px">
-                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
                 {% else %}
                 <img src="https://i.postimg.cc/nh4pKsNz/imagen-icon.png" width="26px" height="26px">
-                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
                 {% endif %} 
 
                 <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
