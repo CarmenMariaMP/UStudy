@@ -338,35 +338,11 @@ def actualizar_usuario(request):
                     return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, 'url': url})
                 if foto != None:
                     if not any(foto.name[-4:] in item for item in ['.jpg', '.png', 'jpeg']):
-                        form.add_error("foto", "Formato de imagen no válido")
+                        form.add_error("foto", "Formato de imagen no válido, solo se permiten .jpg, .png y .jpeg")
                         return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, 'url': url})
 
-                check = False
-                only_username = False
-                if(foto != None and os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
-                    os.remove("app/static/archivos/" +
-                                request.user.username + ".jpg")
-                    foto.name = username + ".jpg"
-                    # save foto in static/archivos
-                    path = default_storage.save(
-                        foto.name, ContentFile(foto.read()))
-                    os.path.join(settings.MEDIA_ROOT, path)
-                    check = True
 
-                elif (foto != None and not os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
-                    foto.name = username + ".jpg"
-                    # save foto in static/archivos
-                    path = default_storage.save(
-                        foto.name, ContentFile(foto.read()))
-                    os.path.join(settings.MEDIA_ROOT, path)
-                    check = True
-
-                elif(foto == None and request.user.username != username and os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
-                    os.rename("app/static/archivos/" +
-                                request.user.username + ".jpg", "app/static/archivos/" + username + ".jpg")
-                    only_username = True
-
-                user_old = request.user
+                user_instancia = User(username=request.user.username, password=contrasena)
                 usuario_instancia = Usuario(
                     nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, foto=foto)
 
@@ -387,11 +363,11 @@ def actualizar_usuario(request):
                 try:
                     comprobacion = 0
                     # validación usuario django
-                    if(user_old.username != username and User.objects.filter(username=username).exists()):
+                    if(user_instancia.username != username and User.objects.filter(username=username).exists()):
                         form.add_error("username", "Este username ya existe")
                         return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, "url": url})
 
-                    elif(user_old.username != username and not User.objects.filter(username=username).exists()):
+                    elif(user_instancia.username != username and not User.objects.filter(username=username).exists()):
                         request.user.username = username
                         comprobacion += 1
 
@@ -408,6 +384,31 @@ def actualizar_usuario(request):
 
                     return render(request, 'actualizar.html', {"mensaje_error": True, "form": form, "url": url})
 
+                check = False
+                only_username = False
+                if(foto != None and os.path.exists('app/static/archivos/'+user_instancia.username+'.jpg')):
+                    os.remove("app/static/archivos/" +
+                                user_instancia.username + ".jpg")
+                    foto.name = username + ".jpg"
+                    # save foto in static/archivos
+                    path = default_storage.save(
+                        foto.name, ContentFile(foto.read()))
+                    os.path.join(settings.MEDIA_ROOT, path)
+                    check = True
+
+                elif (foto != None and not os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
+                    foto.name = username + ".jpg"
+                    # save foto in static/archivos
+                    path = default_storage.save(
+                        foto.name, ContentFile(foto.read()))
+                    os.path.join(settings.MEDIA_ROOT, path)
+                    check = True
+                    
+                   
+                elif (foto == None and user_instancia.username != username and os.path.exists('app/static/archivos/'+user_instancia.username+'.jpg')):
+                    os.rename("app/static/archivos/" +
+                                user_instancia.username + ".jpg", "app/static/archivos/" + username + ".jpg")
+                    only_username = True
                 # actualizar usuario Ustudy
                 try:
                     if(check):
