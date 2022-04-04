@@ -346,7 +346,8 @@ class ArchivoModelTests(TestCase):
         with self.assertRaises(Exception) as context:
             fecha = datetime.datetime.now().replace(tzinfo=timezone.utc)
             Archivo.objects.create(nombre='a'*201, fecha_publicacion=fecha, curso=Curso.objects.first(), ruta='ruta.pdf')
-        self.assertTrue('el valor es demasiado largo para el tipo character varying(200)' in str(context.exception))
+        self.assertTrue('el valor es demasiado largo para el tipo character varying(200)' in str(context.exception) or 
+        "value too long for type character varying(200)" in str(context.exception))
 
 class ReporteModelTest(TestCase):
     @classmethod
