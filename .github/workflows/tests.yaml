@@ -62,5 +62,7 @@ jobs:
       run: python manage.py migrate
     - name: Populate Database
       run: python manage.py loaddata datos_populate_asignaturas.json
-    - name: Run Tests
-      run: python manage.py test
+    - name: Run Tests and Analize Coverage
+      run: python coverage run -m manage.py test
+    - name: Report Coverage
+      run: python coverage report -m
