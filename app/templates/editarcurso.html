@@ -10,9 +10,11 @@
     <h2>Editar curso</h2>
 </div>
 <br>
-<form action="" style="text-align: center;" method="POST">
+<form action="" class="form-signin container col-auto"
+style="width: 30%; margin-top: 20px"
+method="POST">
     {% csrf_token %} {{ form.as_p }}
-    <button class="btn boton btn-info" type="submit">Editar</button>
+    <button class="btn boton btn-info btn-block" type="submit">Editar</button>
 </form>
 {% endblock %}
 

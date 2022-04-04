@@ -1,3 +1,4 @@
+wheel
 psycopg2
 django-environ
 python-decouple

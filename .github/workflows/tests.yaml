@@ -31,14 +31,18 @@ jobs:
 
     services:
       postgres:
-        image: postgres:10.8
+        image: postgres:latest
         env:
-          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASS }}
+          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
           POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
         ports:
           - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v1
@@ -50,6 +54,8 @@ jobs:
       run: sudo apt-get install libpq-dev
     - name: Install dependencies
       run: pip install -r requirements.txt
+    - name: Make Migrations
+      run: python manage.py makemigrations
     - name: Migrate Database
       run: python manage.py migrate
     - name: Populate Database

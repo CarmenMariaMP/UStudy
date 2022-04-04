@@ -21,6 +21,7 @@
             <a href="/"><img src="{% static 'media/logo.png' %}" width="72" height="72"></a>
         </div>
         <div class="stepwizard center-block">
+            <br>
             <div class="stepwizard-row setup-panel">
                 <div class="stepwizard-step col-xs-4">
                     <a href="#step-1" type="button" class="btn btn-info btn-circle">1</a>
@@ -71,7 +72,9 @@
                         </div>
                     </div>
                     <div class='row'>
-                        <button id="siguiente" class="btn btn-info nextBtn btn-lg center-block" type="button">Siguiente</button>
+                        <button id="siguiente" class="btn boton btn-info nextBtn btn-lg center-block" type="button">Siguiente</button>
+                        <br>
+                        <a class="btn boton btn-info btn-lg center-block" type="button" href="/" style="width: 40%; ">Cancelar</a>
                     </div>
                 </div>
             </div>
@@ -90,6 +93,8 @@
                             <div class="alert-danger">{{ form.email_academico.errors }}</div>
                         </div>
                         <button id="siguiente2" class="btn btn-info nextBtn btn-lg center-block" type="button">Siguiente</button>
+                        <br>
+                        <a class="btn boton btn-info btn-lg center-block" type="button" href="/" style="width: 40%; ">Cancelar</a>  
                     </div>
                 </div>
             </div>
@@ -107,7 +112,10 @@
                             {{ form.descripcion }}
                             <div class="alert-danger">{{ form.descripcion.errors }}</div>
                         </div>
+                        
                         <button class="btn btn-info nextBtn btn-lg center-block" type="submit">Registrarme</button>
+                        <br>
+                        <a class="btn boton btn-info btn-lg center-block" type="button" href="/" style="width: 40%; ">Cancelar</a>
                     </div>
                 </div>
             </div>

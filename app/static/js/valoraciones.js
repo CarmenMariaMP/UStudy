@@ -4,7 +4,7 @@ const tres = document.getElementById("third");
 const cuatro = document.getElementById("fourth");
 const cinco = document.getElementById("fifth");
 
-var valoraciona = valoracion
+var valoraciona = valoracionUsuario
 const form = document.querySelector(".rate-form")
 const confirmBox = document.getElementById("confirma-valoracion-box")
 const csrf = document.getElementsByName("csrfmiddlewaretoken") 
