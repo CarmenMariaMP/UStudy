@@ -278,7 +278,7 @@ class CursoModelTests(TestCase):
             fecha = datetime.datetime.now().date()
             Curso.objects.create(nombre="a"*101, descripcion="Descripcion1", fecha_publicacion=fecha, asignatura=Asignatura.objects.first(), propietario=Usuario.objects.first())
         self.assertTrue('el valor es demasiado largo para el tipo character varying(100)' in str(context.exception) or
-        "value too long for type character varying(100)" in str(context.exception))
+        'value too long for type character varying(100)' in str(context.exception))
 
 
     ## Longitud de descripcion mayor de 500 caracteres
@@ -385,7 +385,7 @@ class ReporteModelTest(TestCase):
             Reporte.objects.create(descripcion=None, fecha=datetime.datetime(2022, 3, 30, 0, 0, 0).replace(tzinfo=timezone.utc), tipo=Reporte.TipoReporte["PLAGIO"], usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
         except Exception as e:
             self.assertTrue("el valor nulo en la columna «descripcion» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0] or
-             'null value in column "descripcion"  of relation "app_reporte" violates not-null constraint' in e.args[0])
+             'null value in column "descripcion" of relation "app_reporte" violates not-null constraint' in e.args[0])
             
     def test_crear_reporte_fecha_vacia(self):
         try:
@@ -399,7 +399,7 @@ class ReporteModelTest(TestCase):
             Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime(2022, 3, 30, 0, 0, 0).replace(tzinfo=timezone.utc), tipo=None, usuario=Usuario.objects.first(), archivo=Archivo.objects.first())
         except Exception as e:
             self.assertTrue("el valor nulo en la columna «tipo» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0] or
-             'null value in column "tipo"  of relation "app_reporte2 violates not-null constraint' in e.args[0])
+             'null value in column "tipo" of relation "app_reporte" violates not-null constraint' in e.args[0])
             
     def test_crear_reporte_usuario_vacio(self):
         try:
