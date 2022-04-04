@@ -1,8 +1,6 @@
-from select import select
-from logging import PlaceHolder
 from django import forms
-from app.models import *
-from django.forms import CharField, ModelForm
+from app.models import Asignatura,Curso,Usuario
+from django.forms import ModelForm
 
 def get_choices():
     try:
@@ -46,13 +44,23 @@ class UsuarioForm(forms.Form):
     descripcion = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción ...'}))
 
 
+class CursoEditForm(ModelForm):
+ 
+    def __init__(self,  *args, **kwargs):
+        super(CursoEditForm, self).__init__(*args, **kwargs)
+        self.fields['nombre'].error_messages['required'] = 'Este campo es obligatorio'
+        self.fields['descripcion'].error_messages['required'] = 'Este campo es obligatorio'    
+    class Meta:
+        model = Curso
+        fields = ('nombre', 'descripcion')
+
 class CursoForm(ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super(CursoForm, self).__init__(*args, **kwargs)
         titulacion_user = Usuario.objects.get(django_user=user).titulacion
         asignaturas = Asignatura.objects.filter(titulacion=titulacion_user)
-        asignaturas_choices = tuple((a.id, a.nombre) for a in asignaturas)
+        # asignaturas_choices = tuple((a.id, a.nombre) for a in asignaturas)
         # asignatura = forms.CharField(
         #     label='Elige', widget=forms.Select(choices=asignaturas))
         self.fields['asignatura'] = AsignaturaModelChoiceField(

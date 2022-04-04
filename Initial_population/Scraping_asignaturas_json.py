@@ -1,7 +1,6 @@
-import bs4 as bs 
+import bs4 as bs
 import urllib.request
 import json
-import io
 
 
 url_list = ['grado-en-ingenieria-informatica-ingenieria-del-software#edit-group-plani', 'doble-grado-en-derecho-y-gestion-y-administracion-publica#edit-group-plani',
@@ -14,7 +13,7 @@ url_list = ['grado-en-ingenieria-informatica-ingenieria-del-software#edit-group-
 
 def scraping_asignaturas():
         json_fixture = "["
-        id = 1000
+        id_poblacion = 1000
         counter_carreras = 1
         for url in url_list:
                 source =  urllib.request.urlopen("https://www.us.es/estudiar/que-estudiar/oferta-de-grados/" + url).read()
@@ -26,16 +25,16 @@ def scraping_asignaturas():
                         curso = str.strip(asignatura.find("td", class_ = "views-field-field-cur-numcur").getText())
                         title = str.strip(asignatura.find("td", class_ = "views-field views-field-title").find("a").getText())
                         if title!= "Trabajo Fin de Grado":
-                                json_fixture = json_fixture + '{ "model": "app.asignatura", "pk":' + str(id) + ', "fields": {"nombre": "'+ title + '", "titulacion": "'+ asignatura_name.strip() + '", "anyo": '+ curso + '} },'
+                                json_fixture = json_fixture + '{ "model": "app.asignatura", "pk":' + str(id_poblacion) + ', "fields": {"nombre": "'+ title + '", "titulacion": "'+ asignatura_name.strip() + '", "anyo": '+ curso + '} },'
                                 json_fixture = str.join("", json_fixture.splitlines())
-                        id = id+1
+                        id_poblacion = id_poblacion+1
                 print(f"{counter_carreras}/12 ")
                 counter_carreras +=1
 
         json_fixture = json_fixture[:-1]
-        json_fixture = json_fixture + "]" 
+        json_fixture = json_fixture + "]"
         
-        json_data = json.loads(json_fixture)   
+        json_data = json.loads(json_fixture)
         with open('datos_populate_asignaturas.json', 'w', encoding='utf-8') as f:
                 json.dump(json_data, f, ensure_ascii=False, indent=4)
 scraping_asignaturas()

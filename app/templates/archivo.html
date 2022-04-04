@@ -122,6 +122,25 @@
                     </div>
                 </div>
             </div>
+
+            
+            {% endif %}
+          </div>
+          <div class="col-md-4">
+            <div class="card" style="margin-top: 30px;">
+              <h2>Archivos del curso</h2>
+              <ul>
+                {% for archivo in contenido_curso %}
+                <li style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"><a
+                    href="/curso/{{curso.id}}/archivo/{{archivo.id}}">{{archivo.nombre}}</a></li>
+                {% endfor %}
+              </ul>
+              <input class="btn boton col-sm-12" style="float:right;" type="button" class="atras" value="Atrás"
+                onclick="location.href = '/curso/{{curso.id}}'">
+            </div>
+          </div>
+
+          
         </div>
         {% else %}
         <div>
