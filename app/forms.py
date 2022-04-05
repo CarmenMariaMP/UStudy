@@ -39,7 +39,7 @@ class UsuarioForm(forms.Form):
     name = forms.CharField(max_length=40, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}))
     surname = forms.CharField(max_length=40, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellidos'}))
     email = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'user@domain.com'}))
-    email_academico = forms.EmailField(max_length=254 ,required=True, disabled=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'uvus@alum.us.es'}))
+    email_academico = forms.EmailField(max_length=254 ,required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'uvus@alum.us.es'}))
     titulacion = forms.ChoiceField(choices=opciones, required=True, widget=forms.Select(attrs={'class': 'form-control'}))
     descripcion = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción ...'}))
 
