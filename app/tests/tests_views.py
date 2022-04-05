@@ -1,6 +1,8 @@
 from django.test import TestCase, Client
-from app.models import User,Usuario
+from app.models import User,Usuario,Curso,Asignatura
 import json
+import datetime
+from datetime import timezone
 
 class InicioViewTests(TestCase):
 
@@ -120,3 +122,145 @@ class CrearCursoViewTests(TestCase):
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response, 'inicio.html')
         
+
+class CursosDisponiblesViewTests(TestCase):
+    
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1', password='pass')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        
+        
+    def test_courses_available_view(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        response = client.get('/cursosdisponibles', follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'cursosdisponibles.html')
+        
+    
+    def test_create_course_available_view_not_logged(self):
+        client = Client()
+        response = client.get('/cursosdisponibles', follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'login.html')
+        
+
+
+class MisCursosViewTests(TestCase):
+    
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1', password='pass')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        
+        
+    def test_my_courses_view(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        response = client.get('/miscursos', follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'miscursos.html')
+        
+    
+    def test_my_courses_view_not_logged(self):
+        client = Client()
+        response = client.get('/miscursos', follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'login.html')
+        
+
+
+class CursoViewTests(TestCase):
+    
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1', password='pass')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        
+        
+        user2 = User.objects.create(username='User2', password='pass')
+        usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
+                                         email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
+        
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
+        
+    def test_course_view(self):
+        client = Client()
+        client.force_login(User.objects.get(username='User2'))
+        curso_id = Curso.objects.first().id
+        response = client.get('/curso/'+str(curso_id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'curso.html')
+        
+    def test_course_view_not_same_titulation(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        curso_id = Curso.objects.first().id
+        response = client.get('/curso/'+str(curso_id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'cursosdisponibles.html')        
+    
+    def test_course_view_not_logged(self):
+        client = Client()
+        curso_id = Curso.objects.first().id
+        response = client.get('/curso/'+str(curso_id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'inicio.html')
+        
+
+'''
+class ArchivoViewTests(TestCase):
+    
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1', password='pass')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        
+        
+        user2 = User.objects.create(username='User2', password='pass')
+        usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
+                                         email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
+        
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
+        
+    def test_file_view(self):
+        client = Client()
+        client.force_login(User.objects.get(username='User2'))
+        curso_id = Curso.objects.first().id
+        response = client.get('/curso/'+str(curso_id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'curso.html')
+        
+    def test_file_view_not_same_titulation(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        curso_id = Curso.objects.first().id
+        response = client.get('/curso/'+str(curso_id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'cursosdisponibles.html')        
+    
+    def test_course_view_not_logged(self):
+        client = Client()
+        curso_id = Curso.objects.first().id
+        response = client.get('/curso/'+str(curso_id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'inicio.html')
+        
+'''
