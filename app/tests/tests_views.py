@@ -286,3 +286,28 @@ class LoginTestView(TestCase):
         response = client.post('/login/', data={"username": "User1", "contrasena": "pass"}, follow=True)
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response,'miscursos.html')
+
+class borrarArchivoTestView(TestCase):
+    
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        fecha = datetime.datetime.now().date()
+        user = User.objects.create(username='User1')
+        user.set_password('pass')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=fecha, asignatura=asignatura, propietario=usuario)
+        Archivo.objects.create(nombre='Archivo1', fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), curso=curso, ruta='ruta.pdf')
+        
+    def test_borrar_archivo_positive(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        response = client.get('/curso/'+str(Curso.objects.first().id)+'/'+str(Archivo.objects.first().id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertRedirects(response,'/curso/'+str(Curso.objects.first().id),fetch_redirect_response=False)
+    
+    
