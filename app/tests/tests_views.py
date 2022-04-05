@@ -93,9 +93,10 @@ class CrearCursoViewTests(TestCase):
     @classmethod
     def setUp(self):
         #Instanciar objetos sin modificar que se usan en todos los métodos
+        Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         user = User.objects.create(username='User1', password='pass')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         email_academico='barranco@alum.us.es', titulacion='Titulacion1',
                                          descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
         
@@ -106,15 +107,16 @@ class CrearCursoViewTests(TestCase):
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response, 'crearcurso.html')
         
-    '''
+
     def test_create_course_post_view(self):
+        
         client = Client()
         client.force_login(User.objects.first())
         response = client.get('/crearcurso', follow=True)
-        response = client.post('/crearcurso/', data={"nombre": "Curso de prueba", "descripcion": "Esto es una descripción de prueba", "asignatura": "1"})
-        self.assertEquals(response.status_code,200)
-        self.assertTemplateUsed(response, 'inicio_profesor.html')
-    '''
+        response = client.post('/crearcurso/', data={"nombre": "Curso de prueba", "descripcion": "Esto es una descripción de prueba", "asignatura": Asignatura.objects.first().id})
+        self.assertEquals(response.status_code,302)
+        self.assertRedirects(response,'/inicio_profesor',fetch_redirect_response=False)
+    
     
     def test_create_course_view_not_logged(self):
         client = Client()

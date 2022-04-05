@@ -105,8 +105,6 @@ def login_user(request):
 
             usuario_autenticado = authenticate(
                 username=usuario, password=contrasena)
-
-            print(usuario_autenticado)
             if usuario_autenticado is not None:
                 usuario = usuario_autenticado.usuario
                 login(request, usuario_autenticado)
@@ -228,7 +226,6 @@ def crearcurso(request):
                 curso.propietario = Usuario.objects.get(
                     django_user=request.user)
                 curso.save()
-
                 return redirect('/inicio_profesor')
             else:
                 return render(request, 'crearcurso.html', {"form": form})
