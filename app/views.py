@@ -3,7 +3,8 @@ from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
-from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, GetOrder, User
+from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User
+from app.paypal import GetOrder
 from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm
 import json
 import os
