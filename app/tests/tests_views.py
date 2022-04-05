@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from app.models import User,Usuario,Curso,Asignatura
+from app.models import User,Usuario,Curso,Asignatura,Archivo
 import json
 import datetime
 from datetime import timezone
@@ -220,7 +220,7 @@ class CursoViewTests(TestCase):
         self.assertTemplateUsed(response, 'inicio.html')
         
 
-'''
+
 class ArchivoViewTests(TestCase):
     
     @classmethod
@@ -239,28 +239,22 @@ class ArchivoViewTests(TestCase):
         
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
+        archivo = Archivo.objects.create(nombre='Archivo1', fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), curso=curso, ruta='ruta.pdf')
         
     def test_file_view(self):
         client = Client()
         client.force_login(User.objects.get(username='User2'))
         curso_id = Curso.objects.first().id
-        response = client.get('/curso/'+str(curso_id), follow=True)
+        archivo_id = Archivo.objects.first().id
+        response = client.get('/curso/'+str(curso_id)+"/archivo/"+str(archivo_id), follow=True)
         self.assertEquals(response.status_code,200)
-        self.assertTemplateUsed(response, 'curso.html')
+        self.assertTemplateUsed(response, 'archivo.html')
         
-    def test_file_view_not_same_titulation(self):
-        client = Client()
-        client.force_login(User.objects.first())
-        curso_id = Curso.objects.first().id
-        response = client.get('/curso/'+str(curso_id), follow=True)
-        self.assertEquals(response.status_code,200)
-        self.assertTemplateUsed(response, 'cursosdisponibles.html')        
     
-    def test_course_view_not_logged(self):
+    def test_file_view_not_logged(self):
         client = Client()
         curso_id = Curso.objects.first().id
         response = client.get('/curso/'+str(curso_id), follow=True)
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response, 'inicio.html')
         
-'''

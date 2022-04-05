@@ -15,7 +15,7 @@ from datetime import timezone
 ## https://developer.mozilla.org/es/docs/Learn/Server-side/Django/Testing
 
 
-    
+
 class AsignaturaModelTests(TestCase):
 
     @classmethod
@@ -63,7 +63,6 @@ class AsignaturaModelTests(TestCase):
         try:
             Asignatura.objects.create(nombre='Nombre5', titulacion=None, anyo=2020)
         except Exception as e:
-            print(e.args[0])
             self.assertTrue("el valor nulo en la columna «titulacion» de la relación «app_asignatura» viola la restricción de no nulo" in e.args[0] or
             'null value in column "titulacion" of relation "app_asignatura" violates not-null constraint' in e.args[0])
 
@@ -416,4 +415,3 @@ class ReporteModelTest(TestCase):
             self.assertTrue("el valor nulo en la columna «archivo_id» de la relación «app_reporte» viola la restricción de no nulo" in e.args[0] or
             'null value in column "archivo_id"  of relation "app_reporte" violates not-null constraint' in e.args[0])
             
-    
