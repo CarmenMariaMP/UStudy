@@ -11,8 +11,8 @@ import requests
 
 BASEURL = 'http://localhost:8000/login/'
 BASEURLSIGN = 'http://localhost:8000/registro/'
-BASEURLCURSO ='http://localhost:8000/crearcurso/'
-
+BASEURLCURSO = 'http://localhost:8000/crearcurso/'
+BASEURLPROFILE = 'http://localhost:8000/perfil/'
 
 
 ## Test de login
@@ -193,3 +193,129 @@ class TestCrearCurso(LiveServerTestCase):
         time.sleep(3)
 
         assert '/crearcurso' in driver.current_url
+
+    def test_crearcuso_exitoso(self):
+        option = webdriver.ChromeOptions()
+        option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=option)
+
+        driver.get(BASEURL)
+
+
+
+        username = driver.find_element_by_name('username')
+        contrasena = driver.find_element_by_name('contrasena')
+
+        username.send_keys('prueba')
+        contrasena.send_keys('contraseña',Keys.ENTER)
+
+
+        driver.get(BASEURLCURSO)
+
+        nombre = driver.find_element_by_name('nombre')
+        descripcion = driver.find_element_by_name('descripcion')
+        asignatura = driver.find_element_by_name('asignatura')
+
+        nombre.send_keys('Aprueba Matemáticas Discretas')
+        descripcion.send_keys('Con este curso aprobarás seguro')
+
+        drop = Select(asignatura)
+        drop.select_by_visible_text('Matemática Discreta')
+
+        time.sleep(2)
+
+        crear=driver.find_element_by_id('crear')
+        crear.click()
+
+        time.sleep(3)
+
+        assert '/inicio_profesor' in driver.current_url
+
+## Test de editar perfil
+class TestEditarPerfil(LiveServerTestCase):
+    def test_editarperfil_fallido(self):
+        option = webdriver.ChromeOptions()
+        option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=option)
+
+        driver.get(BASEURL)
+
+        username = driver.find_element_by_name('username')
+        contrasena = driver.find_element_by_name('contrasena')
+
+        username.send_keys('prueba')
+        contrasena.send_keys('contraseña',Keys.ENTER)
+
+        driver.get(BASEURLPROFILE)
+
+        editarPerfil=driver.find_element_by_id('editarPerfil')
+        editarPerfil.click()
+
+        foto = driver.find_element_by_name('foto')
+        username = driver.find_element_by_name('username')
+        nombre = driver.find_element_by_name('nombre')
+        apellidos = driver.find_element_by_name('apellidos')
+        contrasena = driver.find_element_by_name('contrasena')
+        confirmar_contrasena = driver.find_element_by_name('confirmar_contrasena')
+        descripcion = driver.find_element_by_name('descripcion')
+        email = driver.find_element_by_name('email')
+        titulacion = driver.find_element_by_name('titulacion')
+
+        username.clear()
+
+        actualizarBoton=driver.find_element_by_id('actualizarBoton')
+        actualizarBoton.click()
+
+        time.sleep(3)
+
+        assert '/actualizar_perfil' in driver.current_url
+    
+    def test_editarperfil_exitoso(self):
+        option = webdriver.ChromeOptions()
+        option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=option)
+
+        driver.get(BASEURL)
+
+        username = driver.find_element_by_name('username')
+        contrasena = driver.find_element_by_name('contrasena')
+
+        username.send_keys('prueba')
+        contrasena.send_keys('contraseña',Keys.ENTER)
+
+        driver.get(BASEURLPROFILE)
+
+        editarPerfil=driver.find_element_by_id('editarPerfil')
+        editarPerfil.click()
+
+        foto = driver.find_element_by_id('id_foto')
+        username = driver.find_element_by_name('username')
+        nombre = driver.find_element_by_name('nombre')
+        apellidos = driver.find_element_by_name('apellidos')
+        contrasena = driver.find_element_by_name('contrasena')
+        confirmar_contrasena = driver.find_element_by_name('confirmar_contrasena')
+        descripcion = driver.find_element_by_name('descripcion')
+        email = driver.find_element_by_name('email')
+        titulacion = driver.find_element_by_name('titulacion')
+
+        foto.send_keys("\\app\\tests\\archivos_prueba\\foto_perfil.jpg")
+        username.clear()
+        username.send_keys('usuarioTest')
+        nombre.clear()
+        nombre.send_keys('Manolo')
+        apellidos.clear()
+        apellidos.send_keys('García')
+        contrasena.clear()
+        contrasena.send_keys('contrasena')
+        confirmar_contrasena.send_keys('contrasena')
+        descripcion.clear()
+        descripcion.send_keys('Alumno dispuesto a enseñar con grandes calificaciones')
+        email.clear()
+        email.send_keys('manologarcia@gmail.com')
+
+        actualizarBoton=driver.find_element_by_id('actualizarBoton')
+        actualizarBoton.click()
+
+        time.sleep(3)
+
+        assert '/login' in driver.current_url
