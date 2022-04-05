@@ -260,3 +260,52 @@ class ArchivoViewTests(TestCase):
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response, 'inicio.html')
         
+
+class LogoutTestView(TestCase):
+    
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1', password='pass')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        
+    def test_logout_view_test(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        response = client.get('/logout/', follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'inicio.html')
+    
+    
+class LoginTestView(TestCase):
+    
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1')
+        user.set_password('pass')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        
+    def test_login_view_test_logged(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        response = client.get('/login/', follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'miscursos.html')
+    
+    def test_login_view_test_not_logged(self):
+        client = Client()
+        response = client.get('/login/', follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'login.html')
+    
+    def test_login_view_test_not_logged_to_logged(self):
+        client = Client()
+        response = client.post('/login/', data={"username": "User1", "contrasena": "pass"}, follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response,'miscursos.html')

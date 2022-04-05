@@ -105,6 +105,7 @@ def login_user(request):
 
             usuario_autenticado = authenticate(
                 username=usuario, password=contrasena)
+            
             if usuario_autenticado is not None:
                 usuario = usuario_autenticado.usuario
                 login(request, usuario_autenticado)
