@@ -28,20 +28,6 @@ class InicioViewTests(TestCase):
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response, 'miscursos.html')
 
-class LoginViewTests(TestCase):
-
-    @classmethod
-    def setUp(self):
-        #Instanciar objetos sin modificar que se usan en todos los métodos
-        user = User.objects.create(username='User1', password='pass')
-        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', email_academico='barranco@alum.us.es', titulacion='Titulación 1',descripcion='Descripcion 1', 
-        foto='foto.jpg', dinero=9.53, django_user=user)
-
-    # muestra vista de login al hacer consulta get
-    def test_login_view(self):
-        #TODO
-        pass
-
 class PerfilUsuarioViewTests(TestCase):
     
     @classmethod
@@ -122,8 +108,7 @@ class CrearCursoViewTests(TestCase):
         client = Client()
         response = client.get('/crearcurso', follow=True)
         self.assertEquals(response.status_code,200)
-        self.assertTemplateUsed(response, 'inicio.html')
-        
+        self.assertTemplateUsed(response, 'inicio.html')   
 
 class CursosDisponiblesViewTests(TestCase):
     
@@ -149,9 +134,7 @@ class CursosDisponiblesViewTests(TestCase):
         response = client.get('/cursosdisponibles', follow=True)
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response, 'login.html')
-        
-
-
+     
 class MisCursosViewTests(TestCase):
     
     @classmethod
@@ -177,8 +160,6 @@ class MisCursosViewTests(TestCase):
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response, 'login.html')
         
-
-
 class CursoViewTests(TestCase):
     
     @classmethod
@@ -221,8 +202,6 @@ class CursoViewTests(TestCase):
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response, 'inicio.html')
         
-
-
 class ArchivoViewTests(TestCase):
     
     @classmethod
@@ -260,7 +239,6 @@ class ArchivoViewTests(TestCase):
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response, 'inicio.html')
         
-
 class LogoutTestView(TestCase):
     
     @classmethod
@@ -277,7 +255,6 @@ class LogoutTestView(TestCase):
         response = client.get('/logout/', follow=True)
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response, 'inicio.html')
-    
     
 class LoginTestView(TestCase):
     
