@@ -13,6 +13,7 @@ BASEURL = 'http://localhost:8000/login/'
 BASEURLSIGN = 'http://localhost:8000/registro/'
 BASEURLCURSO = 'http://localhost:8000/crearcurso/'
 BASEURLPROFILE = 'http://localhost:8000/perfil/'
+BASEURLCOURSES = 'http://localhost:8000/cursosdisponibles'
 
 
 ## Test de login
@@ -32,6 +33,26 @@ class TestLogin(LiveServerTestCase):
 
         username.send_keys('l@alum.us.es')
         contrasena.send_keys('prueba',Keys.ENTER)
+
+        time.sleep(5)
+
+        assert '/login' in driver.current_url
+
+    def test_login_vacio(self):
+        option = webdriver.ChromeOptions()
+        option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=option)
+    
+        driver.get(BASEURL)
+
+    
+
+        
+        username = driver.find_element_by_name('username')
+        contrasena = driver.find_element_by_name('contrasena')
+
+        username.send_keys('')
+        contrasena.send_keys('',Keys.ENTER)
 
         time.sleep(5)
 
@@ -288,7 +309,6 @@ class TestEditarPerfil(LiveServerTestCase):
         editarPerfil=driver.find_element_by_id('editarPerfil')
         editarPerfil.click()
 
-        foto = driver.find_element_by_id('id_foto')
         username = driver.find_element_by_name('username')
         nombre = driver.find_element_by_name('nombre')
         apellidos = driver.find_element_by_name('apellidos')
@@ -298,16 +318,13 @@ class TestEditarPerfil(LiveServerTestCase):
         email = driver.find_element_by_name('email')
         titulacion = driver.find_element_by_name('titulacion')
 
-        foto.send_keys("\\app\\tests\\archivos_prueba\\foto_perfil.jpg")
-        username.clear()
-        username.send_keys('usuarioTest')
         nombre.clear()
         nombre.send_keys('Manolo')
         apellidos.clear()
         apellidos.send_keys('García')
         contrasena.clear()
-        contrasena.send_keys('contrasena')
-        confirmar_contrasena.send_keys('contrasena')
+        contrasena.send_keys('contraseña')
+        confirmar_contrasena.send_keys('contraseña')
         descripcion.clear()
         descripcion.send_keys('Alumno dispuesto a enseñar con grandes calificaciones')
         email.clear()
@@ -319,3 +336,113 @@ class TestEditarPerfil(LiveServerTestCase):
         time.sleep(3)
 
         assert '/login' in driver.current_url
+
+## Test de suscribirse a un curso
+class TestEditarCurso(LiveServerTestCase):
+    def test_editarcurso_exitoso(self):
+        option = webdriver.ChromeOptions()
+        option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=option)
+
+        driver.get(BASEURL)
+
+        username = driver.find_element_by_name('username')
+        contrasena = driver.find_element_by_name('contrasena')
+
+        username.send_keys('prueba')
+        contrasena.send_keys('contraseña',Keys.ENTER)
+
+        driver.get(BASEURLCURSO)
+
+        nombre = driver.find_element_by_name('nombre')
+        descripcion = driver.find_element_by_name('descripcion')
+        asignatura = driver.find_element_by_name('asignatura')
+
+        nombre.send_keys('¡Un nuevo curso ha comenzado!')
+        descripcion.send_keys('Esta descripción es emocionante')
+
+        drop = Select(asignatura)
+        drop.select_by_visible_text('Lógica Informática')
+
+        time.sleep(2)
+
+        crear=driver.find_element_by_id('crear')
+        crear.click()
+
+        time.sleep(3)
+
+        editarCurso = driver.find_element_by_id('editarCurso_9')
+        editarCurso.click()
+
+        nombre = driver.find_element_by_name('nombre')
+        descripcion = driver.find_element_by_name('descripcion')
+        
+        time.sleep(2)
+
+        nombre.clear()
+        nombre.send_keys('¡Un curso ha sido editado!')
+        descripcion.clear()
+        descripcion.send_keys('Esta descripción es genial :)')
+
+        time.sleep(1)
+
+        finalizarEditar = driver.find_element_by_id('finalizarEditar')
+        finalizarEditar.click()
+
+        time.sleep(3)
+
+        assert '/inicio_profesor' in driver.current_url
+
+    def test_editarcurso_fallido(self):
+        option = webdriver.ChromeOptions()
+        option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
+        driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=option)
+
+        driver.get(BASEURL)
+
+        username = driver.find_element_by_name('username')
+        contrasena = driver.find_element_by_name('contrasena')
+
+        username.send_keys('prueba')
+        contrasena.send_keys('contraseña',Keys.ENTER)
+
+        driver.get(BASEURLCURSO)
+
+        nombre = driver.find_element_by_name('nombre')
+        descripcion = driver.find_element_by_name('descripcion')
+        asignatura = driver.find_element_by_name('asignatura')
+
+        nombre.send_keys('¡Un nuevo curso ha comenzado!')
+        descripcion.send_keys('Esta descripción es emocionante')
+
+        drop = Select(asignatura)
+        drop.select_by_visible_text('Lógica Informática')
+
+        time.sleep(2)
+
+        crear=driver.find_element_by_id('crear')
+        crear.click()
+
+        time.sleep(3)
+
+        editarCurso = driver.find_element_by_id('editarCurso_9')
+        editarCurso.click()
+
+        nombre = driver.find_element_by_name('nombre')
+        descripcion = driver.find_element_by_name('descripcion')
+        
+        time.sleep(2)
+
+        nombre.clear()
+        nombre.send_keys('')
+        descripcion.clear()
+        descripcion.send_keys('Esta descripción es genial :)')
+
+        time.sleep(1)
+
+        finalizarEditar = driver.find_element_by_id('finalizarEditar')
+        finalizarEditar.click()
+
+        time.sleep(3)
+
+        assert '/editarcurso/9' in driver.current_url
