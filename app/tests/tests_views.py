@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from app.models import User,Usuario,Curso,Asignatura,Archivo
+from app.models import Reporte, User,Usuario,Curso,Asignatura,Archivo
 import json
 import datetime
 from datetime import timezone
@@ -402,3 +402,34 @@ class EditarCursoTestView(TestCase):
         response = client.post('/editarcurso/'+str(curso_id), data={"nombres": "Nuevo nombre", "descripcion": "Nueva descripcion"}, follow=True)
         self.assertEquals(response.status_code,200)
         self.assertRedirects(response,'/login/',fetch_redirect_response=False)
+
+class borrarReporteTestView(TestCase):
+    
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        fecha = datetime.datetime.now().date()
+        user = User.objects.create(username='User1')
+        user.set_password('pass')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=fecha, asignatura=asignatura, propietario=usuario)
+        archivo = Archivo.objects.create(nombre='Archivo1', fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), curso=curso, ruta='ruta.pdf')
+        Reporte.objects.create(descripcion="Descripcion1", fecha=datetime.datetime.now().replace(tzinfo=timezone.utc), tipo=Reporte.TipoReporte["PLAGIO"], usuario=usuario, archivo=archivo)
+
+        
+    def test_borrar_reporte_positive(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        response = client.get('/curso/'+str(Curso.objects.first().id)+'/archivo/'+str(Archivo.objects.first().id)+'/reporte/'+str(Reporte.objects.first().id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertRedirects(response,'/curso/'+str(Curso.objects.first().id)+'/archivo/'+str(Archivo.objects.first().id),fetch_redirect_response=False)
+        
+class SubirContenidoTestView(TestCase):
+    
+    def test_upload_content_test(self):
+        client = Client()
+        self.assertTemplateUsed(client.get('/subir_contenido/'), 'subir_contenido.html')
