@@ -310,4 +310,95 @@ class borrarArchivoTestView(TestCase):
         self.assertEquals(response.status_code,200)
         self.assertRedirects(response,'/curso/'+str(Curso.objects.first().id),fetch_redirect_response=False)
     
+class ValorarCursoTestView(TestCase):
     
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1')
+        user.set_password('pass')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        
+        
+        user2 = User.objects.create(username='User2', password='pass')
+        usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
+                                         email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
+        
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
+        archivo = Archivo.objects.create(nombre='Archivo1', fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), curso=curso, ruta='ruta.pdf')
+        
+        
+    def test_rate_file_view(self):
+        client = Client()
+        client.force_login(User.objects.get(username='User2'))
+        curso_id = Curso.objects.first().id
+        response = client.post('/valorar_curso/', data={"id": str(curso_id), "valoracion": "5"}, follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTrue(response.content == b'{"succes": "true", "score": "5"}')
+        
+class EditarCursoTestView(TestCase):
+    
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1')
+        user.set_password('pass')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        
+        
+        user2 = User.objects.create(username='User2')
+        user.set_password('pass')
+        user.save()
+        usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
+                                         email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
+        
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
+        
+    def test_course_edit_view(self):
+        client = Client()
+        client.force_login(User.objects.get(username='User1'))
+        curso_id = Curso.objects.first().id
+        response = client.post('/editarcurso/'+str(curso_id), data={"nombre": "Nuevo nombre", "descripcion": "Nueva descripcion"}, follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertRedirects(response,'/inicio_profesor/',fetch_redirect_response=False)
+        
+    def test_course_edit_view_bad_form(self):
+        client = Client()
+        client.force_login(User.objects.get(username='User1'))
+        curso_id = Curso.objects.first().id
+        response = client.post('/editarcurso/'+str(curso_id), data={"nombres": "Nuevo nombre", "descripcion": "Nueva descripcion"}, follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'editarcurso.html')
+        
+    def test_course_edit_view_get(self):
+        client = Client()
+        client.force_login(User.objects.get(username='User1'))
+        curso_id = Curso.objects.first().id
+        response = client.get('/editarcurso/'+str(curso_id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'editarcurso.html')
+        
+    def test_course_edit_view_another_owner(self):
+        client = Client()
+        client.force_login(User.objects.get(username='User2'))
+        curso_id = Curso.objects.first().id
+        response = client.post('/editarcurso/'+str(curso_id), data={"nombres": "Nuevo nombre", "descripcion": "Nueva descripcion"}, follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertRedirects(response,'/miscursos/',fetch_redirect_response=False)
+        
+    def test_course_edit_view_not_logged(self):
+        client = Client()
+        curso_id = Curso.objects.first().id
+        response = client.post('/editarcurso/'+str(curso_id), data={"nombres": "Nuevo nombre", "descripcion": "Nueva descripcion"}, follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertRedirects(response,'/login/',fetch_redirect_response=False)
