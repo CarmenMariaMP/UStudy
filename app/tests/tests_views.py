@@ -4,6 +4,7 @@ import json
 import datetime
 from datetime import timezone
 
+
 class InicioViewTests(TestCase):
 
     @classmethod
@@ -433,3 +434,63 @@ class SubirContenidoTestView(TestCase):
     def test_upload_content_test(self):
         client = Client()
         self.assertTemplateUsed(client.get('/subir_contenido/'), 'subir_contenido.html')
+        
+class ErrorsTestView(TestCase):
+    
+    def test_error_404(self):
+        client = Client()
+        response = client.get('/error404/')
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'error.html')
+        
+    def test_error_403(self):
+        # TODO testear error 403
+        pass 
+        
+    def test_error_500(self):
+        # TODO testear error 500
+        pass
+
+class RegistroTestView(TestCase):
+    
+    def test_register_view_get(self):
+        client = Client()
+        response = client.get('/registro/')
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response, 'registro.html')
+    
+    def test_register_view_post(self):
+        client = Client()
+        data_form = {
+            "password": "passwd", 
+            "confirm_password": "passwd", 
+            "usename": "nomapedos", 
+            "name": "Nombre", 
+            "surname": "Apellidos", 
+            "email": "email@gmail.com", 
+            "email_academico": "email@alum.us.es", 
+            "titulacion": "Titulacion1", 
+            "descripcion": "descripcion", 
+            "dinero": "0.0"
+        }
+        response = client.post('/registro/', data=data_form, follow=True)
+        self.assertEquals(response.status_code,200)
+        #self.assertRedirects(response,'/login/',fetch_redirect_response=False) # TODO: Comprobar que redirige a login
+        
+    def test_register_view_post_different_passwords(self):
+        client = Client()
+        data_form = {
+            "password": "passwd", 
+            "confirm_password": "passwd1", 
+            "usename": "nomapedos", 
+            "name": "Nombre", 
+            "surname": "Apellidos", 
+            "email": "email@gmail.com", 
+            "email_academico": "email@alum.us.es", 
+            "titulacion": "Titulacion1", 
+            "descripcion": "descripcion", 
+            "dinero": "0.0"
+        }
+        response = client.post('/registro/', data=data_form, follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response,'registro.html')
