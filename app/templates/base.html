@@ -6,7 +6,7 @@
     <title>UStudy</title>
     {% load static %}
     <link href="{% static 'css/base.css' %}" rel="stylesheet" />
-    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="shortcut icon" type="image/png" href="{% static 'media/favicon.png' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    {% block contenido %}{% endblock %} 
+    {% block contenido %}{% endblock %}
 </body>
 <footer>
     {% block pie %}{% endblock %}

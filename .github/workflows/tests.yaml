@@ -31,14 +31,18 @@ jobs:
 
     services:
       postgres:
-        image: postgres:10.8
+        image: postgres:latest
         env:
-          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASS }}
+          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
           POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
         ports:
           - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v1
@@ -50,9 +54,24 @@ jobs:
       run: sudo apt-get install libpq-dev
     - name: Install dependencies
       run: pip install -r requirements.txt
+    - name: Make Migrations with Merge
+      run: yes | python manage.py makemigrations --merge
+    - name: Make Migrations Normal
+      run: python manage.py makemigrations
     - name: Migrate Database
       run: python manage.py migrate
     - name: Populate Database
       run: python manage.py loaddata datos_populate_asignaturas.json
     - name: Run Tests
       run: python manage.py test
+    - name: Run Tests and Analize Coverage
+      run: yes | coverage run --source . manage.py test -v 2
+    - name: Report Coverage
+      run: coverage report -m
+    - name: Generate XML
+      run: coverage xml -o 'cobertura.xml'
+    - name: Run codacy-coverage-reporter
+      uses: codacy/codacy-coverage-reporter-action@v1
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        coverage-reports: cobertura.xml

@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
+    {% extends 'base_navbar.html' %}{% load static %}{% block contenido %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <meta charset="utf-8" />
 </head>
@@ -13,6 +13,7 @@
     <div class="row d-flex justify-content-center">
         <h2>Cursos disponibles</h2>
     </div>
+
     <!-- <form role="search" class="center" id="form">
         <div class="row">
             <input class="col-sm-8" type="search" id="query" name="q" placeholder="  Buscar cursos..." aria-label="Search through site content">
@@ -23,59 +24,52 @@
     </form> -->
     <br>
     <div class="container">
-
         <br>
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
                     {%if page_obj|length > 0 %} {% for cursoYvaloracion in page_obj %}
-                        <div class="col-md-4">
-                            <div class="card border-info mb-4">
-                                <div class="card-body standard_web_color">
-                                    <h5 class="card-title">Asignatura: {{cursoYvaloracion.0.asignatura.nombre}}</h5>
-                                    <p class="card-text">Profesor: {{cursoYvaloracion.0.propietario.nombre}}</p>
-                                    <p class="card-text">Descripción: {{cursoYvaloracion.0.descripcion}}</p>
-                                    <p class="card-text">Valoraciones: {{cursoYvaloracion.1}}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="col-md-4 mb-5">
+                        <div class="card h-100 box-shadow border-info standard_web_color">
+                            <div class="card-body standard_web_color ">
+                                <h5 class="card-title text-truncate">Asignatura: {{cursoYvaloracion.0.asignatura.nombre}}</h5>
+                                <p class="card-text">Profesor: {{cursoYvaloracion.0.propietario.nombre}}</p>
+                                <p class="card-text text-truncate">Descripción: {{cursoYvaloracion.0.descripcion}}</p>
+                                <p class="card-text">Valoración: {{cursoYvaloracion.1}}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group text-center">
                                         <div class="btn-group text-center">
                                             <a href="/pago?id={{cursoYvaloracion.0.id}}" class="btn btn-sm btn-outline-secondary">Suscribirse</a>
                                         </div>
-                                        <small class="text-muted">Fecha publicación: {{cursoYvaloracion.0.fecha_publicacion|date:"d/m/Y"}}</small>
-                                        </form>
                                     </div>
+                                    <small class="text-muted">Fecha publicación: {{cursoYvaloracion.0.fecha_publicacion|date:"d/m/Y"}}</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {% endfor %} {%else%}
-                     <div class="col">
-                        <p class="font-italic text-center lead">Actualmente no existen cursos disponibles</p>
-                        <p class="font-weight-lighter text-center"><ins><a href="/crearcurso" class="text-decoration text-dark">¿Quieres crear uno?</a></ins></p>
+                    {% endfor %}{%else%}
+                    <div class="col">
+                        <p class="font-italic text-center lead">Actualmente no hay ningún curso disponible</p>
                     </div>
                     {%endif%}
                 </div>
-
             </div>
-            {%if page_obj|length > 0 %}
-            <nav class= "d-flex justify-content-center" aria-label="Page navigation example">
+            <br> {%if page_obj|length > 0 %}
+            <nav class="d-flex justify-content-center" aria-label="Page navigation example">
                 <ul class="pagination">
-                    <span class="step-links"></span>
-                        {% if page_obj.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
-                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
-                        {% endif %}
+                    <span class="step-links"></span> {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+                    {% endif %}
                     <li class="page-item"><a class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
                     {% if page_obj.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
                     {% endif %}
                 </ul>
             </nav>
-              {%endif%}
-
-            {% endblock %}
+            {%endif%} {% endblock %}
 </body>
-
 <footer>
     {% block pie %}{% endblock %}
 </footer>

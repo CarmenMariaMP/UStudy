@@ -4,15 +4,14 @@
 <head>
     {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
     <link href="{% static 'css/searchbar.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/valoraciones.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{% static 'css/valoraciones.css' %}" rel="stylesheet" />
-    <script type="text/javascript">var valoracion = "{{valoracion}}"</script>
+    <script type="text/javascript">var valoracionUsuario = "{{valoracionUsuario}}"</script>
     <script src="{% static 'js/valoraciones.js' %}" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/colores.css' %}" rel="stylesheet" />
 </head>
 
 <body>
@@ -36,38 +35,40 @@
 <div style="align-content: center;">
     <div class="separado borde-azul standard_web_color">
         <p style="text-align: center; padding-top: 15px; font-size: 15px;"> <b>Curso:</b> {{curso.nombre}}
-            <br> <b>Profesor:</b> {{curso.propietario.nombre}} <br>
-            <b>Valoración media: {{valoracion}}</b>
+            <br> <b>Profesor:</b> {{curso.propietario.nombre}} 
+            <br> <b>Descripción:</b> {{curso.descripcion}} 
+            <br> <b>Valoración media: {{valoracionCurso}}</b>
         </p>
     </div>
     {% if es_owner or es_suscriptor %}
     <div class="separado borde-azul">
-        <ul class="list-group list-group-flush">
+        {% if contenido_curso|length > 0 %}
+        <ul class="list-group">
             {% for archivo in contenido_curso %}
-            <li class="list-group-item" style="border-radius: 50px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+            <li class="list-group-item" style="border-radius: 25px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
                 {% if ".mp4" in archivo.ruta.url|slice:"-4:"%}
                 <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="26px" height="19px">
-                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> 
                 {% elif ".pdf" in archivo.ruta.url|slice:"-4:"%}
                 <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="26px" height="26px">
-
-                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
                 {% elif ".txt" in archivo.ruta.url|slice:"-4:"%}
                 <img src="https://i.postimg.cc/LsGDHX6t/txt-icon.png" width="26px" height="26px">
-                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
                 {% else %}
                 <img src="https://i.postimg.cc/nh4pKsNz/imagen-icon.png" width="26px" height="26px">
-                <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
                 {% endif %} 
 
                 <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
                 {% if es_owner %}
-                <a type="submit" class="btn boton col-sm-1" style="width: 20%; float: right;" href="/curso/{{curso.id}}/{{archivo.id}}">
+                <a type="submit" class="btn boton btn-info col-sm-1" style="width: 20%; float: right;" href="/curso/{{curso.id}}/{{archivo.id}}">
                     Eliminar</a> {% endif %}
-
             </li>
             {% endfor %}
         </ul>
+        {% else %}
+        <div class="col">
+                        <p class="text-center lead">Actualmente no hay subido ningún archivo</p>
+                        
+                    </div>
+        {% endif %}
     </div>
     <br> {% endif %}
     <div style="align-content: center;">
@@ -78,25 +79,17 @@
         {%endif%} {%if es_owner%}
 
         <div style="display:flex; justify-content: center">
-            <form class="btn boton col-sm-3 btn-info justify-content-center" id="myform" method="post" enctype="multipart/form-data">
+            <form class="btn boton col-sm-5 btn-info justify-content-center" id="myform" method="post" enctype="multipart/form-data">
                 {% csrf_token %} {{form.file}}
             </form>
         </div>
         <div style="display:flex; justify-content: center;">
-            <input class="btn boton col-sm-1 añadirContenido justify-content-center" form="myform" type="submit" style="margin: 20px;" value="Añadir Contenido">
+            <input class="btn boton col-sm-3 btn-info añadirContenido justify-content-center" form="myform" type="submit" style="margin: 20px;" value="Añadir Contenido">
 
-        </div>
-        <h5>Valora este curso: </h5>
-        <div class="rating">
-            <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
-            <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
-            <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
-            <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
-            <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
         </div>
         <div class="col text-center">
 
-            <a class="btn boton col-sm-1 btn-info justify-content-center" href="/inicio_profesor">Atrás</a> {%endif%} {%if es_suscriptor%}
+            <a class="btn boton col-sm-2 btn-info justify-content-center" href="/inicio_profesor">Atrás</a> {%endif%} {%if es_suscriptor%}
         </div>
         <div class="col text-center">
             <a class="btn boton col-sm-1 btn-info justify-content-center" href="/miscursos">Atrás</a>{%endif%} {%if excede_tamano%}
@@ -106,10 +99,11 @@
     </div>
 
     </div>
-    {%if es_suscriptor %}
-        <h5>Valora este curso: </h5>
+    <br>
+    {%if es_suscriptor and not es_owner%}
+        <h5>Valora este curso </h5>
         <div class="rating">
-            <form class="rate-form" action="" method="POST" id="{{ curso.id }}">   
+            <form class="rate-form standard_web_color borde-azul" action="" method="POST" id="{{ curso.id }}" style="display:flex; justify-content: center;">   
                 {% csrf_token %}
                 <button type="submit" class="fa fa-star fa-2x boton-estrella"  id="first"></button>
                 <button type="submit" class="fa fa-star fa-2x boton-estrella"  id="second"></button>
@@ -118,7 +112,7 @@
                 <button type="submit" class="fa fa-star fa-2x boton-estrella"  id="fifth"></button>
             </form> 
         </div>
-        <div id="confirma-valoracion-box"></div>
+        <h5 ><div id="confirma-valoracion-box"></div></h5>
     {%endif%}
 
 {% endblock %}

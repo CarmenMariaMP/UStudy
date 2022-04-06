@@ -3,12 +3,13 @@
 }
 
 .blue_standard {
-    background-color: #2685BF;
+    background-color: #2694BF;
 }
 
 .borde-azul {
     border: solid;
     border-radius: 25px;
-    border-color: #2694BF;
+    color: #000000;
+    border-color : #2694BF;
     font-size: small;
 }
