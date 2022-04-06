@@ -437,6 +437,27 @@ class SubirContenidoTestView(TestCase):
         
 class ErrorsTestView(TestCase):
     
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1')
+        user.set_password('pass')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        
+        
+        user2 = User.objects.create(username='User2')
+        user.set_password('pass')
+        user.save()
+        usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
+                                         email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
+        
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
+        
     def test_error_404(self):
         client = Client()
         response = client.get('/error404/')
@@ -449,8 +470,8 @@ class ErrorsTestView(TestCase):
         
     def test_error_500(self):
         # TODO testear error 500
-        pass
-
+        pass 
+        
 class RegistroTestView(TestCase):
     
     def test_register_view_get(self):
