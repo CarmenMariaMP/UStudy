@@ -242,7 +242,6 @@ def crearcurso(request):
                 curso.propietario = Usuario.objects.get(
                     django_user=request.user)
                 curso.save()
-
                 return redirect('/inicio_profesor')
             else:
                 return render(request, 'crearcurso.html', {"form": form})
@@ -636,7 +635,6 @@ def ver_archivo(request, id_curso, id_archivo):
     comentarios = Comentario.objects.all().filter(archivo=id_archivo)
     archivo = Archivo.objects.get(id=id_archivo)
     url = archivo.ruta.url.replace("app/static/", "")
-    print(url)
     reportes = None
     page_obj = None
     if request.user.is_authenticated:
