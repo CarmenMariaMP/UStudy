@@ -75,6 +75,7 @@ class addUsuarioFormTest(TestCase):
             'descripcion': 'Esto es una descripcion de prueba'
         }
         form = UsuarioForm(data=form_data)
+        print(form.errors)
         self.assertTrue(form.is_valid())
         
     def test_user_form_all_empty(self):
@@ -90,6 +91,7 @@ class addUsuarioFormTest(TestCase):
             'descripcion': None
         }
         form = UsuarioForm(data=form_data)
+        print(form.errors)
         self.assertTrue('<ul class="errorlist"><li>username<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>password<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>confirm_password<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>name<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>surname<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>email<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>email_academico<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>titulacion<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li></ul>' in str(form.errors))
                 
     def test_user_form_fields_too_large(self):
