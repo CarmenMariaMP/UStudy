@@ -21,11 +21,9 @@
                     </div>
                     {% if not es_owner%}
                     <div class="col-md-3">
-                        <button type="button" class="btn boton" style="float:right;margin-right:10px"
-                            data-toggle="modal" data-target="#reporteModal">Reportar error</button>
+                        <button type="button" class="btn boton" style="float:right;margin-right:10px" data-toggle="modal" data-target="#reporteModal">Reportar error</button>
                         <!-- Modal -->
-                        <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog"
-                            aria-labelledby="reporteModal" aria-hidden="true">
+                        <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog" aria-labelledby="reporteModal" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -39,8 +37,7 @@
                                             {% csrf_token %} {{form.as_p}}
                                             <div class="modal-footer">
                                                 <button class="btn boton" type="submit">Reportar</button>
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -58,11 +55,8 @@
                             <video controls controlsList="nodownload">
                                 <source src="{% static url %}" type="video/mp4">
                                 Your browser does not support the video tag.
-                            </video>
-                            {% else %}
-                            <iframe src="{% static url %}#zoom=90&toolbar=0&navpanes=0&scrollbar=0"
-                                title="PDF in an i-Frame" frameborder="0" scrolling="auto"
-                                style="width:100%; height:700px"></iframe> {% endif %}
+                            </video> {% else %}
+                            <iframe src="{% static url %}#zoom=90&toolbar=0&navpanes=0&scrollbar=0" title="PDF in an i-Frame" frameborder="0" scrolling="auto" style="width:100%; height:700px"></iframe> {% endif %}
                         </div>
                         <h2 style="margin-top: 30px;">COMENTARIOS</h2>
                         <div class="card" style="max-height: 500px;">
@@ -72,25 +66,21 @@
                                 {% endfor %}
                             </ul>
                         </div>
-                        <h2 style="margin-top: 30px;">REPORTES</h2>
                         {%if page_obj|length > 0 %}
+                        <h2 style="margin-top: 30px;">REPORTES</h2>
                         <div>
                             <div class="container">
                                 {% for reporte in page_obj %}
                                 <div class="card">
                                     <div class="card-body standard_web_color">
-                                        <h5 class="card-title">{{reporte.usuario.nombre}}
-                                            {% if reporte.tipo == "PLAGIO" %}
-                                            <span class="badge badge-warning">{{reporte.tipo}}</span>
-                                            {% else %}
-                                            <span class="badge badge-danger">{{reporte.tipo}}</span>
-                                            {% endif %}
+                                        <h5 class="card-title">{{reporte.usuario.nombre}} {% if reporte.tipo == "PLAGIO" %}
+                                            <span class="badge badge-warning">{{reporte.tipo}}</span> {% else %}
+                                            <span class="badge badge-danger">{{reporte.tipo}}</span> {% endif %}
                                         </h5>
                                         </h5>
                                         <p class="card-text">{{reporte.descripcion}}</p>
                                         <div class="d-flex justify-content-end align-items-center standard_web_color">
-                                            <a type="submit" class="btn btn-sm btn-outline-secondary"
-                                                href="/curso/{{curso.id}}/archivo/{{archivo.id}}/reporte/{{reporte.id}}">
+                                            <a type="submit" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}/archivo/{{archivo.id}}/reporte/{{reporte.id}}">
                                                 Eliminar</a>
                                         </div>
                                     </div>
@@ -99,28 +89,26 @@
                                 <br>
                                 <nav class="d-flex justify-content-center" aria-label="Page navigation example">
                                     <ul class="pagination">
-                                        <span class="step-links"></span> 
-                                        {% if page_obj.has_previous %}
+                                        <span class="step-links"></span> {% if page_obj.has_previous %}
                                         <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
-                                        <li class="page-item"><a class="page-link"
-                                                href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+                                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
                                         {% endif %}
-                                        <li class="page-item"><a class="page-link">{{ page_obj.number }} de {{
-                                                page_obj.paginator.num_pages }}</a></li>
+                                        <li class="page-item"><a class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
                                         {% if page_obj.has_next %}
-                                        <li class="page-item"><a class="page-link"
-                                                href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
-                                        <li class="page-item"><a class="page-link"
-                                                href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+                                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
                                         {% endif %}
                                     </ul>
                                 </nav>
                             </div>
                         </div>
                         {% else %}
+                        {% if es_owner%}
+                        <h2 style="margin-top: 30px;">REPORTES</h2>
                         <div class="alert alert-secondary" role="alert">
                             <p>No existe ningún reporte</p>
                         </div>
+                        {% endif %}
                         {% endif %}
                     </div>
                     <div class="col-md-4">
@@ -128,8 +116,7 @@
                             <h2>Archivos del curso</h2>
                             <ul>
                                 {% for archivo in contenido_curso %}
-                                <li style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"><a
-                                        href="/curso/{{curso.id}}/archivo/{{archivo.id}}">{{archivo.nombre}}</a></li>
+                                <li style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"><a href="/curso/{{curso.id}}/archivo/{{archivo.id}}">{{archivo.nombre}}</a></li>
                                 {% endfor %}
                             </ul>
                             <a class="btn boton col-sm-12" href="/curso/{{curso.id}}">Atrás</a>

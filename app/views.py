@@ -3,7 +3,8 @@ from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
-from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, GetOrder, User
+from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User
+from app.paypal import GetOrder
 from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm
 import json
 import os
@@ -241,7 +242,6 @@ def crearcurso(request):
                 curso.propietario = Usuario.objects.get(
                     django_user=request.user)
                 curso.save()
-
                 return redirect('/inicio_profesor')
             else:
                 return render(request, 'crearcurso.html', {"form": form})
@@ -635,7 +635,6 @@ def ver_archivo(request, id_curso, id_archivo):
     comentarios = Comentario.objects.all().filter(archivo=id_archivo)
     archivo = Archivo.objects.get(id=id_archivo)
     url = archivo.ruta.url.replace("app/static/", "")
-    print(url)
     reportes = None
     page_obj = None
     if request.user.is_authenticated:
