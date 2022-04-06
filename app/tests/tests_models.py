@@ -7,6 +7,7 @@ import decimal
 from django.core.exceptions import ValidationError
 import datetime
 from datetime import timezone
+from django.core.exceptions import ValidationError
 
 ## Estrategia: crear una clase por cada modelo
 ## Ejemplo: class AsignaturaModelTest(TestCase):

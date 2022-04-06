@@ -4,6 +4,7 @@
 
 <head>
     {% load i18n static %} {% block extrahead %}
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />
 
@@ -23,16 +24,31 @@
         <div class="stepwizard center-block">
             <br>
             <div class="stepwizard-row setup-panel">
+                {%if form.email.errors|length > 0 or form.email_academico.errors|length > 0%}
+                        <div class="alert-danger bg-white text-center">ERROR en el paso 2</div>
+                        <br>
+                        {%elif form.titulacion.errors|length > 0 or form.descripcion.errors|length > 0%}
+                        <div class="alert-danger bg-white text-center">ERROR en el paso 3</div>
+                        <br>
+                        {%endif%}
                 <div class="stepwizard-step col-xs-4">
                     <a href="#step-1" type="button" class="btn btn-info btn-circle">1</a>
                     <p>Datos personales</p>
                 </div>
                 <div class="stepwizard-step col-xs-4">
+                    {%if form.email.errors|length > 0 or form.email_academico.errors|length > 0%}
+                    <a href="#step-2" type="button" class="btn btn-default btn-circle btn-danger" disabled="disabled">2</a>
+                    {%else%}
                     <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                    {%endif%}
                     <p>Configuración del correo</p>
                 </div>
                 <div class="stepwizard-step col-xs-4">
+                    {%if form.titulacion.errors|length > 0 or form.descripcion.errors|length > 0%}
                     <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                    {%else%}
+                    <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                    {%endif%}
                     <p>Titulación</p>
                 </div>
             </div>
@@ -45,36 +61,31 @@
                         <h3>Datos personales</h3>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label class="control-label">Nombre de usuario</label>
-                                {{ form.username }}
+                                <label class="control-label">Nombre de usuario</label> {{ form.username }}
                                 <div class="alert-danger">{{ form.username.errors }}</div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="control-label">Nombre</label>
-                                {{ form.name }}
+                                <label class="control-label">Nombre</label> {{ form.name }}
                                 <div class="alert-danger">{{ form.name.errors }}</div>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="control-label">Apellidos</label>
-                            {{ form.surname }}
+                            <label class="control-label">Apellidos</label> {{ form.surname }}
                             <div class="alert-danger">{{ form.surname.errors }}</div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="control-label">Contraseña</label>
-                            {{ form.password }}
+                            <label class="control-label">Contraseña</label> {{ form.password }}
                             <div class="alert-danger">{{form.password.errors }}</div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="control-label">Confirmar contraseña</label>
-                            {{form.confirm_password }}
+                            <label class="control-label">Confirmar contraseña</label> {{form.confirm_password }}
                             <div class="alert-danger">{{form.confirm_password.errors }}</div>
                         </div>
                     </div>
                     <div class='row'>
-                        <button class="btn boton btn-info nextBtn btn-lg center-block" type="button">Siguiente</button>
+                        <button class="btn boton btn-info nextBtn btn-lg center-block" style="background-color: #17a2b8;" <button>Siguiente</button>
                         <br>
-                        <a class="btn boton btn-info btn-lg center-block" type="button" href="/" style="width: 40%; ">Cancelar</a>
+                        <a class="btn boton btn-info btn-lg center-block" type="button" href="/" style="width: 40%; background-color: #17a2b8;">Cancelar</a>
                     </div>
                 </div>
             </div>
@@ -83,18 +94,16 @@
                     <div class="col-md-12">
                         <h3> Configuración del correo</h3>
                         <div class="form-group col-md-12">
-                            <label class="control-label">Correo electrónico</label>
-                            {{ form.email }}
+                            <label class="control-label">Correo electrónico</label> {{ form.email }}
                             <div class="alert-danger">{{ form.email.errors }}</div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="control-label">Correo corporativo</label>
-                            {{ form.email_academico }}
+                            <label class="control-label">Correo corporativo</label> {{ form.email_academico }}
                             <div class="alert-danger">{{ form.email_academico.errors }}</div>
                         </div>
-                        <button class="btn btn-info nextBtn btn-lg center-block" type="button">Siguiente</button>
+                        <button class="btn btn-info nextBtn btn-lg center-block" style="background-color: #17a2b8;" type="button">Siguiente</button>
                         <br>
-                        <a class="btn boton btn-info btn-lg center-block" type="button" href="/" style="width: 40%; ">Cancelar</a>  
+                        <a class="btn boton btn-info btn-lg center-block" type="button" href="/" style="width: 40%; background-color: #17a2b8;">Cancelar</a>
                     </div>
                 </div>
             </div>
@@ -103,19 +112,17 @@
                     <div class="col-md-12">
                         <h3>Titulación</h3>
                         <div class="form-group col-md-12">
-                            <label>Grado</label>
-                            {{ form.titulacion }}
+                            <label>Grado</label> {{ form.titulacion }}
                             <div class="alert-danger">{{ form.titulacion.errors}}</div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="control-label">Descripción</label>
-                            {{ form.descripcion }}
+                            <label class="control-label">Descripción</label> {{ form.descripcion }}
                             <div class="alert-danger">{{ form.descripcion.errors }}</div>
                         </div>
-                        
-                        <button class="btn btn-info nextBtn btn-lg center-block" type="submit">Registrarme</button>
+
+                        <button class="btn btn-info nextBtn btn-lg center-block" style="background-color: #17a2b8;" type="submit">Registrarme</button>
                         <br>
-                        <a class="btn boton btn-info btn-lg center-block" type="button" href="/" style="width: 40%; ">Cancelar</a>
+                        <a class="btn boton btn-info btn-lg center-block" type="button" href="/" style="width: 40%; background-color: #17a2b8;">Cancelar</a>
                     </div>
                 </div>
             </div>
@@ -123,14 +130,14 @@
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             var navListItems = $('div.setup-panel div a'),
                 allWells = $('.setup-content'),
                 allNextBtn = $('.nextBtn');
 
             allWells.hide();
 
-            navListItems.click(function (e) {
+            navListItems.click(function(e) {
                 e.preventDefault();
                 var $target = $($(this).attr('href')),
                     $item = $(this);
@@ -144,7 +151,7 @@
                 }
             });
 
-            allNextBtn.click(function () {
+            allNextBtn.click(function() {
                 var curStep = $(this).closest(".setup-content"),
                     curStepBtn = curStep.attr("id"),
                     nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),

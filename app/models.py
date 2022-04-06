@@ -1,14 +1,10 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
-from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
-from paypalcheckoutsdk.orders import OrdersGetRequest, OrdersCaptureRequest
 from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now
 from django.contrib.auth.models import User
 import psutil
-from decouple import config
-
 
 def emails_distintos(email_academico):
     if('@alum.us.es' in email_academico):
@@ -29,13 +25,13 @@ def validador_email(email):
 def validador_archivo(file):
     if(file.size > 1024*1024*20):
         raise ValidationError(
-            _('El archivo es demasiado grande'), code='mensaje')
+            _('El tamaño del archivo debe ser inferior a 20 MB'), code='mensaje')
     if not file.name[-4:] in ('.pdf', '.mp4', '.png', '.jpg', '.txt', 'jpeg'):
         raise ValidationError(
-            _('El archivo no es un PDF, MP4, PNG, JPG, JPEG ó TXT'), code='mensaje3')
+            _('El formato del archivo debe ser PDF, MP4, PNG, JPG, JPEG ó TXT'), code='mensaje3')
     if(psutil.virtual_memory()[1] < 1024 * 1024 * 40):
         raise ValidationError(
-            _('No hay memoria suficiente para subir el archivo, conctacte con el soporte técnico'), code='mensaje2')
+            _('No hay memoria suficiente para subir el archivo, contacte con el soporte técnico'), code='mensaje2')
 
 
 class Asignatura(models.Model):
@@ -45,8 +41,7 @@ class Asignatura(models.Model):
 
 
 def image_directory_path(instance, filename):
-    return 'user_images/{0}.jpg'.format(instance.django_user)
-
+    return '{0}.jpg'.format(instance.django_user)
 
 class Usuario(models.Model):
     nombre = models.CharField(max_length=40)
@@ -130,67 +125,3 @@ class Reporte(models.Model):
         Usuario, on_delete=models.CASCADE, related_name="usuario", null=True)
     archivo = models.ForeignKey(
         Archivo, on_delete=models.CASCADE, related_name="archivo", null=True)
-
-
-class PayPalClient:
-    def __init__(self):
-        self.client_id = config('PAYPAL_CLIENT_ID')
-        self.client_secret = config('PAYPAL_SECRET_ID')
-
-        self.environment = SandboxEnvironment(
-            client_id=self.client_id, client_secret=self.client_secret)
-
-        self.client = PayPalHttpClient(self.environment)
-
-    def object_to_json(self, json_data):
-        result = {}
-
-        itr = json_data.__dict__.items()
-        for key, value in itr:
-            if key.startswith("__"):
-                continue
-            result[key] = self.array_to_json_array(value) if isinstance(value, list) else\
-                self.object_to_json(value) if not self.is_primittive(value) else\
-                value
-        return result
-
-    def array_to_json_array(self, json_array):
-        result = []
-        if isinstance(json_array, list):
-            for item in json_array:
-                result.append(self.object_to_json(item) if not self.is_primittive(item)
-                              else self.array_to_json_array(item) if isinstance(item, list) else item)
-        return result
-
-    def is_primittive(self, data):
-        return isinstance(data, str) or isinstance(data, int)
-
-
-# Obtener los detalles de la transacción
-class GetOrder(PayPalClient):
-
-    def get_order(self, order_id):
-        request = OrdersGetRequest(order_id)
-        response = self.client.execute(request)
-        return response
-
-
-class CaptureOrder(PayPalClient):
-
-    def capture_order(self, order_id, debug=False):
-        request = OrdersCaptureRequest(order_id)
-        response = self.client.execute(request)
-        if debug:
-            print('Status Code: ', response.status_code)
-            print('Status: ', response.result.status)
-            print('Order ID: ', response.result.id)
-            print('Links: ')
-            for link in response.result.links:
-                print('\t{}: {}\tCall Type: {}'.format(
-                    link.rel, link.href, link.method))
-            print('Capture Ids: ')
-            for purchase_unit in response.result.purchase_units:
-                for capture in purchase_unit.payments.captures:
-                    print('\t', capture.id)
-            print("Buyer:")
-        return response
