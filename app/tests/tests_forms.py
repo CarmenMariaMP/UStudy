@@ -71,8 +71,8 @@ class addUsuarioFormTest(TestCase):
             'surname': 'Brincau Cano',
             'email': 'david.brincau@htomail.com',
             'email_academico': 'davbrican@alum.us.es',
-            'titulacion': 'Grado en Ingeniería Informática-Ingeniería del Software',
-            'descripcion': 'Esto es una descripción de prueba'
+            'titulacion': 'Grado en Ingenieria Informatica-Ingenieria del Software',
+            'descripcion': 'Esto es una descripcion de prueba'
         }
         form = UsuarioForm(data=form_data)
         self.assertTrue(form.is_valid())
