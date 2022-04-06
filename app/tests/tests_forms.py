@@ -62,6 +62,11 @@ class addReportFormTests(TestCase):
 
 
 class addUsuarioFormTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Asignatura.objects.create(nombre="Prueba", titulacion='Grado en Ingeniería Informática-Ingeniería del Software', anyo=2022)
+        
     def test_user_form_is_valid(self):
         form_data = {
             'username': 'davbrican',

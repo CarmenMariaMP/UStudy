@@ -55,15 +55,13 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
     - name: Make Migrations with Merge
-      run: yes | python manage.py makemigrations --merge
+      run: yes | python manage.py makemigrations app --merge
     - name: Make Migrations Normal
-      run: python manage.py makemigrations
+      run: python manage.py makemigrations app
     - name: Migrate Database
-      run: python manage.py migrate
+      run: python manage.py migrate app
     - name: Populate Database
       run: python manage.py loaddata datos_populate_asignaturas.json
-    - name: Run Tests
-      run: python manage.py test
     - name: Run Tests and Analize Coverage
       run: yes | coverage run --source . manage.py test -v 2
     - name: Report Coverage
