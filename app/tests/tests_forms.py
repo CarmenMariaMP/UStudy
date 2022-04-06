@@ -75,7 +75,7 @@ class addUsuarioFormTest(TestCase):
             'descripcion': 'Esto es una descripcion de prueba'
         }
         form = UsuarioForm(data=form_data)
-        print(form.errors)
+        print("EL ERROR ESTA AQUIIIIIIIIIIIIIIIIII:" + form.errors)
         self.assertTrue(form.is_valid())
         
     def test_user_form_all_empty(self):
@@ -91,7 +91,6 @@ class addUsuarioFormTest(TestCase):
             'descripcion': None
         }
         form = UsuarioForm(data=form_data)
-        print(form.errors)
         self.assertTrue('<ul class="errorlist"><li>username<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>password<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>confirm_password<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>name<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>surname<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>email<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>email_academico<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>titulacion<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li></ul>' in str(form.errors))
                 
     def test_user_form_fields_too_large(self):
@@ -107,6 +106,7 @@ class addUsuarioFormTest(TestCase):
             'descripcion': 'a'*501
         }
         form = UsuarioForm(data=form_data)
+        print("EL ERROR 2222222 ESTA AQUIIIIIIIIIIIIIIIIII:" + form.errors)
         self.assertTrue('<ul class="errorlist"><li>username<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 50 caracteres (tiene 51).</li></ul></li><li>password<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 50 caracteres (tiene 51).</li></ul></li><li>confirm_password<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 50 caracteres (tiene 51).</li></ul></li><li>name<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 40 caracteres (tiene 41).</li></ul></li><li>surname<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 40 caracteres (tiene 41).</li></ul></li><li>email<ul class="errorlist"><li>Introduzca una dirección de correo electrónico válida.</li></ul></li><li>email_academico<ul class="errorlist"><li>Introduzca una dirección de correo electrónico válida.</li></ul></li><li>descripcion<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 500 caracteres (tiene 501).</li></ul></li></ul>' in str(form.errors))
         
     def test_user_form_titulacion_inexistente(self):
