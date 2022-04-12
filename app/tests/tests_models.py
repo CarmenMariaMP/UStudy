@@ -139,13 +139,17 @@ class NotificacionModelTests(TestCase):
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos1', email='nombreMail@gmail.com', 
                                email_academico='nombreMail@alum.us.es', titulacion='Titulacion1', descripcion='Descripcion1', 
                                foto=None, dinero=10.0, django_user=user)
-        Notificacion.objects.create(tipo=Notificacion.TipoNotificacion["COMENTARIO"], fecha='2020-01-01', visto=False, usuario=usuario)
+        asignatura = Asignatura.objects.create(nombre='NombreAsignatura', titulacion='TitulacionAsignatura', anyo=1)
+        curso = Curso.objects.create(nombre='Curso1', descripcion='Descripcion1', fecha_publicacion='2020-01-01'
+                                     ,asignatura=asignatura, propietario=usuario)
+        Notificacion.objects.create(tipo=Notificacion.TipoNotificacion["COMENTARIO"], visto=False, usuario=usuario
+                                    , referencia='curso/4', curso=curso, fecha='2020-01-01')
         
     def test_crear_notificacion_positiva(self):
         usuario = Usuario.objects.first()
         notificacion = Notificacion.objects.get(id=1)
         self.assertEquals(notificacion.tipo,Notificacion.TipoNotificacion["COMENTARIO"])
-        self.assertEquals(notificacion.fecha,datetime.date(2020, 1, 1))
+        self.assertEquals(notificacion.fecha,datetime.datetime(2020, 1, 1, 0, 0, tzinfo=timezone.utc))
         self.assertEquals(notificacion.visto,False)
         self.assertEquals(notificacion.usuario,usuario)
         
@@ -183,9 +187,10 @@ class NotificacionModelTests(TestCase):
 
     def test_crear_notificacion_negativa(self):
         usuario = Usuario.objects.first()
-        notificacion = Notificacion.objects.create(tipo="", fecha='2020-01-01', visto=False, usuario=usuario)
+        curso = Curso.objects.first()
+        notificacion = Notificacion.objects.create(tipo="", fecha='2020-01-01', visto=False, usuario=usuario, referencia='curso/4', curso=curso)
         with self.assertRaises(Exception) as context:
-            self.assertTrue(context.exception == {'id_refencia': ['This field cannot be blank.'], 'tipo': ['This field cannot be blank.']})
+            self.assertTrue(context.exception == {'refencia': ['This field cannot be blank.'], 'tipo': ['This field cannot be blank.']})
             notificacion.full_clean()
 
 class ValoracionModelTests(TestCase):
