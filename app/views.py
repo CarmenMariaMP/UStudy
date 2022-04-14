@@ -8,6 +8,7 @@ from app.paypal import GetOrder
 from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm
 import json
 import os
+from decimal import Decimal
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -71,34 +72,64 @@ def pago(request):
         return redirect("/login")
 
 
+# def suscripcion(request, id):
+#     if request.user.is_authenticated:
+
+#         alumno = Usuario.objects.get(django_user=request.user)
+#         curso = Curso.objects.get(pk=id)
+
+#         usuario = request.user.usuario
+#         if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
+#             return redirect('/cursosdisponibles')
+
+#         data = json.loads(request.body)
+#         order_id = data['orderID']
+
+#         detalle = GetOrder().get_order(order_id)
+#         detalle_precio = float(detalle.result.purchase_units[0].amount.value)
+
+#         if detalle_precio == 10.0:
+#             curso.suscriptores.add(alumno)
+#             curso.save()
+#             data = {
+#                 "mensaje": "Se ha suscrito al curso correctamente"
+#             }
+#             return JsonResponse(data)
+#         else:
+#             data = {
+#                 "mensaje": "Error =("
+#             }
+#             return JsonResponse(data)
+#     else:
+#         return redirect("/login")
+
 def suscripcion(request, id):
     if request.user.is_authenticated:
-
-        alumno = Usuario.objects.get(django_user=request.user)
+        usuario = Usuario.objects.get(django_user=request.user)
         curso = Curso.objects.get(pk=id)
-
-        usuario = request.user.usuario
         if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
-            return redirect('/cursosdisponibles')
-
-        data = json.loads(request.body)
-        order_id = data['orderID']
-
-        detalle = GetOrder().get_order(order_id)
-        detalle_precio = float(detalle.result.purchase_units[0].amount.value)
-
-        if detalle_precio == 10.0:
-            curso.suscriptores.add(alumno)
-            curso.save()
-            data = {
-                "mensaje": "Se ha suscrito al curso correctamente"
-            }
-            return JsonResponse(data)
+            #return redirect('/cursosdisponibles', mensaje_error = True, mensaje = "No puedes suscribirte a este curso")
+            return cursosdisponibles(request, mensaje_error = True, mensaje = "No puedes suscribirte a este curso")
+            
+        if usuario in curso.suscriptores.all():
+            #return redirect('/cursosdisponibles',mensaje_error = True, mensaje = "Ya estás suscrito al curso")
+            return cursosdisponibles(request, mensaje_error = True, mensaje = "Ya estás suscrito al curso")
+            
+        if usuario.dinero < Decimal(12.00):
+            #return redirect('/cursosdisponibles',mensaje_error = True, mensaje = "No tienes dinero suficiente")
+            return cursosdisponibles(request, mensaje_error = True, mensaje = "No tienes dinero suficiente")
+            
         else:
-            data = {
-                "mensaje": "Error =("
-            }
-            return JsonResponse(data)
+            curso.suscriptores.add(usuario)
+            usuario.dinero -= Decimal(12.00)
+            profesor = curso.propietario
+            profesor.dinero += Decimal(9.00)
+            curso.save()
+            usuario.save()
+            profesor.save()
+            #return redirect('/cursosdisponibles',mensaje_error = False, mensaje = "Se ha suscrito al curso correctamente")
+            return cursosdisponibles(request, mensaje_error = False, mensaje = "Se ha suscrito al curso correctamente")
+            
     else:
         return redirect("/login")
 
@@ -608,7 +639,7 @@ def miscursos(request):
         return redirect("/login", {"mensaje_error": True})
 
 
-def cursosdisponibles(request):
+def cursosdisponibles(request, mensaje_error = False, mensaje = ''):
     if request.user.is_authenticated:
         cursos_todos = Curso.objects.order_by('nombre')
         cursos = []
@@ -620,7 +651,7 @@ def cursosdisponibles(request):
                     valoracion = get_valoracion(curso)
                     cursos.append((curso, valoracion))
         page_obj = pagination(request, cursos, 9)
-        return render(request, "cursosdisponibles.html", {'page_obj': page_obj})
+        return render(request, "cursosdisponibles.html", {'page_obj': page_obj, "mensaje_error": mensaje_error, "mensaje": mensaje})
     else:
         return redirect("/login")
 
