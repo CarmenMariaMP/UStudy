@@ -517,7 +517,7 @@ def curso(request, id):
         # Comprobar si el usuario es profesor
         usuario_autenticado = request.user
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
-        if usuario.titulacion != curso.asignatura.titulacion:
+        if usuario.titulacion != curso.asignatura.titulacion and usuario not in curso.suscriptores.all() and usuario != curso.propietario:
             return redirect('/cursosdisponibles')
         form = UploadFileForm(request.POST, request.FILES)
         excede_tamano = False
