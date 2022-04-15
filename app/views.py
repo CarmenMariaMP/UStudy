@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User
 from app.paypal import GetOrder
-from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm
+from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
 import json
 import os
 
@@ -636,14 +636,12 @@ def ver_archivo(request, id_curso, id_archivo):
         archivo=id_archivo, responde_a=None).order_by('-fecha')
     respuestas = Comentario.objects.all().filter(
         archivo=id_archivo, responde_a__isnull=False)
-    print(respuestas)
     respuestasDict = {}
     for respuesta in respuestas:
         if respuesta.responde_a.id not in respuestasDict.keys():
             respuestasDict[respuesta.responde_a.id] = [respuesta]
         else:
             respuestasDict[respuesta.responde_a.id].append(respuesta)
-    print(respuestasDict)
     archivo = Archivo.objects.get(id=id_archivo)
     url = archivo.ruta.url.replace("app/static/", "")
     reportes = None
@@ -689,26 +687,47 @@ def ver_archivo(request, id_curso, id_archivo):
                     Comentario.objects.create(texto=texto, archivo=archivo, fecha=datetime.datetime.now(
                     ), usuario=usuario, responde_a=Comentario.objects.get(id=responde_a))
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+            elif request.POST['action'] == 'Responder2':
+                formRespuesta2 = ResponderComentarioForm2(request.POST)
+                if formRespuesta2.is_valid():
+                    responderForm = formRespuesta2.cleaned_data
+                    usuario_responde_a = responderForm['usuario_responde_a']
+                    responde_a = responderForm['responde_a']
+                    texto = responderForm['texto']
+                    texto = "@"+usuario_responde_a+" "+texto
+                    Comentario.objects.create(texto=texto, archivo=archivo, fecha=datetime.datetime.now(
+                    ), usuario=usuario, responde_a=Comentario.objects.get(id=responde_a))
+                    return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
         else:
             formComentario = ComentarioForm()
             formReporte = ReporteForm()
             formRespuesta = ResponderComentarioForm()
-        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'respuestasDict' : respuestasDict,
+            formRespuesta2 = ResponderComentarioForm2()
+            return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'respuestasDict': respuestasDict,
                                                 'acceso': acceso, 'comentarios': comentarios, 'url': url, 'formReporte': formReporte, 'page_obj': page_obj, 'es_owner': es_owner,
-                                                'es_plagio': es_plagio, 'es_error': es_error, 'formComentario': formComentario, 'formRespuesta': formRespuesta}
-                      )
+                                                'usuario': usuario, 'es_plagio': es_plagio, 'es_error': es_error, 'formComentario': formComentario, 'formRespuesta': formRespuesta, 'formRespuesta2': formRespuesta2})
     else:
         return render(request, 'inicio.html')
 
 
+def eliminar_comentario(request, id_curso, id_archivo, id_comentario):
+    comentario=Comentario.objects.get(id = id_comentario)
+    if request.user.is_authenticated:
+        usuario=Usuario.objects.get(django_user = request.user)
+        if (comentario.usuario == usuario):
+            Comentario.objects.filter(id = id_comentario).update(texto = 'Este comentario ha sido eliminado',
+                                                               fecha = comentario.fecha, archivo = comentario.archivo, responde_a = comentario.responde_a, usuario = comentario.usuario)
+    return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+
+
 def eliminar_reporte(request, id_curso, id_archivo, id_reporte):
-    curso = Curso.objects.get(id=id_curso)
+    curso=Curso.objects.get(id = id_curso)
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
-        usuario_autenticado = request.user
-        usuario = Usuario.objects.get(django_user=usuario_autenticado)
+        usuario_autenticado=request.user
+        usuario=Usuario.objects.get(django_user = usuario_autenticado)
         if (curso.propietario == usuario):
-            reporte = Reporte.objects.get(id=id_reporte)
+            reporte=Reporte.objects.get(id = id_reporte)
             reporte.delete()
     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
 
@@ -718,15 +737,15 @@ def subir_contenido(request):
 
 
 def error_404(request, exception):
-    context = {"error": "Parece que esta página no existe..."}
+    context={"error": "Parece que esta página no existe..."}
     return render(request, 'error.html', context)
 
 
 def error_403(request, exception):
-    context = {"error": "Parece que no tienes acceso a esta página..."}
+    context={"error": "Parece que no tienes acceso a esta página..."}
     return render(request, 'error.html', context)
 
 
 def error_500(request):
-    context = {"error": "Parece que hay un error en el servidor..."}
+    context={"error": "Parece que hay un error en el servidor..."}
     return render(request, 'error.html', context)

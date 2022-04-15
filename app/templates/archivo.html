@@ -75,9 +75,18 @@
                                             <h5 class="card-title">{{comentario.usuario.django_user}}</h5>
                                             <p class="card-text">{{comentario.fecha}}</p>
                                             <p class="card-text">{{comentario.texto}}</p>
-                                            <button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#collapseVerRespuestas{{comentario.id}}' aria-expanded='false' aria-controls='collapseVerRespuestas'>
-                                                Ver respuestas
-                                            </button>
+                                            {%if comentario.usuario == usuario %}
+                                                {%ifnotequal comentario.texto "Este comentario ha sido eliminado"%}
+                                                    <a type="submit" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}/archivo/{{archivo.id}}/comentario/{{comentario.id}}">
+                                                        Eliminar
+                                                    </a>
+                                                {%endifnotequal%}
+                                            {%endif%}
+                                            {%if respuestasDict|get_item:comentario.id|length > 0%}
+                                                <button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#collapseVerRespuestas{{comentario.id}}' aria-expanded='false' aria-controls='collapseVerRespuestas'>
+                                                    Ver respuestas
+                                                </button>
+                                            {%endif%}
                                             <button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#collapseReply{{comentario.id}}' aria-expanded='false' aria-controls='collapseReply'>
                                                 Responder
                                             </button>
@@ -100,6 +109,28 @@
                                                                     <h5 class="card-title">{{respuesta.usuario.django_user}}</h5>
                                                                     <p class="card-text">{{respuesta.fecha}}</p>
                                                                     <p class="card-text">{{respuesta.texto}}</p>
+                                                                    {%if respuesta.usuario == usuario %}
+                                                                        {%ifnotequal respuesta.texto "Este comentario ha sido eliminado"%}
+                                                                        <a type="submit" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}/archivo/{{archivo.id}}/comentario/{{respuesta.id}}">
+                                                                            Eliminar
+                                                                        </a>
+                                                                        {%endifnotequal%}
+                                                                    {%endif%}
+                                                                    <button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#collapseReply2{{respuesta.id}}' aria-expanded='false' aria-controls='collapseReply2'>
+                                                                        Responder
+                                                                    </button>
+                                                                    <div class="collapse" id="collapseReply2{{respuesta.id}}">
+                                                                        <div class="card card-body">
+                                                                            <form id="myform" method="post" enctype="multipart/form-data">
+                                                                                {% csrf_token %} {{formRespuesta2.as_p}}
+                                                                                <input type="hidden" name="usuario_responde_a" value="{{respuesta.usuario.django_user}}">
+                                                                                <input type="hidden" name="responde_a" value="{{comentario.id}}">
+                                                                                <div class="modal-footer">
+                                                                                    <button class="btn boton" type="submit" name="action" value="Responder2">Responder</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                     {% endfor %}

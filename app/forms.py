@@ -45,6 +45,16 @@ class ResponderComentarioForm(forms.Form):
         'placeholder': 'Escribe un comentario...'
     }))
 
+class ResponderComentarioForm2(forms.Form):
+    usuario_responde_a = forms.CharField(widget=forms.HiddenInput())
+    responde_a = forms.IntegerField(widget=forms.HiddenInput())
+    texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
+        'cols': 200,
+        'rows': 4,
+        'style': 'width: 100%; border: 3px solid black; border-radius: 4px; padding: 10px;', 
+        'placeholder': 'Escribe un comentario...'
+    }))
+
 class UsuarioForm(forms.Form):
     titulaciones = get_choices()
     opciones = ( (x,x) for x in titulaciones)
