@@ -1,3 +1,4 @@
+from unicodedata import name
 from django import forms
 from app.models import Asignatura,Curso,Usuario
 from django.forms import ModelForm
@@ -27,6 +28,22 @@ class ReporteForm(forms.Form):
     descripcion = forms.CharField(max_length=500, required=True,widget=forms.Textarea)
     tipo = forms.ChoiceField(choices=TIPOS_REPORTE, widget=forms.Select(attrs={'class':'bootstrap-select'}))
 
+class ComentarioForm(forms.Form):
+    texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
+        'cols': 200,
+        'rows': 4,
+        'style': 'width: 100%; border: 3px solid black; border-radius: 4px; padding: 10px;', 
+        'placeholder': 'Escribe un comentario...'
+    }))
+
+class ResponderComentarioForm(forms.Form):
+    responde_a = forms.IntegerField(widget=forms.HiddenInput())
+    texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
+        'cols': 200,
+        'rows': 4,
+        'style': 'width: 100%; border: 3px solid black; border-radius: 4px; padding: 10px;', 
+        'placeholder': 'Escribe un comentario...'
+    }))
 
 class UsuarioForm(forms.Form):
     titulaciones = get_choices()

@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User
 from app.paypal import GetOrder
-from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm
+from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm
 import json
 import os
 
@@ -632,7 +632,18 @@ def ver_archivo(request, id_curso, id_archivo):
     es_error = False
     curso = Curso.objects.get(id=id_curso)
     contenido_curso = Archivo.objects.all().filter(curso=curso)
-    comentarios = Comentario.objects.all().filter(archivo=id_archivo)
+    comentarios = Comentario.objects.all().filter(
+        archivo=id_archivo, responde_a=None).order_by('-fecha')
+    respuestas = Comentario.objects.all().filter(
+        archivo=id_archivo, responde_a__isnull=False)
+    print(respuestas)
+    respuestasDict = {}
+    for respuesta in respuestas:
+        if respuesta.responde_a.id not in respuestasDict.keys():
+            respuestasDict[respuesta.responde_a.id] = [respuesta]
+        else:
+            respuestasDict[respuesta.responde_a.id].append(respuesta)
+    print(respuestasDict)
     archivo = Archivo.objects.get(id=id_archivo)
     url = archivo.ruta.url.replace("app/static/", "")
     reportes = None
@@ -651,20 +662,41 @@ def ver_archivo(request, id_curso, id_archivo):
 
         # si es una consulta post (enviando el formulario)
         if request.method == 'POST':
-            form = ReporteForm(request.POST)
-            if form.is_valid():
-                reporteForm = form.cleaned_data
-                descripcion = reporteForm['descripcion']
-                tipo = reporteForm['tipo']
-                reporte_instancia = Reporte(
-                    descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
-                reporte_instancia.save()
-                return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+            if request.POST['action'] == 'Reportar':
+                formReporte = ReporteForm(request.POST)
+                if formReporte.is_valid():
+                    reporteForm = formReporte.cleaned_data
+                    descripcion = reporteForm['descripcion']
+                    tipo = reporteForm['tipo']
+                    reporte_instancia = Reporte(
+                        descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
+                    reporte_instancia.save()
+                    return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+            elif request.POST['action'] == 'Comentar':
+                formComentario = ComentarioForm(request.POST)
+                if formComentario.is_valid():
+                    comentarioForm = formComentario.cleaned_data
+                    texto = comentarioForm['texto']
+                    Comentario.objects.create(
+                        texto=texto, archivo=archivo, fecha=datetime.datetime.now(), usuario=usuario)
+                    return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+            elif request.POST['action'] == 'Responder':
+                formRespuesta = ResponderComentarioForm(request.POST)
+                if formRespuesta.is_valid():
+                    responderForm = formRespuesta.cleaned_data
+                    responde_a = responderForm['responde_a']
+                    texto = responderForm['texto']
+                    Comentario.objects.create(texto=texto, archivo=archivo, fecha=datetime.datetime.now(
+                    ), usuario=usuario, responde_a=Comentario.objects.get(id=responde_a))
+                    return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
         else:
-            form = ReporteForm()
-        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso,
-                                                'acceso': acceso, 'comentarios': comentarios, 'url': url, 'form': form, 'page_obj': page_obj, 'es_owner': es_owner,
-                                                'es_plagio': es_plagio, 'es_error': es_error})
+            formComentario = ComentarioForm()
+            formReporte = ReporteForm()
+            formRespuesta = ResponderComentarioForm()
+        return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'respuestasDict' : respuestasDict,
+                                                'acceso': acceso, 'comentarios': comentarios, 'url': url, 'formReporte': formReporte, 'page_obj': page_obj, 'es_owner': es_owner,
+                                                'es_plagio': es_plagio, 'es_error': es_error, 'formComentario': formComentario, 'formRespuesta': formRespuesta}
+                      )
     else:
         return render(request, 'inicio.html')
 
