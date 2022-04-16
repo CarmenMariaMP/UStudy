@@ -710,8 +710,6 @@ def servir_archivo(request,id_curso, archivo):
     if request.user.is_authenticated:
         curso = Curso.objects.get(pk=id_curso)
         usuario = Usuario.objects.filter(django_user=request.user)[0]
-        print(curso.suscriptores.all())
-        print(usuario)
         if usuario == curso.propietario or usuario in curso.suscriptores.all():
             filename = "./files/"+str(curso.id)+"/"+archivo
             wrapper = FileWrapper(open(filename,"rb"))
