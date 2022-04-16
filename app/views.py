@@ -13,6 +13,11 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 import datetime
 from decouple import config
+from wsgiref.util import FileWrapper
+from django.http import HttpResponse
+import mimetypes
+
+
 
 from django.core.paginator import Paginator
 
@@ -634,7 +639,8 @@ def ver_archivo(request, id_curso, id_archivo):
     contenido_curso = Archivo.objects.all().filter(curso=curso)
     comentarios = Comentario.objects.all().filter(archivo=id_archivo)
     archivo = Archivo.objects.get(id=id_archivo)
-    url = archivo.ruta.url.replace("app/static/", "")
+    url = archivo.ruta.url.replace("files", "archivos")
+    print("URL",url)
     reportes = None
     page_obj = None
     if request.user.is_authenticated:
@@ -698,3 +704,21 @@ def error_403(request, exception):
 def error_500(request):
     context = {"error": "Parece que hay un error en el servidor..."}
     return render(request, 'error.html', context)
+
+
+def servir_archivo(request,id_curso, archivo):
+    if request.user.is_authenticated:
+        curso = Curso.objects.get(pk=id_curso)
+        usuario = Usuario.objects.filter(django_user=request.user)[0]
+        print(curso.suscriptores.all())
+        print(usuario)
+        if usuario == curso.propietario or usuario in curso.suscriptores.all():
+            filename = "./files/"+str(curso.id)+"/"+archivo
+            wrapper = FileWrapper(open(filename,"rb"))
+            response = HttpResponse(wrapper, content_type=mimetypes.guess_type("./files/"+str(curso.id)+"/"+archivo)[0])
+            response['Content-Length'] = os.path.getsize(filename)
+            return response
+        else:
+            return error_403(request,None)
+    else:
+        return error_403(request,None)
