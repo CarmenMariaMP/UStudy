@@ -643,7 +643,7 @@ def ver_archivo(request, id_curso, id_archivo):
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
             reportes = Reporte.objects.all().filter(archivo=archivo)
-            page_obj = pagination(request, reportes, 5)
+            #page_obj = pagination(request, reportes, 5)
             acceso = True
             es_owner = True
         if (usuario in curso.suscriptores.all()):
@@ -663,7 +663,7 @@ def ver_archivo(request, id_curso, id_archivo):
         else:
             form = ReporteForm()
         return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso,
-                                                'acceso': acceso, 'comentarios': comentarios, 'url': url, 'form': form, 'page_obj': page_obj, 'es_owner': es_owner,
+                                                'acceso': acceso, 'comentarios': comentarios, 'url': url, 'form': form, 'reportes': reportes, 'es_owner': es_owner,
                                                 'es_plagio': es_plagio, 'es_error': es_error})
     else:
         return render(request, 'inicio.html')
