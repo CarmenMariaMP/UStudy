@@ -87,8 +87,9 @@ class Comentario(models.Model):
     fecha = models.DateTimeField(default=now, blank=True)
     archivo = models.ForeignKey(
         Archivo, verbose_name="Archivo", on_delete=models.CASCADE)
-    responde_a = models.OneToOneField(
+    responde_a = models.ForeignKey(
         'self', null=True, blank=True, verbose_name="Responde a", on_delete=models.DO_NOTHING)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
 
 class Notificacion(models.Model):

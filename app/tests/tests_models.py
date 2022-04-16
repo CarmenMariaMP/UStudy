@@ -304,12 +304,13 @@ class ComentarioModelTests(TestCase):
     
     def test_crear_comentario_positiva(self):
         fecha = datetime.datetime.now().replace(tzinfo=timezone.utc)
-        Comentario.objects.create(texto='Texto1',fecha=fecha,archivo=Archivo.objects.first())
+        Comentario.objects.create(texto='Texto1',fecha=fecha,archivo=Archivo.objects.first(),usuario=Usuario.objects.first())
 
         comentario = Comentario.objects.first()
         self.assertEquals(comentario.texto,'Texto1')
         self.assertEquals(comentario.fecha,fecha)
         self.assertEquals(comentario.archivo,Archivo.objects.first())
+        self.assertEquals(comentario.usuario,Usuario.objects.first())
 
     ## Longitud de texto mayor de 500 caracteres
     def test_crear_comentario_negative_texto_longitud_max(self):
