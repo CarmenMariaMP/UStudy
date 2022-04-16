@@ -76,11 +76,11 @@
                                             <p class="card-text">{{comentario.fecha}}</p>
                                             <p class="card-text">{{comentario.texto}}</p>
                                             {%if comentario.usuario == usuario %}
-                                                {%ifnotequal comentario.texto "Este comentario ha sido eliminado"%}
+                                                {%if comentario.texto != "Este comentario ha sido eliminado"%}
                                                     <a type="submit" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}/archivo/{{archivo.id}}/comentario/{{comentario.id}}">
                                                         Eliminar
                                                     </a>
-                                                {%endifnotequal%}
+                                                {%endif%}
                                             {%endif%}
                                             {%if respuestasDict|get_item:comentario.id|length > 0%}
                                                 <button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#collapseVerRespuestas{{comentario.id}}' aria-expanded='false' aria-controls='collapseVerRespuestas'>
@@ -110,11 +110,11 @@
                                                                     <p class="card-text">{{respuesta.fecha}}</p>
                                                                     <p class="card-text">{{respuesta.texto}}</p>
                                                                     {%if respuesta.usuario == usuario %}
-                                                                        {%ifnotequal respuesta.texto "Este comentario ha sido eliminado"%}
+                                                                        {%if respuesta.texto != "Este comentario ha sido eliminado"%}
                                                                         <a type="submit" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}/archivo/{{archivo.id}}/comentario/{{respuesta.id}}">
                                                                             Eliminar
                                                                         </a>
-                                                                        {%endifnotequal%}
+                                                                        {%endif%}
                                                                     {%endif%}
                                                                     <button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#collapseReply2{{respuesta.id}}' aria-expanded='false' aria-controls='collapseReply2'>
                                                                         Responder
