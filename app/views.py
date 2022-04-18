@@ -3,9 +3,10 @@ from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
+from django.urls import reverse
 from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User
 from app.paypal import GetOrder
-from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm
+from app.forms import MonederoForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm
 import json
 import os
 
@@ -55,43 +56,49 @@ def inicio(request):
 
 
 def pago(request):
-    if request.user.is_authenticated:
-        usuario = request.user.usuario
-        client_id = config('PAYPAL_CLIENT_ID')
-        id = request.GET.get('id')
-        try:
-            curso = Curso.objects.get(pk=id)
-            if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
-                return redirect('/cursosdisponibles')
-            return render(request, "pasarela_pago.html", context={"client_id": client_id, "curso": curso})
-        except:
-            return redirect("/cursosdisponibles")
+   if request.user.is_authenticated:
+        # si es una consulta post (enviando el formulario)
+        if request.method == 'POST':
+            form = MonederoForm(request.POST)
+            if form.is_valid():
+                dinero = request.POST['dinero']
+                client_id = config('PAYPAL_CLIENT_ID')
 
-    else:
+                return render(request,"pasarela_pago.html",context={"client_id": client_id,"dinero":dinero})
+            else:
+                return render(request, 'pasarela_pago.html', {"form": form})
+
+        else:  
+            form = MonederoForm()
+
+            return render(request, "pasarela_pago.html", {"form": form})
+   else:
         return redirect("/login")
 
 
-def suscripcion(request, id):
+
+
+def comprobacion_pago(request):
     if request.user.is_authenticated:
 
-        alumno = Usuario.objects.get(django_user=request.user)
-        curso = Curso.objects.get(pk=id)
-
-        usuario = request.user.usuario
-        if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
-            return redirect('/cursosdisponibles')
 
         data = json.loads(request.body)
-        order_id = data['orderID']
 
-        detalle = GetOrder().get_order(order_id)
-        detalle_precio = float(detalle.result.purchase_units[0].amount.value)
+        if data:
 
-        if detalle_precio == 10.0:
-            curso.suscriptores.add(alumno)
-            curso.save()
+            order_id = data['orderID']
+
+            detalle = GetOrder().get_order(order_id)
+            detalle_precio = float(detalle.result.purchase_units[0].amount.value)
+
+        
+        
+            usuarioActual = request.user.usuario
+        
+            usuarioActual.dinero = float(usuarioActual.dinero) + detalle_precio
+            usuarioActual.save()
             data = {
-                "mensaje": "Se ha suscrito al curso correctamente"
+                "mensaje": "Se ha añadido el dinero correctamente"
             }
             return JsonResponse(data)
         else:
@@ -99,8 +106,13 @@ def suscripcion(request, id):
                 "mensaje": "Error =("
             }
             return JsonResponse(data)
+
+        
     else:
         return redirect("/login")
+
+
+
 
 
 def login_user(request):

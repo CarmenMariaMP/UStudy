@@ -28,6 +28,11 @@ class ReporteForm(forms.Form):
     tipo = forms.ChoiceField(choices=TIPOS_REPORTE, widget=forms.Select(attrs={'class':'bootstrap-select'}))
 
 
+class MonederoForm(forms.Form):
+
+    dinero = forms.DecimalField(required=True , widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+
 class UsuarioForm(forms.Form):
     titulaciones = get_choices()
     opciones = ( (x,x) for x in titulaciones)
