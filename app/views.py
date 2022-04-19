@@ -3,9 +3,10 @@ from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
+from django.urls import reverse
+from app.forms import MonederoForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm,ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
 from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion
 from app.paypal import GetOrder
-from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
 import json
 import os
 from decimal import Decimal
@@ -56,20 +57,62 @@ def inicio(request):
 
 
 def pago(request):
-    if request.user.is_authenticated:
-        usuario = request.user.usuario
-        client_id = config('PAYPAL_CLIENT_ID')
-        id = request.GET.get('id')
-        try:
-            curso = Curso.objects.get(pk=id)
-            if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
-                return redirect('/cursosdisponibles')
-            return render(request, "pasarela_pago.html", context={"client_id": client_id, "curso": curso})
-        except:
-            return redirect("/cursosdisponibles")
+   if request.user.is_authenticated:
+        # si es una consulta post (enviando el formulario)
+        if request.method == 'POST':
+            form = MonederoForm(request.POST)
+            if form.is_valid():
+                dinero = request.POST['dinero']
+                client_id = config('PAYPAL_CLIENT_ID')
 
+                return render(request,"pasarela_pago.html",context={"client_id": client_id,"dinero":dinero})
+            else:
+                return render(request, 'pasarela_pago.html', {"form": form})
+
+        else:  
+            form = MonederoForm()
+
+            return render(request, "pasarela_pago.html", {"form": form})
+   else:
+        return redirect("/login")
+
+
+
+def comprobacion_pago(request):
+    if request.user.is_authenticated:
+
+
+        data = json.loads(request.body)
+
+        if data:
+
+            order_id = data['orderID']
+
+            detalle = GetOrder().get_order(order_id)
+            detalle_precio = float(detalle.result.purchase_units[0].amount.value)
+
+        
+        
+            usuarioActual = request.user.usuario
+        
+            usuarioActual.dinero = float(usuarioActual.dinero) + detalle_precio
+            usuarioActual.save()
+            data = {
+                "mensaje": "Se ha añadido el dinero correctamente"
+            }
+            return JsonResponse(data)
+        else:
+            data = {
+                "mensaje": "Error =("
+            }
+            return JsonResponse(data)
+
+        
     else:
         return redirect("/login")
+
+
+        
 
 def suscripcion(request, id):
     if request.user.is_authenticated:
@@ -97,6 +140,9 @@ def suscripcion(request, id):
             
     else:
         return redirect("/login")
+
+
+
 
 
 def login_user(request):
@@ -749,5 +795,6 @@ def error_403(request, exception):
 
 
 def error_500(request):
-    context={"error": "Parece que hay un error en el servidor..."}
+    context = {"error": "Parece que hay un error en el servidor..."}
     return render(request, 'error.html', context)
+    

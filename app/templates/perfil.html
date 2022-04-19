@@ -1,40 +1,74 @@
 <header>
-    {% extends 'base_navbar.html' %} {% block contenido %}{%load static%}
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
-    <meta charset="utf-8" />
+  {% extends 'base_navbar.html' %} {% block contenido %}{%load static%}
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="utf-8" />
 </header>
 
 <body>
-    <br>
-    <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            {% if foto == "None"%}
-              <img src="{% static "/media/avatar.png" %}" class="img-fluid" style="display: block; margin: 0 auto; float:center; height:180px;"/>
-            {%else%}
-              <div class="image">
-                <img src="{% static foto %}" class="img-fluid img-thumbnail" style="display: block; margin: 0 auto; float:center"/>
-                <br>
-              </div>
-            {%endif%}
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        {% if foto == "None"%}
+          <img src="{% static "/media/avatar.png" %}" class="img-fluid" style="display: block; margin: 0 auto; float:center; height:180px;"/>
+        {%else%}
+          <div class="image">
+            <img src="{% static foto %}" class="img-fluid img-thumbnail" style="display: block; margin: 0 auto; float:center"/>
+            <br>
           </div>
-          <div class="col-md-5">
-            <h3>{{nombre}}</h3>
-            <p>Titulación: {{titulacion}}</p>
-            <p>Monedero: {{dinero}}€</p>
-          </div>
-          <div class="col-md-3">
-            {% if boolPuntos %}
-            <div class="rating-block">
-                <h5>Valoración media de los usuarios</h5>
-                <h2 class="bold padding-bottom-7">{{valoracion}} <small>/ 5</small></h2>
-            </div>    
-            {% else %}
-                <h3>No tienes valoraciones</h3>
-            {%endif%}
-            <a class="btn btn-outline-secondary mt-3"  href="/actualizar_perfil">Actualizar Perfil</a>
-          </div>
+        {%endif%}
+      </div>
+
+        <div class="col-md-5">
+          <h3>{{nombre}}</h3>
+          <p>Titulación: {{titulacion}}</p>
+          <p>Monedero: {{dinero}}€</p>
         </div>
+        <div class="col-md-3">
+          {% if boolPuntos %}
+          <div class="rating-block">
+              <h5>Valoración media de los usuarios</h5>
+              <h2 class="bold padding-bottom-7">{{valoracion}} <small>/ 5</small></h2>
+          </div>    
+          {% else %}
+              <h3>No tienes valoraciones</h3>
+          {%endif%}
+
+          
+          <a class="btn btn-outline-secondary mt-3" href="/pago">Añadir fondos</h2>   
+          <a class="btn btn-outline-secondary mt-3"  href="/actualizar_perfil">Actualizar Perfil</a>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="container" style="height:450px; overflow-y: scroll; border: 1px solid black">
+          <div class="col-md-12" style="border: 2px solid grey; border-radius: 25px;">        
+              <h5>Reporte</h5>
+              <p>Fecha: 27-03-2022</p>
+              <p>Descripción: La linea 22 tiene una errata</p>
+          </div>
+          <br>
+          <div class="col-md-12" style="border: 2px solid grey; border-radius: 25px;">         
+              <h5>Comentario</h5>
+              <p>Fecha: 27-03-2022</p>
+              <p>Descripción: No entiendo a que te refieres en la linea 22, no entiendo porque haces la recursion ahi cuando lo inteligente seria...</p>
+          </div>
+          <br>
+          <div class="col-md-12" style="border: 2px solid grey; border-radius: 25px;">       
+              <h5>Nuevo alumno</h5>
+              <p>Fecha: 14-02-2022</p>
+              <p>jesapaort se ha inscrito en tu curso</p>
+          </div>
+          <br>
+          <div class="col-md-12" style="border: 2px solid grey; border-radius: 25px;">        
+              <h5>Comentario</h5>
+              <p>Fecha: 29-03-2022</p>
+              <p>Descripción: Podrias explicar de otra forma esto, es que no entiendo porque al compilar el archivo este da...</p>
+        </div>
+
+     </div>
+    </div>
+
       </div>
       <br>
       <div class="container">
@@ -105,8 +139,9 @@
        </div>
       </div>
 
+
 {% endblock %}
 </body>
 <footer>
-    {% block pie %}{% endblock %}
+  {% block pie %}{% endblock %}
 </footer>

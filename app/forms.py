@@ -54,6 +54,11 @@ class ResponderComentarioForm2(forms.Form):
         'placeholder': 'Escribe un comentario...'
     }))
 
+class MonederoForm(forms.Form):
+
+    dinero = forms.DecimalField(required=True ,min_value=0.09, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-control','placeholder':'12,00'}))
+
+
 class UsuarioForm(forms.Form):
     titulaciones = get_choices()
     opciones = ( (x,x) for x in titulaciones)
