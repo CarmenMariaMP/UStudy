@@ -68,6 +68,8 @@ class UsuarioForm(forms.Form):
     email_academico = forms.EmailField(max_length=254 ,required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'uvus@alum.us.es'}))
     titulacion = forms.ChoiceField(choices=opciones, required=True, widget=forms.Select(attrs={'class': 'form-control'}))
     descripcion = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción ...'}))
+    terminos = forms.BooleanField(required=True)
+    privacidad = forms.BooleanField(required=True)
 
 class ActualizarUsuarioForm(forms.Form):
     titulaciones = get_choices()

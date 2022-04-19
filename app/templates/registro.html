@@ -81,7 +81,23 @@
                             <label class="control-label">Confirmar contraseña</label> {{form.confirm_password }}
                             <div class="alert-danger">{{form.confirm_password.errors }}</div>
                         </div>
+                        <div class="form-check col-md-12">
+                            {{ form.terminos }}
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Acepto los <a href="/terminos">Términos de Uso</a> de UStudy
+                            </label>
+                            <div class="alert-danger">{{form.terminos.errors }}</div>
+
+                        </div>
+                        <div class="form-check col-md-12">
+                            {{ form.privacidad }}
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Acepto la <a href="/privacidad">Política de Privacidad</a> de UStudy
+                            </label>
+                            <div class="alert-danger">{{form.privacidad.errors }}</div>
+                        </div>
                     </div>
+                    
                     <div class='row'>
                         <button class="btn boton btn-info nextBtn btn-lg center-block" style="background-color: #17a2b8;" <button>Siguiente</button>
                         <br>

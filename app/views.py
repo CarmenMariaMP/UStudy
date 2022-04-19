@@ -275,6 +275,8 @@ def registro_usuario(request):
             titulacion = usuario_form['titulacion']
             descripcion = usuario_form['descripcion']
             dinero = 0.0
+            terminos = usuario_form['terminos']
+            privacidad = usuario_form['privacidad']
             # Comprobación contraseña
             if(password != confirm_password):
                 form.add_error("confirm_password",
@@ -284,7 +286,7 @@ def registro_usuario(request):
             user_instancia = User(
                 username=usename, email=email, password=password)
             usuario_instancia = Usuario(
-                nombre=name, apellidos=surname, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero)
+                nombre=name, apellidos=surname, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, terminos=terminos, privacidad=privacidad)
 
             # validación userjango
             try:
