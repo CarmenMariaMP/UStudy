@@ -56,7 +56,7 @@ class ResponderComentarioForm2(forms.Form):
 
 class MonederoForm(forms.Form):
 
-    dinero = forms.DecimalField(required=True ,min_value=0.09, widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    dinero = forms.DecimalField(required=True ,min_value=0.09, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-control','placeholder':'12,00'}))
 
 
 class UsuarioForm(forms.Form):

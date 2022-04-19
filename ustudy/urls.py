@@ -31,6 +31,8 @@ urlpatterns = [
     path('miscursos/', views.miscursos),
     path('cursosdisponibles/', views.cursosdisponibles),
     path('subir_contenido/', views.subir_contenido),
+    path('suscripcion/<int:id>', views.suscripcion),
+    path('pago/',views.pago),
     path('comprobacion_pago', views.comprobacion_pago),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo),
     path('valorar_curso/',views.valorar_curso),
