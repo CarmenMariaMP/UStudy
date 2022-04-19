@@ -3,7 +3,7 @@ from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
-from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User
+from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion
 from app.paypal import GetOrder
 from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
 import json
@@ -78,7 +78,8 @@ def suscripcion(request, id):
         curso = Curso.objects.get(pk=id)
 
         usuario = request.user.usuario
-        if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
+        propietario = curso.propietario
+        if usuario.titulacion != curso.asignatura.titulacion or propietario == usuario:
             return redirect('/cursosdisponibles')
 
         data = json.loads(request.body)
@@ -90,6 +91,9 @@ def suscripcion(request, id):
         if detalle_precio == 10.0:
             curso.suscriptores.add(alumno)
             curso.save()
+            referencia = '/curso/' + str(curso.id)
+            notificacion = Notificacion(referencia=referencia,usuario=propietario, tipo="NUEVO_ALUMNO", curso=curso, visto=False)
+            notificacion.save()
             data = {
                 "mensaje": "Se ha suscrito al curso correctamente"
             }
@@ -178,8 +182,11 @@ def perfil_usuario(request):
                 boolPuntos = True
             else:
                 mediaPuntos = 0
+                
+        notificaciones = Notificacion.objects.all().filter(usuario=usuarioActual).order_by('-fecha')
 
-        return render(request, "perfil.html", {"boolPuntos": boolPuntos, "nombre": nombre, "titulacion": titulacion, "dinero": dinero, "valoracion": mediaPuntos, "foto": url})
+        return render(request, "perfil.html", {"boolPuntos": boolPuntos, "nombre": nombre, "titulacion": titulacion,
+                "dinero": dinero, "valoracion": mediaPuntos, "foto": url, "notificaciones": notificaciones})
 
     else:
         return redirect("/login", {"mensaje_error": True})
@@ -669,6 +676,9 @@ def ver_archivo(request, id_curso, id_archivo):
                     reporte_instancia = Reporte(
                         descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
                     reporte_instancia.save()
+                    referencia = '/curso/'+str(id_curso)+'/archivo/'+str(id_archivo)
+                    notificacion = Notificacion(referencia=referencia,usuario=curso.propietario, tipo="REPORTE", curso=curso, visto=False)
+                    notificacion.save()
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
             elif request.POST['action'] == 'Comentar':
                 formComentario = ComentarioForm(request.POST)
