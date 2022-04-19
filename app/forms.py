@@ -30,7 +30,7 @@ class ReporteForm(forms.Form):
 
 class MonederoForm(forms.Form):
 
-    dinero = forms.DecimalField(required=True ,min_value=0.1, widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    dinero = forms.DecimalField(required=True ,min_value=0.09, widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
 
 class UsuarioForm(forms.Form):
