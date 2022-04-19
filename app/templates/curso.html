@@ -82,7 +82,27 @@
     <div style="align-content: center;">
         {% if not es_suscriptor and not es_owner%}
         <a class="btn boton col-sm-1 atras" style="margin-top: 20px;" type="button" value="Atrás" href="/cursosdisponibles"><b>Atrás</b></a>
-        <a href="/pago?id={{curso.id}}" class=" btn boton col-sm-1 unirseCurso" style="margin-top: 20px;">Suscribirse</a>
+        <button  class="btn boton col-sm-1 unirseCurso" style="margin-top: 20px;" data-toggle="modal" data-target="#reporteModal">Suscribirse</button>
+                                            <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog" aria-labelledby="reporteModal" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="suscripcion_pop_up">Suscripción</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>  
+                                                        <div class="modal-body">
+                                                            <p>¿Deseas suscribirte a este curso?</p>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                            <a href='/suscripcion/{{id}}'  class="btn btn-primary">Si</a>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                        </div>
         <h5>Para acceder al contenido de este curso debes unirte al mismo</h5>
         {%endif%} {%if es_owner%}
 
