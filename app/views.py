@@ -106,12 +106,12 @@ def pago(request):
 def suscripcion(request, id):
     if request.user.is_authenticated:
         usuario = Usuario.objects.get(django_user=request.user)
-        curso = Curso.objects.get(pk=id)
-        if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
+        curso_var = Curso.objects.get(pk=id)
+        if usuario.titulacion != curso_var.asignatura.titulacion or curso_var.propietario == usuario:
             #return redirect('/cursosdisponibles', mensaje_error = True, mensaje = "No puedes suscribirte a este curso")
             return cursosdisponibles(request, mensaje_error = True, mensaje = "No puedes suscribirte a este curso")
             
-        if usuario in curso.suscriptores.all():
+        if usuario in curso_var.suscriptores.all():
             #return redirect('/cursosdisponibles',mensaje_error = True, mensaje = "Ya estás suscrito al curso")
             return cursosdisponibles(request, mensaje_error = True, mensaje = "Ya estás suscrito al curso")
             
@@ -120,15 +120,15 @@ def suscripcion(request, id):
             return cursosdisponibles(request, mensaje_error = True, mensaje = "No tienes dinero suficiente")
             
         else:
-            curso.suscriptores.add(usuario)
+            curso_var.suscriptores.add(usuario)
             usuario.dinero -= Decimal(12.00)
-            profesor = curso.propietario
+            profesor = curso_var.propietario
             profesor.dinero += Decimal(9.00)
-            curso.save()
+            curso_var.save()
             usuario.save()
             profesor.save()
             #return redirect('/cursosdisponibles',mensaje_error = False, mensaje = "Se ha suscrito al curso correctamente")
-            return cursosdisponibles(request, mensaje_error = False, mensaje = "Se ha suscrito al curso correctamente")
+            return curso(request, curso_var.id, suscrito=True)
             
     else:
         return redirect("/login")
@@ -535,7 +535,7 @@ def editar_curso(request, id_curso):
         return redirect("/login")
 
 
-def curso(request, id):
+def curso(request, id, suscrito = False):
     es_owner = False
     es_suscriptor = False
 
@@ -579,7 +579,7 @@ def curso(request, id):
             except:
                 pass
 
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario})
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito})
 
     else:
         return render(request, 'inicio.html')
