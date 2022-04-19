@@ -87,8 +87,9 @@ class Comentario(models.Model):
     fecha = models.DateTimeField(default=now, blank=True)
     archivo = models.ForeignKey(
         Archivo, verbose_name="Archivo", on_delete=models.CASCADE)
-    responde_a = models.OneToOneField(
+    responde_a = models.ForeignKey(
         'self', null=True, blank=True, verbose_name="Responde a", on_delete=models.DO_NOTHING)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
 
 class Notificacion(models.Model):
@@ -97,12 +98,14 @@ class Notificacion(models.Model):
         REPORTE = "REPORTE"
         NUEVO_ALUMNO = "NUEVO_ALUMNO"
 
-    id_refencia = models.SmallIntegerField(null=True)
+    referencia = models.CharField(max_length=100)
     tipo = models.CharField(max_length=20, choices=TipoNotificacion.choices)
-    fecha = models.DateField()
+    fecha = models.DateTimeField(default=now, blank=True)
     visto = models.BooleanField()
     usuario = models.ForeignKey(
         Usuario, verbose_name="Usuario", on_delete=models.CASCADE)
+    curso = models.ForeignKey(
+        Curso, verbose_name="Curso", on_delete=models.CASCADE)
 
 
 class Valoracion(models.Model):
