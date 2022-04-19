@@ -56,6 +56,9 @@
                     <th>Tipo</th>
                     <th>Fecha</th>
                     <th>Curso</th>
+                    <th>Alumno</th>
+                    <th>Descripcion</th>
+                    <th></th>
                     <th></th>
                   </tr>
                 </thead>
@@ -66,8 +69,13 @@
                         <td>{{notificacion.tipo}}</td>
                         <td>{{notificacion.fecha}}</td>
                         <td>{{notificacion.curso.nombre}}</td>
+                        <td>{{notificacion.alumno.nombre}}</td>
+                        <td>{{notificacion.descripcion}}</td>
                         <td>
                           <a class="btn btn-outline-secondary" href="{{notificacion.referencia}}">Ver</a>
+                        </td>
+                        <td>
+                          <a type="submit" class="btn btn-outline-danger" href="/notificacion/eliminar/{{notificacion.id}}">X</a>
                         </td>
                       </tr>
                     {% endif %}
