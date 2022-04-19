@@ -38,6 +38,7 @@ urlpatterns = [
     path('registro/', views.registro_usuario),
     path('actualizar_perfil/', views.actualizar_usuario),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>/reporte/<int:id_reporte>', views.eliminar_reporte),
+    path('curso/<int:id_curso>/archivo/<int:id_archivo>/comentario/<int:id_comentario>', views.eliminar_comentario),
     path('perfil/', views.perfil_usuario),
     path('borrar_foto/', views.borrar_foto),
     path('pago/',views.pago),
