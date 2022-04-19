@@ -71,52 +71,17 @@ def pago(request):
     else:
         return redirect("/login")
 
-
-# def suscripcion(request, id):
-#     if request.user.is_authenticated:
-
-#         alumno = Usuario.objects.get(django_user=request.user)
-#         curso = Curso.objects.get(pk=id)
-
-#         usuario = request.user.usuario
-#         if usuario.titulacion != curso.asignatura.titulacion or curso.propietario == usuario:
-#             return redirect('/cursosdisponibles')
-
-#         data = json.loads(request.body)
-#         order_id = data['orderID']
-
-#         detalle = GetOrder().get_order(order_id)
-#         detalle_precio = float(detalle.result.purchase_units[0].amount.value)
-
-#         if detalle_precio == 10.0:
-#             curso.suscriptores.add(alumno)
-#             curso.save()
-#             data = {
-#                 "mensaje": "Se ha suscrito al curso correctamente"
-#             }
-#             return JsonResponse(data)
-#         else:
-#             data = {
-#                 "mensaje": "Error =("
-#             }
-#             return JsonResponse(data)
-#     else:
-#         return redirect("/login")
-
 def suscripcion(request, id):
     if request.user.is_authenticated:
         usuario = Usuario.objects.get(django_user=request.user)
         curso_var = Curso.objects.get(pk=id)
         if usuario.titulacion != curso_var.asignatura.titulacion or curso_var.propietario == usuario:
-            #return redirect('/cursosdisponibles', mensaje_error = True, mensaje = "No puedes suscribirte a este curso")
             return cursosdisponibles(request, mensaje_error = True, mensaje = "No puedes suscribirte a este curso")
             
         if usuario in curso_var.suscriptores.all():
-            #return redirect('/cursosdisponibles',mensaje_error = True, mensaje = "Ya estás suscrito al curso")
             return cursosdisponibles(request, mensaje_error = True, mensaje = "Ya estás suscrito al curso")
             
         if usuario.dinero < Decimal(12.00):
-            #return redirect('/cursosdisponibles',mensaje_error = True, mensaje = "No tienes dinero suficiente")
             return cursosdisponibles(request, mensaje_error = True, mensaje = "No tienes dinero suficiente")
             
         else:
@@ -127,7 +92,6 @@ def suscripcion(request, id):
             curso_var.save()
             usuario.save()
             profesor.save()
-            #return redirect('/cursosdisponibles',mensaje_error = False, mensaje = "Se ha suscrito al curso correctamente")
             return curso(request, curso_var.id, suscrito=True)
             
     else:
