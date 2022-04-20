@@ -669,10 +669,11 @@ def ver_archivo(request, id_curso, id_archivo):
         else:
             form = ReporteForm()
         ####
-        print("crear ticket")
-        ticket = TicketDescarga(usuario=Usuario.objects.get(django_user=request.user),archivo=archivo)
-        print(ticket)
-        ticket.save()
+        if acceso:
+            print("crear ticket")
+            ticket = TicketDescarga(usuario=Usuario.objects.get(django_user=request.user),archivo=archivo)
+            print(ticket)
+            ticket.save()
         return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso,
                                                 'acceso': acceso, 'comentarios': comentarios, 'url': url, 'form': form, 'page_obj': page_obj, 'es_owner': es_owner,
                                                 'es_plagio': es_plagio, 'es_error': es_error})
