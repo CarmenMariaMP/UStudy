@@ -31,7 +31,7 @@ class ComentarioForm(forms.Form):
     texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
         'cols': 200,
         'rows': 4,
-        'style': 'width: 100%; border: 3px solid black; border-radius: 4px; padding: 10px;', 
+        'style': 'width: 100%; border: 1px solid black; border-radius: 4px; padding: 10px;', 
         'placeholder': 'Escribe un comentario...'
     }))
 
@@ -40,7 +40,7 @@ class ResponderComentarioForm(forms.Form):
     texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
         'cols': 200,
         'rows': 4,
-        'style': 'width: 100%; border: 3px solid black; border-radius: 4px; padding: 10px;', 
+        'style': 'width: 100%; border: 1px solid black; border-radius: 4px; padding: 10px;', 
         'placeholder': 'Escribe un comentario...'
     }))
 
