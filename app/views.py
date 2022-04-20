@@ -136,7 +136,8 @@ def suscripcion(request, id):
             curso_var.save()
             usuario.save()
             profesor.save()
-            return curso(request, curso_var.id, suscrito=True)
+            suscrito="Se ha suscrito correctamente al curso"
+            return render(request, 'cursosdisponibles.html',{'curso':curso_var,'suscrito':suscrito})
             
     else:
         return redirect("/login")
