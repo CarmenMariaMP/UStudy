@@ -3,7 +3,7 @@ from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
-from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User
+from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, TicketDescarga
 from app.paypal import GetOrder
 from app.forms import UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm
 import json
@@ -668,6 +668,11 @@ def ver_archivo(request, id_curso, id_archivo):
                 return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
         else:
             form = ReporteForm()
+        ####
+        print("crear ticket")
+        ticket = TicketDescarga(usuario=Usuario.objects.get(django_user=request.user),archivo=archivo)
+        print(ticket)
+        ticket.save()
         return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso,
                                                 'acceso': acceso, 'comentarios': comentarios, 'url': url, 'form': form, 'page_obj': page_obj, 'es_owner': es_owner,
                                                 'es_plagio': es_plagio, 'es_error': es_error})
@@ -711,11 +716,17 @@ def servir_archivo(request,id_curso, archivo):
         curso = Curso.objects.get(pk=id_curso)
         usuario = Usuario.objects.filter(django_user=request.user)[0]
         if usuario == curso.propietario or usuario in curso.suscriptores.all():
-            filename = "./files/"+str(curso.id)+"/"+archivo
-            wrapper = FileWrapper(open(filename,"rb"))
-            response = HttpResponse(wrapper, content_type=mimetypes.guess_type("./files/"+str(curso.id)+"/"+archivo)[0])
-            response['Content-Length'] = os.path.getsize(filename)
-            return response
+            tickets = TicketDescarga.objects.filter(usuario=usuario,archivo=Archivo.objects.filter(curso=id_curso,nombre=archivo)[0])
+            print(tickets[0])
+            if len(tickets)>0:
+                filename = "./files/"+str(curso.id)+"/"+archivo
+                wrapper = FileWrapper(open(filename,"rb"))
+                response = HttpResponse(wrapper, content_type=mimetypes.guess_type("./files/"+str(curso.id)+"/"+archivo)[0])
+                response['Content-Length'] = os.path.getsize(filename)
+                tickets[0].delete()
+                return response
+            else:
+                return error_403(request,None)
         else:
             return error_403(request,None)
     else:
