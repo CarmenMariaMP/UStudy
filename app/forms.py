@@ -83,6 +83,8 @@ class ActualizarUsuarioForm(forms.Form):
     apellidos = forms.CharField(max_length=40, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellidos'}))
     email = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'user@domain.com'}))
     titulacion = forms.ChoiceField(choices=opciones, required=True, widget=forms.Select(attrs={'class': 'form-control'}))
+    # descripcion = forms.CharField(
+    #     widget=forms.Textarea(max_length=500, required=False, attrs={'style': 'width: 100%;', 'class': 'form-control', 'rows': "5", 'placeholder': 'Descripción ...'}))
     descripcion = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción ...'}))
     foto = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Foto'}))
 
