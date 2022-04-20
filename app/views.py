@@ -286,7 +286,7 @@ def registro_usuario(request):
             user_instancia = User(
                 username=usename, email=email, password=password)
             usuario_instancia = Usuario(
-                nombre=name, apellidos=surname, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, terminos=terminos, privacidad=privacidad)
+                nombre=name, apellidos=surname, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero)
 
             # validación userjango
             try:
@@ -316,7 +316,7 @@ def registro_usuario(request):
 
                 return render(request, 'registro.html', {"mensaje_error": True, "form": form})
 
-            return redirect('/login')
+            
         else:
             return render(request, 'registro.html', {"form": form})
 
