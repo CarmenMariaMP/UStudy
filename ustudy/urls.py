@@ -35,16 +35,22 @@ urlpatterns = [
     path('pago/',views.pago),
     path('comprobacion_pago', views.comprobacion_pago),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>', views.ver_archivo),
-    path('valorar_curso/',views.valorar_curso),
+    path('valorar_curso/', views.valorar_curso),
     path('curso/<int:id_curso>/<int:id_archivo>', views.borrar_archivo),
     path('registro/', views.registro_usuario),
     path('actualizar_perfil/', views.actualizar_usuario),
-    path('curso/<int:id_curso>/archivo/<int:id_archivo>/reporte/<int:id_reporte>', views.eliminar_reporte),
-    path('curso/<int:id_curso>/archivo/<int:id_archivo>/comentario/<int:id_comentario>', views.eliminar_comentario),
+    path('curso/<int:id_curso>/archivo/<int:id_archivo>/reporte/<int:id_reporte>',
+         views.eliminar_reporte),
+    path('curso/<int:id_curso>/archivo/<int:id_archivo>/comentario/<int:id_comentario>',
+         views.eliminar_comentario),
     path('perfil/', views.perfil_usuario),
     path('borrar_foto/', views.borrar_foto),
-    
-    path("editarcurso/<int:id_curso>" , views.editar_curso),
+    path('pago/', views.pago),
+    path("editarcurso/<int:id_curso>", views.editar_curso),
+    path('sobre_nosotros/', views.sobre_nosotros),
+    path('terminos/', views.terminos),
+    path('privacidad/', views.privacidad),
+
 ]
 #urlpatterns += staticfiles_urlpatterns()
 #urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
