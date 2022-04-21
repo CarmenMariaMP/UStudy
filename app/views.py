@@ -803,8 +803,11 @@ def dashboard_users(request):
             curso = Curso.objects.get(id=c.id)
             valoraciones = Valoracion.objects.all().filter(curso=curso)
             numero_valoraciones += len(valoraciones)
-            valoracion = get_valoracion(curso)
-            valoracion_media_global += valoracion
+            try:
+                valoracion = get_valoracion(curso)
+                valoracion_media_global += valoracion
+            except:
+                valoracion_media_global += 0.0
             num_susriptores += len(curso.suscriptores.all())
             archivos_curso = Archivo.objects.filter(curso=curso)
             num_archivos += len(archivos_curso)
