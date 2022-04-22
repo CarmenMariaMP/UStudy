@@ -783,6 +783,53 @@ def eliminar_reporte(request, id_curso, id_archivo, id_reporte):
     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
 
 
+def dashboard_users(request):
+    if request.user.is_authenticated:
+        # Comprobar si el usuario es profesor
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(django_user=usuario_autenticado)
+        cursos = usuario.Suscriptores
+        cursos_suscritos = []
+        numero_valoraciones = 0
+        num_archivos = 0
+        numero_reportes = 0
+        num_susriptores = 0
+        valoracion_media_global = 0
+
+        for c in cursos.all():
+            curso = Curso.objects.get(id=c.id)
+            cursos_suscritos.append(curso)
+        
+        cursos_propietario = Curso.objects.filter(propietario = usuario)
+        
+        for c in cursos_propietario:
+            curso = Curso.objects.get(id=c.id)
+            valoraciones = Valoracion.objects.all().filter(curso=curso)
+            numero_valoraciones += len(valoraciones)
+            try:
+                valoracion = get_valoracion(curso)
+                valoracion_media_global += valoracion
+            except:
+                valoracion_media_global += 0.0
+            num_susriptores += len(curso.suscriptores.all())
+            archivos_curso = Archivo.objects.filter(curso=curso)
+            num_archivos += len(archivos_curso)
+            reportes = list()
+            for archivo in archivos_curso:
+                reporte = Reporte.objects.all().filter(archivo=Archivo.objects.get(id=archivo.id))
+                reportes.append(reporte)
+            numero_reportes += len(reportes)
+        
+        try:
+            valoracion_media_global = valoracion_media_global / len(cursos_propietario)
+        except:
+            valoracion_media_global = 0.0
+        
+        return render(request, 'dashboard.html', {'usuario': usuario, 'cursos_suscritos': len(cursos_suscritos), 
+                        'cursos_propietario': len(cursos_propietario), "suscriptores": num_susriptores, 'archivos_subidos': num_archivos,
+                        'reportes': numero_reportes, 'valoraciones': numero_valoraciones, 'valoracion_media_global': valoracion_media_global})
+    return render(request, 'inicio.html')
+
 def subir_contenido(request):
     return render(request, "subir_contenido.html")
 
