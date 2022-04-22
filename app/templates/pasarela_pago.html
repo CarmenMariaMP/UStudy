@@ -3,6 +3,33 @@
 <head>
     {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
     <meta charset="utf-8" />
+
+    {%if form %} 
+    <form
+    action="/pago/"
+    class="form-signin container col-auto"
+    style="width: 30%; margin-top: 20px"
+    method="POST"
+  >
+    {% csrf_token %}
+
+    <label>Introduzca cantidad a ingresar</label>
+    <div>{{form.dinero}}</div>
+
+
+<br>
+    <div class="text-center mt-3">
+      <button class="btn boton btn-info btn-block" type="submit">
+        Ir al pago
+      </button>
+    </div>
+  </form>
+
+  {% endif %}
+
+
+
+  {%if dinero %} 
     <script>
     function token(name) {
     var cookieValue = null;
@@ -24,7 +51,7 @@ var csrftoken = token('csrftoken');
 <body>
   <br>
   <div class="row d-flex justify-content-center">
-      <h2>Métodos de pago del curso {{curso.nombre}}</h2>
+      <h2>Escoja una forma de pago</h2>
   </div>
   
     <div id="paypal-button-container" class="d-flex justify-content-center mt-lg-5"></div>
@@ -34,20 +61,19 @@ var csrftoken = token('csrftoken');
       </script>
 
 
-
     <script>
         paypal.Buttons({
           createOrder: function(data, actions) {
             return actions.order.create({
               purchase_units: [{
                 amount: {
-                  value: '10.00'
+                  value: '{{dinero}}'
                 }
               }]
             });
           },
           onApprove: function(data) {
-            return fetch('/suscripcion/{{curso.id}}', {
+            return fetch('/comprobacion_pago', {
                 method: 'POST',
                 headers: {
                 'content-type': 'application/json',
@@ -60,12 +86,14 @@ var csrftoken = token('csrftoken');
                 return res.json();
             }).then(function(details) {
                 alert(details.mensaje);
-                window.location.href = "/curso/{{curso.id}}"
+                window.location.href = "/perfil"
                 
             })
           }
         }).render('#paypal-button-container');
       </script>
+
+{% endif %}
 
 </body>
 {% endblock %}

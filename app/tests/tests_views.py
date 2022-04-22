@@ -178,7 +178,7 @@ class CursoViewTests(TestCase):
                                          descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
         
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
-        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario2)
         
     def test_course_view(self):
         client = Client()
