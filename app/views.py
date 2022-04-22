@@ -87,7 +87,6 @@ def comprobacion_pago(request):
         if data:
 
             order_id = data['orderID']
-
             detalle = GetOrder().get_order(order_id)
             detalle_precio = float(detalle.result.purchase_units[0].amount.value)
 
@@ -136,6 +135,10 @@ def suscripcion(request, id):
             curso_var.save()
             usuario.save()
             profesor.save()
+            
+            referencia = '/curso/' + str(curso_var.id)
+            notificacion = Notificacion(referencia=referencia,usuario=profesor, tipo="NUEVO_ALUMNO", curso=curso_var, visto=False, alumno=usuario)
+            notificacion.save()
             suscrito="Se ha suscrito correctamente al curso"
             return render(request, 'cursosdisponibles.html',{'curso':curso_var,'suscrito':suscrito})
             
@@ -718,7 +721,8 @@ def ver_archivo(request, id_curso, id_archivo):
                         descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
                     reporte_instancia.save()
                     referencia = '/curso/'+str(id_curso)+'/archivo/'+str(id_archivo)
-                    notificacion = Notificacion(referencia=referencia,usuario=curso.propietario, tipo="REPORTE", curso=curso, visto=False)
+                    notificacion = Notificacion(referencia=referencia,usuario=curso.propietario, tipo="REPORTE", curso=curso, visto=False,
+                                                alumno=usuario,descripcion=descripcion)
                     notificacion.save()
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
             elif request.POST['action'] == 'Comentar':
@@ -728,6 +732,10 @@ def ver_archivo(request, id_curso, id_archivo):
                     texto = comentarioForm['texto']
                     Comentario.objects.create(
                         texto=texto, archivo=archivo, fecha=datetime.datetime.now(), usuario=usuario)
+                    referencia = '/curso/'+str(id_curso)+'/archivo/'+str(id_archivo)
+                    notificacion = Notificacion(referencia=referencia,usuario=curso.propietario, tipo="COMENTARIO", curso=curso, visto=False,
+                                                alumno=usuario, descripcion=texto)
+                    notificacion.save()
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
             elif request.POST['action'] == 'Responder':
                 formRespuesta = ResponderComentarioForm(request.POST)
@@ -781,6 +789,15 @@ def eliminar_reporte(request, id_curso, id_archivo, id_reporte):
             reporte = Reporte.objects.get(id=id_reporte)
             reporte.delete()
     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+
+def eliminar_notificacion(request, id_notificacion):
+    notificacion=Notificacion.objects.get(id = id_notificacion)
+    if request.user.is_authenticated:
+        usuario_autenticado=request.user
+        usuario=Usuario.objects.get(django_user = usuario_autenticado)
+        if (notificacion.usuario == usuario):
+            Notificacion.objects.filter(id = id_notificacion).update(visto = True)
+    return redirect('/perfil')
 
 
 def subir_contenido(request):

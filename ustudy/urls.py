@@ -50,7 +50,7 @@ urlpatterns = [
     path('sobre_nosotros/', views.sobre_nosotros),
     path('terminos/', views.terminos),
     path('privacidad/', views.privacidad),
-
+    path("notificacion/eliminar/<int:id_notificacion>" , views.eliminar_notificacion),
 ]
 #urlpatterns += staticfiles_urlpatterns()
 #urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
