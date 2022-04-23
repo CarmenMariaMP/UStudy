@@ -1,0 +1,50 @@
+<head>
+  {% extends 'base_navbar.html' %} {% load static %}{% block contenido %}
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+  />
+</head>
+
+<body>
+  <div
+    class="form-signin container col-auto p-5 text-center display:flex; justify-content: center;"
+  >
+    <div class="row">
+      <div class="col">
+        <h2 class="heading pt-4">
+          Ustudy.
+          <span class="text-muted">Por alumnos para alumnos.</span>
+        </h2>
+        <p class="lead">
+          UStudy ofrece a los alumnos de la Universidad de Sevilla una
+          plataforma web donde poder intercambiar conocimientos sobre las
+          distintas materias que se imparten en la US, de manera que aquellos
+          alumnos que quieran puedan impartir clases a sus compañeros obteniendo
+          una recompensa económica por ello.
+        </p>
+      </div>
+      <div class="col">
+        <img
+          class="mb-4"
+          src="{% static 'media/logo.png' %}"
+          alt=""
+          width="300"
+          height="300"
+        />
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
+</body>
+
+<footer></footer>

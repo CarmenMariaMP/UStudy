@@ -1,6 +1,8 @@
 body {
     overflow-x: hidden;
 }
+
+  
   /* Left column */
   .leftcolumn {   
     float: left;
@@ -42,6 +44,12 @@ body {
     .leftcolumn, .rightcolumn {   
       width: 100%;
       padding: 5px;
+    }
+    p{
+      font-size: 0.75em;
+    }
+    h5{
+      font-size: 0.85em;
     }
   }
   

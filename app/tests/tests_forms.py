@@ -77,7 +77,9 @@ class addUsuarioFormTest(TestCase):
             'email': 'david.brincau@htomail.com',
             'email_academico': 'davbrican@alum.us.es',
             'titulacion': 'Grado en Ingeniería Informática-Ingeniería del Software',
-            'descripcion': 'Esto es una descripción de prueba'
+            'descripcion': 'Esto es una descripción de prueba',
+            'terminos': True,
+            'privacidad': True
         }
         form = UsuarioForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -92,9 +94,12 @@ class addUsuarioFormTest(TestCase):
             'email': None,
             'email_academico': None,
             'titulacion': None,
-            'descripcion': None
+            'descripcion': None,
+            'terminos': True,
+            'privacidad': True
         }
         form = UsuarioForm(data=form_data)
+        print(form.errors)
         self.assertTrue('<ul class="errorlist"><li>username<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>password<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>confirm_password<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>name<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>surname<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>email<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>email_academico<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li><li>titulacion<ul class="errorlist"><li>Este campo es obligatorio.</li></ul></li></ul>' in str(form.errors))
                 
     def test_user_form_fields_too_large(self):
@@ -107,7 +112,9 @@ class addUsuarioFormTest(TestCase):
             'email': 'a'*254,
             'email_academico': 'a'*254,
             'titulacion': 'Grado en Ingeniería Informática-Ingeniería del Software',
-            'descripcion': 'a'*501
+            'descripcion': 'a'*501,
+            'terminos': True,
+            'privacidad': True
         }
         form = UsuarioForm(data=form_data)
         self.assertTrue('<ul class="errorlist"><li>username<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 50 caracteres (tiene 51).</li></ul></li><li>password<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 50 caracteres (tiene 51).</li></ul></li><li>confirm_password<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 50 caracteres (tiene 51).</li></ul></li><li>name<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 40 caracteres (tiene 41).</li></ul></li><li>surname<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 40 caracteres (tiene 41).</li></ul></li><li>email<ul class="errorlist"><li>Introduzca una dirección de correo electrónico válida.</li></ul></li><li>email_academico<ul class="errorlist"><li>Introduzca una dirección de correo electrónico válida.</li></ul></li><li>descripcion<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 500 caracteres (tiene 501).</li></ul></li></ul>' in str(form.errors))
@@ -123,7 +130,9 @@ class addUsuarioFormTest(TestCase):
             'email': 'david.brincau@htomail.com',
             'email_academico': 'davbrican@alum.us.es',
             'titulacion': 'Grado inventado',
-            'descripcion': 'Esto es una descripción de prueba'
+            'descripcion': 'Esto es una descripción de prueba',
+            'terminos': True,
+            'privacidad': True
         }
         form = UsuarioForm(data=form_data)
         self.assertTrue('<ul class="errorlist"><li>titulacion<ul class="errorlist"><li>Escoja una opción válida. Grado inventado no es una de las opciones disponibles.</li></ul></li></ul>' in str(form.errors))
