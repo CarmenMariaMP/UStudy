@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
-    <meta charset="utf-8" />
+  {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="{% static 'css/colores.css' %}" rel="stylesheet" />
+  <meta charset="utf-8" />
 
     {%if form %} 
     <form
