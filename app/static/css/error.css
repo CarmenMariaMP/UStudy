@@ -48,9 +48,8 @@ h2 {
 
 @media screen and (max-width: 800px) {
   .container {
-    width: 60%;
+    width: 50%;
     margin-top: 20%;
-    margin-right: -5%;
   }
 
   h1 {
@@ -62,6 +61,7 @@ h2 {
   }
 
   .error-image {
-    opacity: 0;
+    width:30%;
+    padding: 5px 5px 80px 15px;
   }
 }
