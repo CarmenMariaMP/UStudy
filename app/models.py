@@ -98,12 +98,17 @@ class Notificacion(models.Model):
         REPORTE = "REPORTE"
         NUEVO_ALUMNO = "NUEVO_ALUMNO"
 
-    id_refencia = models.SmallIntegerField(null=True)
+    referencia = models.CharField(max_length=100)
     tipo = models.CharField(max_length=20, choices=TipoNotificacion.choices)
-    fecha = models.DateField()
+    fecha = models.DateTimeField(default=now, blank=True)
     visto = models.BooleanField()
     usuario = models.ForeignKey(
         Usuario, verbose_name="Usuario", on_delete=models.CASCADE)
+    curso = models.ForeignKey(
+        Curso, verbose_name="Curso", on_delete=models.CASCADE)
+    alumno = models.ForeignKey(
+        Usuario, related_name="alumno", on_delete=models.CASCADE, null=True, blank=True)
+    descripcion = models.CharField(max_length=500, null=True, blank=True)
 
 
 class Valoracion(models.Model):
