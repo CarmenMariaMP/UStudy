@@ -25,7 +25,7 @@
     <br>
     <div class="container">
         <br>
-        <div class="album py-5 bg-light">
+        <div class="album p-5 bg-light">
             <div class="container">
                 <div class="row">
                     {%if page_obj|length > 0 %} {% for cursoYvaloracion in page_obj %}
@@ -69,9 +69,9 @@
                 </ul>
             </nav>
             {%endif%} {% endblock %}
+        </div>
 </body>
 <footer>
-    {% block pie %}{% endblock %}
 </footer>
 
 </html>

@@ -2,9 +2,12 @@
 <html>
   <header>
     {% extends 'base_navbar.html' %}{% load static %} {% block contenido %}
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <meta charset="utf-8" />
-</header>
+  </header>
   <br />
   <div class="row d-flex justify-content-center">
     <h2>Crear curso</h2>
@@ -27,8 +30,9 @@
     <label class="mt-3">Asignatura</label>
     <div>{{form.asignatura}}</div>
 
-<br>
+    <br />
     <div class="text-center mt-3">
+
       <button type="button" class="btn boton btn-info btn-block" data-toggle="modal" data-target="#reporteModal" >Crear</button>
       <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog" aria-labelledby="reporteModal" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -51,6 +55,7 @@
                 </div>
               </div> 
               
+
     </div>
     <script>function curso_crear(form){console.log("hola");
       form.submit()};</script>
@@ -59,4 +64,5 @@
 
   <footer>{% block pie %}{% endblock %}</footer>
   
+
 </html>

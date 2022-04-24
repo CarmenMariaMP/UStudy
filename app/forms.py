@@ -27,6 +27,37 @@ class ReporteForm(forms.Form):
     descripcion = forms.CharField(max_length=500, required=True,widget=forms.Textarea)
     tipo = forms.ChoiceField(choices=TIPOS_REPORTE, widget=forms.Select(attrs={'class':'bootstrap-select'}))
 
+class ComentarioForm(forms.Form):
+    texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
+        'cols': 200,
+        'rows': 4,
+        'style': 'width: 100%; border: 1px solid black; border-radius: 4px; padding: 10px;', 
+        'placeholder': 'Escribe un comentario...'
+    }))
+
+class ResponderComentarioForm(forms.Form):
+    responde_a = forms.IntegerField(widget=forms.HiddenInput())
+    texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
+        'cols': 200,
+        'rows': 4,
+        'style': 'width: 100%; border: 1px solid black; border-radius: 4px; padding: 10px;', 
+        'placeholder': 'Escribe un comentario...'
+    }))
+
+class ResponderComentarioForm2(forms.Form):
+    usuario_responde_a = forms.CharField(widget=forms.HiddenInput())
+    responde_a = forms.IntegerField(widget=forms.HiddenInput())
+    texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
+        'cols': 200,
+        'rows': 4,
+        'style': 'width: 100%; border: 3px solid black; border-radius: 4px; padding: 10px;', 
+        'placeholder': 'Escribe un comentario...'
+    }))
+
+class MonederoForm(forms.Form):
+
+    dinero = forms.DecimalField(required=True ,min_value=0.09, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-control','placeholder':'12,00'}))
+
 
 class UsuarioForm(forms.Form):
     titulaciones = get_choices()
@@ -42,6 +73,8 @@ class UsuarioForm(forms.Form):
     email_academico = forms.EmailField(max_length=254 ,required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'uvus@alum.us.es'}))
     titulacion = forms.ChoiceField(choices=opciones, required=True, widget=forms.Select(attrs={'class': 'form-control'}))
     descripcion = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción ...'}))
+    terminos = forms.BooleanField(required=True)
+    privacidad = forms.BooleanField(required=True)
 
 class ActualizarUsuarioForm(forms.Form):
     titulaciones = get_choices()
@@ -55,6 +88,8 @@ class ActualizarUsuarioForm(forms.Form):
     apellidos = forms.CharField(max_length=40, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellidos'}))
     email = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'user@domain.com'}))
     titulacion = forms.ChoiceField(choices=opciones, required=True, widget=forms.Select(attrs={'class': 'form-control'}))
+    # descripcion = forms.CharField(
+    #     widget=forms.Textarea(max_length=500, required=False, attrs={'style': 'width: 100%;', 'class': 'form-control', 'rows': "5", 'placeholder': 'Descripción ...'}))
     descripcion = forms.CharField(max_length=500, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción ...'}))
     foto = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Foto'}))
 
