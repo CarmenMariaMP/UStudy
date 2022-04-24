@@ -547,6 +547,7 @@ class SuscripcionTestView(TestCase):
         curso_id = Curso.objects.first().id
         response = client.post('/suscripcion/'+str(curso_id))
         self.assertEquals(response.status_code,200)
+        #ha habido intercambio monetario pues la suscripcion se ha realizado correctamente
         self.assertEquals(suscriptor.usuario.dinero, 0.0)
         self.assertEquals(profesor.usuario.dinero, 18.0)
         self.assertTemplateUsed(response, 'cursosdisponibles.html')
@@ -569,6 +570,8 @@ class SuscripcionTestView(TestCase):
         #No ha habido intercambio monetario pues la suscripcion no se ha realizado
         self.assertEquals(suscriptor.usuario.dinero, 12.0)
         self.assertEquals(profesor.usuario.dinero, 9.0)
+        message = bytes("Ya estás suscrito al curso", encoding='utf-8')
+        self.assertEquals(message in response.content,True)
         self.assertTemplateUsed(response, 'cursosdisponibles.html')
 
     def test_suscripcion_view_post_not_enough_money(self):
@@ -589,7 +592,8 @@ class SuscripcionTestView(TestCase):
         self.assertEquals(response.status_code,200)
         
         #No ha habido intercambio monetario pues la suscripcion no se ha realizado
-        
+        message = bytes("No tienes dinero suficiente", encoding='utf-8')
+        self.assertEquals(message in response.content,True)
         self.assertEquals(profesor.usuario.dinero, 9.0)
         self.assertTemplateUsed(response, 'cursosdisponibles.html')
 
@@ -607,6 +611,8 @@ class SuscripcionTestView(TestCase):
         self.assertEquals(response.status_code,200)
 
         #No ha habido intercambio monetario pues la suscripcion no se ha realizado
+        message = bytes("No puedes suscribirte a este curso", encoding='utf-8')
+        self.assertEquals(message in response.content,True)
         self.assertEquals(profesor.usuario.dinero, 9.0)
         self.assertTemplateUsed(response, 'cursosdisponibles.html')
 
@@ -627,11 +633,85 @@ class SuscripcionTestView(TestCase):
         self.assertEquals(response.status_code,200)
 
         #No ha habido intercambio monetario pues la suscripcion no se ha realizado
+        message = bytes("No puedes suscribirte a este curso", encoding='utf-8')
+        self.assertEquals(message in response.content,True)
         self.assertEquals(suscriptor.usuario.dinero, 12.0)
         self.assertEquals(profesor.usuario.dinero, 9.0)
         self.assertTemplateUsed(response, 'cursosdisponibles.html')
 
     
+class BorrarFotoTestView(TestCase):
 
-
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1')
+        user.set_password('pass')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.00, django_user=user)
+        
+    def test_borrar_foto_succes_view_get(self):
+        client = Client()
+        user = User.objects.get(username='User1')
+        client.force_login(user)
+        response = client.get('/borrar_foto/')
+        self.assertEquals(response.status_code,302)
+        print(user.usuario.foto)
+        self.assertRedirects(response, '/actualizar_perfil',fetch_redirect_response=False)
     
+    def test_borrar_foto_not_logged_view_get(self):
+        client = Client()
+        response = client.get('/borrar_foto/')
+        self.assertEquals(response.status_code,302)
+        self.assertRedirects(response, '/login',fetch_redirect_response=False)
+    
+class PagoTestView(TestCase):
+
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1')
+        user.set_password('pass')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.00, django_user=user)
+
+    def test_pago_success_view_post(self):
+        client = Client()
+        user = User.objects.get(username='User1')
+        client.force_login(user)
+        response = client.post('/pago/', data={'dinero':'10.00'})
+        self.assertEquals(response.status_code,200)
+        #En el caso de que el post haya sido un éxito te llevará a selecciona una forma de pago
+        message = bytes("Escoja una forma de pago", encoding='utf-8')
+        self.assertEquals(message in response.content,True)
+        self.assertTemplateUsed(response, 'pasarela_pago.html')
+
+    def test_pago_invalid_amount_view_post(self):
+        client = Client()
+        user = User.objects.get(username='User1')
+        client.force_login(user)
+        response = client.post('/pago/', data={'dinero':'0.05'})
+        self.assertEquals(response.status_code,200)
+        #En el caso de que el post haya sido un éxito te llevará a selecciona una forma de pago
+        message = bytes("""<form
+    action="/pago/"
+    class="form-signin container col-auto"
+    style="width: 30%; margin-top: 20px"
+    method="POST"
+  >""", encoding='utf-8')
+        self.assertEquals(message in response.content,True)
+        self.assertTemplateUsed(response, 'pasarela_pago.html')
+
+
+    def test_pago_not_logged_view_get(self):
+        client = Client()
+        response = client.get('/pago/')
+        self.assertEquals(response.status_code,302)
+        self.assertRedirects(response, '/login',fetch_redirect_response=False)
+
+
+
