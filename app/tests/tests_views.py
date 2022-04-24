@@ -36,8 +36,8 @@ class PerfilUsuarioViewTests(TestCase):
         #Instanciar objetos sin modificar que se usan en todos los métodos
         user = User.objects.create(username='User1', password='pass')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
     def test_profile_view(self):
         client = Client()
@@ -59,8 +59,8 @@ class InicioProfesotViewTests(TestCase):
         #Instanciar objetos sin modificar que se usan en todos los métodos
         user = User.objects.create(username='User1', password='pass')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
     def test_profesor_view(self):
         client = Client()
@@ -83,8 +83,8 @@ class CrearCursoViewTests(TestCase):
         Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         user = User.objects.create(username='User1', password='pass')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulacion1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulacion1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
         
     def test_create_course_view(self):
@@ -109,7 +109,7 @@ class CrearCursoViewTests(TestCase):
         client = Client()
         response = client.get('/crearcurso', follow=True)
         self.assertEquals(response.status_code,200)
-        self.assertTemplateUsed(response, 'inicio.html')   
+        self.assertTemplateUsed(response, 'inicio.html')
 
 class CursosDisponiblesViewTests(TestCase):
     
@@ -118,8 +118,8 @@ class CursosDisponiblesViewTests(TestCase):
         #Instanciar objetos sin modificar que se usan en todos los métodos
         user = User.objects.create(username='User1', password='pass')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
         
     def test_courses_available_view(self):
@@ -135,7 +135,7 @@ class CursosDisponiblesViewTests(TestCase):
         response = client.get('/cursosdisponibles', follow=True)
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response, 'login.html')
-     
+
 class MisCursosViewTests(TestCase):
     
     @classmethod
@@ -143,8 +143,8 @@ class MisCursosViewTests(TestCase):
         #Instanciar objetos sin modificar que se usan en todos los métodos
         user = User.objects.create(username='User1', password='pass')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
         
     def test_my_courses_view(self):
@@ -168,14 +168,14 @@ class CursoViewTests(TestCase):
         #Instanciar objetos sin modificar que se usan en todos los métodos
         user = User.objects.create(username='User1', password='pass')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
         
         user2 = User.objects.create(username='User2', password='pass')
-        usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
-                                         email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
-                                         descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
+        usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com',
+                                        email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
+                                        descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
         
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario2)
@@ -194,7 +194,7 @@ class CursoViewTests(TestCase):
         curso_id = Curso.objects.first().id
         response = client.get('/curso/'+str(curso_id), follow=True)
         self.assertEquals(response.status_code,200)
-        self.assertTemplateUsed(response, 'cursosdisponibles.html')        
+        self.assertTemplateUsed(response, 'cursosdisponibles.html')
     
     def test_course_view_not_logged(self):
         client = Client()
@@ -210,14 +210,14 @@ class ArchivoViewTests(TestCase):
         #Instanciar objetos sin modificar que se usan en todos los métodos
         user = User.objects.create(username='User1', password='pass')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
         
         user2 = User.objects.create(username='User2', password='pass')
         usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
-                                         email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
-                                         descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
+                                        email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
+                                        descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
         
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
@@ -247,8 +247,8 @@ class LogoutTestView(TestCase):
         #Instanciar objetos sin modificar que se usan en todos los métodos
         user = User.objects.create(username='User1', password='pass')
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
     def test_logout_view_test(self):
         client = Client()
@@ -266,8 +266,8 @@ class LoginTestView(TestCase):
         user.set_password('pass')
         user.save()
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
     def test_login_view_test_logged(self):
         client = Client()
@@ -298,8 +298,8 @@ class borrarArchivoTestView(TestCase):
         user.set_password('pass')
         user.save()
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulacion1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulacion1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=fecha, asignatura=asignatura, propietario=usuario)
         Archivo.objects.create(nombre='Archivo1', fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), curso=curso, ruta='ruta.pdf')
@@ -320,14 +320,14 @@ class ValorarCursoTestView(TestCase):
         user.set_password('pass')
         user.save()
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
         
         user2 = User.objects.create(username='User2', password='pass')
         usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
-                                         email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
-                                         descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
+                                        email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
+                                        descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
         
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
@@ -351,16 +351,16 @@ class EditarCursoTestView(TestCase):
         user.set_password('pass')
         user.save()
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
         
         user2 = User.objects.create(username='User2')
         user.set_password('pass')
         user.save()
         usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
-                                         email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
-                                         descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
+                                        email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
+                                        descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
         
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
@@ -414,8 +414,8 @@ class borrarReporteTestView(TestCase):
         user.set_password('pass')
         user.save()
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulacion1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulacion1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=fecha, asignatura=asignatura, propietario=usuario)
         archivo = Archivo.objects.create(nombre='Archivo1', fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), curso=curso, ruta='ruta.pdf')
@@ -444,16 +444,16 @@ class ErrorsTestView(TestCase):
         user.set_password('pass')
         user.save()
         usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
-                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
-                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+                                        email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                        descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
         
         
         user2 = User.objects.create(username='User2')
         user.set_password('pass')
         user.save()
         usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
-                                         email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
-                                         descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
+                                        email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
+                                        descripcion='Descripcion 2', foto='foto2.jpg', dinero=9.53, django_user=user2)
         
         asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
         curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
@@ -466,11 +466,11 @@ class ErrorsTestView(TestCase):
         
     def test_error_403(self):
         # TODO testear error 403
-        pass 
+        pass
         
     def test_error_500(self):
         # TODO testear error 500
-        pass 
+        pass
         
 class RegistroTestView(TestCase):
     
@@ -483,15 +483,15 @@ class RegistroTestView(TestCase):
     def test_register_view_post(self):
         client = Client()
         data_form = {
-            "password": "passwd", 
-            "confirm_password": "passwd", 
-            "usename": "nomapedos", 
-            "name": "Nombre", 
-            "surname": "Apellidos", 
-            "email": "email@gmail.com", 
-            "email_academico": "email@alum.us.es", 
-            "titulacion": "Titulacion1", 
-            "descripcion": "descripcion", 
+            "password": "passwd",
+            "confirm_password": "passwd",
+            "usename": "nomapedos",
+            "name": "Nombre",
+            "surname": "Apellidos",
+            "email": "email@gmail.com",
+            "email_academico": "email@alum.us.es",
+            "titulacion": "Titulacion1",
+            "descripcion": "descripcion",
             "dinero": "0.0"
         }
         response = client.post('/registro/', data=data_form, follow=True)
@@ -501,15 +501,15 @@ class RegistroTestView(TestCase):
     def test_register_view_post_different_passwords(self):
         client = Client()
         data_form = {
-            "password": "passwd", 
-            "confirm_password": "passwd1", 
-            "usename": "nomapedos", 
-            "name": "Nombre", 
-            "surname": "Apellidos", 
-            "email": "email@gmail.com", 
-            "email_academico": "email@alum.us.es", 
-            "titulacion": "Titulacion1", 
-            "descripcion": "descripcion", 
+            "password": "passwd",
+            "confirm_password": "passwd1",
+            "usename": "nomapedos",
+            "name": "Nombre",
+            "surname": "Apellidos",
+            "email": "email@gmail.com",
+            "email_academico": "email@alum.us.es",
+            "titulacion": "Titulacion1",
+            "descripcion": "descripcion",
             "dinero": "0.0"
         }
         response = client.post('/registro/', data=data_form, follow=True)

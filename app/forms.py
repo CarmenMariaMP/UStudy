@@ -31,7 +31,7 @@ class ComentarioForm(forms.Form):
     texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
         'cols': 200,
         'rows': 4,
-        'style': 'width: 100%; border: 1px solid black; border-radius: 4px; padding: 10px;', 
+        'style': 'width: 100%; border: 1px solid black; border-radius: 4px; padding: 10px;',
         'placeholder': 'Escribe un comentario...'
     }))
 
@@ -50,7 +50,7 @@ class ResponderComentarioForm2(forms.Form):
     texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
         'cols': 200,
         'rows': 4,
-        'style': 'width: 100%; border: 3px solid black; border-radius: 4px; padding: 10px;', 
+        'style': 'width: 100%; border: 3px solid black; border-radius: 4px; padding: 10px;',
         'placeholder': 'Escribe un comentario...'
     }))
 
@@ -95,8 +95,9 @@ class ActualizarUsuarioForm(forms.Form):
 
 
 class CursoEditForm(ModelForm):
- 
     def __init__(self,  *args, **kwargs):
+        '''Actualiza el curso con los datos del formulario
+        '''
         super(CursoEditForm, self).__init__(*args, **kwargs)
         self.fields['nombre'] = forms.CharField(
             widget=forms.TextInput(attrs={'style': 'width: 100%;', 'class': 'form-control'}))
@@ -105,7 +106,7 @@ class CursoEditForm(ModelForm):
 
         # mensajes de error
         self.fields['nombre'].error_messages['required'] = 'Este campo es obligatorio'
-        self.fields['descripcion'].error_messages['required'] = 'Este campo es obligatorio'    
+        self.fields['descripcion'].error_messages['required'] = 'Este campo es obligatorio'
     class Meta:
         model = Curso
         fields = ('nombre', 'descripcion')
