@@ -9,6 +9,11 @@
     <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
     <meta charset="utf-8" />
     {%load extras%}
+    <script>
+        $('#reporteModal').modal({
+            focus: true
+})
+    </script>
 </header>
 
 <body>
@@ -48,6 +53,56 @@
                         </div>
                     </div>
                     {%endif%}
+                    {% if es_owner%}
+                    <div class="col-md-3">
+                        <button type="button" class="btn boton" style="float:right;margin-right:10px" data-toggle="modal" data-target="#reporteModal">Mis reportes</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog" aria-labelledby="reporteModal" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="reporteModal">Mis reportes</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            {%if reportes|length > 0 %}
+                                            <div class="container">
+                                                {% for reporte in reportes %}
+                                                <div class="card">
+                                                    <div class="card-body standard_web_color">
+                                                        <h5 class="card-title">{{reporte.usuario.nombre}} {% if reporte.tipo == "PLAGIO" %}
+                                                            <span class="badge badge-warning">{{reporte.tipo}}</span> {% else %}
+                                                            <span class="badge badge-danger">{{reporte.tipo}}</span> {% endif %}
+                                                        </h5>
+                                                        </h5>
+                                                        <p class="card-text">{{reporte.descripcion}}</p>
+                                                        <div class="d-flex justify-content-end align-items-center standard_web_color">
+                                                            <a type="submit" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}/archivo/{{archivo.id}}/reporte/{{reporte.id}}">
+                                                                Eliminar</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                                
+                                            </div>
+                                            {% else %}
+                                            <div class="alert alert-secondary" role="alert">
+                                                <p>No existe ningún reporte</p>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%endif%}
+                    <script>
+                        $('#reporteModal').on('hidden.bs.modal', function () {}
+                    </script>
                 </div>
                 <div class="row">
                     <div class="col-md-8">
@@ -188,37 +243,6 @@
                                 </div>
                             {%endif%}
                         </div>
-                        {%if reportes|length > 0 %}
-                        <h2 style="margin-top: 30px;">REPORTES</h2>
-                        <div>
-                            <div class="container">
-                                {% for reporte in reportes %}
-                                <div class="card">
-                                    <div class="card-body standard_web_color">
-                                        <h5 class="card-title">{{reporte.usuario.nombre}} {% if reporte.tipo == "PLAGIO" %}
-                                            <span class="badge badge-warning">{{reporte.tipo}}</span> {% else %}
-                                            <span class="badge badge-danger">{{reporte.tipo}}</span> {% endif %}
-                                        </h5>
-                                        </h5>
-                                        <p class="card-text">{{reporte.descripcion}}</p>
-                                        <div class="d-flex justify-content-end align-items-center standard_web_color">
-                                            <a type="submit" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}/archivo/{{archivo.id}}/reporte/{{reporte.id}}">
-                                                Eliminar</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                                <br>
-                            </div>
-                        </div>
-                        {% else %}
-                        {% if es_owner%}
-                        <h2 style="margin-top: 30px;">REPORTES</h2>
-                        <div class="alert alert-secondary" role="alert">
-                            <p>No existe ningún reporte</p>
-                        </div>
-                        {% endif %}
-                        {% endif %}
                     </div>
                 </div>
             </div>

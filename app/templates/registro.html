@@ -7,6 +7,7 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link href="{% static 'css/registro.css' %}" rel="stylesheet" />
 
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -25,19 +26,20 @@
             <br>
             <div class="stepwizard-row setup-panel">
                 {%if form.email.errors|length > 0 or form.email_academico.errors|length > 0%}
-                        <div class="alert-danger bg-white text-center">ERROR en el paso 2</div>
-                        <br>
-                        {%elif form.titulacion.errors|length > 0 or form.descripcion.errors|length > 0%}
-                        <div class="alert-danger bg-white text-center">ERROR en el paso 3</div>
-                        <br>
-                        {%endif%}
+                <div class="alert-danger bg-white text-center">ERROR en el paso 2</div>
+                <br>
+                {%elif form.titulacion.errors|length > 0 or form.descripcion.errors|length > 0%}
+                <div class="alert-danger bg-white text-center">ERROR en el paso 3</div>
+                <br>
+                {%endif%}
                 <div class="stepwizard-step col-xs-4">
                     <a href="#step-1" type="button" class="btn btn-info btn-circle">1</a>
                     <p>Datos personales</p>
                 </div>
                 <div class="stepwizard-step col-xs-4">
                     {%if form.email.errors|length > 0 or form.email_academico.errors|length > 0%}
-                    <a href="#step-2" type="button" class="btn btn-default btn-circle btn-danger" disabled="disabled">2</a>
+                    <a href="#step-2" type="button" class="btn btn-default btn-circle btn-danger"
+                        disabled="disabled">2</a>
                     {%else%}
                     <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
                     {%endif%}
@@ -82,11 +84,25 @@
                             <div class="alert-danger">{{form.confirm_password.errors }}</div>
                         </div>
                     </div>
-                    
-                    <div class='row'>
-                        <button class="btn boton btn-info nextBtn btn-lg center-block" style="background-color: #17a2b8;" type="button">Siguiente</button>
+                    <br>
+                    <div class="container">
+                        <div class="container">
+                        </div>
                         <br>
-                        <a class="btn boton btn-info btn-lg center-block" type="button" href="/" style="width: 40%; background-color: #17a2b8;">Cancelar</a>
+                        <div class="container row">
+                            <div class="container col-md-3">
+                            </div>
+                            <div class="container col-md-2">
+                                <a class="btn btn-info nextBtn btn-lg center-block" style="background-color: #17a2b8;"
+                                    type="button" href="/">Cancelar</a>
+                            </div>
+                            <div class="container col-md-2">
+                            </div>
+                            <div class="container col-md-2">
+                                <a class="btn btn-info nextBtn btn-lg center-block" style="background-color: #17a2b8;"
+                                    type="button">Siguiente</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,9 +118,25 @@
                             <label class="control-label">Correo corporativo</label> {{ form.email_academico }}
                             <div class="alert-danger">{{ form.email_academico.errors }}</div>
                         </div>
-                        <button class="btn btn-info nextBtn btn-lg center-block" style="background-color: #17a2b8;" type="button">Siguiente</button>
-                        <br>
-                        <a class="btn boton btn-info btn-lg center-block" type="button" href="/" style="width: 40%; background-color: #17a2b8;">Cancelar</a>
+                        <div class="container">
+                            <div class="container">
+                            </div>
+                            <br>
+                            <div class="container row">
+                                <div class="container col-md-3">
+                                </div>
+                                <div class="container col-md-2">
+                                    <a class="btn btn-info nextBtn btn-lg center-block" style="background-color: #17a2b8;"
+                                        type="button" href="/">Cancelar</a>
+                                </div>
+                                <div class="container col-md-2">
+                                </div>
+                                <div class="container col-md-2">
+                                    <a class="btn btn-info nextBtn btn-lg center-block" style="background-color: #17a2b8;"
+                                        type="button">Siguiente</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -144,14 +176,14 @@
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             var navListItems = $('div.setup-panel div a'),
                 allWells = $('.setup-content'),
                 allNextBtn = $('.nextBtn');
 
             allWells.hide();
 
-            navListItems.click(function(e) {
+            navListItems.click(function (e) {
                 e.preventDefault();
                 var $target = $($(this).attr('href')),
                     $item = $(this);
@@ -165,7 +197,7 @@
                 }
             });
 
-            allNextBtn.click(function() {
+            allNextBtn.click(function () {
                 var curStep = $(this).closest(".setup-content"),
                     curStepBtn = curStep.attr("id"),
                     nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),

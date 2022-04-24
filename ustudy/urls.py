@@ -45,12 +45,12 @@ urlpatterns = [
          views.eliminar_comentario),
     path('perfil/', views.perfil_usuario),
     path('borrar_foto/', views.borrar_foto),
-    path("editarcurso/<int:id_curso>", views.editar_curso),
+    path('dashboard/', views.dashboard_users),
+    path("editarcurso/<int:id_curso>" , views.editar_curso),
     path('sobre_nosotros/', views.sobre_nosotros),
     path('terminos/', views.terminos),
     path('privacidad/', views.privacidad),
-    path('dashboard/', views.dashboard_users),
-    path("editarcurso/<int:id_curso>" , views.editar_curso)
+    path("notificacion/eliminar/<int:id_notificacion>" , views.eliminar_notificacion),
 ]
 #urlpatterns += staticfiles_urlpatterns()
 #urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
