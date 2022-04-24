@@ -29,12 +29,34 @@
 
 <br>
     <div class="text-center mt-3">
-      <button class="btn boton btn-info btn-block" type="submit">
-        Crear
-      </button>
+      <button type="button" class="btn boton btn-info btn-block" data-toggle="modal" data-target="#reporteModal" >Crear</button>
+      <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog" aria-labelledby="reporteModal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="suscripcion_pop_up">Creación Curso</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>  
+                  <div class="modal-body">
+                      <p>¿Deseas crear este curso?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button  type="submit"  class="btn btn-primary" data-dismiss="modal" onclick="curso_crear(this.form)">Si</button>
+                      
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+              
     </div>
+    <script>function curso_crear(form){console.log("hola");
+      form.submit()};</script>
   </form>
   {% endblock %}
 
   <footer>{% block pie %}{% endblock %}</footer>
+  
 </html>

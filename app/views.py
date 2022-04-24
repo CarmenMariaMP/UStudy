@@ -484,19 +484,21 @@ def editar_curso(request, id_curso):
         curso = Curso.objects.get(id=id_curso)
         if request.user.usuario == curso.propietario:
             if request.method == 'POST':
-                form = CursoEditForm(request.POST, instance=curso)
+                form = CursoEditForm(request.user, request.POST,instance=curso)
                 if form.is_valid():
                     curso_form = form.cleaned_data
                     nombre = curso_form['nombre']
                     descripcion = curso_form['descripcion']
+                    asignatura = curso_form['asignatura']
                     curso.nombre = nombre
                     curso.descripcion = descripcion
+                    curso.asignatura = asignatura
                     curso.save()
                     return redirect("/inicio_profesor")
                 else:
                     return render(request, 'editarcurso.html', {"form": form})
             else:
-                form = CursoEditForm(instance=curso)
+                form = CursoEditForm(request.user ,instance=curso)
                 return render(request, "editarcurso.html", {"form": form, "curso": curso})
         else:
             return redirect("/miscursos")
