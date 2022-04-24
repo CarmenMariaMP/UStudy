@@ -275,7 +275,7 @@ class putCursoFormTest(TestCase):
         curso_sent = Curso.objects.first()
         form = CursoEditForm(form_data, instance=curso_sent)
         self.assertTrue('<ul class="errorlist"><li>nombre<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 100 caracteres (tiene 101).</li></ul></li><li>descripcion<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 500 caracteres (tiene 501).</li></ul></li></ul>' in str(form.errors))
-        
+
 class addComentarioFormTests(TestCase):
     def test_comentario_form_is_valid(self):
         form_data = {

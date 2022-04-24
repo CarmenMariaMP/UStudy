@@ -1,9 +1,8 @@
 from django.test import TestCase, Client
-from app.models import Reporte, User,Usuario,Curso,Asignatura,Archivo
+from app.models import Comentario, Notificacion, Reporte, User,Usuario,Curso,Asignatura,Archivo
 import json
 import datetime
 from datetime import timezone
-
 
 class InicioViewTests(TestCase):
 
@@ -639,7 +638,114 @@ class SuscripcionTestView(TestCase):
         self.assertEquals(profesor.usuario.dinero, 9.0)
         self.assertTemplateUsed(response, 'cursosdisponibles.html')
 
+        
+class borrarComentarioTestView(TestCase):
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        texto = "Esto es un texto de prueba"
+        fecha = datetime.datetime(2022, 3, 30, 0, 0, 0).replace(tzinfo=timezone.utc)
+        user = User.objects.create(username='User1', password='pass')
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='juaostrub@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=fecha, asignatura=asignatura, propietario=usuario)
+        archivo = Archivo.objects.create(nombre='Archivo1', fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), curso=curso, ruta='ruta.pdf')
+        Comentario.objects.create(texto=texto, fecha=fecha, archivo=archivo, usuario=usuario)
+        
+        user2 = User.objects.create(username='User2', password='pass')
+        Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
+                                         email_academico='juaostrub2@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 2', foto='foto.jpg', dinero=9.53, django_user=user2)
+        
+    def test_borrar_comentario_positive(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        response = client.get('/curso/'+str(Curso.objects.first().id)+'/archivo/'+str(Archivo.objects.first().id)+'/comentario/'+str(Comentario.objects.first().id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response,'archivo.html')
+        self.assertEquals(Comentario.objects.first().texto, "Este comentario ha sido eliminado")
+        
+    def test_borrar_comentario_negative(self):
+        client = Client()
+        client.force_login(User.objects.get(username='User2'))
+        response = client.get('/curso/'+str(Curso.objects.first().id)+'/archivo/'+str(Archivo.objects.first().id)+'/comentario/'+str(Comentario.objects.first().id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response,'archivo.html')
+        self.assertEquals(Comentario.objects.first().texto, "Esto es un texto de prueba")
+
+
+class borrarNotificacionesTestView(TestCase):
     
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        texto = "Esto es un texto de prueba"
+        fecha = datetime.datetime(2022, 3, 30, 0, 0, 0).replace(tzinfo=timezone.utc)
+        
+        user1 = User.objects.create(username='User1', password='pass')
+        profesor = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='juaostrub@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user1)
+        
+        user2 = User.objects.create(username='User2', password='pass')
+        alumno = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email12@hotmail.com', 
+                                         email_academico='juaostrub12@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 2', foto='foto.jpg', dinero=9.53, django_user=user2)
+        
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=fecha, asignatura=asignatura, propietario=profesor)
+        archivo = Archivo.objects.create(nombre='Archivo1', fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), curso=curso, ruta='ruta.pdf')
+        comentario = Comentario.objects.create(texto=texto, fecha=fecha, archivo=archivo, usuario=alumno)
+        Notificacion.objects.create(referencia = comentario.id, tipo = "COMENTARIO", fecha = fecha, visto=False, usuario=profesor, curso = curso, alumno=alumno)
+        
+    def test_borrar_notificaciones_negative(self):
+        client = Client()
+        client.force_login(User.objects.get(username='User2'))
+        response = client.get('/notificacion/eliminar/'+str(Notificacion.objects.first().id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response,'perfil.html')
+        self.assertEqual(Notificacion.objects.first().visto, False)
+    
+    def test_borrar_notificaciones_positive(self):
+        client = Client()
+        client.force_login(User.objects.get(username='User1'))
+        response = client.get('/notificacion/eliminar/'+str(Notificacion.objects.first().id), follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response,'perfil.html')
+        self.assertEqual(Notificacion.objects.first().visto, True)
+    
+class privacidadTestView(TestCase):
+   
+    @classmethod 
+    def setUp(self):
+        user = User.objects.create(username='User1', password='pass')
+        Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='juaostrub@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        
+    def test_privacidad_view_get(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        response = client.get("/privacidad/", follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response,'privacidad.html')
+    
+    def test_sobre_nosotros_view_get(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        response = client.get("/sobre_nosotros/", follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response,'sobre_nosotros.html')
+        
+    def test_sobre_nosotros_view_get(self):
+        client = Client()
+        client.force_login(User.objects.first())
+        response = client.get("/terminos/", follow=True)
+        self.assertEquals(response.status_code,200)
+        self.assertTemplateUsed(response,'terminos.html')
+        
 class BorrarFotoTestView(TestCase):
 
     @classmethod
@@ -712,6 +818,4 @@ class PagoTestView(TestCase):
         response = client.get('/pago/')
         self.assertEquals(response.status_code,302)
         self.assertRedirects(response, '/login',fetch_redirect_response=False)
-
-
 

@@ -16,7 +16,6 @@ from django.core.exceptions import ValidationError
 ## https://developer.mozilla.org/es/docs/Learn/Server-side/Django/Testing
 
 
-
 class AsignaturaModelTests(TestCase):
 
     @classmethod
