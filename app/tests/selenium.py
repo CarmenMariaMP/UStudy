@@ -2,7 +2,7 @@ from selenium import webdriver
 from django.test import LiveServerTestCase
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.chrome import ChromeDriverManager
+
 
 
 
@@ -22,13 +22,13 @@ class TestLogincontraseavacia(LiveServerTestCase):
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver = webdriver.Chrome()
         self.vars = {}
-  
+
     def teardown_method(self, method):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.quit()
-  
+
     def test_logincontraseavacia(self):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -51,13 +51,13 @@ class TestLoginemailvacio(LiveServerTestCase):
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver = webdriver.Chrome()
         self.vars = {}
-  
+
     def teardown_method(self, method):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.quit()
-  
+
     def test_loginemailvacio(self):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -81,13 +81,13 @@ class TestLoginexitoso(LiveServerTestCase):
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver = webdriver.Chrome()
         self.vars = {}
-  
+
     def teardown_method(self, method):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.quit()
-  
+
     def test_loginexitoso(self):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -109,16 +109,16 @@ class TestLogincontraseaincorrecta(LiveServerTestCase):
     def setup_method(self, method):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        driver = webdriver.Chrome(ChromeDriverManager().install())  
+        driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver = webdriver.Chrome()
         self.vars = {}
-  
+
     def teardown_method(self, method):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         driver = webdriver.Chrome(ChromeDriverManager().install())  
         self.driver.quit()
-  
+
     def test_logincontraseaincorrecta(self):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -132,7 +132,7 @@ class TestLogincontraseaincorrecta(LiveServerTestCase):
         self.driver.find_element(By.ID, "show_hide_password").send_keys("contrahdjsa")
         self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
 
-   
+
 # Test de email incorrecto y contraseña incorrecta
 class TestLoginemailincorrecto(LiveServerTestCase):
     options = webdriver.ChromeOptions()
@@ -144,13 +144,13 @@ class TestLoginemailincorrecto(LiveServerTestCase):
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver = webdriver.Chrome()
         self.vars = {}
-  
+
     def teardown_method(self, method):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.quit()
-  
+
     def test_loginemailincorrecto(self):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -179,13 +179,13 @@ class TestLoginvacio(LiveServerTestCase):
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver = webdriver.Chrome()
         self.vars = {}
-  
+
     def teardown_method(self, method):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.quit()
-  
+
     def test_loginvacio(self):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -207,13 +207,13 @@ class TestLoginylogaout(LiveServerTestCase):
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver = webdriver.Chrome()
         self.vars = {}
-  
+
     def teardown_method(self, method):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.quit()
-  
+
     def test_loginylogaout(self):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])

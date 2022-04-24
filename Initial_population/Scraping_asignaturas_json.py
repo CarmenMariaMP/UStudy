@@ -20,7 +20,6 @@ def scraping_asignaturas():
                 soup = bs.BeautifulSoup(source,"lxml")
                 asignaturas = soup.find("table", class_ ="table-condensed").find("tbody").find_all("tr")
                 asignatura_name = soup.find("h1", class_ = "text-center noticia grado").getText()
-                
                 for asignatura in asignaturas:
                         curso = str.strip(asignatura.find("td", class_ = "views-field-field-cur-numcur").getText())
                         title = str.strip(asignatura.find("td", class_ = "views-field views-field-title").find("a").getText())

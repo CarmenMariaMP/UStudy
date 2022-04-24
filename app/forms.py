@@ -96,8 +96,7 @@ class ActualizarUsuarioForm(forms.Form):
 
 class CursoEditForm(ModelForm):
     def __init__(self,  *args, **kwargs):
-        '''Actualiza el curso con los datos del formulario
-        '''
+        '''Actualiza el curso con los datos del formulario'''
         super(CursoEditForm, self).__init__(*args, **kwargs)
         self.fields['nombre'] = forms.CharField(
             widget=forms.TextInput(attrs={'style': 'width: 100%;', 'class': 'form-control'}))
@@ -108,12 +107,14 @@ class CursoEditForm(ModelForm):
         self.fields['nombre'].error_messages['required'] = 'Este campo es obligatorio'
         self.fields['descripcion'].error_messages['required'] = 'Este campo es obligatorio'
     class Meta:
+        '''Define los campos del formulario'''
         model = Curso
         fields = ('nombre', 'descripcion')
 
 class CursoForm(ModelForm):
 
     def __init__(self, user, *args, **kwargs):
+        '''Crea un curso con los datos del formulario'''
         super(CursoForm, self).__init__(*args, **kwargs)
         titulacion_user = Usuario.objects.get(django_user=user).titulacion
         asignaturas = Asignatura.objects.filter(titulacion=titulacion_user)
@@ -134,5 +135,6 @@ class CursoForm(ModelForm):
         self.fields['asignatura'].error_messages['invalid_choice'] = 'Selecciona una opción válida'
 
     class Meta:
+        '''Define los campos del formulario'''
         model = Curso
         fields = ('nombre', 'descripcion', 'asignatura')
