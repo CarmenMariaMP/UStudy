@@ -1,38 +1,38 @@
 .styled-table {
   text-align: center;
-    border-collapse: collapse;
-    margin: 0 auto;
-    font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 800px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  }
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 800px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
 
-  .styled-table thead tr {
-    background-color: #0d6efd;
-    color: #ffffff;
-    text-align: center;
-  }
+.styled-table thead tr {
+  background-color: #0d6efd;
+  color: #ffffff;
+  text-align: center;
+}
 
-  .styled-table th,
-  .styled-table td {
-    padding: 12px 15px;
-  }
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+}
 
-  .styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-  }
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
 
-  .styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-  }
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
 
-  .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #0d6efd;
-  }
-  
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #0d6efd;
+}
+
 body {
-	margin-top: 40px;
+  margin-top: 40px;
 }
 
 body::after {
@@ -49,17 +49,17 @@ body::after {
 }
 
 .stepwizard-step p {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 .stepwizard-row {
-	display: table-row;
+  display: table-row;
 }
 
 .stepwizard {
   display: table;
   width: 50%;
-	position: relative;
+  position: relative;
 }
 
 .stepwizard-step button[disabled] {
@@ -68,27 +68,27 @@ body::after {
 }
 
 .stepwizard-row:before {
-	top: 14px;
+  top: 14px;
   bottom: 0;
   position: absolute;
   content: " ";
   width: 100%;
   height: 1px;
-	background-color: #ccc;
+  background-color: #ccc;
 }
 
 .stepwizard-step {
-	display: table-cell;
+  display: table-cell;
   text-align: center;
-	position: relative;
+  position: relative;
 }
 
 .btn-circle {
   width: 30px;
-	height: 30px;
+  height: 30px;
   text-align: center;
-	padding: 6px 0;
+  padding: 6px 0;
   font-size: 12px;
   line-height: 1.428571429;
-	border-radius: 15px;
+  border-radius: 15px;
 }

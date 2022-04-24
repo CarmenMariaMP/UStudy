@@ -4,6 +4,7 @@ const tres = document.getElementById("third");
 const cuatro = document.getElementById("fourth");
 const cinco = document.getElementById("fifth");
 
+/*global valoracionUsuario*/
 var valoraciona = valoracionUsuario;
 const form = document.querySelector(".rate-form");
 const confirmBox = document.getElementById("confirma-valoracion-box");
@@ -63,7 +64,7 @@ const getNumericValue = (stringValue) => {
 };
 
 const arr = [uno, dos, tres, cuatro, cinco];
-arr.forEach( (element) => { element.addEventListener("mouseover", (event) => { handleSelect(event.target.id) } ) } );
+arr.forEach( (element) => { element.addEventListener("mouseover", (event) => { handleSelect(event.target.id) } ); } );
 
 arr.forEach( (element) => {
     element.addEventListener("click", (event) => {
@@ -95,4 +96,4 @@ arr.forEach( (element) => {
     })
 } );
 
-arr.forEach( (element) => { element.addEventListener("mouseout", () => { handleStarSelect(valoraciona) }) });
+arr.forEach( (element) => { element.addEventListener("mouseout", () => { handleStarSelect(valoraciona) });});

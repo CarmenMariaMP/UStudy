@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app.models import Asignatura,Archivo,Curso,Comentario,Notificacion,Valoracion,Usuario,Reporte
+from app.models import Asignatura, Archivo, Curso, Comentario, Notificacion, Valoracion, Usuario, Reporte
 
 
 # Register your models here.
