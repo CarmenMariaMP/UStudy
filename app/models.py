@@ -106,6 +106,9 @@ class Notificacion(models.Model):
         Usuario, verbose_name="Usuario", on_delete=models.CASCADE)
     curso = models.ForeignKey(
         Curso, verbose_name="Curso", on_delete=models.CASCADE)
+    alumno = models.ForeignKey(
+        Usuario, related_name="alumno", on_delete=models.CASCADE, null=True, blank=True)
+    descripcion = models.CharField(max_length=500, null=True, blank=True)
 
 
 class Valoracion(models.Model):

@@ -87,7 +87,6 @@ def comprobacion_pago(request):
         if data:
 
             order_id = data['orderID']
-
             detalle = GetOrder().get_order(order_id)
             detalle_precio = float(detalle.result.purchase_units[0].amount.value)
 
@@ -136,7 +135,12 @@ def suscripcion(request, id):
             curso_var.save()
             usuario.save()
             profesor.save()
-            return curso(request, curso_var.id, suscrito=True)
+            
+            referencia = '/curso/' + str(curso_var.id)
+            notificacion = Notificacion(referencia=referencia,usuario=profesor, tipo="NUEVO_ALUMNO", curso=curso_var, visto=False, alumno=usuario)
+            notificacion.save()
+            suscrito="Se ha suscrito correctamente al curso"
+            return render(request, 'cursosdisponibles.html',{'curso':curso_var,'suscrito':suscrito})
             
     else:
         return redirect("/login")
@@ -320,6 +324,8 @@ def registro_usuario(request):
             titulacion = usuario_form['titulacion']
             descripcion = usuario_form['descripcion']
             dinero = 0.0
+            terminos = usuario_form['terminos']
+            privacidad = usuario_form['privacidad']
             # Comprobación contraseña
             if(password != confirm_password):
                 form.add_error("confirm_password",
@@ -359,7 +365,7 @@ def registro_usuario(request):
 
                 return render(request, 'registro.html', {"mensaje_error": True, "form": form})
 
-            return redirect('/login')
+            
         else:
             return render(request, 'registro.html', {"form": form})
 
@@ -697,7 +703,7 @@ def ver_archivo(request, id_curso, id_archivo):
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
             reportes = Reporte.objects.all().filter(archivo=archivo)
-            page_obj = pagination(request, reportes, 5)
+            #page_obj = pagination(request, reportes, 5)
             acceso = True
             es_owner = True
         if (usuario in curso.suscriptores.all()):
@@ -715,7 +721,8 @@ def ver_archivo(request, id_curso, id_archivo):
                         descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
                     reporte_instancia.save()
                     referencia = '/curso/'+str(id_curso)+'/archivo/'+str(id_archivo)
-                    notificacion = Notificacion(referencia=referencia,usuario=curso.propietario, tipo="REPORTE", curso=curso, visto=False)
+                    notificacion = Notificacion(referencia=referencia,usuario=curso.propietario, tipo="REPORTE", curso=curso, visto=False,
+                                                alumno=usuario,descripcion=descripcion)
                     notificacion.save()
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
             elif request.POST['action'] == 'Comentar':
@@ -725,6 +732,10 @@ def ver_archivo(request, id_curso, id_archivo):
                     texto = comentarioForm['texto']
                     Comentario.objects.create(
                         texto=texto, archivo=archivo, fecha=datetime.datetime.now(), usuario=usuario)
+                    referencia = '/curso/'+str(id_curso)+'/archivo/'+str(id_archivo)
+                    notificacion = Notificacion(referencia=referencia,usuario=curso.propietario, tipo="COMENTARIO", curso=curso, visto=False,
+                                                alumno=usuario, descripcion=texto)
+                    notificacion.save()
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
             elif request.POST['action'] == 'Responder':
                 formRespuesta = ResponderComentarioForm(request.POST)
@@ -752,32 +763,41 @@ def ver_archivo(request, id_curso, id_archivo):
             formRespuesta = ResponderComentarioForm()
             formRespuesta2 = ResponderComentarioForm2()
             return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'respuestasDict': respuestasDict,
-                                                'acceso': acceso, 'comentarios': comentarios, 'url': url, 'formReporte': formReporte, 'page_obj': page_obj, 'es_owner': es_owner,
-                                                'usuario': usuario, 'es_plagio': es_plagio, 'es_error': es_error, 'formComentario': formComentario, 'formRespuesta': formRespuesta, 'formRespuesta2': formRespuesta2})
+                                                    'acceso': acceso, 'comentarios': comentarios, 'url': url, 'formReporte': formReporte, 'reportes': reportes, 'es_owner': es_owner,
+                                                    'usuario': usuario, 'es_plagio': es_plagio, 'es_error': es_error, 'formComentario': formComentario, 'formRespuesta': formRespuesta, 'formRespuesta2': formRespuesta2})
     else:
         return render(request, 'inicio.html')
 
 
 def eliminar_comentario(request, id_curso, id_archivo, id_comentario):
-    comentario=Comentario.objects.get(id = id_comentario)
+    comentario = Comentario.objects.get(id=id_comentario)
     if request.user.is_authenticated:
-        usuario=Usuario.objects.get(django_user = request.user)
+        usuario = Usuario.objects.get(django_user=request.user)
         if (comentario.usuario == usuario):
-            Comentario.objects.filter(id = id_comentario).update(texto = 'Este comentario ha sido eliminado',
-                                                               fecha = comentario.fecha, archivo = comentario.archivo, responde_a = comentario.responde_a, usuario = comentario.usuario)
+            Comentario.objects.filter(id=id_comentario).update(texto='Este comentario ha sido eliminado',
+                                                               fecha=comentario.fecha, archivo=comentario.archivo, responde_a=comentario.responde_a, usuario=comentario.usuario)
     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
 
 
 def eliminar_reporte(request, id_curso, id_archivo, id_reporte):
-    curso=Curso.objects.get(id = id_curso)
+    curso = Curso.objects.get(id=id_curso)
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
-        usuario_autenticado=request.user
-        usuario=Usuario.objects.get(django_user = usuario_autenticado)
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
-            reporte=Reporte.objects.get(id = id_reporte)
+            reporte = Reporte.objects.get(id=id_reporte)
             reporte.delete()
     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+
+def eliminar_notificacion(request, id_notificacion):
+    notificacion=Notificacion.objects.get(id = id_notificacion)
+    if request.user.is_authenticated:
+        usuario_autenticado=request.user
+        usuario=Usuario.objects.get(django_user = usuario_autenticado)
+        if (notificacion.usuario == usuario):
+            Notificacion.objects.filter(id = id_notificacion).update(visto = True)
+    return redirect('/perfil')
 
 
 def dashboard_users(request):
@@ -832,16 +852,27 @@ def subir_contenido(request):
 
 
 def error_404(request, exception):
-    context={"error": "Parece que esta página no existe..."}
+    context = {"error": "Parece que esta página no existe..."}
     return render(request, 'error.html', context)
 
 
 def error_403(request, exception):
-    context={"error": "Parece que no tienes acceso a esta página..."}
+    context = {"error": "Parece que no tienes acceso a esta página..."}
     return render(request, 'error.html', context)
 
 
 def error_500(request):
     context = {"error": "Parece que hay un error en el servidor..."}
     return render(request, 'error.html', context)
-    
+
+
+def sobre_nosotros(request):
+    return render(request, "sobre_nosotros.html")
+
+
+def terminos(request):
+    return render(request, "terminos.html")
+
+
+def privacidad(request):
+    return render(request, "privacidad.html")
