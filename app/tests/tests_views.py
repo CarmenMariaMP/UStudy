@@ -515,3 +515,123 @@ class RegistroTestView(TestCase):
         response = client.post('/registro/', data=data_form, follow=True)
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response,'registro.html')
+
+class SuscripcionTestView(TestCase):
+
+    @classmethod
+    def setUp(self):
+        #Instanciar objetos sin modificar que se usan en todos los métodos
+        user = User.objects.create(username='User1')
+        user.set_password('pass')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com', 
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.00, django_user=user)
+        
+        
+        user2 = User.objects.create(username='User2')
+        user.set_password('pass')
+        user.save()
+        usuario2 = Usuario.objects.create(nombre='Nombre2', apellidos='Apellidos', email='email2@hotmail.com', 
+                                         email_academico='barranco2@alum.us.es', titulacion='Titulacion1',
+                                         descripcion='Descripcion 2', foto='foto2.jpg', dinero=12.00, django_user=user2)
+        
+        asignatura = Asignatura.objects.create(nombre='Nombre1', titulacion='Titulacion1', anyo=2012)
+        curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
+    
+    def test_suscripcion_view_post_success(self):
+        client = Client()
+        suscriptor = User.objects.get(username='User2')
+        profesor = User.objects.get(username='User1')
+        client.force_login(suscriptor)
+        curso_id = Curso.objects.first().id
+        response = client.post('/suscripcion/'+str(curso_id))
+        self.assertEquals(response.status_code,200)
+        self.assertEquals(suscriptor.usuario.dinero, 0.0)
+        self.assertEquals(profesor.usuario.dinero, 18.0)
+        self.assertTemplateUsed(response, 'cursosdisponibles.html')
+
+    def test_suscripcion_view_post_already_suscribed(self):
+        client = Client()
+        suscriptor = User.objects.get(username='User2')
+        profesor = User.objects.get(username='User1')
+        client.force_login(suscriptor)
+        curso = Curso.objects.first()
+        curso_id = curso.id
+        #El usuario ya estaba suscrito al curso
+        curso.suscriptores.add(suscriptor.usuario)
+        curso.save()
+        self.assertEquals(curso.suscriptores.all()[0], suscriptor.usuario)
+
+        response = client.post('/suscripcion/'+str(curso_id))
+        self.assertEquals(response.status_code,200)
+
+        #No ha habido intercambio monetario pues la suscripcion no se ha realizado
+        self.assertEquals(suscriptor.usuario.dinero, 12.0)
+        self.assertEquals(profesor.usuario.dinero, 9.0)
+        self.assertTemplateUsed(response, 'cursosdisponibles.html')
+
+    def test_suscripcion_view_post_not_enough_money(self):
+        client = Client()
+        suscriptor = User.objects.get(username='User2')
+        profesor = User.objects.get(username='User1')
+        client.force_login(suscriptor)
+        curso = Curso.objects.first()
+        curso.suscriptores.remove(suscriptor.usuario)
+        curso_id = curso.id
+        #El usuario no tiene suficiente dinero para suscribirse al curso
+        suscriptor.usuario.dinero = 0.0
+        suscriptor.usuario.save()
+        self.assertEquals(suscriptor.usuario.dinero, 0.0)
+        self.assertEquals(curso.suscriptores.exists(), False)
+
+        response = client.post('/suscripcion/'+str(curso_id))
+        self.assertEquals(response.status_code,200)
+        
+        #No ha habido intercambio monetario pues la suscripcion no se ha realizado
+        
+        self.assertEquals(profesor.usuario.dinero, 9.0)
+        self.assertTemplateUsed(response, 'cursosdisponibles.html')
+
+    def test_suscripcion_view_suscriber_is_owner(self):
+        client = Client()
+        profesor = User.objects.get(username='User1')
+        client.force_login(profesor)
+        curso = Curso.objects.first()
+        curso_id = curso.id
+        #El usuario es el propietario del curso
+        self.assertEquals(curso.suscriptores.all().exists(), False)
+        self.assertEquals(curso.propietario, profesor.usuario)
+
+        response = client.post('/suscripcion/'+str(curso_id))
+        self.assertEquals(response.status_code,200)
+
+        #No ha habido intercambio monetario pues la suscripcion no se ha realizado
+        self.assertEquals(profesor.usuario.dinero, 9.0)
+        self.assertTemplateUsed(response, 'cursosdisponibles.html')
+
+    def test_suscripcion_view_other_degree(self):
+        client = Client()
+        suscriptor = User.objects.get(username='User2')
+        profesor = User.objects.get(username='User1')
+        suscriptor.usuario.titulacion = 'otra_titulacion'
+        suscriptor.usuario.save()
+        client.force_login(suscriptor)
+        curso = Curso.objects.first()
+        curso_id = curso.id
+        #El usuario no estaba suscrito al cursos pero tiene otra titulacion
+        self.assertEquals(curso.suscriptores.exists(), False)
+        self.assertNotEquals(curso.asignatura.titulacion, suscriptor.usuario.titulacion)
+
+        response = client.post('/suscripcion/'+str(curso_id))
+        self.assertEquals(response.status_code,200)
+
+        #No ha habido intercambio monetario pues la suscripcion no se ha realizado
+        self.assertEquals(suscriptor.usuario.dinero, 12.0)
+        self.assertEquals(profesor.usuario.dinero, 9.0)
+        self.assertTemplateUsed(response, 'cursosdisponibles.html')
+
+    
+
+
+    
