@@ -167,7 +167,7 @@ class CursoForm(ModelForm):
         self.fields['asignatura'].error_messages['invalid_choice'] = 'Selecciona una opción válida'
 
     class Meta:
-        
+
         """Define los campos del formulario"""
         model = Curso
         fields = ('nombre', 'descripcion', 'asignatura')
