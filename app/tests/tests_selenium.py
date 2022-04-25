@@ -5,56 +5,59 @@ from selenium.webdriver.support.ui import Select
 from webdriver_manager.chrome import ChromeDriverManager
 from django.test import LiveServerTestCase
 from selenium.webdriver.common.keys import Keys
-from django.contrib.auth.models import User
+from app.models import User, Usuario
 import requests
 
-
+## DEJAR DE UTILIZAR Y ELIMINAR ESTAS VARIABLES. EN SU LUGAR UTILIZAR self.live_server_url + PATH
 BASEURL = 'http://localhost:8000/login/'
 BASEURLSIGN = 'http://localhost:8000/registro/'
 BASEURLCURSO = 'http://localhost:8000/crearcurso/'
 BASEURLPROFILE = 'http://localhost:8000/perfil/'
 BASEURLCOURSES = 'http://localhost:8000/cursosdisponibles'
-
+#################################################################################################
 
 ## Test de login
 class TestLogin(LiveServerTestCase):
+    
+    @classmethod
+    def setUp(self): ## crear las entidades necesarias en este metodo para cada clase
+        user = User(username='prueba')
+        user.set_password('contraseña')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com',
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        usuario.save()
+
     def test_login_erroneo(self):
         option = webdriver.ChromeOptions()
         option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
+        option.add_argument("--headless") # evita mostrar el navegador
         driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=option)
     
-        driver.get(BASEURL)
+        driver.get(self.live_server_url+'/login/')
 
-    
-
-        
         username = driver.find_element_by_name('username')
         contrasena = driver.find_element_by_name('contrasena')
 
-        username.send_keys('l@alum.us.es')
-        contrasena.send_keys('prueba',Keys.ENTER)
-
-        time.sleep(5)
+        username.send_keys('prueba')
+        contrasena.send_keys('contrasenha',Keys.ENTER)
 
         assert '/login' in driver.current_url
 
     def test_login_vacio(self):
         option = webdriver.ChromeOptions()
         option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
+        option.add_argument("--headless") # evita mostrar el navegador
         driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=option)
     
-        driver.get(BASEURL)
+        driver.get(self.live_server_url+'/login/')
 
-    
-
-        
         username = driver.find_element_by_name('username')
         contrasena = driver.find_element_by_name('contrasena')
 
         username.send_keys('')
         contrasena.send_keys('',Keys.ENTER)
-
-        time.sleep(5)
 
         assert '/login' in driver.current_url
 
@@ -62,20 +65,16 @@ class TestLogin(LiveServerTestCase):
     def test_login_exitoso(self):
         option = webdriver.ChromeOptions()
         option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
+        option.add_argument("--headless") # evita mostrar el navegador
         driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=option)
     
-        driver.get(BASEURL)
+        driver.get(self.live_server_url+'/login/')
 
-    
-
-        
         username = driver.find_element_by_name('username')
         contrasena = driver.find_element_by_name('contrasena')
 
         username.send_keys('prueba')
         contrasena.send_keys('contraseña',Keys.ENTER)
-
-        time.sleep(3)
 
         assert '/miscursos' in driver.current_url
 
