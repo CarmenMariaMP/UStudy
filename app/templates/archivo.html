@@ -110,10 +110,10 @@
                             <h5>Fecha de publicación: {{archivo.fecha_publicacion}}</h5>
                             {% if ".mp4" in archivo.ruta.path %}
                             <video controls controlsList="nodownload">
-                                <source src="{% static url %}" type="video/mp4">
+                                <source src="{{url}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video> {% else %}
-                            <iframe src="{% static url %}#zoom=90&toolbar=0&navpanes=0&scrollbar=0" title="PDF in an i-Frame" frameborder="0" scrolling="auto" style="width:100%; height:700px"></iframe> {% endif %}
+                            <iframe src="{{url}}#zoom=90&toolbar=0&navpanes=0&scrollbar=0" title="PDF in an i-Frame" frameborder="0" scrolling="auto" style="width:100%; height:700px"></iframe> {% endif %}
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -248,9 +248,9 @@
             </div>
         </div>
         {% else %}
-        <div>
-            <p style="text-align: center;"> No tienes acceso a este recueso </p>
-        </div>
+            <div class="alert alert-danger row d-flex justify-content-center" role="alert">
+        <h5 class ="text-justify">No tiene acceso a este recurso</h5>
+    </div> 
         {% endif%} {% endblock %}
     </section>
 </body>

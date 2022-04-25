@@ -45,6 +45,7 @@ urlpatterns = [
          views.eliminar_comentario),
     path('perfil/', views.perfil_usuario),
     path('borrar_foto/', views.borrar_foto),
+    path('archivos/<int:id_curso>/<str:archivo>',views.servir_archivo),
     path('dashboard/', views.dashboard_users),
     path("editarcurso/<int:id_curso>" , views.editar_curso),
     path('sobre_nosotros/', views.sobre_nosotros),
