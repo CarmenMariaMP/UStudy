@@ -66,8 +66,8 @@
 
                 <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
                 {% if es_owner %}
-                <a type="submit" class="btn boton btn-info col-sm-1" style="width: 20%; float: right;" href="/curso/{{curso.id}}/{{archivo.id}}">
-                    Eliminar</a> {% endif %}
+                <a type="submit" class="btn boton btn-info" style=" float: right; margin: auto;" href="/curso/{{curso.id}}/{{archivo.id}}">
+                    <i class="bi bi-trash"></i></a> {% endif %}
             </li>
             {% endfor %}
         </ul>
@@ -106,26 +106,29 @@
         <h5>Para acceder al contenido de este curso debes unirte al mismo</h5>
         {%endif%} {%if es_owner%}
 
-        <div style="display:flex; justify-content: center">
-            <form class="btn boton col-sm-5 btn-info justify-content-center" id="myform" method="post" enctype="multipart/form-data">
+ 
+            <form class="btn boton btn-info justify-content-center separado borde-azul standard_web_color"
+            id="myform" method="post" enctype="multipart/form-data"  style="background-color: #17a2b8;width: 80%;">
                 {% csrf_token %} {{form.file}}
             </form>
-        </div>
-        <div style="display:flex; justify-content: center;">
-            <input class="btn boton col-sm-3 btn-info añadirContenido justify-content-center" form="myform" type="submit" style="margin: 20px;" value="Añadir Contenido">
+            
 
+    </div>
+        <div class="col text-center">
+            <div class="row container justify-content-center" style="width: 80%;margin: auto;">
+                <input class="btn boton col-sm-2 btn-info añadirContenido justify-content-center separado borde-azul standard_web_color"
+             form="myform" type="submit" style="margin: 20px;" value="Añadir">
+            <a class="btn boton col-sm-2 btn-info justify-content-center separado borde-azul standard_web_color" style="margin: 20px;"
+            href="/inicio_profesor">Atrás</a> {%endif%} {%if es_suscriptor%}
+        
+            </div>
         </div>
         <div class="col text-center">
-
-            <a class="btn boton col-sm-2 btn-info justify-content-center" href="/inicio_profesor">Atrás</a> {%endif%} {%if es_suscriptor%}
-        </div>
-        <div class="col text-center">
-            <a class="btn boton col-sm-1 btn-info justify-content-center" href="/miscursos">Atrás</a>{%endif%} {%if excede_tamano%}
+            <a class="btn boton col-sm-2 btn-info justify-content-center separado borde-azul standard_web_color" href="/miscursos">Atrás</a>{%endif%} {%if excede_tamano%}
         </div>
 
         {%endif%}
     </div>
-
     </div>
     <br>
     {%if es_suscriptor and not es_owner%}

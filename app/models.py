@@ -6,6 +6,7 @@ from django.utils.timezone import now
 from django.contrib.auth.models import User
 import psutil
 
+
 def emails_distintos(email_academico):
     if('@alum.us.es' in email_academico):
         raise ValidationError(
@@ -43,6 +44,7 @@ class Asignatura(models.Model):
 def image_directory_path(instance, filename):
     return '{0}.jpg'.format(instance.django_user)
 
+
 class Usuario(models.Model):
     nombre = models.CharField(max_length=40)
     apellidos = models.CharField(max_length=40)
@@ -50,7 +52,7 @@ class Usuario(models.Model):
     email_academico = models.EmailField(
         primary_key=True, unique=True, validators=[validador_email])
     titulacion = models.CharField(max_length=200)
-    descripcion = models.TextField(max_length=500, blank = True)
+    descripcion = models.TextField(max_length=500, blank=True)
     foto = models.ImageField(null=True, blank=True,
                              upload_to=image_directory_path)
     dinero = models.DecimalField(max_digits=12, decimal_places=2)
@@ -66,7 +68,8 @@ class Curso(models.Model):
         Asignatura, verbose_name="Asignatura", on_delete=models.DO_NOTHING)
     propietario = models.ForeignKey(
         Usuario, related_name="Propietario", on_delete=models.DO_NOTHING)
-    suscriptores = models.ManyToManyField(Usuario, related_name="Suscriptores", blank=True)
+    suscriptores = models.ManyToManyField(
+        Usuario, related_name="Suscriptores", blank=True)
 
 
 def user_directory_path(instance, filename):
@@ -80,7 +83,7 @@ class Archivo(models.Model):
         Curso, verbose_name="Curso", on_delete=models.CASCADE)
     ruta = models.FileField(upload_to=user_directory_path,
                             validators=[validador_archivo])
-
+                            
 
 class Comentario(models.Model):
     texto = models.CharField(max_length=500)
@@ -106,6 +109,9 @@ class Notificacion(models.Model):
         Usuario, verbose_name="Usuario", on_delete=models.CASCADE)
     curso = models.ForeignKey(
         Curso, verbose_name="Curso", on_delete=models.CASCADE)
+    alumno = models.ForeignKey(
+        Usuario, related_name="alumno", on_delete=models.CASCADE, null=True, blank=True)
+    descripcion = models.CharField(max_length=500, null=True, blank=True)
 
 
 class Valoracion(models.Model):
@@ -128,3 +134,8 @@ class Reporte(models.Model):
         Usuario, on_delete=models.CASCADE, related_name="usuario", null=True)
     archivo = models.ForeignKey(
         Archivo, on_delete=models.CASCADE, related_name="archivo", null=True)
+
+class TicketDescarga(models.Model):
+    usuario = models.ForeignKey(Usuario, related_name="Usuario", on_delete=models.DO_NOTHING)
+    archivo = models.ForeignKey(Archivo, related_name="Archivo", on_delete=models.DO_NOTHING)
+
