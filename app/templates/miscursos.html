@@ -25,7 +25,7 @@
     <br>
     <div class="container">
         <br>
-        <div class="album py-5 bg-light">
+        <div class="album p-5 bg-light">
             <div class="container">
                 <div class="row">
                     {%if page_obj|length > 0 %} {% for cursoYvaloracion in page_obj %}
@@ -54,27 +54,24 @@
                     {%endif%}
                 </div>
             </div>
-            <br>
-            {%if page_obj|length > 0 %}
-            <nav class= "d-flex justify-content-center" aria-label="Page navigation example">
+            <br> {%if page_obj|length > 0 %}
+            <nav class="d-flex justify-content-center" aria-label="Page navigation example">
                 <ul class="pagination">
-                    <span class="step-links"></span>
-                        {% if page_obj.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
-                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
-                        {% endif %}
+                    <span class="step-links"></span> {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+                    {% endif %}
                     <li class="page-item"><a class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
                     {% if page_obj.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
                     {% endif %}
                 </ul>
             </nav>
-              {%endif%}
-            {% endblock %}
+            {%endif%} {% endblock %}
+        </div>
 </body>
 <footer>
-    {% block pie %}{% endblock %}
 </footer>
 
 </html>

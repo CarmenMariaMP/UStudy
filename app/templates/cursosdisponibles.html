@@ -11,7 +11,24 @@
 <body>
     <br>
     <div class="row d-flex justify-content-center">
-        <h2>Mis cursos</h2>
+        <h2>Cursos disponibles</h2>
+    </div>
+    <div class="row d-flex justify-content-center"></div>
+    {%if suscrito %}
+<script>
+    alert("{{suscrito}}");
+    window.location.href="/curso/{{curso.id}}"
+</script>
+
+{%endif%}
+    
+        
+        {%if mensaje_error%}
+        <div class="alert alert-danger row d-flex justify-content-center" role="alert">
+        <h6 class ="text-justify">{{mensaje}}</h6>
+        </div>
+        
+        {%endif%}
     </div>
 
     <!-- <form role="search" class="center" id="form">
@@ -34,12 +51,31 @@
                             <div class="card-body standard_web_color ">
                                 <h5 class="card-title text-truncate">Asignatura: {{cursoYvaloracion.0.asignatura.nombre}}</h5>
                                 <p class="card-text">Profesor: {{cursoYvaloracion.0.propietario.nombre}}</p>
-                                <p class="card-text text-truncate">Descripción: {{cursoYvaloracion.0.descripcion}}</p>
+                                <p class="card-text text-truncate">Descripción: {{cursoYvaloracion.0.descripcion}} </p>
                                 <p class="card-text">Valoración: {{cursoYvaloracion.1}}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group text-center">
                                         <div class="btn-group text-center">
-                                            <a href="/pago?id={{cursoYvaloracion.0.id}}" class="btn btn-sm btn-outline-secondary">Suscribirse</a>
+                                            <button  class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#reporteModal{{cursoYvaloracion.0.id}}">Suscribirse</button>
+                                            <div class="modal fade" id="reporteModal{{cursoYvaloracion.0.id}}" tabindex="-1" role="dialog" aria-labelledby="reporteModal{{cursoYvaloracion.0.id}}" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="suscripcion_pop_up">Suscripción</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>  
+                                                        <div class="modal-body">
+                                                            <p>¿Deseas suscribirte a este curso?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a href="/suscripcion/{{cursoYvaloracion.0.id}}" class="btn btn-primary">Si</a>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
                                         </div>
                                     </div>
                                     <small class="text-muted">Fecha publicación: {{cursoYvaloracion.0.fecha_publicacion|date:"d/m/Y"}}</small>
@@ -49,33 +85,29 @@
                     </div>
                     {% endfor %}{%else%}
                     <div class="col">
-                        <p class="font-italic text-center lead">Actualmente no te has suscrito a ningún curso</p>
-                        <p class="font-weight-lighter text-center"><ins><a href="/cursosdisponibles" class="text-decoration text-dark">Descubre los cursos disponibles</a></ins></p>
+                        <p class="font-italic text-center lead">Actualmente no hay ningún curso disponible</p>
                     </div>
                     {%endif%}
                 </div>
             </div>
-            <br>
-            {%if page_obj|length > 0 %}
-            <nav class= "d-flex justify-content-center" aria-label="Page navigation example">
+            <br> {%if page_obj|length > 0 %}
+            <nav class="d-flex justify-content-center" aria-label="Page navigation example">
                 <ul class="pagination">
-                    <span class="step-links"></span>
-                        {% if page_obj.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
-                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
-                        {% endif %}
+                    <span class="step-links"></span> {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+                    {% endif %}
                     <li class="page-item"><a class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
                     {% if page_obj.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
                     {% endif %}
                 </ul>
             </nav>
-              {%endif%}
-            {% endblock %}
+            {%endif%} {% endblock %}
 </body>
 <footer>
-    {% block pie %}{% endblock %}
+    
 </footer>
 
 </html>
