@@ -25,11 +25,13 @@ class ReporteForm(forms.Form):
         ("PLAGIO", "PLAGIO"),
         ("ERROR", "ERROR"),
     )
-    descripcion = forms.CharField(
-        max_length=500, required=True, widget=forms.Textarea)
-    tipo = forms.ChoiceField(choices=TIPOS_REPORTE, widget=forms.Select(
-        attrs={'class': 'bootstrap-select'}))
+    descripcion = forms.CharField(max_length=500, required=True,widget=forms.Textarea(attrs={'style': 'width: 100%;', 'class': 'form-control font-weight-bold',
+     'rows': "5", 'placeholder': 'Proporciona una breve descripción'}))
+    tipo = forms.ChoiceField(choices=TIPOS_REPORTE, widget=forms.Select(attrs={'style': 'width: 100%;', 'class': 'form-control font-weight-bold'}))
 
+    def __init__(self, *args, **kwargs):
+        super(ReporteForm, self).__init__(*args, **kwargs)
+        self.fields['descripcion'].label = "Descripción"
 
 class ComentarioForm(forms.Form):
     texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
