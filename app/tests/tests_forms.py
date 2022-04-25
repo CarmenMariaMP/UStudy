@@ -210,7 +210,7 @@ class addCursoFormTest(TestCase):
         form = CursoForm(user_sent, form_data)
         self.assertTrue(form.is_valid())
 
-   def test_curso_form_empty_fields(self):
+    def test_curso_form_empty_fields(self):
         form_data = {
             "nombre": None,
             "descripcion": None,
