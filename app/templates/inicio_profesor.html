@@ -19,42 +19,41 @@
                         <div class="card h-100 box-shadow border-info standard_web_color">
                             <div class="card-body ">
                                 <h4 class="card-title">Asignatura: {{curso.asignatura.nombre}}</h5>
-                                <h5 class="card-title text-truncate">Nombre del Curso: {{curso.nombre}}</h5>
-                                <p class="card-text text-truncate">Descripción: {{curso.descripcion}}</p>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item standard_web_color">Alumnos: {{archivos.2}}</li>
-                                    <li class="list-group-item standard_web_color">Archivos multimedia: {{archivos.0}}</li>
-                                    <li class="list-group-item standard_web_color">
-                                        <div class="row justify-content-around">
-                                            <div class="d-flex">
-                                                {% if archivos.1 >= 0 %}
-                                                <div>Puntuación: {{archivos.1}}/5</div>
-                                                {% else %}
-                                                <div>Todavía no ha recibido valoraciones</div>
-                                                {% endif %}
+                                    <h5 class="card-title">Nombre del Curso: {{curso.nombre}}</h5>
+                                    <p class="card-text text-truncate">Descripción: {{curso.descripcion}}</p>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item standard_web_color">Alumnos: {{archivos.2}}</li>
+                                        <li class="list-group-item standard_web_color">Archivos multimedia: {{archivos.0}}</li>
+                                        <li class="list-group-item standard_web_color">
+                                            <div class="row justify-content-around">
+                                                <div class="d-flex">
+                                                    {% if archivos.1 >= 0 %}
+                                                    <div>Puntuación: {{archivos.1}}/5</div>
+                                                    {% else %}
+                                                    <div>Todavía no ha recibido valoraciones</div>
+                                                    {% endif %}
+                                                </div>
                                             </div>
+                                        </li>
+                                    </ul>
+                                    <br>
+                                    <div class="d-flex justify-content-between align-items-center container">
+                                        <div class="btn-group">
+                                            <a type="button" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}">Acceder</a>
                                         </div>
-                                    </li>
-                                </ul>
-                                <br>
-                                <div class="d-flex justify-content-between align-items-center container">
-                                    <div class="btn-group">
-                                        <a type="button" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}">Acceder</a>
+                                        <div class="btn-group">
+                                            <a type="button" class="btn btn-sm btn-outline-secondary" href="/editarcurso/{{curso.id}}">Editar</a>
+                                        </div>
                                     </div>
-                                    <div class="btn-group">
-                                        <a type="button" class="btn btn-sm btn-outline-secondary" href="/editarcurso/{{curso.id}}">Editar</a>
+                                    <br>
+                                    <div class="d-flex flex-row-reverse bd-highlight">
+                                        <small class="text-muted p-2 bd-highlight">Fecha publicación: {{curso.fecha_publicacion|date:"d/m/Y"}}</small>
                                     </div>
-                                </div>
-                                <br>
-                                <div class="d-flex flex-row-reverse bd-highlight">
-                                    <small class="text-muted p-2 bd-highlight">Fecha publicación: {{curso.fecha_publicacion|date:"d/m/Y"}}</small>
-                                </div>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
-                    {%else%}
-                     <div class="col">
+                    {% endfor %} {%else%}
+                    <div class="col">
                         <p class="font-italic text-center lead">Actualmente no has creado ningún curso</p>
                         <p class="font-weight-lighter text-center"><ins><a href="/crearcurso" class="text-decoration text-dark">¿Quieres crear uno?</a></ins></p>
                     </div>
@@ -62,23 +61,20 @@
                 </div>
             </div>
             {%if page_obj|length > 0 %}
-            <nav class= "d-flex justify-content-center" aria-label="Page navigation example">
+            <nav class="d-flex justify-content-center" aria-label="Page navigation example">
                 <ul class="pagination">
-                    <span class="step-links"></span>
-                        {% if page_obj.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
-                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
-                        {% endif %}
+                    <span class="step-links"></span> {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+                    {% endif %}
                     <li class="page-item"><a class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
                     {% if page_obj.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
                     {% endif %}
                 </ul>
             </nav>
-              {%endif%}
-
-            {% endblock %}
+            {%endif%} {% endblock %}
 </body>
 <footer>
   

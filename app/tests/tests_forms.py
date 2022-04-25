@@ -232,19 +232,6 @@ class addCursoFormTest(TestCase):
         form = CursoForm(user_sent, form_data)
         self.assertTrue(
             '<ul class="errorlist"><li>asignatura<ul class="errorlist"><li>Selecciona una opción válida</li></ul></li></ul>' in str(form.errors))
-
-    def test_curso_form_maxlength_error(self):
-        form_data = {
-            "nombre": "a"*101,
-            "descripcion": "a"*501,
-            "asignatura": "Asignatura de prueba"
-        }
-
-        user_sent = User.objects.first()
-        form = CursoForm(user_sent, form_data)
-        self.assertTrue('<ul class="errorlist"><li>asignatura<ul class="errorlist"><li>Selecciona una opción válida</li></ul></li><li>nombre<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 100 caracteres (tiene 101).</li></ul></li><li>descripcion<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 500 caracteres (tiene 501).</li></ul></li></ul>' in str(form.errors))
-
-
 class putCursoFormTest(TestCase):
 
     @classmethod

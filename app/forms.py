@@ -137,9 +137,9 @@ class CursoEditForm(ModelForm):
         titulacion_user = Usuario.objects.get(django_user=user).titulacion
         asignaturas = Asignatura.objects.filter(titulacion=titulacion_user)
         self.fields['nombre'] = forms.CharField(
-            widget=forms.TextInput(attrs={'style': 'width: 100%;', 'class': 'form-control'}))
+            widget=forms.TextInput(attrs={'style': 'width: 100%;', 'class': 'form-control', 'maxlength': 100}))
         self.fields['descripcion'] = forms.CharField(
-            widget=forms.Textarea(attrs={'style': 'width: 100%;', 'class': 'form-control', 'rows': "5"}))
+            widget=forms.Textarea(attrs={'style': 'width: 100%;', 'class': 'form-control', 'rows': "5", 'maxlength': 500}))
         self.fields['asignatura'] = AsignaturaModelChoiceField(
             asignaturas, widget=forms.Select(attrs={'style': 'width: 100%;', 'class': 'form-control '}))
 
@@ -169,13 +169,14 @@ class CursoForm(ModelForm):
         self.fields['asignatura'] = AsignaturaModelChoiceField(
             asignaturas, widget=forms.Select(attrs={'style': 'width: 100%;', 'class': 'form-control '}))
         self.fields['nombre'] = forms.CharField(
-            widget=forms.TextInput(attrs={'style': 'width: 100%;', 'class': 'form-control'}))
+            widget=forms.TextInput(attrs={'style': 'width: 100%;', 'class': 'form-control', 'maxlength': 100}))
         self.fields['descripcion'] = forms.CharField(
-            widget=forms.Textarea(attrs={'style': 'width: 100%;', 'class': 'form-control', 'rows': "5", 'placeholder': 'Proporciona una breve descripcion'}))
+            widget=forms.Textarea(attrs={'style': 'width: 100%;', 'class': 'form-control', 'rows': "5", 'placeholder': 'Proporciona una breve descripcion', 'maxlength': 500}))
 
         # mensajes de error
         self.fields['nombre'].error_messages['required'] = 'Este campo es obligatorio'
         self.fields['descripcion'].error_messages['required'] = 'Este campo es obligatorio'
+        self.fields['descripcion'].error_messages['max_length'] = 'Te pasas'
         self.fields['asignatura'].error_messages['required'] = 'Este campo es obligatorio'
         self.fields['asignatura'].error_messages['invalid_choice'] = 'Selecciona una opción válida'
 
