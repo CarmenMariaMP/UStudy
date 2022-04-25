@@ -40,13 +40,13 @@ def envio_correo(request):
 
                 if(paypal!=confirmar_paypal):
                     form.add_error("confirmar_paypal",
-                               "Las contraseñas no coinciden")
+                               "Las cuentas no coinciden")
                     return render(request, 'correo.html', {"form": form})
 
                 
                 if(Decimal(dinero)>usuarioActual.dinero):
                     form.add_error("dinero",
-                               "No dispone de esa cantidad en el formulario")
+                               "No dispone de esa cantidad en el monedero")
                     return render(request, 'correo.html', {"form": form})
 
                 
