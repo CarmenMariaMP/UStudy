@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.urls import reverse
 from app.forms import MonederoForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm,ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
-from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion
+from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga
 from app.paypal import GetOrder
 import json
 import os
@@ -15,6 +15,11 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 import datetime
 from decouple import config
+from wsgiref.util import FileWrapper
+from django.http import HttpResponse
+import mimetypes
+
+
 
 from django.core.paginator import Paginator
 
@@ -694,7 +699,8 @@ def ver_archivo(request, id_curso, id_archivo):
         else:
             respuestasDict[respuesta.responde_a.id].append(respuesta)
     archivo = Archivo.objects.get(id=id_archivo)
-    url = archivo.ruta.url.replace("app/static/", "")
+    url = archivo.ruta.url.replace("files", "archivos")
+    print("URL",url)
     reportes = None
     page_obj = None
     if request.user.is_authenticated:
@@ -758,6 +764,12 @@ def ver_archivo(request, id_curso, id_archivo):
                     ), usuario=usuario, responde_a=Comentario.objects.get(id=responde_a))
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
         else:
+            if acceso:
+                print("crear ticket")
+                ticket = TicketDescarga(usuario=Usuario.objects.get(django_user=request.user),archivo=archivo)
+                print(ticket)
+                ticket.save()
+       
             formComentario = ComentarioForm()
             formReporte = ReporteForm()
             formRespuesta = ResponderComentarioForm()
@@ -865,6 +877,26 @@ def error_500(request):
     context = {"error": "Parece que hay un error en el servidor..."}
     return render(request, 'error.html', context)
 
+def servir_archivo(request,id_curso, archivo):
+    if request.user.is_authenticated:
+        curso = Curso.objects.get(pk=id_curso)
+        usuario = Usuario.objects.filter(django_user=request.user)[0]
+        if usuario == curso.propietario or usuario in curso.suscriptores.all():
+            tickets = TicketDescarga.objects.filter(usuario=usuario,archivo=Archivo.objects.filter(curso=id_curso,nombre=archivo)[0])
+            print(tickets[0])
+            if len(tickets)>0:
+                filename = "./files/"+str(curso.id)+"/"+archivo
+                wrapper = FileWrapper(open(filename,"rb"))
+                response = HttpResponse(wrapper, content_type=mimetypes.guess_type("./files/"+str(curso.id)+"/"+archivo)[0])
+                response['Content-Length'] = os.path.getsize(filename)
+                tickets[0].delete()
+                return response
+            else:
+                return error_403(request,None)
+        else:
+            return error_403(request,None)
+    else:
+        return error_403(request,None)
 
 def sobre_nosotros(request):
     return render(request, "sobre_nosotros.html")
@@ -876,3 +908,4 @@ def terminos(request):
 
 def privacidad(request):
     return render(request, "privacidad.html")
+

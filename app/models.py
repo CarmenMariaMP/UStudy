@@ -80,7 +80,7 @@ class Archivo(models.Model):
         Curso, verbose_name="Curso", on_delete=models.CASCADE)
     ruta = models.FileField(upload_to=user_directory_path,
                             validators=[validador_archivo])
-
+                            
 
 class Comentario(models.Model):
     texto = models.CharField(max_length=500)
@@ -131,3 +131,7 @@ class Reporte(models.Model):
         Usuario, on_delete=models.CASCADE, related_name="usuario", null=True)
     archivo = models.ForeignKey(
         Archivo, on_delete=models.CASCADE, related_name="archivo", null=True)
+
+class TicketDescarga(models.Model):
+    usuario = models.ForeignKey(Usuario, related_name="Usuario", on_delete=models.DO_NOTHING)
+    archivo = models.ForeignKey(Archivo, related_name="Archivo", on_delete=models.DO_NOTHING)

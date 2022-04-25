@@ -141,6 +141,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Media files
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-MEDIA_URL = '/app/static/archivos/'
+MEDIA_URL = '/files/'
 STATIC_ROOT = 'app/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'app/static/archivos')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'files')
