@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.urls import reverse
 from app.forms import MonederoForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm,ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
-from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion
+from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga
 from app.paypal import GetOrder
 import json
 import os
@@ -15,6 +15,11 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 import datetime
 from decouple import config
+from wsgiref.util import FileWrapper
+from django.http import HttpResponse
+import mimetypes
+
+
 
 from django.core.paginator import Paginator
 
@@ -57,7 +62,7 @@ def inicio(request):
 
 
 def pago(request):
-   if request.user.is_authenticated:
+    if request.user.is_authenticated:
         # si es una consulta post (enviando el formulario)
         if request.method == 'POST':
             form = MonederoForm(request.POST)
@@ -65,22 +70,20 @@ def pago(request):
                 dinero = request.POST['dinero']
                 client_id = config('PAYPAL_CLIENT_ID')
 
-                return render(request,"pasarela_pago.html",context={"client_id": client_id,"dinero":dinero})
+                return render(request, "pasarela_pago.html", context={"client_id": client_id, "dinero": dinero})
             else:
                 return render(request, 'pasarela_pago.html', {"form": form})
 
-        else:  
+        else:
             form = MonederoForm()
 
             return render(request, "pasarela_pago.html", {"form": form})
-   else:
+    else:
         return redirect("/login")
-
 
 
 def comprobacion_pago(request):
     if request.user.is_authenticated:
-
 
         data = json.loads(request.body)
 
@@ -88,12 +91,11 @@ def comprobacion_pago(request):
 
             order_id = data['orderID']
             detalle = GetOrder().get_order(order_id)
-            detalle_precio = float(detalle.result.purchase_units[0].amount.value)
+            detalle_precio = float(
+                detalle.result.purchase_units[0].amount.value)
 
-        
-        
             usuarioActual = request.user.usuario
-        
+
             usuarioActual.dinero = float(usuarioActual.dinero) + detalle_precio
             usuarioActual.save()
             data = {
@@ -106,12 +108,9 @@ def comprobacion_pago(request):
             }
             return JsonResponse(data)
 
-        
     else:
         return redirect("/login")
 
-
-        
 
 def suscripcion(request, id):
     if request.user.is_authenticated:
@@ -119,14 +118,14 @@ def suscripcion(request, id):
         usuario = Usuario.objects.get(django_user=request.user)
         curso_var = Curso.objects.get(pk=id)
         if usuario.titulacion != curso_var.asignatura.titulacion or curso_var.propietario == usuario:
-            return cursosdisponibles(request, mensaje_error = True, mensaje = "No puedes suscribirte a este curso")
-            
+            return cursosdisponibles(request, mensaje_error=True, mensaje="No puedes suscribirte a este curso")
+
         if usuario in curso_var.suscriptores.all():
-            return cursosdisponibles(request, mensaje_error = True, mensaje = "Ya estás suscrito al curso")
-            
+            return cursosdisponibles(request, mensaje_error=True, mensaje="Ya estás suscrito al curso")
+
         if usuario.dinero < Decimal(12.00):
-            return cursosdisponibles(request, mensaje_error = True, mensaje = "No tienes dinero suficiente")
-            
+            return cursosdisponibles(request, mensaje_error=True, mensaje="No tienes dinero suficiente")
+
         else:
             curso_var.suscriptores.add(usuario)
             usuario.dinero -= Decimal(12.00)
@@ -135,18 +134,16 @@ def suscripcion(request, id):
             curso_var.save()
             usuario.save()
             profesor.save()
-            
+
             referencia = '/curso/' + str(curso_var.id)
-            notificacion = Notificacion(referencia=referencia,usuario=profesor, tipo="NUEVO_ALUMNO", curso=curso_var, visto=False, alumno=usuario)
+            notificacion = Notificacion(referencia=referencia, usuario=profesor,
+                                        tipo="NUEVO_ALUMNO", curso=curso_var, visto=False, alumno=usuario)
             notificacion.save()
-            suscrito="Se ha suscrito correctamente al curso"
-            return render(request, 'cursosdisponibles.html',{'curso':curso_var,'suscrito':suscrito})
-            
+            suscrito = "Se ha suscrito correctamente al curso"
+            return render(request, 'cursosdisponibles.html', {'curso': curso_var, 'suscrito': suscrito})
+
     else:
         return redirect("/login")
-
-
-
 
 
 def login_user(request):
@@ -224,11 +221,12 @@ def perfil_usuario(request):
                 boolPuntos = True
             else:
                 mediaPuntos = 0
-                
-        notificaciones = Notificacion.objects.all().filter(usuario=usuarioActual).order_by('-fecha')
+
+        notificaciones = Notificacion.objects.all().filter(
+            usuario=usuarioActual).order_by('-fecha')
 
         return render(request, "perfil.html", {"boolPuntos": boolPuntos, "nombre": nombre, "titulacion": titulacion,
-                "dinero": dinero, "valoracion": mediaPuntos, "foto": url, "notificaciones": notificaciones})
+                                               "dinero": dinero, "valoracion": mediaPuntos, "foto": url, "notificaciones": notificaciones})
 
     else:
         return redirect("/login", {"mensaje_error": True})
@@ -364,8 +362,8 @@ def registro_usuario(request):
                     form.add_error(i, e.error_dict[i])
 
                 return render(request, 'registro.html', {"mensaje_error": True, "form": form})
-
-            
+              
+            return redirect("/login")
         else:
             return render(request, 'registro.html', {"form": form})
 
@@ -557,7 +555,7 @@ def editar_curso(request, id_curso):
         return redirect("/login")
 
 
-def curso(request, id, suscrito = False):
+def curso(request, id, suscrito=False):
     es_owner = False
     es_suscriptor = False
 
@@ -661,7 +659,7 @@ def miscursos(request):
         return redirect("/login", {"mensaje_error": True})
 
 
-def cursosdisponibles(request, mensaje_error = False, mensaje = ''):
+def cursosdisponibles(request, mensaje_error=False, mensaje=''):
     if request.user.is_authenticated:
         cursos_todos = Curso.objects.order_by('nombre')
         cursos = []
@@ -696,7 +694,8 @@ def ver_archivo(request, id_curso, id_archivo):
         else:
             respuestasDict[respuesta.responde_a.id].append(respuesta)
     archivo = Archivo.objects.get(id=id_archivo)
-    url = archivo.ruta.url.replace("app/static/", "")
+    url = archivo.ruta.url.replace("files", "archivos")
+    print("URL",url)
     reportes = None
     page_obj = None
     if request.user.is_authenticated:
@@ -722,9 +721,10 @@ def ver_archivo(request, id_curso, id_archivo):
                     reporte_instancia = Reporte(
                         descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
                     reporte_instancia.save()
-                    referencia = '/curso/'+str(id_curso)+'/archivo/'+str(id_archivo)
-                    notificacion = Notificacion(referencia=referencia,usuario=curso.propietario, tipo="REPORTE", curso=curso, visto=False,
-                                                alumno=usuario,descripcion=descripcion)
+                    referencia = '/curso/' + \
+                        str(id_curso)+'/archivo/'+str(id_archivo)
+                    notificacion = Notificacion(referencia=referencia, usuario=curso.propietario, tipo="REPORTE", curso=curso, visto=False,
+                                                alumno=usuario, descripcion=descripcion)
                     notificacion.save()
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
             elif request.POST['action'] == 'Comentar':
@@ -734,8 +734,9 @@ def ver_archivo(request, id_curso, id_archivo):
                     texto = comentarioForm['texto']
                     Comentario.objects.create(
                         texto=texto, archivo=archivo, fecha=datetime.datetime.now(), usuario=usuario)
-                    referencia = '/curso/'+str(id_curso)+'/archivo/'+str(id_archivo)
-                    notificacion = Notificacion(referencia=referencia,usuario=curso.propietario, tipo="COMENTARIO", curso=curso, visto=False,
+                    referencia = '/curso/' + \
+                        str(id_curso)+'/archivo/'+str(id_archivo)
+                    notificacion = Notificacion(referencia=referencia, usuario=curso.propietario, tipo="COMENTARIO", curso=curso, visto=False,
                                                 alumno=usuario, descripcion=texto)
                     notificacion.save()
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
@@ -760,6 +761,12 @@ def ver_archivo(request, id_curso, id_archivo):
                     ), usuario=usuario, responde_a=Comentario.objects.get(id=responde_a))
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
         else:
+            if acceso:
+                print("crear ticket")
+                ticket = TicketDescarga(usuario=Usuario.objects.get(django_user=request.user),archivo=archivo)
+                print(ticket)
+                ticket.save()
+       
             formComentario = ComentarioForm()
             formReporte = ReporteForm()
             formRespuesta = ResponderComentarioForm()
@@ -792,13 +799,14 @@ def eliminar_reporte(request, id_curso, id_archivo, id_reporte):
             reporte.delete()
     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
 
+
 def eliminar_notificacion(request, id_notificacion):
-    notificacion=Notificacion.objects.get(id = id_notificacion)
+    notificacion = Notificacion.objects.get(id=id_notificacion)
     if request.user.is_authenticated:
-        usuario_autenticado=request.user
-        usuario=Usuario.objects.get(django_user = usuario_autenticado)
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (notificacion.usuario == usuario):
-            Notificacion.objects.filter(id = id_notificacion).update(visto = True)
+            Notificacion.objects.filter(id=id_notificacion).update(visto=True)
     return redirect('/perfil')
 
 
@@ -818,9 +826,9 @@ def dashboard_users(request):
         for c in cursos.all():
             curso = Curso.objects.get(id=c.id)
             cursos_suscritos.append(curso)
-        
-        cursos_propietario = Curso.objects.filter(propietario = usuario)
-        
+
+        cursos_propietario = Curso.objects.filter(propietario=usuario)
+
         for c in cursos_propietario:
             curso = Curso.objects.get(id=c.id)
             valoraciones = Valoracion.objects.all().filter(curso=curso)
@@ -835,19 +843,22 @@ def dashboard_users(request):
             num_archivos += len(archivos_curso)
             reportes = list()
             for archivo in archivos_curso:
-                reporte = Reporte.objects.all().filter(archivo=Archivo.objects.get(id=archivo.id))
+                reporte = Reporte.objects.all().filter(
+                    archivo=Archivo.objects.get(id=archivo.id))
                 reportes.append(reporte)
             numero_reportes += len(reportes)
-        
+
         try:
-            valoracion_media_global = valoracion_media_global / len(cursos_propietario)
+            valoracion_media_global = valoracion_media_global / \
+                len(cursos_propietario)
         except:
             valoracion_media_global = 0.0
-        
-        return render(request, 'dashboard.html', {'usuario': usuario, 'cursos_suscritos': len(cursos_suscritos), 
-                        'cursos_propietario': len(cursos_propietario), "suscriptores": num_susriptores, 'archivos_subidos': num_archivos,
-                        'reportes': numero_reportes, 'valoraciones': numero_valoraciones, 'valoracion_media_global': valoracion_media_global})
+
+        return render(request, 'dashboard.html', {'usuario': usuario, 'cursos_suscritos': len(cursos_suscritos),
+                                                  'cursos_propietario': len(cursos_propietario), "suscriptores": num_susriptores, 'archivos_subidos': num_archivos,
+                                                  'reportes': numero_reportes, 'valoraciones': numero_valoraciones, 'valoracion_media_global': valoracion_media_global})
     return render(request, 'inicio.html')
+
 
 def subir_contenido(request):
     return render(request, "subir_contenido.html")
@@ -867,6 +878,26 @@ def error_500(request):
     context = {"error": "Parece que hay un error en el servidor..."}
     return render(request, 'error.html', context)
 
+def servir_archivo(request,id_curso, archivo):
+    if request.user.is_authenticated:
+        curso = Curso.objects.get(pk=id_curso)
+        usuario = Usuario.objects.filter(django_user=request.user)[0]
+        if usuario == curso.propietario or usuario in curso.suscriptores.all():
+            tickets = TicketDescarga.objects.filter(usuario=usuario,archivo=Archivo.objects.filter(curso=id_curso,nombre=archivo)[0])
+            print(tickets[0])
+            if len(tickets)>0:
+                filename = "./files/"+str(curso.id)+"/"+archivo
+                wrapper = FileWrapper(open(filename,"rb"))
+                response = HttpResponse(wrapper, content_type=mimetypes.guess_type("./files/"+str(curso.id)+"/"+archivo)[0])
+                response['Content-Length'] = os.path.getsize(filename)
+                tickets[0].delete()
+                return response
+            else:
+                return error_403(request,None)
+        else:
+            return error_403(request,None)
+    else:
+        return error_403(request,None)
 
 def sobre_nosotros(request):
     return render(request, "sobre_nosotros.html")
@@ -878,3 +909,4 @@ def terminos(request):
 
 def privacidad(request):
     return render(request, "privacidad.html")
+
