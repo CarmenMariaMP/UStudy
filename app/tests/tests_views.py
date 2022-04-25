@@ -739,7 +739,7 @@ class privacidadTestView(TestCase):
         self.assertEquals(response.status_code,200)
         self.assertTemplateUsed(response,'sobre_nosotros.html')
         
-    def test_sobre_nosotros_view_get(self):
+    def test_terminos_view_get(self):
         client = Client()
         client.force_login(User.objects.first())
         response = client.get("/terminos/", follow=True)
