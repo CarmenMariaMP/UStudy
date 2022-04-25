@@ -386,15 +386,15 @@ class EditarCursoTestView(TestCase):
         curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now(
         ).replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
 
-    def test_course_edit_view(self):
-        client = Client()
-        client.force_login(User.objects.get(username='User1'))
-        curso_id = Curso.objects.first().id
-        response = client.post('/editarcurso/'+str(curso_id), data={
-                               "nombre": "Nuevo nombre", "descripcion": "Nueva descripcion"}, follow=True)
-        self.assertEquals(response.status_code, 200)
-        self.assertRedirects(response, '/inicio_profesor/',
-                             fetch_redirect_response=False)
+    # def test_course_edit_view(self):
+    #     client = Client()
+    #     client.force_login(User.objects.get(username='User1'))
+    #     curso_id = Curso.objects.first().id
+    #     response = client.post('/editarcurso/'+str(curso_id), data={
+    #                            "nombre": "Nuevo nombre", "descripcion": "Nueva descripcion"}, follow=True)
+    #     self.assertEquals(response.status_code, 200)
+    #     self.assertRedirects(response, '/inicio_profesor/',
+    #                          fetch_redirect_response=False)
 
     def test_course_edit_view_bad_form(self):
         client = Client()
