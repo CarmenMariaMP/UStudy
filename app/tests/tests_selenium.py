@@ -183,7 +183,7 @@ class TestRegistro(LiveServerTestCase):
         
 ## Test de crear curso
 class TestCrearCurso(LiveServerTestCase):
-    def test_crearcuso_fallido(self):
+    def test_crearcurso_fallido(self):
         option = webdriver.ChromeOptions()
         option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
         driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=option)
@@ -229,7 +229,6 @@ class TestCrearCurso(LiveServerTestCase):
         username.send_keys('prueba')
         contrasena.send_keys('contraseña',Keys.ENTER)
 
-
         driver.get(BASEURLCURSO)
 
         nombre = driver.find_element_by_name('nombre')
@@ -246,6 +245,11 @@ class TestCrearCurso(LiveServerTestCase):
 
         crear=driver.find_element_by_id('crear')
         crear.click()
+        
+        time.sleep(1)
+
+        aceptarSi=driver.find_element_by_id('aceptarSi')
+        aceptarSi.click()
 
         time.sleep(3)
 
