@@ -1,16 +1,32 @@
-{% extends 'base.html' %} {% load static %}{% block contenido %}
-<link href="{% static 'css/error.css' %}" rel="stylesheet" />
-<br>
-<a class="btn boton btn-info btn-lg float-right mr-5"  href="/">Inicio</a>
-<!-- <a class="btn btn-secondary btn-lg float-right" href="#">Registrate aquí</a> -->
-<div class="container" style="width:auto">  
-    <div class="error-page float-sm-left">
-        <h1>Oops!</h1>
-        <h2>{{error}}</h2>
-    </div>
-    <div class="error-image" style="width:20%">
-        <img src="{% static 'media/logo_roto.png' %}" alt="" width="90%" height="90%" class="rotate20"/>
-    </div>
-<div> 
-{% endblock %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>UStudy</title>
+    {% load static %}
+    <link href="{% static 'css/base.css' %}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'media/favicon.png' %}" />
+    <link href="{% static 'css/error.css' %}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    
+</head>
+
+<body>
+    <div class="container" style="width:auto">  
+        <div class="error-page float-sm-left">
+            <h1>Oops!</h1>
+            <h2>{{error}}</h2>
+        </div>
+        <div class="error-image" style="width:20%">
+            <img src="{% static 'media/logo_roto.png' %}" alt="" width="90%" height="90%" class="rotate20"/>
+        </div>
+    <div> 
 </body>
+<footer>
+</footer>
+</html>
