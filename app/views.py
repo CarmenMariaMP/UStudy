@@ -1,4 +1,4 @@
-from django.core.files.storage import default_storage
+from django.core.files.storage import default_storage, DefaultStorage, FileSystemStorage
 from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -19,6 +19,8 @@ from decouple import config
 from wsgiref.util import FileWrapper
 from django.http import HttpResponse
 import mimetypes
+
+from pathlib import Path
 
 
 
@@ -541,27 +543,29 @@ def actualizar_usuario(request):
 
                 check = False
                 only_username = False
-                if(foto != None and os.path.exists('app/static/archivos/'+user_instancia.username+'.jpg')):
-                    os.remove("app/static/archivos/" +
+                if(foto != None and os.path.exists('app/static/files/'+user_instancia.username+'.jpg')):
+                    os.remove("app/static/files/" +
                               user_instancia.username + ".jpg")
                     foto.name = username + ".jpg"
                     # save foto in static/archivos
-                    path = default_storage.save(
+                    BASE_DIR = Path(__file__).resolve().parent.parent
+                    path = FileSystemStorage(location=os.path.join(BASE_DIR, 'app/static/files'),base_url='/app/static/files').save(
                         foto.name, ContentFile(foto.read()))
                     os.path.join(settings.MEDIA_ROOT, path)
                     check = True
 
-                elif (foto != None and not os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
+                elif (foto != None and not os.path.exists('app/static/files/'+request.user.username+'.jpg')):
                     foto.name = username + ".jpg"
                     # save foto in static/archivos
-                    path = default_storage.save(
+                    BASE_DIR = Path(__file__).resolve().parent.parent
+                    path = FileSystemStorage(location=os.path.join(BASE_DIR, 'app/static/files'),base_url='/app/static/files').save(
                         foto.name, ContentFile(foto.read()))
                     os.path.join(settings.MEDIA_ROOT, path)
                     check = True
 
-                elif (foto == None and user_instancia.username != username and os.path.exists('app/static/archivos/'+user_instancia.username+'.jpg')):
-                    os.rename("app/static/archivos/" +
-                              user_instancia.username + ".jpg", "app/static/archivos/" + username + ".jpg")
+                elif (foto == None and user_instancia.username != username and os.path.exists('app/static/files/'+user_instancia.username+'.jpg')):
+                    os.rename("app/static/files/" +
+                              user_instancia.username + ".jpg", "app/static/files/" + username + ".jpg")
                     only_username = True
                 # actualizar usuario Ustudy
                 try:
