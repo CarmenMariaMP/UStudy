@@ -15,20 +15,17 @@
     </div>
     <div class="row d-flex justify-content-center"></div>
     {%if suscrito %}
-<script>
-    alert("{{suscrito}}");
-    window.location.href="/curso/{{curso.id}}"
-</script>
+    <script>
+        alert("{{suscrito}}");
+        window.location.href = "/curso/{{curso.id}}"
+    </script>
 
-{%endif%}
-    
-        
-        {%if mensaje_error%}
-        <div class="alert alert-danger row d-flex justify-content-center" role="alert">
-        <h6 class ="text-justify">{{mensaje}}</h6>
-        </div>
-        
-        {%endif%}
+    {%endif%} {%if mensaje_error%}
+    <div class="alert alert-danger row d-flex justify-content-center" role="alert">
+        <h6 class="text-justify">{{mensaje}}</h6>
+    </div>
+
+    {%endif%}
     </div>
 
     <!-- <form role="search" class="center" id="form">
@@ -49,14 +46,14 @@
                     <div class="col-md-4 mb-5">
                         <div class="card h-100 box-shadow border-info standard_web_color">
                             <div class="card-body standard_web_color ">
-                                <h5 class="card-title text-truncate">Asignatura: {{cursoYvaloracion.0.asignatura.nombre}}</h5>
+                                <h5 class="card-title">Asignatura: {{cursoYvaloracion.0.asignatura.nombre}}</h5>
                                 <p class="card-text">Profesor: {{cursoYvaloracion.0.propietario.nombre}}</p>
                                 <p class="card-text text-truncate">Descripción: {{cursoYvaloracion.0.descripcion}} </p>
                                 <p class="card-text">Valoración: {{cursoYvaloracion.1}}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group text-center">
                                         <div class="btn-group text-center">
-                                            <button  class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#reporteModal{{cursoYvaloracion.0.id}}">Suscribirse</button>
+                                            <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#reporteModal{{cursoYvaloracion.0.id}}">Suscribirse</button>
                                             <div class="modal fade" id="reporteModal{{cursoYvaloracion.0.id}}" tabindex="-1" role="dialog" aria-labelledby="reporteModal{{cursoYvaloracion.0.id}}" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -65,7 +62,7 @@
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
-                                                        </div>  
+                                                        </div>
                                                         <div class="modal-body">
                                                             <p>¿Deseas suscribirte a este curso?</p>
                                                         </div>
@@ -73,9 +70,9 @@
                                                             <a href="/suscripcion/{{cursoYvaloracion.0.id}}" class="btn btn-primary">Si</a>
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                                                         </div>
-                                                        </div>
                                                     </div>
-                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <small class="text-muted">Fecha publicación: {{cursoYvaloracion.0.fecha_publicacion|date:"d/m/Y"}}</small>
