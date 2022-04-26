@@ -81,6 +81,16 @@ class TestLogin(LiveServerTestCase):
 ## Test de registro
 
 class TestRegistro(LiveServerTestCase):
+    @classmethod
+    def setUp(self): ## crear las entidades necesarias en este metodo para cada clase
+        user = User(username='prueba')
+        user.set_password('contraseña')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com',
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        usuario.save()
+
     def test_registro_erroneo(self):
         option = webdriver.ChromeOptions()
         option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
@@ -183,6 +193,17 @@ class TestRegistro(LiveServerTestCase):
         
 ## Test de crear curso
 class TestCrearCurso(LiveServerTestCase):
+
+    @classmethod
+    def setUp(self): ## crear las entidades necesarias en este metodo para cada clase
+        user = User(username='prueba')
+        user.set_password('contraseña')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com',
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        usuario.save()
+
     def test_crearcurso_fallido(self):
         option = webdriver.ChromeOptions()
         option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
@@ -257,6 +278,16 @@ class TestCrearCurso(LiveServerTestCase):
 
 ## Test de editar perfil
 class TestEditarPerfil(LiveServerTestCase):
+    @classmethod
+    def setUp(self): ## crear las entidades necesarias en este metodo para cada clase
+        user = User(username='prueba')
+        user.set_password('contraseña')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com',
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        usuario.save()
+        
     def test_editarperfil_fallido(self):
         option = webdriver.ChromeOptions()
         option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
@@ -341,7 +372,17 @@ class TestEditarPerfil(LiveServerTestCase):
         assert '/login' in driver.current_url
 
 ## Test de suscribirse a un curso
+
 class TestEditarCurso(LiveServerTestCase):
+    @classmethod
+    def setUp(self): ## crear las entidades necesarias en este metodo para cada clase
+        user = User(username='prueba')
+        user.set_password('contraseña')
+        user.save()
+        usuario = Usuario.objects.create(nombre='Nombre1', apellidos='Apellidos', email='email@hotmail.com',
+                                         email_academico='barranco@alum.us.es', titulacion='Titulación 1',
+                                         descripcion='Descripcion 1', foto='foto.jpg', dinero=9.53, django_user=user)
+        usuario.save()
     def test_editarcurso_exitoso(self):
         option = webdriver.ChromeOptions()
         option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
