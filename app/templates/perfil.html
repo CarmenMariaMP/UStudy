@@ -25,19 +25,11 @@
           <p>Monedero: {{dinero}}€</p>
         </div>
         <div class="col-md-3">
-          {% if boolPuntos %}
-          <div class="rating-block">
-              <h5>Valoración media de los usuarios</h5>
-              <h2 class="bold padding-bottom-7">{{valoracion}} <small>/ 5</small></h2>
-          </div>    
-          {% else %}
-              <h3>No tienes valoraciones</h3>
-          {%endif%}
 
           <div class="d-grid gap-2 d-md-block">
 
             <a class="btn btn-outline-secondary mt-3 btn-sm btn-block" href="/pago">Añadir Fondos</h2>   
-            <a class="btn btn-outline-secondary mt-3 btn-sm btn-block"  href="/actualizar_perfil">Actualizar Perfil</a>
+            <a id="editarPerfil" class="btn btn-outline-secondary mt-3 btn-sm btn-block"  href="/actualizar_perfil">Actualizar Perfil</a>
             <a class="btn btn-outline-secondary mt-3 btn-sm btn-block"  href="/correo">Retirar Fondos</a>
           </div>
           

@@ -12,7 +12,6 @@ from datetime import timezone
 # Para saber más sobre la estrategia elegida visitar el siguiente link:
 # https://developer.mozilla.org/es/docs/Learn/Server-side/Django/Testing
 
-
 class AsignaturaModelTests(TestCase):
 
     @classmethod

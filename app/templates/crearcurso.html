@@ -36,7 +36,7 @@
     <br />
     <div class="text-center mt-3">
 
-      <button type="button" class="btn boton btn-info btn-block" data-toggle="modal" data-target="#reporteModal" >Crear</button>
+      <button id="crear" type="button" class="btn boton btn-info btn-block" data-toggle="modal" data-target="#reporteModal" >Crear</button>
       <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog" aria-labelledby="reporteModal" aria-hidden="true">
           <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -50,7 +50,7 @@
                       <p>¿Deseas crear este curso?</p>
                     </div>
                     <div class="modal-footer">
-                      <button  type="submit"  class="btn btn-primary" data-dismiss="modal" onclick="curso_crear(this.form)">Si</button>
+                      <button id="aceptarSi" type="submit"  class="btn btn-primary" data-dismiss="modal" onclick="curso_crear(this.form)">Si</button>
                       
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>

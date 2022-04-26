@@ -53,7 +53,7 @@ class ResponderComentarioForm(forms.Form):
 
 
 class ResponderComentarioForm2(forms.Form):
-    usuario_responde_a = forms.CharField(widget=forms.HiddenInput())
+    usuario_responde_a = forms.CharField(max_length=40, widget=forms.HiddenInput())
     responde_a = forms.IntegerField(widget=forms.HiddenInput())
     texto = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
         'cols': 200,

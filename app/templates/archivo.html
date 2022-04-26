@@ -17,6 +17,11 @@
 </header>
 
 <body>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        El comentario debe tener menos de 500 caracteres
+    </div>
+    {% endif %}
     <section>
         {% if acceso %}
         <div class="row d-flex justify-content-center">
