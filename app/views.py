@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.urls import reverse
-from app.forms import MonederoForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm,ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
+from app import paypal
+from app.forms import MonederoForm, RetiradaDineroForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm,ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
 from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga
 from app.paypal import GetOrder
 import json
@@ -22,6 +23,88 @@ import mimetypes
 
 
 from django.core.paginator import Paginator
+
+import smtplib
+from email.message import EmailMessage
+
+
+
+
+
+
+def envio_correo(request):
+
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = RetiradaDineroForm(request.POST)
+            if form.is_valid():
+                usuarioActual = request.user.usuario
+                paypal = request.POST['paypal']
+                confirmar_paypal = request.POST['confirmar_paypal']
+                dinero = request.POST['dinero']
+
+                if(paypal!=confirmar_paypal):
+                    form.add_error("confirmar_paypal",
+                               "Las cuentas no coinciden")
+                    return render(request, 'correo.html', {"form": form})
+
+                
+                if(Decimal(dinero)>usuarioActual.dinero):
+                    form.add_error("dinero",
+                               "No dispone de esa cantidad en el monedero")
+                    return render(request, 'correo.html', {"form": form})
+
+                
+                usuarioActual.dinero -= Decimal(dinero)
+                usuarioActual.save()
+
+
+                email_host_user = config('EMAIL_HOST_USER')
+                email_host_password = config('EMAIL_HOST_PASSWORD')
+                smtp_server = config('EMAIL_HOST')
+                msg = EmailMessage()
+                msg['Subject'] = "Retirada Dinero"
+                msg['From'] = email_host_user
+                msg['To'] = email_host_user
+                msg.set_content("La cuenta de correo del usuario que desea sacar el dinero es " + request.user.usuario.email + ". La cuenta de paypal a la que realizar la transferencia es " + paypal + ". El dinero que desea sacar es " + dinero + "€.")
+                
+    
+                server = smtplib.SMTP(smtp_server)
+                server.starttls()
+                server.login(email_host_user, email_host_password)
+                server.send_message(msg)
+                server.quit()
+                
+    
+                
+
+                return redirect('/informacion_transferencia')
+            else:
+                return render(request, 'correo.html', {"form": form})
+
+        else:  
+            form = RetiradaDineroForm()
+
+            return render(request, "correo.html", {"form": form})
+    else:
+        return redirect("/login")
+
+
+
+def informacion_transferencia(request):
+
+    if request.user.is_authenticated:
+
+        return render(request,'informacion_transferencia.html')
+
+    else:
+        return redirect("/login")
+
+
+
+
+
+    
 
 
 def pagination(request, productos, num):
