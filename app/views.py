@@ -252,8 +252,11 @@ def borrar_foto(request):
     if request.user.is_authenticated:
         usuarioActual = request.user.usuario
         usuarioActual.foto.delete(save=True)
-        os.remove("app/static/files/" +
-                  request.user.username + ".jpg")
+        try:
+            os.remove("app/static/files/" +
+                    request.user.username + ".jpg")
+        except:
+            pass
         return redirect("/actualizar_perfil")
     else:
         return redirect("/login")
@@ -923,8 +926,7 @@ def dashboard_users(request):
             numero_reportes += len(reportes)
 
         try:
-            valoracion_media_global = valoracion_media_global / \
-                len(cursos_propietario)
+            valoracion_media_global = round(valoracion_media_global / len(cursos_propietario), 2)
         except:
             valoracion_media_global = 0.0
 
