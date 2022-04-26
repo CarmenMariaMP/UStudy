@@ -20,7 +20,7 @@
     method="POST"
   >
     {% csrf_token %} {{ form.as_p }}
-    <button class="btn boton btn-info btn-block" type="submit">Editar</button>
+    <button id="finalizarEditar" class="btn boton btn-info btn-block" type="submit">Editar</button>
   </form>
   {% endblock %}
 
