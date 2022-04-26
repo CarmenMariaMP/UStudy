@@ -243,34 +243,44 @@ class putCursoFormTest(TestCase):
         Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now().replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
         
     def test_put_curso_form_is_valid(self):
+        usuario = User.objects.first()
+        asignatura = Asignatura.objects.first()
+        id_asi = asignatura.id
         form_data = {
             "nombre": "Nuevo nombre",
-            "descripcion": "Nueva Descripcion"
+            "descripcion": "Nueva Descripcion",
+            "asignatura": id_asi
         }
         
         curso_sent = Curso.objects.first()
-        form = CursoEditForm(form_data, instance=curso_sent)
+        form = CursoEditForm(usuario,form_data, instance=curso_sent)
         self.assertTrue(form.is_valid())
         
     def test_put_curso_form_empty_fields(self):
+        usuario = User.objects.first()
         form_data = {
             "nombre": None,
-            "descripcion": None
+            "descripcion": None,
+            "asignatura": None
         }
         
         curso_sent = Curso.objects.first()
-        form = CursoEditForm(form_data, instance=curso_sent)
-        self.assertTrue('<ul class="errorlist"><li>nombre<ul class="errorlist"><li>Este campo es obligatorio</li></ul></li><li>descripcion<ul class="errorlist"><li>Este campo es obligatorio</li></ul></li></ul>' in str(form.errors))
+        form = CursoEditForm(usuario,form_data, instance=curso_sent)
+        self.assertTrue('<ul class="errorlist"><li>nombre<ul class="errorlist"><li>Este campo es obligatorio</li></ul></li><li>descripcion<ul class="errorlist"><li>Este campo es obligatorio</li></ul></li><li>asignatura<ul class="errorlist"><li>Este campo es obligatorio</li></ul></li></ul>' in str(form.errors))
         
         
     def test_put_curso_form_maxlength_error(self):
+        usuario = User.objects.first()
+        asignatura = Asignatura.objects.first()
+        id_asi = asignatura.id
         form_data = {
             "nombre": "a"*101,
-            "descripcion": "a"*501
+            "descripcion": "a"*501,
+            "asignatura": id_asi
         }
         
         curso_sent = Curso.objects.first()
-        form = CursoEditForm(form_data, instance=curso_sent)
+        form = CursoEditForm(usuario,form_data, instance=curso_sent)
         self.assertTrue('<ul class="errorlist"><li>nombre<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 100 caracteres (tiene 101).</li></ul></li><li>descripcion<ul class="errorlist"><li>Asegúrese de que este valor tenga menos de 500 caracteres (tiene 501).</li></ul></li></ul>' in str(form.errors))
 
 class addComentarioFormTests(TestCase):
