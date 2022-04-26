@@ -228,7 +228,6 @@ def suscripcion(request, id):
     else:
         return redirect("/login")
 
-
 def login_user(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
@@ -823,6 +822,11 @@ def ver_archivo(request, id_curso, id_archivo):
                                                 alumno=usuario, descripcion=texto)
                     notificacion.save()
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+                else:
+                    return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'respuestasDict': respuestasDict, 'error': True,
+                                                    'acceso': acceso, 'comentarios': comentarios, 'url': url, 'formReporte': ReporteForm(), 'reportes': reportes, 'es_owner': es_owner,
+                                                    'usuario': usuario, 'es_plagio': es_plagio, 'es_error': es_error, 'formComentario': ComentarioForm(), 'formRespuesta': ResponderComentarioForm(), 'formRespuesta2': ResponderComentarioForm2()})
+                    
             elif request.POST['action'] == 'Responder':
                 formRespuesta = ResponderComentarioForm(request.POST)
                 if formRespuesta.is_valid():
@@ -832,6 +836,10 @@ def ver_archivo(request, id_curso, id_archivo):
                     Comentario.objects.create(texto=texto, archivo=archivo, fecha=datetime.datetime.now(
                     ), usuario=usuario, responde_a=Comentario.objects.get(id=responde_a))
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+                else:
+                    return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'respuestasDict': respuestasDict, 'error': True,
+                                                    'acceso': acceso, 'comentarios': comentarios, 'url': url, 'formReporte': ReporteForm(), 'reportes': reportes, 'es_owner': es_owner,
+                                                    'usuario': usuario, 'es_plagio': es_plagio, 'es_error': es_error, 'formComentario': ComentarioForm(), 'formRespuesta': ResponderComentarioForm(), 'formRespuesta2': ResponderComentarioForm2()})
             elif request.POST['action'] == 'Responder2':
                 formRespuesta2 = ResponderComentarioForm2(request.POST)
                 if formRespuesta2.is_valid():
@@ -843,6 +851,10 @@ def ver_archivo(request, id_curso, id_archivo):
                     Comentario.objects.create(texto=texto, archivo=archivo, fecha=datetime.datetime.now(
                     ), usuario=usuario, responde_a=Comentario.objects.get(id=responde_a))
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
+                else:
+                    return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'respuestasDict': respuestasDict, 'error': True,
+                                                    'acceso': acceso, 'comentarios': comentarios, 'url': url, 'formReporte': ReporteForm(), 'reportes': reportes, 'es_owner': es_owner,
+                                                    'usuario': usuario, 'es_plagio': es_plagio, 'es_error': es_error, 'formComentario': ComentarioForm(), 'formRespuesta': ResponderComentarioForm(), 'formRespuesta2': ResponderComentarioForm2()})
         else:
             if acceso:
                 print("crear ticket")
@@ -855,8 +867,8 @@ def ver_archivo(request, id_curso, id_archivo):
             formRespuesta = ResponderComentarioForm()
             formRespuesta2 = ResponderComentarioForm2()
             return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'respuestasDict': respuestasDict,
-                                                    'acceso': acceso, 'comentarios': comentarios, 'url': url, 'formReporte': formReporte, 'reportes': reportes, 'es_owner': es_owner,
-                                                    'usuario': usuario, 'es_plagio': es_plagio, 'es_error': es_error, 'formComentario': formComentario, 'formRespuesta': formRespuesta, 'formRespuesta2': formRespuesta2})
+                                                    'acceso': acceso, 'comentarios': comentarios, 'url': url, 'formReporte': ReporteForm(), 'reportes': reportes, 'es_owner': es_owner,
+                                                    'usuario': usuario, 'es_plagio': es_plagio, 'es_error': es_error, 'formComentario': ComentarioForm(), 'formRespuesta': ResponderComentarioForm(), 'formRespuesta2': ResponderComentarioForm2()})
     else:
         return render(request, 'inicio.html')
 
