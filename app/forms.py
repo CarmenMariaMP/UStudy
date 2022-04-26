@@ -147,6 +147,7 @@ class CursoEditForm(ModelForm):
         self.fields['nombre'].error_messages['required'] = 'Este campo es obligatorio'
         self.fields['descripcion'].error_messages['required'] = 'Este campo es obligatorio'   
         self.fields['asignatura'].error_messages['required'] = 'Este campo es obligatorio'
+        self.fields['descripcion'].error_messages['max_length'] = 'La descripción no puede superar los 500 caracteres'
         self.fields['asignatura'].error_messages['invalid_choice'] = 'Selecciona una opción válida' 
     class Meta:
 
@@ -176,7 +177,7 @@ class CursoForm(ModelForm):
         # mensajes de error
         self.fields['nombre'].error_messages['required'] = 'Este campo es obligatorio'
         self.fields['descripcion'].error_messages['required'] = 'Este campo es obligatorio'
-        self.fields['descripcion'].error_messages['max_length'] = 'Te pasas'
+        self.fields['descripcion'].error_messages['max_length'] = 'La descripción no puede superar los 500 caracteres'
         self.fields['asignatura'].error_messages['required'] = 'Este campo es obligatorio'
         self.fields['asignatura'].error_messages['invalid_choice'] = 'Selecciona una opción válida'
 
