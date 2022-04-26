@@ -19,7 +19,18 @@
     style="width: 30%; margin-top: 20px"
     method="POST"
   >
-    {% csrf_token %} {{ form.as_p }}
+    {% csrf_token %}  <label>Nombre del curso</label>
+    <div>{{form.nombre}}</div>
+    <div class="alert-danger">{{ form.nombre.errors }}</div>
+
+    <label class="mt-3">Descripción</label>
+    <div>{{form.descripcion}}</div>
+    <div class="alert-danger">{{ form.descripcion.errors }}</div>
+
+    <label class="mt-3">Asignatura</label>
+    <div>{{form.asignatura}}</div>
+    <div class="alert-danger">{{ form.asignatura.errors }}</div>
+    <br>
     <button class="btn boton btn-info btn-block" type="submit">Editar</button>
   </form>
   {% endblock %}
