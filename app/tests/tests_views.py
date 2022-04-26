@@ -587,7 +587,7 @@ class SuscripcionTestView(TestCase):
         self.assertEquals(response.status_code,200)
         #ha habido intercambio monetario pues la suscripcion se ha realizado correctamente
         self.assertEquals(suscriptor.usuario.dinero, 0.0)
-        self.assertEquals(profesor.usuario.dinero, 18.0)
+        self.assertEquals(profesor.usuario.dinero, 17.0)
         self.assertTemplateUsed(response, 'cursosdisponibles.html')
 
     def test_suscripcion_view_post_already_suscribed(self):

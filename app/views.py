@@ -197,7 +197,7 @@ def suscripcion(request, id):
             curso_var.suscriptores.add(usuario)
             usuario.dinero -= Decimal(12.00)
             profesor = curso_var.propietario
-            profesor.dinero += Decimal(9.00)
+            profesor.dinero += Decimal(8.00)
             curso_var.save()
             usuario.save()
             profesor.save()
