@@ -139,3 +139,6 @@ class TicketDescarga(models.Model):
     usuario = models.ForeignKey(Usuario, related_name="Usuario", on_delete=models.CASCADE)
     archivo = models.ForeignKey(Archivo, related_name="Archivo", on_delete=models.CASCADE)
 
+class RetiradaDinero(models.Model):
+    email = models.EmailField(unique=True, max_length=254)
+    dinero = models.DecimalField(max_digits=12, decimal_places=2)

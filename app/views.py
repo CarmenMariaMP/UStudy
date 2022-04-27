@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.urls import reverse
 from app import paypal
 from app.forms import MonederoForm, RetiradaDineroForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
-from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga
+from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga, RetiradaDinero
 from app.paypal import GetOrder
 import json
 import os
@@ -52,22 +52,8 @@ def envio_correo(request):
 
                 try:
 
-
-                    email_host_user = config('EMAIL_HOST_USER')
-                    email_host_password = config('EMAIL_HOST_PASSWORD')
-                    smtp_server = config('EMAIL_HOST')
-                    msg = EmailMessage()
-                    msg['Subject'] = "Retirada Dinero"
-                    msg['From'] = email_host_user
-                    msg['To'] = email_host_user
-                    msg.set_content("La cuenta de correo del usuario que desea sacar el dinero es " + request.user.usuario.email +
-                                ". La cuenta de paypal a la que realizar la transferencia es " + paypal + ". El dinero que desea sacar es " + dinero + "€.")
-
-                    server = smtplib.SMTP(smtp_server)
-                    server.starttls()
-                    server.login(email_host_user, email_host_password)
-                    server.send_message(msg)
-                    server.quit()
+                    retirada = RetiradaDinero(email=paypal,dinero=dinero)
+                    retirada.save()
 
                     usuarioActual.dinero -= Decimal(dinero)
                     usuarioActual.save()
@@ -1027,4 +1013,3 @@ def terminos(request):
 
 def privacidad(request):
     return render(request, "privacidad.html")
-    
