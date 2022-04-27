@@ -716,9 +716,10 @@ def borrar_archivo(request, id_curso, id_archivo):
         if (curso.propietario == usuario):
             archivo = Archivo.objects.get(id=id_archivo)
             archivo.delete()
+            nombre = archivo.nombre.replace(" ", "_")
             try:   
                 os.remove("files/" +
-                    str(curso.id) +"/" +  archivo.nombre)
+                    str(curso.id) +"/" +  nombre)
                 print("Success")
             except:
                 print("Failed")
