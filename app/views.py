@@ -973,8 +973,7 @@ def servir_archivo(request, id_curso, archivo):
         usuario = Usuario.objects.filter(django_user=request.user)[0]
         if usuario == curso.propietario or usuario in curso.suscriptores.all():
             tickets = TicketDescarga.objects.filter(
-                usuario=usuario, archivo=Archivo.objects.filter(curso=id_curso, nombre=archivo)[0])
-            print(tickets[0])
+                usuario=usuario, archivo=Archivo.objects.filter(curso=id_curso,ruta=str(id_curso)+"/"+str(archivo))[0])
             if len(tickets) > 0:
                 filename = "./files/"+str(curso.id)+"/"+archivo
                 wrapper = FileWrapper(open(filename, "rb"))
@@ -1001,3 +1000,4 @@ def terminos(request):
 
 def privacidad(request):
     return render(request, "privacidad.html")
+    
