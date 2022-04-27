@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    'paypalcheckoutsdk'
+    'paypalcheckoutsdk',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
