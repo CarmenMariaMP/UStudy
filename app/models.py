@@ -27,7 +27,7 @@ def validador_archivo(file):
     if(file.size > 1024*1024*20):
         raise ValidationError(
             _('El tamaño del archivo debe ser inferior a 20 MB'), code='mensaje')
-    if not file.name[-4:] in ('.pdf', '.mp4', '.png', '.jpg', '.txt', 'jpeg'):
+    if not file.name[-4:] in ('.pdf', '.mp4', '.png', '.jpg', '.txt', 'jpeg', '.PDF', '.MP4', '.PNG', '.JPG', '.TXT', '.JPEG'):
         raise ValidationError(
             _('El formato del archivo debe ser PDF, MP4, PNG, JPG, JPEG ó TXT'), code='mensaje3')
     if(psutil.virtual_memory()[1] < 1024 * 1024 * 40):
