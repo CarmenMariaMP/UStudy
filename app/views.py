@@ -1,11 +1,11 @@
-from django.core.files.storage import default_storage, DefaultStorage, FileSystemStorage
+from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.urls import reverse
 from app import paypal
-from app.forms import MonederoForm, RetiradaDineroForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
+from app.forms import MonederoForm, RetiradaDineroForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm,ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
 from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga
 from app.paypal import GetOrder
 import json
@@ -20,13 +20,16 @@ from wsgiref.util import FileWrapper
 from django.http import HttpResponse
 import mimetypes
 
-from pathlib import Path
 
 
 from django.core.paginator import Paginator
 
 import smtplib
 from email.message import EmailMessage
+
+
+
+
 
 
 def envio_correo(request):
@@ -40,18 +43,21 @@ def envio_correo(request):
                 confirmar_paypal = request.POST['confirmar_paypal']
                 dinero = request.POST['dinero']
 
-                if(paypal != confirmar_paypal):
+                if(paypal!=confirmar_paypal):
                     form.add_error("confirmar_paypal",
-                                   "Las cuentas no coinciden")
+                               "Las cuentas no coinciden")
                     return render(request, 'correo.html', {"form": form})
 
-                if(Decimal(dinero) > usuarioActual.dinero):
+                
+                if(Decimal(dinero)>usuarioActual.dinero):
                     form.add_error("dinero",
-                                   "No dispone de esa cantidad en el monedero")
+                               "No dispone de esa cantidad en el monedero")
                     return render(request, 'correo.html', {"form": form})
 
+                
                 usuarioActual.dinero -= Decimal(dinero)
                 usuarioActual.save()
+
 
                 email_host_user = config('EMAIL_HOST_USER')
                 email_host_password = config('EMAIL_HOST_PASSWORD')
@@ -60,20 +66,23 @@ def envio_correo(request):
                 msg['Subject'] = "Retirada Dinero"
                 msg['From'] = email_host_user
                 msg['To'] = email_host_user
-                msg.set_content("La cuenta de correo del usuario que desea sacar el dinero es " + request.user.usuario.email +
-                                ". La cuenta de paypal a la que realizar la transferencia es " + paypal + ". El dinero que desea sacar es " + dinero + "€.")
-
+                msg.set_content("La cuenta de correo del usuario que desea sacar el dinero es " + request.user.usuario.email + ". La cuenta de paypal a la que realizar la transferencia es " + paypal + ". El dinero que desea sacar es " + dinero + "€.")
+                
+    
                 server = smtplib.SMTP(smtp_server)
                 server.starttls()
                 server.login(email_host_user, email_host_password)
                 server.send_message(msg)
                 server.quit()
+                
+    
+                
 
                 return redirect('/informacion_transferencia')
             else:
                 return render(request, 'correo.html', {"form": form})
 
-        else:
+        else:  
             form = RetiradaDineroForm()
 
             return render(request, "correo.html", {"form": form})
@@ -81,14 +90,21 @@ def envio_correo(request):
         return redirect("/login")
 
 
+
 def informacion_transferencia(request):
 
     if request.user.is_authenticated:
 
-        return render(request, 'informacion_transferencia.html')
+        return render(request,'informacion_transferencia.html')
 
     else:
         return redirect("/login")
+
+
+
+
+
+    
 
 
 def pagination(request, productos, num):
@@ -197,7 +213,7 @@ def suscripcion(request, id):
             curso_var.suscriptores.add(usuario)
             usuario.dinero -= Decimal(12.00)
             profesor = curso_var.propietario
-            profesor.dinero += Decimal(8.00)
+            profesor.dinero += Decimal(9.00)
             curso_var.save()
             usuario.save()
             profesor.save()
@@ -251,11 +267,6 @@ def borrar_foto(request):
     if request.user.is_authenticated:
         usuarioActual = request.user.usuario
         usuarioActual.foto.delete(save=True)
-        try:
-            os.remove("app/static/files/" +
-                    request.user.username + ".jpg")
-        except:
-            pass
         return redirect("/actualizar_perfil")
     else:
         return redirect("/login")
@@ -433,7 +444,7 @@ def registro_usuario(request):
                     form.add_error(i, e.error_dict[i])
 
                 return render(request, 'registro.html', {"mensaje_error": True, "form": form})
-
+              
             return redirect("/login")
         else:
             return render(request, 'registro.html', {"form": form})
@@ -529,31 +540,28 @@ def actualizar_usuario(request):
 
                 check = False
                 only_username = False
-                if(foto != None and os.path.exists('app/static/files/'+user_instancia.username+'.jpg')):
-                    os.remove("app/static/files/" +
+                if(foto != None and os.path.exists('app/static/archivos/'+user_instancia.username+'.jpg')):
+                    os.remove("app/static/archivos/" +
                               user_instancia.username + ".jpg")
                     foto.name = username + ".jpg"
                     # save foto in static/archivos
-                    BASE_DIR = Path(__file__).resolve().parent.parent
-                    path = FileSystemStorage(location=os.path.join(BASE_DIR, 'app/static/files'), base_url='/app/static/files').save(
+                    path = default_storage.save(
                         foto.name, ContentFile(foto.read()))
                     os.path.join(settings.MEDIA_ROOT, path)
                     check = True
 
-                elif (foto != None and not os.path.exists('app/static/files/'+request.user.username+'.jpg')):
+                elif (foto != None and not os.path.exists('app/static/archivos/'+request.user.username+'.jpg')):
                     foto.name = username + ".jpg"
                     # save foto in static/archivos
-                    BASE_DIR = Path(__file__).resolve().parent.parent
-                    path = FileSystemStorage(location=os.path.join(BASE_DIR, 'app/static/files'), base_url='/app/static/files').save(
+                    path = default_storage.save(
                         foto.name, ContentFile(foto.read()))
                     os.path.join(settings.MEDIA_ROOT, path)
                     check = True
 
-                elif (foto == None and user_instancia.username != username and os.path.exists('app/static/files/'+user_instancia.username+'.jpg')):
-                    os.rename("app/static/files/" +
-                              user_instancia.username + ".jpg", "app/static/files/" + username + ".jpg")
+                elif (foto == None and user_instancia.username != username and os.path.exists('app/static/archivos/'+user_instancia.username+'.jpg')):
+                    os.rename("app/static/archivos/" +
+                              user_instancia.username + ".jpg", "app/static/archivos/" + username + ".jpg")
                     only_username = True
-
                 # actualizar usuario Ustudy
                 try:
                     if(check):
@@ -607,8 +615,7 @@ def editar_curso(request, id_curso):
         curso = Curso.objects.get(id=id_curso)
         if request.user.usuario == curso.propietario:
             if request.method == 'POST':
-                form = CursoEditForm(
-                    request.user, request.POST, instance=curso)
+                form = CursoEditForm(request.user, request.POST,instance=curso)
                 if form.is_valid():
                     curso_form = form.cleaned_data
                     nombre = curso_form['nombre']
@@ -622,7 +629,7 @@ def editar_curso(request, id_curso):
                 else:
                     return render(request, 'editarcurso.html', {"form": form})
             else:
-                form = CursoEditForm(request.user, instance=curso)
+                form = CursoEditForm(request.user ,instance=curso)
                 return render(request, "editarcurso.html", {"form": form, "curso": curso})
         else:
             return redirect("/miscursos")
@@ -770,7 +777,7 @@ def ver_archivo(request, id_curso, id_archivo):
             respuestasDict[respuesta.responde_a.id].append(respuesta)
     archivo = Archivo.objects.get(id=id_archivo)
     url = archivo.ruta.url.replace("files", "archivos")
-    print("URL", url)
+    print("URL",url)
     reportes = None
     page_obj = None
     if request.user.is_authenticated:
@@ -851,11 +858,10 @@ def ver_archivo(request, id_curso, id_archivo):
         else:
             if acceso:
                 print("crear ticket")
-                ticket = TicketDescarga(usuario=Usuario.objects.get(
-                    django_user=request.user), archivo=archivo)
+                ticket = TicketDescarga(usuario=Usuario.objects.get(django_user=request.user),archivo=archivo)
                 print(ticket)
                 ticket.save()
-
+       
             formComentario = ComentarioForm()
             formReporte = ReporteForm()
             formRespuesta = ResponderComentarioForm()
@@ -938,7 +944,8 @@ def dashboard_users(request):
             numero_reportes += len(reportes)
 
         try:
-            valoracion_media_global = round(valoracion_media_global / len(cursos_propietario), 2)
+            valoracion_media_global = valoracion_media_global / \
+                len(cursos_propietario)
         except:
             valoracion_media_global = 0.0
 
@@ -966,30 +973,26 @@ def error_500(request):
     context = {"error": "Parece que hay un error en el servidor..."}
     return render(request, 'error.html', context)
 
-
-def servir_archivo(request, id_curso, archivo):
+def servir_archivo(request,id_curso, archivo):
     if request.user.is_authenticated:
         curso = Curso.objects.get(pk=id_curso)
         usuario = Usuario.objects.filter(django_user=request.user)[0]
         if usuario == curso.propietario or usuario in curso.suscriptores.all():
-            tickets = TicketDescarga.objects.filter(
-                usuario=usuario, archivo=Archivo.objects.filter(curso=id_curso, nombre=archivo)[0])
+            tickets = TicketDescarga.objects.filter(usuario=usuario,archivo=Archivo.objects.filter(curso=id_curso,ruta=str(id_curso)+"/"+str(archivo))[0])
             print(tickets[0])
-            if len(tickets) > 0:
+            if len(tickets)>0:
                 filename = "./files/"+str(curso.id)+"/"+archivo
-                wrapper = FileWrapper(open(filename, "rb"))
-                response = HttpResponse(wrapper, content_type=mimetypes.guess_type(
-                    "./files/"+str(curso.id)+"/"+archivo)[0])
+                wrapper = FileWrapper(open(filename,"rb"))
+                response = HttpResponse(wrapper, content_type=mimetypes.guess_type("./files/"+str(curso.id)+"/"+archivo)[0])
                 response['Content-Length'] = os.path.getsize(filename)
                 tickets[0].delete()
                 return response
             else:
-                return error_403(request, None)
+                return error_403(request,None)
         else:
-            return error_403(request, None)
+            return error_403(request,None)
     else:
-        return error_403(request, None)
-
+        return error_403(request,None)
 
 def sobre_nosotros(request):
     return render(request, "sobre_nosotros.html")
@@ -1001,3 +1004,4 @@ def terminos(request):
 
 def privacidad(request):
     return render(request, "privacidad.html")
+
