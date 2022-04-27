@@ -80,7 +80,7 @@ class Archivo(models.Model):
     nombre = models.CharField(max_length=200)
     fecha_publicacion = models.DateTimeField(default=now, blank=True)
     curso = models.ForeignKey(
-        Curso, verbose_name="Curso", on_delete=models.CASCADE)
+        Curso, verbose_name="Curso", related_name = "archivos" ,on_delete=models.CASCADE)
     ruta = models.FileField(upload_to=user_directory_path,
                             validators=[validador_archivo])
                             

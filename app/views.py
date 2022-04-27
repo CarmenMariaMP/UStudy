@@ -650,6 +650,7 @@ def curso(request, id, suscrito=False):
         excede_mensaje = ""
         valoracionCurso = get_valoracion(curso)
         valoracionUsuario = "No has valorado este curso"
+        nombre_archivo_unico = True
         if curso.propietario == usuario:
             es_owner = True
             if request.method == 'POST':
@@ -658,12 +659,15 @@ def curso(request, id, suscrito=False):
                     curso = Curso.objects.get(id=id)
                     archivo_instancia = Archivo(
                         nombre=file.name, ruta=file, curso=curso)
-                    try:
-                        archivo_instancia.full_clean()
-                        archivo_instancia.save()
-                    except ValidationError as e:
-                        excede_tamano = True
-                        excede_mensaje = e.message_dict['ruta'][0]
+                    if file.name in curso.archivos.values_list('nombre', flat=True):
+                        nombre_archivo_unico = False
+                    else:
+                        try:
+                            archivo_instancia.full_clean()
+                            archivo_instancia.save()
+                        except ValidationError as e:
+                            excede_tamano = True
+                            excede_mensaje = e.message_dict['ruta'][0]
                 else:
                     form = UploadFileForm()
         elif usuario in curso.suscriptores.all():
@@ -674,7 +678,7 @@ def curso(request, id, suscrito=False):
             except:
                 pass
 
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito})
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito,"nombre_archivo_unico": nombre_archivo_unico})
 
     else:
         return render(request, 'inicio.html')
@@ -712,6 +716,13 @@ def borrar_archivo(request, id_curso, id_archivo):
         if (curso.propietario == usuario):
             archivo = Archivo.objects.get(id=id_archivo)
             archivo.delete()
+            try:   
+                os.remove("files/" +
+                    str(curso.id) +"/" +  archivo.nombre)
+                print("Success")
+            except:
+                print("Failed")
+                pass
     return redirect('/curso/'+str(id_curso))
 
 

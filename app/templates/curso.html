@@ -20,6 +20,11 @@
         {{excede_mensaje}}
     </div>
     {% endif %}
+    {% if not nombre_archivo_unico %}
+    <div class="alert alert-danger" role="alert">
+        Ya existe un archivo con ese nombre en este curso
+    </div>
+    {% endif %}
 
 
 
