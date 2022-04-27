@@ -41,6 +41,8 @@ h1 {
 
 body {
     overflow-y: scroll;
+    overflow: auto;
+    overflow-x: hidden;
     /* Show vertical scrollbar */
 }
 
