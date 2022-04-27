@@ -136,6 +136,6 @@ class Reporte(models.Model):
         Archivo, on_delete=models.CASCADE, related_name="archivo", null=True)
 
 class TicketDescarga(models.Model):
-    usuario = models.ForeignKey(Usuario, related_name="Usuario", on_delete=models.DO_NOTHING)
-    archivo = models.ForeignKey(Archivo, related_name="Archivo", on_delete=models.DO_NOTHING)
+    usuario = models.ForeignKey(Usuario, related_name="Usuario", on_delete=models.CASCADE)
+    archivo = models.ForeignKey(Archivo, related_name="Archivo", on_delete=models.CASCADE)
 
