@@ -54,7 +54,8 @@ urlpatterns = [
     path("notificacion/eliminar/<int:id_notificacion>" , views.eliminar_notificacion),
     path('correo/',views.envio_correo),
     path('informacion_transferencia/',views.informacion_transferencia),
-    path('informacion_error_transferencia',views.informacion_error_transferencia)
+    path('informacion_error_transferencia',views.informacion_error_transferencia),
+    path('buscar_curso/', views.buscar_curso)
 ]
 #urlpatterns += staticfiles_urlpatterns()
 #urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
