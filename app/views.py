@@ -306,7 +306,8 @@ def perfil_usuario(request, username):
             usuario=usuario_perfil).order_by('-fecha')
 
         return render(request, "perfil.html", { "nombre": nombre, "titulacion": titulacion,"cursos": cursosUsuario,
-                                               "dinero": dinero, "valoracion_media": valoracion_media, "foto": url, "notificaciones": notificaciones, "owner": owner_perfil})
+                                               "dinero": dinero, "valoracion_media": valoracion_media, "foto": url, "notificaciones": notificaciones, "owner": owner_perfil, 
+                                               "rango_r": range(round(valoracion_media)), "rango_sr": range(round(5-valoracion_media))})
 
     else:
         return redirect("/login", {"mensaje_error": True})
