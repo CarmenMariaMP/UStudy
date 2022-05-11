@@ -302,12 +302,14 @@ def perfil_usuario(request, username):
             valoracion_media = round(valoracion_total/numero_valoraciones, 2)
         else:   
             valoracion_media = 0
+            
         notificaciones = Notificacion.objects.all().filter(
             usuario=usuario_perfil).order_by('-fecha')
-
+        valoracion_media_redondeada = round(valoracion_media)
+        
         return render(request, "perfil.html", { "nombre": nombre, "titulacion": titulacion,"cursos": cursosUsuario,
                                                "dinero": dinero, "valoracion_media": valoracion_media, "foto": url, "notificaciones": notificaciones, "owner": owner_perfil, 
-                                               "rango_r": range(round(valoracion_media)), "rango_sr": range(round(5-valoracion_media))})
+                                               "rango_r": range(valoracion_media_redondeada), "rango_sr": range(5-valoracion_media_redondeada)})
 
     else:
         return redirect("/login", {"mensaje_error": True})
