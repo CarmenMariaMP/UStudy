@@ -22,15 +22,20 @@
         <div class="col-md-5">
           <h3>{{nombre}}</h3>
           <p>Titulación: {{titulacion}}</p>
+          {% if owner == True %}
           <p>Monedero: {{dinero}}€</p>
+          
+          {%endif%}
         </div>
         <div class="col-md-3">
 
           <div class="d-grid gap-2 d-md-block">
-
+            {% if owner == True %}
             <a class="btn btn-outline-secondary mt-3 btn-sm btn-block" href="/pago">Añadir Fondos</h2>   
             <a id="editarPerfil" class="btn btn-outline-secondary mt-3 btn-sm btn-block"  href="/actualizar_perfil">Actualizar Perfil</a>
             <a class="btn btn-outline-secondary mt-3 btn-sm btn-block"  href="/correo">Retirar Fondos</a>
+            
+            {%endif%}
           </div>
           
         </div>
@@ -43,6 +48,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
+            {% if owner == True %}
             <h3>Mis Notificaciones</h3>
             <hr>
           </div>
@@ -89,7 +95,7 @@
           </div>
         </div>
       </div>
-
+      {% endif %}
 
 {% endblock %}
 </body>

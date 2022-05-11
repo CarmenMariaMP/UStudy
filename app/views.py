@@ -262,26 +262,33 @@ def borrar_foto(request):
         return redirect("/login")
 
 
-def perfil_usuario(request):
+def perfil_usuario(request, username):
+    owner_perfil = False
     if request.user.is_authenticated:
         usuarioActual = request.user.usuario
 
-        nombre = request.user.usuario.nombre+' '+request.user.usuario.apellidos
-        titulacion = request.user.usuario.titulacion
-        dinero = request.user.usuario.dinero
+        user_perfil = User.objects.get(username=username)
+        usuario_perfil = user_perfil.usuario
+        if request.user == user_perfil:
+            owner_perfil = True
+
+        nombre = usuario_perfil.nombre+' '+usuario_perfil.apellidos
+        titulacion = usuario_perfil.titulacion
+        dinero = usuario_perfil.dinero
 
         try:
-            foto = request.user.usuario.foto.url
+            foto = usuario_perfil.foto.url
         except:
             foto = "None"
 
         url = foto.replace("app/static/", "")
         boolPuntos = False
 
-        mediaPuntos = 0
-        cursosUsuario = Curso.objects.all().filter(
-            propietario=usuarioActual)
 
+        cursosUsuario = Curso.objects.all().filter(
+            propietario=usuario_perfil)
+        valoracion_total= 0
+        numero_valoraciones = 0
         for curso in cursosUsuario:
             valoraciones = Valoracion.objects.all().filter(curso=curso)
             puntos = 0
@@ -289,16 +296,17 @@ def perfil_usuario(request):
                 puntos += valoracion.puntuacion
 
             if len(valoraciones) > 0:
-                mediaPuntos = puntos/len(valoraciones)
-                boolPuntos = True
-            else:
-                mediaPuntos = 0
-
+                valoracion_total += puntos
+                numero_valoraciones += len(valoraciones)
+        if(numero_valoraciones!=0):
+            valoracion_media = round(valoracion_total/numero_valoraciones, 2)
+        else:   
+            valoracion_media = 0
         notificaciones = Notificacion.objects.all().filter(
-            usuario=usuarioActual).order_by('-fecha')
+            usuario=usuario_perfil).order_by('-fecha')
 
-        return render(request, "perfil.html", {"boolPuntos": boolPuntos, "nombre": nombre, "titulacion": titulacion,
-                                               "dinero": dinero, "valoracion": mediaPuntos, "foto": url, "notificaciones": notificaciones})
+        return render(request, "perfil.html", { "nombre": nombre, "titulacion": titulacion,"cursos": cursosUsuario,
+                                               "dinero": dinero, "valoracion_media": valoracion_media, "foto": url, "notificaciones": notificaciones, "owner": owner_perfil})
 
     else:
         return redirect("/login", {"mensaje_error": True})
