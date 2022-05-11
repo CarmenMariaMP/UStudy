@@ -5,8 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.urls import reverse
 from app import paypal
-from app.forms import MonederoForm, RetiradaDineroForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
-from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga, RetiradaDinero
+from app.forms import MonederoForm, ResenyaForm, RetiradaDineroForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
+from app.models import Resenya, Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga, RetiradaDinero
 from app.paypal import GetOrder
 import json
 import os
@@ -639,6 +639,8 @@ def curso(request, id, suscrito=False):
 
     curso = Curso.objects.get(id=id)
     contenido_curso = Archivo.objects.all().filter(curso=curso)
+    resenyas = Resenya.objects.all().filter(
+        curso=curso).order_by('-fecha')
 
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
@@ -650,6 +652,7 @@ def curso(request, id, suscrito=False):
         excede_tamano = False
         excede_mensaje = ""
         valoracionCurso = get_valoracion(curso)
+        formResenya = ResenyaForm()
         valoracionUsuario = "No has valorado este curso"
         nombre_archivo_unico = True
         if curso.propietario == usuario:
@@ -678,8 +681,23 @@ def curso(request, id, suscrito=False):
                     curso=curso, usuario=usuario).puntuacion
             except:
                 pass
+            if request.method == 'POST':
+                if request.POST['action'] == 'Publicar reseña':
+                    formResenya = ResenyaForm(request.POST)
+                    if formResenya.is_valid():
+                        resenyaForm = formResenya.cleaned_data
+                        descripcion = resenyaForm['descripcion']
 
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito,"nombre_archivo_unico": nombre_archivo_unico})
+                        Resenya.objects.create(
+                        descripcion=descripcion, fecha=datetime.datetime.now(), curso=curso, usuario=usuario)
+                        referencia = '/curso/' + \
+                        str(id)
+                        notificacion = Notificacion(referencia=referencia, usuario=curso.propietario, tipo="NUEVA RESEÑA", curso=curso, visto=False,
+                                                alumno=usuario, descripcion=descripcion)
+                        notificacion.save()
+                        return redirect('/curso/'+str(id))
+
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "formResenya":formResenya, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito,"nombre_archivo_unico": nombre_archivo_unico, "resenyas":resenyas})
 
     else:
         return render(request, 'inicio.html')
