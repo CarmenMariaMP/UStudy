@@ -43,7 +43,7 @@ urlpatterns = [
          views.eliminar_reporte),
     path('curso/<int:id_curso>/archivo/<int:id_archivo>/comentario/<int:id_comentario>',
          views.eliminar_comentario),
-    path('perfil/', views.perfil_usuario),
+    path('perfil/<str:username>', views.perfil_usuario),
     path('borrar_foto/', views.borrar_foto),
     path('archivos/<int:id_curso>/<str:archivo>',views.servir_archivo),
     path('dashboard/', views.dashboard_users),
