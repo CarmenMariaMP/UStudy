@@ -152,7 +152,7 @@
             <ul>
                 {% for resenya in resenyas %}
                 <div class="card">
-                    <p class="card-title">Alumno: {{resenya.usuario.django_user}}</p>
+                    <p class="card-title">Alumno: {{resenya.usuario.nombre}} {{resenya.usuario.apellidos}}</p>
                     <p class="card-text">Fecha: {{resenya.fecha}}</p>
                     <p class="card-text">Descripción: {{resenya.descripcion}}</p>
                 </div>
