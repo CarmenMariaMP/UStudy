@@ -7,6 +7,54 @@
     <meta charset="utf-8" />
 </head>
 
+<style>
+
+.form{
+
+position: relative;
+}
+
+.form .fa-search{
+
+position: absolute;
+top:34%;
+left: 10px;
+color: #9ca3af;
+
+}
+
+.form span{
+
+    position: absolute;
+right: 17px;
+top: 13px;
+padding: 2px;
+border-left: 1px solid #d1d5db;
+
+}
+
+.left-pan{
+padding-left: 7px;
+}
+
+.left-pan i{
+
+padding-left: 10px;
+}
+
+.form-input{
+
+height: 40px;
+text-indent: 20px;
+border-radius: 10px;
+}
+
+.form-input:focus{
+
+box-shadow: none;
+border:none;
+}
+</style>
 
 <body>
     <br>
@@ -27,16 +75,21 @@
 
     {%endif%}
     </div>
-
-    <!-- <form role="search" class="center" id="form">
-        <div class="row">
-            <input class="col-sm-8" type="search" id="query" name="q" placeholder="  Buscar cursos..." aria-label="Search through site content">
-            <button class="button-search col-sm-1">
-             <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
-           </button>
-        </div>
-    </form> -->
     <br>
+    <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+          <div class="col-md-6">
+            <div class="form">
+              <i class="fa fa-search"></i>
+              <form action="/buscar_curso/" method="GET">
+              <input name="q" id="buscador" type="text" class="form-control form-input" placeholder="Buscar cursos...">
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     <div class="container">
         <br>
         <div class="album py-5 bg-light">
