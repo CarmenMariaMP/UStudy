@@ -48,7 +48,7 @@
 <div style="align-content: center;">
     <div class="separado borde-azul standard_web_color">
         <p style="text-align: center; padding-top: 15px; font-size: 15px;"> <b>Curso:</b> {{curso.nombre}}
-            <br> <b>Profesor:</b> {{curso.propietario.nombre}} 
+            <br> <b>Profesor:</b> <a  href="/perfil/{{curso.propietario.nombre}} ">{{curso.propietario.nombre}} </a>
             <br> <b>Descripción:</b> {{curso.descripcion}} 
             <br> <b>Valoración media: {{valoracionCurso}}</b>
         </p>

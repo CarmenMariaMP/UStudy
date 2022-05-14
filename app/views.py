@@ -157,7 +157,7 @@ def pago(request):
                 dinero = request.POST['dinero']
                 client_id = config('PAYPAL_CLIENT_ID')
 
-                return render(request, "pasarela_pago.html", context={"client_id": client_id, "dinero": dinero})
+                return render(request, "pasarela_pago.html", context={"client_id": client_id, "dinero": dinero, "username": request.user.username})
             else:
                 return render(request, 'pasarela_pago.html', {"form": form})
 
@@ -284,7 +284,8 @@ def borrar_foto(request):
 def perfil_usuario(request, username):
     owner_perfil = False
     if request.user.is_authenticated:
-        usuarioActual = request.user.usuario
+        usuario_actual = Usuario.objects.filter(django_user=request.user).prefetch_related('Suscriptores').get()
+        cursos_suscritos = usuario_actual.Suscriptores.all()
 
         user_perfil = User.objects.get(username=username)
         usuario_perfil = user_perfil.usuario
@@ -301,7 +302,6 @@ def perfil_usuario(request, username):
             foto = "None"
 
         url = foto.replace("app/static/", "")
-        boolPuntos = False
 
 
         cursosUsuario = Curso.objects.all().filter(
@@ -326,7 +326,7 @@ def perfil_usuario(request, username):
             usuario=usuario_perfil).order_by('-fecha')
         valoracion_media_redondeada = round(valoracion_media)
         
-        return render(request, "perfil.html", { "nombre": nombre, "titulacion": titulacion,"cursos": cursosUsuario,
+        return render(request, "perfil.html", { "cursos_suscritos": cursos_suscritos, "nombre": nombre, "titulacion": titulacion,"cursos": cursosUsuario,
                                                "dinero": dinero, "valoracion_media": valoracion_media, "foto": url, "notificaciones": notificaciones, "owner": owner_perfil, 
                                                "rango_r": range(valoracion_media_redondeada), "rango_sr": range(5-valoracion_media_redondeada)})
 
@@ -936,10 +936,11 @@ def eliminar_notificacion(request, id_notificacion):
     notificacion = Notificacion.objects.get(id=id_notificacion)
     if request.user.is_authenticated:
         usuario_autenticado = request.user
+        
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (notificacion.usuario == usuario):
             Notificacion.objects.filter(id=id_notificacion).update(visto=True)
-    return redirect('/perfil')
+    return redirect('/perfil/'+request.user.username)
 
 
 def dashboard_users(request):

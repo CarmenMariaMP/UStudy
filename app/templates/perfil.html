@@ -124,7 +124,10 @@
                     <td>{{curso.nombre}}</td>
                     <td>{{curso.descripcion}}</td>
                     <td>{{curso.asignatura.nombre}}</td>
-                    <td>{{notificacion.fecha_publicacion}}</td>
+                    <td>{{curso.fecha_publicacion}}</td>
+                    {% if curso  in cursos_suscritos%}
+                    <td>Suscrito</td>
+                    {% endif %}
                     </tr>
                 {% endfor %}
               </tbody>
