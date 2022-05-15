@@ -939,7 +939,7 @@ def eliminar_notificacion(request, id_notificacion):
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (notificacion.usuario == usuario):
             Notificacion.objects.filter(id=id_notificacion).update(visto=True)
-    return redirect('/perfil')
+    return redirect('/perfil/'+str(request.user.username))
 
 
 def dashboard_users(request):

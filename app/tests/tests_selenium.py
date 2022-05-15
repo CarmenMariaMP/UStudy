@@ -146,7 +146,7 @@ class TestRegistro(LiveServerTestCase):
         time.sleep(5)
 
         assert '/registro' in driver.current_url
-'''
+        
     def test_registro_exitoso(self):
         option = webdriver.ChromeOptions()
         option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
@@ -194,7 +194,6 @@ class TestRegistro(LiveServerTestCase):
 
         assert '/login' in driver.current_url
 
-        '''
 ## Test de crear curso
 class TestCrearCurso(LiveServerTestCase):
 
@@ -341,7 +340,7 @@ class TestEditarPerfil(LiveServerTestCase):
         time.sleep(3)
 
         assert '/actualizar_perfil' in driver.current_url
-''' 
+ 
     def test_editarperfil_exitoso(self):
         option = webdriver.ChromeOptions()
         option.add_experimental_option("excludeSwitches", ['enable-automation', 'enable-logging'])
@@ -387,9 +386,9 @@ class TestEditarPerfil(LiveServerTestCase):
         time.sleep(3)
         print(driver.current_url)
         assert '/login' in driver.current_url
-'''
+
 ## Test de suscribirse a un curso
-'''
+
 class TestEditarCurso(LiveServerTestCase):
     @classmethod
     def setUp(self): ## crear las entidades necesarias en este metodo para cada clase
@@ -506,4 +505,4 @@ class TestEditarCurso(LiveServerTestCase):
 
         time.sleep(3)
 
-        assert '/editarcurso/9' in driver.current_url'''
+        assert '/editarcurso/9' in driver.current_url
