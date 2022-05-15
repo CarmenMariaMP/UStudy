@@ -669,7 +669,7 @@ def curso(request, id, suscrito=False):
     valoracionCurso = 0
 
     curso = Curso.objects.get(id=id)
-    contenido_curso = Archivo.objects.all().filter(curso=curso)
+    contenido_curso = Archivo.objects.all().filter(curso=curso).order_by('fecha_publicacion')
 
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
@@ -1051,8 +1051,10 @@ def editar_archivo(request, id_curso, id_archivo):
             if request.method == 'POST':
                 if formUpdate.is_valid():
                     file = request.FILES['file']
+                    archivo = Archivo.objects.get(id=id_archivo)
+                    fecha = archivo.fecha_publicacion
                     archivo_instancia = Archivo(
-                        nombre=file.name, ruta=file, curso=curso)
+                        nombre=file.name, ruta=file, curso=curso, fecha_publicacion=fecha)
                     if file.name in curso.archivos.values_list('nombre', flat=True):
                         messages.info(request, 'Archivo repetido - El archivo ya existe en el curso')
                         return HttpResponseRedirect('/curso/' + str(id_curso))
@@ -1060,8 +1062,7 @@ def editar_archivo(request, id_curso, id_archivo):
                         #añadir archivo
                         try:
                             archivo_instancia.full_clean()
-                            #borrar archivo
-                            archivo = Archivo.objects.get(id=id_archivo)
+                            #borrar archivo anterior
                             archivo.delete()
                             nombre = archivo.nombre.replace(" ", "_")
                             try:   

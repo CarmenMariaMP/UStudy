@@ -58,7 +58,7 @@
             {% if contenido_curso|length > 0 %}
             <ul class="list-group">
                 {% for archivo in contenido_curso %}
-                <li class="list-group-item"
+                <li class="list-group-item "
                     style="border-radius: 25px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
                     {% if ".mp4" in archivo.ruta.url|slice:"-4:"%}
                     <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="26px" height="19px">
@@ -72,21 +72,22 @@
 
                     <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
                     {% if es_owner %}
-                    <form
-                        id="updateForm{{archivo.id}}" method="post" enctype="multipart/form-data" style="all: initial;" action={% url 'editar_archivo' curso.id archivo.id %}>
-                        <div class="custom-file" id="customFile">
-                            {% csrf_token %}
-                            {{formUpdate.file}}
-                            <label class="custom-file-label" for="customFileLang" style="size: 10px;"></label>
-                        </div>
-                    </form>
-                    <input
-                    class="btn boton col-sm-2 btn-info añadirContenido justify-content-center separado borde-azul standard_web_color"
-                    form="updateForm{{archivo.id}}" type="submit" style="margin: 20px;" value="Añadir">
-                    <a type="submit" class="btn boton btn-info" onclick="return confirm('¿Estás seguro de que quieres borrar el archivo?')" style=" float: right; margin: auto;"
+                    
+                    <a type="submit" class="btn boton btn-info " onclick="return confirm('¿Estás seguro de que quieres borrar el archivo?')" style=" float: right; margin-left: 10px;"
                         href="/curso/{{curso.id}}/{{archivo.id}}">
                         <i class="bi bi-trash"></i>
                     </a>
+                    <input
+                    class="btn boton col-sm-1 btn-info añadirContenido justify-content-center separado borde-azul standard_web_color"
+                    form="updateForm{{archivo.id}}" type="submit" style="  float: right; margin: auto;" value="Actualizar Archivo">
+                    
+                    <form
+                        id="updateForm{{archivo.id}}" method="post" enctype="multipart/form-data" style="all: initial;" action={% url 'editar_archivo' curso.id archivo.id %}>
+                        <div class="custom-file justify-content-center col-sm-1" id="customFile" style="  float: right; margin: auto;" >
+                            {% csrf_token %}
+                            {{formUpdate.file}}
+                        </div>
+                    </form>
                     {% endif %}
                 </li>
                 {% endfor %}
