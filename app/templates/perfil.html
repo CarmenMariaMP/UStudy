@@ -119,13 +119,30 @@
           <div class="table-responsive">
             <table class="table table-hover">
               <tbody>
+                <thead>
+                  <tr class="text-center">
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Asignatura</th>
+                    <th>Fecha Publicación</th>
+                    <th>¿Suscrito?</th>
+                    <th></th>
+                  </tr>
+                </thead>
                 {% for curso in cursos %}
-                  <tr>
+                  <tr class="text-center">
                     <td>{{curso.nombre}}</td>
                     <td>{{curso.descripcion}}</td>
                     <td>{{curso.asignatura.nombre}}</td>
-                    <td>{{notificacion.fecha_publicacion}}</td>
-                    </tr>
+                    <td>{{curso.fecha_publicacion}}</td>
+                    {% if curso  in cursos_suscritos%}
+                      <td> <a class="btn btn-outline-primary" href="/curso/{{curso.id}}">Ir a curso</a></td>
+                    {% else %}
+                      <td>
+                        No
+                      </td>
+                    {% endif %}
+                  </tr>
                 {% endfor %}
               </tbody>
             </table>

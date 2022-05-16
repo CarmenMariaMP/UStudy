@@ -5,8 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.urls import reverse
 from app import paypal
-from app.forms import MonederoForm, RetiradaDineroForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
-from app.models import Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga, RetiradaDinero
+from app.forms import MonederoForm, ResenyaForm, RetiradaDineroForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
+from app.models import Resenya, Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga, RetiradaDinero
 from app.paypal import GetOrder
 import json
 import os
@@ -157,7 +157,7 @@ def pago(request):
                 dinero = request.POST['dinero']
                 client_id = config('PAYPAL_CLIENT_ID')
 
-                return render(request, "pasarela_pago.html", context={"client_id": client_id, "dinero": dinero})
+                return render(request, "pasarela_pago.html", context={"client_id": client_id, "dinero": dinero, "username": request.user.username})
             else:
                 return render(request, 'pasarela_pago.html', {"form": form})
 
@@ -284,7 +284,8 @@ def borrar_foto(request):
 def perfil_usuario(request, username):
     owner_perfil = False
     if request.user.is_authenticated:
-        usuarioActual = request.user.usuario
+        usuario_actual = Usuario.objects.filter(django_user=request.user).prefetch_related('Suscriptores').get()
+        cursos_suscritos = usuario_actual.Suscriptores.all()
 
         user_perfil = User.objects.get(username=username)
         usuario_perfil = user_perfil.usuario
@@ -301,7 +302,6 @@ def perfil_usuario(request, username):
             foto = "None"
 
         url = foto.replace("app/static/", "")
-        boolPuntos = False
 
 
         cursosUsuario = Curso.objects.all().filter(
@@ -326,7 +326,7 @@ def perfil_usuario(request, username):
             usuario=usuario_perfil).order_by('-fecha')
         valoracion_media_redondeada = round(valoracion_media)
         
-        return render(request, "perfil.html", { "nombre": nombre, "titulacion": titulacion,"cursos": cursosUsuario,
+        return render(request, "perfil.html", { "cursos_suscritos": cursos_suscritos, "nombre": nombre, "titulacion": titulacion,"cursos": cursosUsuario,
                                                "dinero": dinero, "valoracion_media": valoracion_media, "foto": url, "notificaciones": notificaciones, "owner": owner_perfil, 
                                                "rango_r": range(valoracion_media_redondeada), "rango_sr": range(5-valoracion_media_redondeada)})
 
@@ -669,6 +669,8 @@ def curso(request, id, suscrito=False):
 
     curso = Curso.objects.get(id=id)
     contenido_curso = Archivo.objects.all().filter(curso=curso)
+    resenyas = Resenya.objects.all().filter(
+        curso=curso).order_by('-fecha')
 
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
@@ -680,6 +682,7 @@ def curso(request, id, suscrito=False):
         excede_tamano = False
         excede_mensaje = ""
         valoracionCurso = get_valoracion(curso)
+        formResenya = ResenyaForm()
         valoracionUsuario = "No has valorado este curso"
         nombre_archivo_unico = True
         if curso.propietario == usuario:
@@ -708,8 +711,23 @@ def curso(request, id, suscrito=False):
                     curso=curso, usuario=usuario).puntuacion
             except:
                 pass
+            if request.method == 'POST':
+                if request.POST['action'] == 'Publicar reseña':
+                    formResenya = ResenyaForm(request.POST)
+                    if formResenya.is_valid():
+                        resenyaForm = formResenya.cleaned_data
+                        descripcion = resenyaForm['descripcion']
 
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito,"nombre_archivo_unico": nombre_archivo_unico})
+                        Resenya.objects.create(
+                        descripcion=descripcion, fecha=datetime.datetime.now(), curso=curso, usuario=usuario)
+                        referencia = '/curso/' + \
+                        str(id)
+                        notificacion = Notificacion(referencia=referencia, usuario=curso.propietario, tipo="NUEVA RESEÑA", curso=curso, visto=False,
+                                                alumno=usuario, descripcion=descripcion)
+                        notificacion.save()
+                        return redirect('/curso/'+str(id))
+
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "formResenya":formResenya, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito,"nombre_archivo_unico": nombre_archivo_unico, "resenyas":resenyas})
 
     else:
         return render(request, 'inicio.html')
@@ -936,6 +954,7 @@ def eliminar_notificacion(request, id_notificacion):
     notificacion = Notificacion.objects.get(id=id_notificacion)
     if request.user.is_authenticated:
         usuario_autenticado = request.user
+        
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (notificacion.usuario == usuario):
             Notificacion.objects.filter(id=id_notificacion).update(visto=True)
