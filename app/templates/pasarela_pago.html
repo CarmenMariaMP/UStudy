@@ -89,7 +89,8 @@ var csrftoken = token('csrftoken');
                 return res.json();
             }).then(function(details) {
                 alert(details.mensaje);
-                window.location.href = "/perfil"
+                window.location.href = "/perfil/{{username}}"
+
                 
             })
           }

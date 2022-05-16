@@ -7,12 +7,11 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <link type="text/css" rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
     <link href="{% static 'css/archivo.css' %}" rel="stylesheet" />
-    <meta charset="utf-8" />
-    {%load extras%}
+    <meta charset="utf-8" /> {%load extras%}
     <script>
         $('#reporteModal').modal({
             focus: true
-})
+        })
     </script>
 </header>
 
@@ -59,7 +58,7 @@
                     </div>
                     {%endif%}
                     <script>
-                        $('#reporteModal').on('hidden.bs.modal', function () {}
+                        $('#reporteModal').on('hidden.bs.modal', function() {})
                     </script>
                 </div>
                 <div class="row">
@@ -147,116 +146,110 @@
                             </form>
                             <ul style="margin-right=20px;">
                                 {% for comentario in comentarios %}
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{comentario.usuario.django_user}}</h5>
-                                            <p class="card-text">{{comentario.fecha}}</p>
-                                            <p class="card-text">{{comentario.texto}}</p>
-                                            {%if comentario.usuario == usuario %}
-                                                {%if comentario.texto != "Este comentario ha sido eliminado"%}
-                                                    <a type="submit" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}/archivo/{{archivo.id}}/comentario/{{comentario.id}}">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                {%endif%}
-                                            {%endif%}
-                                            {%if respuestasDict|get_item:comentario.id|length > 0%}
-                                                <button class='btn btn-light btn-sm' type='button' data-toggle='modal' data-target='#modalVerRespuestas{{comentario.id}}' aria-hidden = "true">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{comentario.usuario.django_user}}</h5>
+                                        <p class="card-text">{{comentario.fecha}}</p>
+                                        <p class="card-text">{{comentario.texto}}</p>
+                                        {%if comentario.usuario == usuario %} {%if comentario.texto != "Este comentario ha sido eliminado"%}
+                                        <a type="submit" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}/archivo/{{archivo.id}}/comentario/{{comentario.id}}">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                        {%endif%} {%endif%} {%if respuestasDict|get_item:comentario.id|length > 0%}
+                                        <button class='btn btn-light btn-sm' type='button' data-toggle='modal' data-target='#modalVerRespuestas{{comentario.id}}' aria-hidden="true">
                                                     Ver respuestas
-                                                </button>
-                                            {%endif%}
-                                                <button class= "btn btn-light btn-sm" type='button' data-toggle='modal' data-target='#modalReply{{comentario.id}}'>
+                                                </button> {%endif%}
+                                        <button class="btn btn-light btn-sm" type='button' data-toggle='modal' data-target='#modalReply{{comentario.id}}'>
                                                     <i class="fas fa-reply"></i>
                                                 </button>
-                                                <div class="modal fade" id="modalReply{{comentario.id}}" tabindex="-1" role="dialog" aria-labelledby="modalReply{{comentario.id}}" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="modalReply{{comentario.id}}">Nueva respuesta</h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <div class="modal fade" id="modalReply{{comentario.id}}" tabindex="-1" role="dialog" aria-labelledby="modalReply{{comentario.id}}" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalReply{{comentario.id}}">Nueva respuesta</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p> {{comentario.texto}}</p>
+                                                        <form id="myform" method="post" enctype="multipart/form-data">
+                                                            {% csrf_token %} {{formRespuesta.as_p}}
+                                                            <input type="hidden" name="responde_a" value="{{comentario.id}}">
+                                                            <div class="modal-footer">
+                                                                <button class="btn boton" type="submit" name="action" value="Responder">Responder</button>
                                                             </div>
-                                                            <div class="modal-body">
-                                                                <p> {{comentario.texto}}</p>
-                                                                <form id="myform" method="post" enctype="multipart/form-data">
-                                                                    {% csrf_token %} {{formRespuesta.as_p}}
-                                                                    <input type="hidden" name="responde_a" value="{{comentario.id}}">
-                                                                    <div class="modal-footer">
-                                                                        <button class="btn boton" type="submit" name="action" value="Responder">Responder</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
-                                            <div class="modal fade" id="modalVerRespuestas{{comentario.id}}">
-                                                <div class="modal-dialog modal-lg" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="modalVerRespuestas{{comentario.id}}">Respuestas</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="modalVerRespuestas{{comentario.id}}">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalVerRespuestas{{comentario.id}}">Respuestas</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            {% for respuesta in respuestasDict|get_item:comentario.id %}
-                                                                <div class="card" style="max-height: 500px;">
-                                                                    <div class="card-body">
-                                                                        <h5 class="card-title">{{respuesta.usuario.django_user}}</h5>
-                                                                        <p class="card-text">{{respuesta.fecha}}</p>
-                                                                        <p class="card-text">{{respuesta.texto}}</p>
-                                                                        {%if respuesta.usuario == usuario %}
-                                                                            {%if respuesta.texto != "Este comentario ha sido eliminado"%}
-                                                                            <a type="submit" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}/archivo/{{archivo.id}}/comentario/{{respuesta.id}}">
-                                                                                <i class="fas fa-trash"></i>
-                                                                            </a>
-                                                                            {%endif%}
-                                                                        {%endif%}
-                                                                        <button class='btn btn-light btn-sm' type='button' data-toggle='collapse' data-target='#collapseReply2{{respuesta.id}}' aria-expanded='false' aria-controls='collapseReply2'>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {% for respuesta in respuestasDict|get_item:comentario.id %}
+                                                        <div class="card" style="max-height: 500px;">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">{{respuesta.usuario.django_user}}</h5>
+                                                                <p class="card-text">{{respuesta.fecha}}</p>
+                                                                <p class="card-text">{{respuesta.texto}}</p>
+                                                                {%if respuesta.usuario == usuario %} {%if respuesta.texto != "Este comentario ha sido eliminado"%}
+                                                                <a type="submit" class="btn btn-sm btn-outline-secondary" href="/curso/{{curso.id}}/archivo/{{archivo.id}}/comentario/{{respuesta.id}}">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
+                                                                {%endif%} {%endif%}
+                                                                <button class='btn btn-light btn-sm' type='button' data-toggle='collapse' data-target='#collapseReply2{{respuesta.id}}' aria-expanded='false' aria-controls='collapseReply2'>
                                                                             <i class="fas fa-reply"></i>
                                                                         </button>
-                                                                        <div class="collapse" id="collapseReply2{{respuesta.id}}">
-                                                                            <div class="card card-body">
-                                                                                <form id="myform" method="post" enctype="multipart/form-data">
-                                                                                    {% csrf_token %} {{formRespuesta2.as_p}}
-                                                                                    <input type="hidden" name="usuario_responde_a" value="{{respuesta.usuario.django_user}}">
-                                                                                    <input type="hidden" name="responde_a" value="{{comentario.id}}">
-                                                                                    <div class="modal-footer">
-                                                                                        <button class="btn boton" type="submit" name="action" value="Responder2">Responder</button>
-                                                                                    </div>
-                                                                                </form>
+                                                                <div class="collapse" id="collapseReply2{{respuesta.id}}">
+                                                                    <div class="card card-body">
+                                                                        <form id="myform" method="post" enctype="multipart/form-data">
+                                                                            {% csrf_token %} {{formRespuesta2.as_p}}
+                                                                            <input type="hidden" name="usuario_responde_a" value="{{respuesta.usuario.django_user}}">
+                                                                            <input type="hidden" name="responde_a" value="{{comentario.id}}">
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn boton" type="submit" name="action" value="Responder2">Responder</button>
                                                                             </div>
-                                                                        </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
-                                                            {% endfor %}
+                                                            </div>
                                                         </div>
+                                                        {% endfor %}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                 {% endfor %}
                             </ul>
                             {%else%}
-                                <h5>No hay comentarios, sé el primero en añadir uno...</h5>
-                                    <form id="myform" method="post" enctype="multipart/form-data">
-                                        {% csrf_token %} {{formComentario.as_p}}
-                                        <div class="modal-footer">
-                                            <button class="btn boton" type="submit" name="action" value="Comentar">Comentar</button>
-                                        </div>
-                                    </form>
+                            <h5>No hay comentarios, sé el primero en añadir uno...</h5>
+                            <form id="myform" method="post" enctype="multipart/form-data">
+                                {% csrf_token %} {{formComentario.as_p}}
+                                <div class="modal-footer">
+                                    <button class="btn boton" type="submit" name="action" value="Comentar">Comentar</button>
                                 </div>
-                            {%endif%}
+                            </form>
                         </div>
+                        {%endif%}
                     </div>
                 </div>
             </div>
         </div>
+        </div>
         {% else %}
-            <div class="alert alert-danger row d-flex justify-content-center" role="alert">
-        <h5 class ="text-justify">No tiene acceso a este recurso</h5>
-    </div> 
+        <div class="alert alert-danger row d-flex justify-content-center" role="alert">
+            <h5 class="text-justify">No tiene acceso a este recurso</h5>
+        </div>
         {% endif%} {% endblock %}
     </div>
 </body>
