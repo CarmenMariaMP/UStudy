@@ -100,6 +100,7 @@ class Notificacion(models.Model):
         COMENTARIO = "COMENTARIO"
         REPORTE = "REPORTE"
         NUEVO_ALUMNO = "NUEVO_ALUMNO"
+        RESENYA= "NUEVA RESEÑA"
 
     referencia = models.CharField(max_length=100)
     tipo = models.CharField(max_length=20, choices=TipoNotificacion.choices)
@@ -122,6 +123,13 @@ class Valoracion(models.Model):
     curso = models.ForeignKey(
         Curso, verbose_name="Curso", on_delete=models.CASCADE)
 
+class Resenya(models.Model):
+    descripcion = models.TextField(max_length=1000)
+    fecha = models.DateTimeField(default=now, blank=True)
+    usuario = models.ForeignKey(
+        Usuario, verbose_name="Usuario", on_delete=models.CASCADE)
+    curso = models.ForeignKey(
+        Curso, verbose_name="Curso", on_delete=models.CASCADE)
 
 class Reporte(models.Model):
     class TipoReporte(models.TextChoices):
