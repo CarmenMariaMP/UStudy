@@ -142,44 +142,28 @@ class TestRegistro(LiveServerTestCase):
         
     def test_registro_exitoso(self):
         driver = self.driver
-    
-        driver.get(BASEURLSIGN)
-
-        username = driver.find_element_by_name('username')
-        name = driver.find_element_by_name('name')
-        surname = driver.find_element_by_name('surname')
-        password = driver.find_element_by_name('password')
-        confirm_password = driver.find_element_by_name('confirm_password')
-
-        username.send_keys('pruebaUsuario')
-        name.send_keys('prueba')
-        surname.send_keys('prueba')
-        password.send_keys('contraseña')
-        confirm_password.send_keys('contraseña')
-
-        time.sleep(2)
-
-        siguiente=driver.find_element_by_id('siguiente')
-        siguiente.click()
-
-
-        email = driver.find_element_by_name('email')
-        email_academico = driver.find_element_by_name('email_academico')
-
-        email.send_keys('pruebaUsuario@gmail.com')
-        email_academico.send_keys('pruebaUsuario@alum.us.es')
-
-        time.sleep(2)
-
-        siguiente2=driver.find_element_by_id('siguiente2')
-        siguiente2.click()
-
-        titulacion = driver.find_element_by_name('titulacion')
-        descripcion = driver.find_element_by_name('descripcion')
-
-        drop = Select(titulacion)
-        drop.select_by_visible_text('Grado en Ingeniería Informática-Ingeniería del Software')
-        descripcion.send_keys('esto es una descripción',Keys.ENTER)
+        driver.get(self.live_server_url+'/registro/')
+        driver.find_element(By.CSS_SELECTOR, "html").click()
+        driver.find_element(By.ID, "id_username").send_keys("prueba22@@")
+        driver.find_element(By.ID, "id_name").click()
+        driver.find_element(By.ID, "id_name").send_keys("Prueba")
+        driver.find_element(By.ID, "id_surname").send_keys("Prueba")
+        driver.find_element(By.CSS_SELECTOR, "html").click()
+        driver.find_element(By.ID, "id_password").send_keys("pacopaco")
+        driver.find_element(By.ID, "id_confirm_password").click()
+        driver.find_element(By.ID, "id_confirm_password").send_keys("pacopaco")
+        driver.find_element(By.ID, "id_confirm_password").send_keys(Keys.ENTER)
+        driver.find_element(By.ID, "siguiente").click()
+        driver.find_element(By.ID, "id_email").click()
+        driver.find_element(By.ID, "id_email").send_keys("pruebaprueba@hotmail.com")
+        driver.find_element(By.ID, "id_email_academico").click()
+        driver.find_element(By.ID, "id_email_academico").send_keys("pruebaprueba@alum.us.es")
+        driver.find_element(By.ID, "siguiente2").click()
+        driver.find_element(By.ID, "id_descripcion").click()
+        driver.find_element(By.ID, "id_descripcion").send_keys("bnn")
+        driver.find_element(By.ID, "id_terminos").click()
+        driver.find_element(By.ID, "id_privacidad").click()
+        driver.find_element(By.CSS_SELECTOR, ".row:nth-child(6) .btn:nth-child(2)").click()
 
         time.sleep(4)
 
@@ -298,8 +282,7 @@ class TestEditarPerfil(LiveServerTestCase):
 
     def test_editarperfil_fallido(self):
         driver = self.driver
-        driver.get("http://127.0.0.1:8000/")
-        driver.find_element(By.LINK_TEXT, "Login").click()
+        driver.get(self.live_server_url+'/login/')
         driver.find_element(By.ID, "username").click()
         driver.find_element(By.ID, "username").send_keys("prueba")
         driver.find_element(By.ID, "pwd").send_keys("contrasena")
@@ -317,8 +300,7 @@ class TestEditarPerfil(LiveServerTestCase):
  
     def test_editarperfil_exitoso(self):
         driver = self.driver
-        driver.get("http://127.0.0.1:8000/")
-        driver.find_element(By.LINK_TEXT, "Login").click()
+        driver.get(self.live_server_url+'/login/')
         driver.find_element(By.ID, "username").click()
         driver.find_element(By.ID, "username").send_keys("prueba")
         driver.find_element(By.ID, "pwd").send_keys("contrasena")
@@ -357,10 +339,10 @@ class TestEditarCurso(LiveServerTestCase):
         curso = Curso.objects.create(nombre="Curso1", descripcion="Descripcion1", fecha_publicacion=datetime.datetime.now(
         ).replace(tzinfo=timezone.utc), asignatura=asignatura, propietario=usuario)
         curso.save()
+        
     def test_editarcurso_exitoso(self):
         driver = self.driver
-        driver.get("http://127.0.0.1:8000/")
-        driver.find_element(By.LINK_TEXT, "Login").click()
+        driver.get(self.live_server_url+'/login/')
         driver.find_element(By.ID, "username").click()
         driver.find_element(By.ID, "username").send_keys("prueba")
         driver.find_element(By.CSS_SELECTOR, ".form-field:nth-child(3)").click()
@@ -375,7 +357,7 @@ class TestEditarCurso(LiveServerTestCase):
         actions.move_to_element(element).perform()
         driver.find_element(By.LINK_TEXT, "Profesor").click()
         driver.find_element(By.LINK_TEXT, "Gestionar Cursos").click()
-        driver.find_element(By.CSS_SELECTOR, ".col-md-4:nth-child(2) .btn-group:nth-child(2) > .btn").click()
+        driver.find_element(By.LINK_TEXT, "Editar").click()
         driver.find_element(By.ID, "id_descripcion").send_keys("DescripcionX")
         driver.find_element(By.CSS_SELECTOR, ".btn").click()
 
@@ -385,8 +367,7 @@ class TestEditarCurso(LiveServerTestCase):
 
     def test_editarcurso_fallido(self):
         driver = self.driver
-        driver.get("http://127.0.0.1:8000/")
-        driver.find_element(By.LINK_TEXT, "Login").click()
+        driver.get(self.live_server_url+'/login/')
         driver.find_element(By.ID, "username").click()
         driver.find_element(By.ID, "username").send_keys("prueba")
         driver.find_element(By.CSS_SELECTOR, ".form-field:nth-child(3)").click()
@@ -401,7 +382,7 @@ class TestEditarCurso(LiveServerTestCase):
         actions.move_to_element(element).perform()
         driver.find_element(By.LINK_TEXT, "Profesor").click()
         driver.find_element(By.LINK_TEXT, "Gestionar Cursos").click()
-        driver.find_element(By.CSS_SELECTOR, ".col-md-4:nth-child(2) .btn-group:nth-child(2) > .btn").click()
+        driver.find_element(By.LINK_TEXT, "Editar").click()
         driver.find_element(By.ID, "id_descripcion").click()
         element = driver.find_element(By.ID, "id_descripcion")
         actions = ActionChains(driver)
