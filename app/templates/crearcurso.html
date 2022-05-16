@@ -10,16 +10,15 @@
   </header>
   <br />
 <body>
-  <div class="container">
+  <div class="container col-auto pt-5 pr-5 pl-5 display:flex;">
     <div class="row d-flex justify-content-center">
-      <div class="col-md-12">
           <h2>Crear curso</h2>
         </div>
         <br />
         <form
           action="/crearcurso/"
           class="form-signin container col-auto"
-          style="width: 30%; margin-top: 20px"
+          style="width: 80%; margin-top: 20px"
           method="POST"
         >
           {% csrf_token %}
