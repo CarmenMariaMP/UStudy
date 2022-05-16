@@ -27,8 +27,31 @@
     </div>
     {% endif %} {%if suscrito%}
 
-    <div style="display: flex;" class="alert alert-success row d-flex justify-content-center" role="alert">
-        <h6 class="text-justify">Te has suscrito correctamente a este curso</h6>
+{%if  suscrito%}
+    
+        <div style="display: flex;" class="alert alert-success row d-flex justify-content-center" role="alert">
+            <h6 class ="text-justify">Te has suscrito correctamente a este curso</h6>
+        </div>
+        {% endif %}
+        <br>
+<div class="row d-flex justify-content-center">
+    {% if es_owner %}
+    <h2>Editar curso</h2>
+    {% endif %} {% if es_suscriptor %}
+    <h2> Curso </h2>
+    
+    {% endif %}
+</div>
+
+<br>
+<div style="align-content: center;">
+    <div class="separado borde-azul standard_web_color">
+        <p style="text-align: center; padding-top: 15px; font-size: 15px;"> <b>Curso:</b> {{curso.nombre}}
+            <br> <b>Profesor:</b> <a  href="/perfil/{{curso.propietario.nombre}} ">{{curso.propietario.nombre}} </a>
+            <br> <b>Descripción:</b> {{curso.descripcion}} 
+            <br> <b>Valoración media: {{valoracionCurso}}</b>
+        </p>
+
     </div>
     {% endif %}
     <br>
