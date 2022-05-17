@@ -3,12 +3,12 @@
 <html>
 
 <head>
-    {% load i18n static %} {% block extrahead %}
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    {%extends 'base_navbar.html'%} {% load i18n static %} {% block extrahead %}
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />
 
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     {% endblock %}
 </head>
@@ -16,96 +16,105 @@
 
 <body>
     {% block contenido %}
-        <form action="/actualizar_perfil/" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="row setup-content" id="step-1">
-                <div class="stepwizard center-block">
-                    <div class="col-md-3">
-                        <label class="control-label">Foto de perfil</label>
-                        {% if url == "None"%}
-                            <img src="{% static "/media/avatar.png" %}" class="img-fluid" style="display: block; margin: 0 auto; float:center; height:180px;"/>
-                            <br>
-                        {%else%}
-                            <div class="image">
-                                <img src="{% static url %}" class="img-fluid img-thumbnail" style="display: block; margin: 0 auto; float:center"/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ">
+                <form action="/actualizar_perfil/" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <br>
+                    <div class="form-group">
+                        <div class="stepwizard">
+                            <div class="col-md-12 text-center">
+                                <label class="control-label">Foto de perfil</label>
+                                    {% if url == "None"%}
+                                        <img src="{% static "/media/avatar.png" %}" class="img-fluid" style="display: block; margin: 0 auto; float:center; height:300px;"/>
+                                        <br>
+                                    {%else%}
+                                        <div class="image">
+                                            <img src="{% static url %}" class="img-fluid img-thumbnail" style="display: block; margin: 0 auto; float:center; height:300px;"/>
+                                        </div>
+                                        <br>
+                                    {%endif%}
+                                <label class="control-label">Añade una nueva foto de perfil</label>
+                                {{form.foto}}
+                                <div class="alert-danger">{{ form.foto.errors }}</div>
+                                {% if url != "None"%}
+                                    <a class="btn btn-outline-secondary mt-3"  href="/borrar_foto">Eliminar foto</a>
+                                {%endif%}
                             </div>
                             <br>
-                      {%endif%}
-                    </div>
-                    <div class="col-md-9">
-                        <label class="control-label">Añade una nueva foto de perfil</label>
-                        {{form.foto}}
-                        <div class="alert-danger">{{ form.foto.errors }}</div>
-                        {% if url != "None"%}
-                            <a class="btn btn-outline-secondary mt-3"  href="/borrar_foto">Eliminar foto</a>
-                        {%endif%}
-                    </div>
-                    <div class="col-md-12">
-                        <h3>Datos personales</h3>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="control-label">Nombre de usuario</label>
-                                {{ form.username }}
-                                <div class="alert-danger">{{ form.username.errors }}</div>
+                            <div class="col-md-12">
+                                <h3>Datos personales</h3>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label">Nombre de usuario</label>
+                                        {{ form.username }}
+                                        <div class="alert-danger">{{ form.username.errors }}</div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label">Nombre</label>
+                                        {{ form.nombre }}
+                                        <div class="alert-danger">{{ form.nombre.errors }}</div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label">Apellidos</label>
+                                        {{ form.apellidos }}
+                                        <div class="alert-danger">{{ form.apellidos.errors }}</div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label">Descripción</label>
+                                        {{ form.descripcion }}
+                                        <div class="alert-danger">{{ form.descripcion.errors }}</div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label">Nueva contraseña</label>
+                                        {{ form.contrasena }}
+                                        <div class="alert-danger">{{form.contrasena.errors }}</div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label">Confirmar nueva contraseña</label>
+                                        {{form.confirmar_contrasena }}
+                                        <div class="alert-danger">{{form.confirmar_contrasena.errors }}</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="control-label">Nombre</label>
-                                {{ form.nombre }}
-                                <div class="alert-danger">{{ form.nombre.errors }}</div>
+                        </div>
+                    </div>
+                    <div class="row setup-content" id="step-2">
+                        <div class="stepwizard center-block">
+                            <div class="col-md-12">
+                                <h3> Configuración del correo</h3>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Correo electrónico</label>
+                                    {{ form.email }}
+                                    <div class="alert-danger">{{ form.email.errors }}</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Apellidos</label>
-                            {{ form.apellidos }}
-                            <div class="alert-danger">{{ form.apellidos.errors }}</div>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Nueva contraseña</label>
-                            {{ form.contrasena }}
-                            <div class="alert-danger">{{form.contrasena.errors }}</div>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Confirmar nueva contraseña</label>
-                            {{form.confirmar_contrasena }}
-                            <div class="alert-danger">{{form.confirmar_contrasena.errors }}</div>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Descripción</label>
-                            {{ form.descripcion }}
-                            <div class="alert-danger">{{ form.descripcion.errors }}</div>
+                    </div>
+                    <div class="row setup-content" id="step-3">
+                        <div class="stepwizard">
+                            <div class="col-md-12 ">
+                                <h3>Titulación</h3>
+                                <div class="form-group col-md-12">
+                                    <label>Grado</label>
+                                    {{ form.titulacion }}
+                                    <div class="alert-danger">{{ form.titulacion.errors}}</div>
+                                </div>
+                                <br>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row setup-content" id="step-2">
-                <div class="stepwizard center-block">
-                    <div class="col-md-12">
-                        <h3> Configuración del correo</h3>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Correo electrónico</label>
-                            {{ form.email }}
-                            <div class="alert-danger">{{ form.email.errors }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row setup-content" id="step-3">
-                <div class="stepwizard center-block">
-                    <div class="col-md-12">
-                        <h3>Titulación</h3>
-                        <div class="form-group col-md-12">
-                            <label>Grado</label>
-                            {{ form.titulacion }}
-                            <div class="alert-danger">{{ form.titulacion.errors}}</div>
-                        </div>
+                    <div class="text-center">
                         <button id="actualizarBoton" class="btn btn-info nextBtn btn-lg center-block" type="submit">Actualizar</button>
-                        <br>
-                        <a class="btn btn-info nextBtn btn-lg center-block" type="button" href="/perfil" style="width: 20%; ">Cancelar</a>
-                        <br>
                     </div>
-                </div>
+                    <br>
+                    <div class="text-center">
+                        <button class="btn btn-info nextBtn btn-lg center-block" onclick="history.back()">Cancelar</button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
     {% endblock %}
 </body>
