@@ -52,12 +52,28 @@ def envio_correo(request):
                     return render(request, 'correo.html', {"form": form})
 
                 try:
-
-                    retirada = RetiradaDinero(email=paypal,dinero=dinero)
+                    retirada = RetiradaDinero(email=paypal,dinero=Decimal(dinero))
+                    retirada.full_clean()
                     retirada.save()
 
                     usuarioActual.dinero -= Decimal(dinero)
                     usuarioActual.save()
+                    
+                    email_host_user = config('EMAIL_HOST_USER')
+                    email_host_password = config('EMAIL_HOST_PASSWORD')
+                    smtp_server = config('EMAIL_HOST')
+                    msg = EmailMessage()
+                    msg['Subject'] = "Retirada Dinero"
+                    msg['From'] = email_host_user
+                    msg['To'] = email_host_user
+                    msg.set_content("La cuenta de correo del usuario que desea sacar el dinero es " + request.user.usuario.email + ". La cuenta de paypal a la que realizar la transferencia es " + paypal + ". El dinero que desea sacar es " + dinero + "€.")
+                    
+        
+                    server = smtplib.SMTP(smtp_server)
+                    server.starttls()
+                    server.login(email_host_user, email_host_password)
+                    server.send_message(msg)
+                    server.quit()
 
                     return redirect('/informacion_transferencia')
                 except Exception:
