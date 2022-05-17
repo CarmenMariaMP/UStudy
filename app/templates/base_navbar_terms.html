@@ -22,36 +22,36 @@
         <div class="mx-auto order-0">
             <a class="navbar-brand mx-auto" href="/"><img src="{% static 'media/logo.png' %}" alt="" width="53" height="50" /></a>
             {% if user.is_authenticated %}
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-              <span class="navbar-toggler-icon">
-                <ul class="navbar-nav mr-auto">
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" role="navbardrop" data-toggle="dropdown">Alumno</a
-              >
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="/miscursos">Mis cursos</a>
-                      <a class="dropdown-item" href="/cursosdisponibles">Cursos disponibles</a
-                >
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                  <span class="navbar-toggler-icon">
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" role="navbardrop" data-toggle="dropdown">Alumno</a
+                  >
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/miscursos">Mis cursos</a>
+                          <a class="dropdown-item" href="/cursosdisponibles">Cursos disponibles</a
+                    >
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    role="navbardrop"
+                    data-toggle="dropdown"
+                    >Profesor</a
+                  >
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/inicio_profesor"
+                      >Gestionar Cursos</a
+                    >
+                    <a class="dropdown-item" href="/crearcurso">Crear curso</a>
               </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="navbardrop"
-                data-toggle="dropdown"
-                >Profesor</a
-              >
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="/inicio_profesor"
-                  >Gestionar Cursos</a
-                >
-                <a class="dropdown-item" href="/crearcurso">Crear curso</a>
-          </div>
-          </li>
-          </ul>
-              </span>
-            </button>
+              </li>
+              </ul>
+                  </span>
+                </button>
             {% endif %}
         </div>
     </nav>

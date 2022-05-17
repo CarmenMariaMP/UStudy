@@ -194,5 +194,30 @@
 
     {% endblock %}
 </body>
+<br>
+<br>
+<footer class="pt-3 mt-4">
+    {% block pie %}
+    <div class="container">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <div class="col-md-12 text-center">
+                <li class="nav-item" style="display: inline-block; margin-right: 4px;">
+                    <a href="/sobre_nosotros" class="nav-link px-2 text-muted">Sobre Nosotros</a
+                >
+                </li>
+                <li class="nav-item" style="display: inline-block; margin-right: 4px;">
+                    <a href="/terminos" class="nav-link px-2 text-muted">Términos </a>
+                </li>
+                <li class="nav-item" style="display: inline-block;">
+                        <a href="/privacidad" class="nav-link px-2 text-muted">Política de Privacidad</a
+                >
+                </li>
+            </div>
+        </ul>
+        <br>
+        <p class="text-center text-muted">© 2022</p>
 
+        {% endblock %}
+    </div>
+  </footer>
 </html>

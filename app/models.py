@@ -148,5 +148,6 @@ class TicketDescarga(models.Model):
     archivo = models.ForeignKey(Archivo, related_name="Archivo", on_delete=models.CASCADE)
 
 class RetiradaDinero(models.Model):
-    email = models.EmailField(unique=True, max_length=254)
+    email = models.EmailField(max_length=254)
     dinero = models.DecimalField(max_digits=12, decimal_places=2)
+    fecha = models.DateTimeField(default=now, blank=True)

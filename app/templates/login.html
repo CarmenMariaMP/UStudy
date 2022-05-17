@@ -40,7 +40,24 @@
     </div>
     {% endblock %}
 </body>
+<footer class="pt-3 mt-4">
+    {% block pie %}
 
-<footer></footer>
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item">
+            <a href="/sobre_nosotros" class="nav-link px-2 text-muted">Sobre Nosotros</a
+        >
+      </li>
+      <li class="nav-item">
+        <a href="/terminos" class="nav-link px-2 text-muted">Términos</a>
+        </li>
+        <li class="nav-item">
+            <a href="/privacidad" class="nav-link px-2 text-muted">Política de Privacidad</a
+        >
+      </li>
+    </ul>
+    <p class="text-center text-muted">© 2022</p>
 
+    {% endblock %}
+  </footer>
 </html>
