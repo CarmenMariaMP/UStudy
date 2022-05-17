@@ -1,8 +1,9 @@
 from django.core.files.storage import default_storage, DefaultStorage, FileSystemStorage
 from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from app import paypal
 from app.forms import MonederoForm, ResenyaForm, RetiradaDineroForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
@@ -668,9 +669,12 @@ def curso(request, id, suscrito=False):
     valoracionCurso = 0
 
     curso = Curso.objects.get(id=id)
-    contenido_curso = Archivo.objects.all().filter(curso=curso)
+
+    contenido_curso = Archivo.objects.all().filter(curso=curso).order_by('fecha_publicacion')
+
     resenyas = Resenya.objects.all().filter(
         curso=curso).order_by('-fecha')
+
 
     if request.user.is_authenticated:
         # Comprobar si el usuario es profesor
@@ -679,6 +683,7 @@ def curso(request, id, suscrito=False):
         if usuario.titulacion != curso.asignatura.titulacion and usuario not in curso.suscriptores.all() and usuario != curso.propietario:
             return redirect('/cursosdisponibles')
         form = UploadFileForm(request.POST, request.FILES)
+        formUpdate = UploadFileForm(request.POST, request.FILES)
         excede_tamano = False
         excede_mensaje = ""
         valoracionCurso = get_valoracion(curso)
@@ -704,6 +709,8 @@ def curso(request, id, suscrito=False):
                             excede_mensaje = e.message_dict['ruta'][0]
                 else:
                     form = UploadFileForm()
+                    formUpdate = UploadFileForm()
+                
         elif usuario in curso.suscriptores.all():
             es_suscriptor = True
             try:
@@ -717,7 +724,6 @@ def curso(request, id, suscrito=False):
                     if formResenya.is_valid():
                         resenyaForm = formResenya.cleaned_data
                         descripcion = resenyaForm['descripcion']
-
                         Resenya.objects.create(
                         descripcion=descripcion, fecha=datetime.datetime.now(), curso=curso, usuario=usuario)
                         referencia = '/curso/' + \
@@ -727,7 +733,7 @@ def curso(request, id, suscrito=False):
                         notificacion.save()
                         return redirect('/curso/'+str(id))
 
-        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "formResenya":formResenya, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito,"nombre_archivo_unico": nombre_archivo_unico, "resenyas":resenyas})
+        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "formResenya":formResenya, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito,"nombre_archivo_unico": nombre_archivo_unico, "formUpdate": formUpdate, "resenyas":resenyas})
 
     else:
         return render(request, 'inicio.html')
@@ -763,6 +769,10 @@ def borrar_archivo(request, id_curso, id_archivo):
         usuario_autenticado = request.user
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (curso.propietario == usuario):
+            numero_archivos_curso = curso.archivos.count()
+            if(numero_archivos_curso < 4):
+                messages.info(request, 'Mínimo de archivos posible - Debes tener al menos 3 archivos subidos a un curso para poder borrar uno, prueba a actualizarlo!')
+                return HttpResponseRedirect('/curso/' + str(id_curso))
             archivo = Archivo.objects.get(id=id_archivo)
             archivo.delete()
             nombre = archivo.nombre.replace(" ", "_")
@@ -958,7 +968,7 @@ def eliminar_notificacion(request, id_notificacion):
         usuario = Usuario.objects.get(django_user=usuario_autenticado)
         if (notificacion.usuario == usuario):
             Notificacion.objects.filter(id=id_notificacion).update(visto=True)
-    return redirect('/perfil/'+request.user.username)
+    return redirect('/perfil/'+str(request.user.username))
 
 
 def dashboard_users(request):
@@ -1050,6 +1060,49 @@ def servir_archivo(request, id_curso, archivo):
             return error_403(request, None)
     else:
         return error_403(request, None)
+    
+def editar_archivo(request, id_curso, id_archivo):
+    curso = Curso.objects.get(id=id_curso)
+    if request.user.is_authenticated:
+        # Comprobar si el usuario es profesor
+        usuario_autenticado = request.user
+        usuario = Usuario.objects.get(django_user=usuario_autenticado)
+        formUpdate = UploadFileForm(request.POST, request.FILES)
+        if (curso.propietario == usuario):
+            if request.method == 'POST':
+                if formUpdate.is_valid():
+                    file = request.FILES['file']
+                    archivo = Archivo.objects.get(id=id_archivo)
+                    fecha = archivo.fecha_publicacion
+                    archivo_instancia = Archivo(
+                        nombre=file.name, ruta=file, curso=curso, fecha_publicacion=fecha)
+                    if len(file.name) > 50:
+                        messages.info(request, 'Nombre de archivo demasiado largo - debe ser menor a 50 caracteres')
+                        return HttpResponseRedirect('/curso/' + str(id_curso))
+                    if file.name in curso.archivos.values_list('nombre', flat=True) and archivo.nombre != file.name:
+                        messages.info(request, 'Archivo repetido - El archivo ya existe en el curso')
+                        return HttpResponseRedirect('/curso/' + str(id_curso))
+                    else:
+                        #añadir archivo
+                        try:
+                            archivo_instancia.full_clean()
+                            #borrar archivo anterior
+                            archivo.delete()
+                            nombre = archivo.nombre.replace(" ", "_")
+                            try:   
+                                os.remove("files/" +
+                                    str(curso.id) +"/" +  nombre)
+                                print("Archivo borrado")
+                            except:
+                                print("No se pudo borrar el archivo")
+                                messages.info(request, 'Error al subir el archivo- Prueba de nuevo en unos minutos')
+                                return HttpResponseRedirect('/curso/' + str(id_curso))
+                            archivo_instancia.save()
+                        except ValidationError as e:
+                            excede_mensaje = e.message_dict['ruta'][0]
+                            messages.info(request, excede_mensaje)
+                            return HttpResponseRedirect('/curso/' + str(id_curso))
+    return redirect('/curso/'+str(id_curso))
 
 
 def sobre_nosotros(request):

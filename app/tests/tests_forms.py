@@ -14,7 +14,6 @@ from datetime import timezone
 # https://adamj.eu/tech/2020/06/15/how-to-unit-test-a-django-form/
 # Implementar como en la SECCION "Unit Tests" de dicho enlace
 
-
 class addReportFormTests(TestCase):
     def test_report_form_is_valid(self):
         form_data = {
