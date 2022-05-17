@@ -124,7 +124,7 @@ class Valoracion(models.Model):
         Curso, verbose_name="Curso", on_delete=models.CASCADE)
 
 class Resenya(models.Model):
-    descripcion = models.TextField(max_length=1000)
+    descripcion = models.TextField(max_length=500)
     fecha = models.DateTimeField(default=now, blank=True)
     usuario = models.ForeignKey(
         Usuario, verbose_name="Usuario", on_delete=models.CASCADE)

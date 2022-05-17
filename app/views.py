@@ -296,6 +296,7 @@ def perfil_usuario(request, username):
         nombre = usuario_perfil.nombre+' '+usuario_perfil.apellidos
         titulacion = usuario_perfil.titulacion
         dinero = usuario_perfil.dinero
+        descripcion = usuario_perfil.descripcion
 
         try:
             foto = usuario_perfil.foto.url
@@ -327,7 +328,7 @@ def perfil_usuario(request, username):
             usuario=usuario_perfil).order_by('-fecha')
         valoracion_media_redondeada = round(valoracion_media)
         
-        return render(request, "perfil.html", { "cursos_suscritos": cursos_suscritos, "nombre": nombre, "titulacion": titulacion,"cursos": cursosUsuario,
+        return render(request, "perfil.html", { "cursos_suscritos": cursos_suscritos, "nombre": nombre, "titulacion": titulacion,"cursos": cursosUsuario,"descripcion":descripcion,
                                                "dinero": dinero, "valoracion_media": valoracion_media, "foto": url, "notificaciones": notificaciones, "owner": owner_perfil, 
                                                "rango_r": range(valoracion_media_redondeada), "rango_sr": range(5-valoracion_media_redondeada)})
 
@@ -724,8 +725,12 @@ def curso(request, id, suscrito=False):
                     if formResenya.is_valid():
                         resenyaForm = formResenya.cleaned_data
                         descripcion = resenyaForm['descripcion']
-                        Resenya.objects.create(
-                        descripcion=descripcion, fecha=datetime.datetime.now(), curso=curso, usuario=usuario)
+                        resenya_instancia = Resenya(descripcion=descripcion, fecha=datetime.datetime.now(), curso=curso, usuario=usuario)
+                        try:
+                            resenya_instancia.full_clean()
+                            resenya_instancia.save()
+                        except ValidationError as e:
+                            print(e)
                         referencia = '/curso/' + \
                         str(id)
                         notificacion = Notificacion(referencia=referencia, usuario=curso.propietario, tipo="NUEVA RESEÑA", curso=curso, visto=False,
@@ -809,15 +814,19 @@ def cursosdisponibles(request, mensaje_error=False, mensaje=''):
     if request.user.is_authenticated:
         cursos_todos = Curso.objects.order_by('nombre')
         cursos = []
+        numero_archivos = []
         usuario_actual = request.user.usuario
         for curso in cursos_todos:
             suscriptores = curso.suscriptores.all()
+            archivos = len(curso.archivos.all())
+            numero_archivos.append(archivos)
             if (curso.propietario != usuario_actual):
                 if (usuario_actual not in suscriptores and usuario_actual.titulacion == curso.asignatura.titulacion):
                     valoracion = get_valoracion(curso)
                     cursos.append((curso, valoracion))
         page_obj = pagination(request, cursos, 9)
-        return render(request, "cursosdisponibles.html", {'page_obj': page_obj, "mensaje_error": mensaje_error, "mensaje": mensaje})
+        page_obj_archivos = zip(page_obj,numero_archivos)
+        return render(request, "cursosdisponibles.html", {'page_obj': page_obj,"page_obj_archivos":page_obj_archivos,"mensaje_error": mensaje_error, "mensaje": mensaje})
     else:
         return redirect("/login")
 

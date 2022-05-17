@@ -24,8 +24,14 @@
         <div class="col-md-5">
           <h3>{{nombre}}</h3>
           <p>Titulación: {{titulacion}}</p>
+          {% if not descripcion%}
+          <p>Descripcion: Ninguna</p>
+          {%else%}
+          <p>Descripcion: {{descripcion}}</p>
+          {%endif%}
           {% if owner == True %}
           <p>Monedero: {{dinero}}€</p>
+          
           
           {%endif%}
         </div>

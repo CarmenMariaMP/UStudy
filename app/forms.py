@@ -42,7 +42,7 @@ class ComentarioForm(forms.Form):
     }))
 
 class ResenyaForm(forms.Form):
-    descripcion = forms.CharField(max_length=1000, label="", required=True, widget=forms.Textarea(attrs={
+    descripcion = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
         'cols': 100,
         'rows': 4,
         'style': 'width: 100%; border: 1px solid black; border-radius: 4px; padding: 10px;', 'class': 'form-control font-weight-bold',
