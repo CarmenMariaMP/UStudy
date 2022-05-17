@@ -79,6 +79,8 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
+                    <th>Acciones</th>
+                    <th></th>
                     <th>Tipo</th>
                     <th>Fecha</th>
                     <th>Curso</th>
@@ -92,17 +94,18 @@
                   {% for notificacion in notificaciones %}
                     {% if not notificacion.visto %}
                       <tr>
-                        <td>{{notificacion.tipo}}</td>
-                        <td>{{notificacion.fecha}}</td>
-                        <td>{{notificacion.curso.nombre}}</td>
-                        <td>{{notificacion.alumno.nombre}}</td>
-                        <td>{{notificacion.descripcion}}</td>
                         <td>
                           <a class="btn btn-outline-secondary" href="{{notificacion.referencia}}">Ver</a>
                         </td>
                         <td>
                           <a type="submit" class="btn btn-outline-danger" href="/notificacion/eliminar/{{notificacion.id}}">X</a>
                         </td>
+                        <td>{{notificacion.tipo}}</td>
+                        <td>{{notificacion.fecha}}</td>
+                        <td>{{notificacion.curso.nombre}}</td>
+                        <td>{{notificacion.alumno.nombre}}</td>
+                        <td>{{notificacion.descripcion}}</td>
+                        
                       </tr>
                     {% endif %}
                   {% endfor %}
