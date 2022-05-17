@@ -73,17 +73,16 @@
                     <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
                     {% if es_owner %}
                     
-                    <a type="submit" class="btn boton btn-info " onclick="return confirm('¿Estás seguro de que quieres borrar el archivo?')" style=" float: right; margin-left: 10px;"
+                    <a type="submit" class="btn boton btn-info col-sm-1" onclick="return confirm('¿Estás seguro de que quieres borrar el archivo?')" style=" float: right; margin-left: 10px;"
                         href="/curso/{{curso.id}}/{{archivo.id}}">
                         <i class="bi bi-trash"></i>
                     </a>
                     <input
-                    class="btn boton col-sm-1 btn-info añadirContenido justify-content-center separado borde-azul standard_web_color"
-                    form="updateForm{{archivo.id}}" type="submit" style="  float: right; margin: auto;" value="Actualizar Archivo">
-                    
+                    class="btn boton col-sm-3 btn-info añadirContenido justify-content-center separado borde-azul standard_web_color"
+                    form="updateForm{{archivo.id}}" type="submit" style="  float: right; margin: auto;" value="Actualizar archivo">
                     <form
                         id="updateForm{{archivo.id}}" method="post" enctype="multipart/form-data" style="all: initial;" action={% url 'editar_archivo' curso.id archivo.id %}>
-                        <div class="custom-file justify-content-center col-sm-1" id="customFile" style="  float: right; margin: auto;" >
+                        <div class="custom-file justify-content-center col-sm-3" id="customFile" style="  float: right; margin: auto;" >
                             {% csrf_token %}
                             {{formUpdate.file}}
                         </div>
