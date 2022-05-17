@@ -1055,6 +1055,9 @@ def editar_archivo(request, id_curso, id_archivo):
                     fecha = archivo.fecha_publicacion
                     archivo_instancia = Archivo(
                         nombre=file.name, ruta=file, curso=curso, fecha_publicacion=fecha)
+                    if len(file.name) > 50:
+                        messages.info(request, 'Nombre de archivo demasiado largo - debe ser menor a 50 caracteres')
+                        return HttpResponseRedirect('/curso/' + str(id_curso))
                     if file.name in curso.archivos.values_list('nombre', flat=True) and archivo.nombre != file.name:
                         messages.info(request, 'Archivo repetido - El archivo ya existe en el curso')
                         return HttpResponseRedirect('/curso/' + str(id_curso))
