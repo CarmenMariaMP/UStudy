@@ -33,7 +33,7 @@
                         <div class="card h-100 box-shadow border-info standard_web_color">
                             <div class="card-body standard_web_color ">
                                 <h5 class="card-title">Asignatura: {{cursoYvaloracion.0.asignatura.nombre}}</h5>
-                                <p class="card-text">Profesor: {{cursoYvaloracion.0.propietario.nombre}}</p>
+                                <p class="card-text">Profesor: <a  href="/perfil/{{cursoYvaloracion.0.propietario.django_user.username}}">{{cursoYvaloracion.0.propietario.django_user.username}}</a></p>
                                 <p class="card-text text-truncate">Descripción: {{cursoYvaloracion.0.descripcion}}</p>
                                 <p class="card-text">Valoración: {{cursoYvaloracion.1}}</p>
                                 <div class="d-flex justify-content-between align-items-center">

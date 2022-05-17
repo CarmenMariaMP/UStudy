@@ -42,13 +42,13 @@ class PerfilUsuarioViewTests(TestCase):
     def test_profile_view(self):
         client = Client()
         client.force_login(User.objects.first())
-        response = client.get('/perfil', follow=True)
+        response = client.get('/perfil/'+User.objects.first().username, follow=True)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'perfil.html')
 
     def test_profile_view_not_logged(self):
         client = Client()
-        response = client.get('/perfil', follow=True)
+        response = client.get('/perfil/'+User.objects.first().username, follow=True)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'login.html')
 

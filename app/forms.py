@@ -41,6 +41,14 @@ class ComentarioForm(forms.Form):
         'placeholder': 'Escribe un comentario...'
     }))
 
+class ResenyaForm(forms.Form):
+    descripcion = forms.CharField(max_length=1000, label="", required=True, widget=forms.Textarea(attrs={
+        'cols': 100,
+        'rows': 4,
+        'style': 'width: 100%; border: 1px solid black; border-radius: 4px; padding: 10px;', 'class': 'form-control font-weight-bold',
+        'placeholder': 'Escribe una reseña...'
+    }))
+
 
 class ResponderComentarioForm(forms.Form):
     responde_a = forms.IntegerField(widget=forms.HiddenInput())
