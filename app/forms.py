@@ -80,7 +80,7 @@ class MonederoForm(forms.Form):
 class RetiradaDineroForm(forms.Form):
     paypal = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'user@domain.com'}))
     confirmar_paypal = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'user@domain.com'}))
-    dinero = forms.DecimalField(required=True ,min_value=5.00, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-control','placeholder':'5,00'}))
+    dinero = forms.DecimalField(required=True ,min_value=5.00, max_digits=12, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-control','placeholder':'5,00'}))
 
 
 class UsuarioForm(forms.Form):
