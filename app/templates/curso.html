@@ -27,31 +27,10 @@
     </div>
     {% endif %} {%if suscrito%}
 
-{%if  suscrito%}
-    
-        <div style="display: flex;" class="alert alert-success row d-flex justify-content-center" role="alert">
-            <h6 class ="text-justify">Te has suscrito correctamente a este curso</h6>
-        </div>
-        {% endif %}
-        <br>
-<div class="row d-flex justify-content-center">
-    {% if es_owner %}
-    <h2>Editar curso</h2>
-    {% endif %} {% if es_suscriptor %}
-    <h2> Curso </h2>
-    
-    {% endif %}
-</div>
+    {%if suscrito%}
 
-<br>
-<div style="align-content: center;">
-    <div class="separado borde-azul standard_web_color">
-        <p style="text-align: center; padding-top: 15px; font-size: 15px;"> <b>Curso:</b> {{curso.nombre}}
-            <br> <b>Profesor:</b> <a  href="/perfil/{{curso.propietario.nombre}} ">{{curso.propietario.nombre}} </a>
-            <br> <b>Descripción:</b> {{curso.descripcion}} 
-            <br> <b>Valoración media: {{valoracionCurso}}</b>
-        </p>
-
+    <div style="display: flex;" class="alert alert-success row d-flex justify-content-center" role="alert">
+        <h6 class="text-justify">Te has suscrito correctamente a este curso</h6>
     </div>
     {% endif %}
     <br>
@@ -68,93 +47,132 @@
     <div style="align-content: center;">
         <div class="separado borde-azul standard_web_color">
             <p style="text-align: center; padding-top: 15px; font-size: 15px;"> <b>Curso:</b> {{curso.nombre}}
+                <br> <b>Profesor:</b> <a href="/perfil/{{curso.propietario.nombre}} ">{{curso.propietario.nombre}} </a>
+                <br> <b>Descripción:</b>
+            <div class="container" style="word-break: break-all; text-align: center;">
+                {{curso.descripcion}}
+            </div>
+            <br> <b>Valoración media: {{valoracionCurso}}</b>
+            </p>
+        </div>
+
+        {% endif %}
+        <br>
+        <div class="row d-flex justify-content-center">
+            {% if es_owner %}
+            <h2>Editar curso</h2>
+            {% endif %} {% if es_suscriptor %}
+            <h2> Curso </h2>
+
+            {% endif %}
+        </div>
+
+        <br>
+        <div style="align-content: center;">
+            <div class="separado borde-azul standard_web_color">
+                <p style="text-align: center; padding-top: 15px; font-size: 15px;"> <b>Curso:</b> {{curso.nombre}}
                     <br> <b>Profesor:</b> {{curso.propietario.nombre}}
                     <br> <b>Valoración media: {{valoracionCurso}}</b>
                     <br> <br> <b>Descripción</b>
-                    <br><div class="container" style="word-break: break-all;">
-                        {{curso.descripcion}}
-                    </div>
-                    
-            </p>
-        </div>
-        {% if es_owner or es_suscriptor %}
-        <div class="separado borde-azul">
-            {% if contenido_curso|length > 0 %}
-            <ul class="list-group">
-                {% for archivo in contenido_curso %}
-                <li class="list-group-item" style="border-radius: 25px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-                    {% if ".mp4" in archivo.ruta.url|slice:"-4:"%}
-                    <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="26px" height="19px"> {% elif ".pdf" in archivo.ruta.url|slice:"-4:"%}
-                    <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="26px" height="26px"> {% elif ".txt" in archivo.ruta.url|slice:"-4:"%}
-                    <img src="https://i.postimg.cc/LsGDHX6t/txt-icon.png" width="26px" height="26px"> {% else %}
-                    <img src="https://i.postimg.cc/nh4pKsNz/imagen-icon.png" width="26px" height="26px"> {% endif %}
+                    <br>
+                <div class="container" style="word-break: break-all; text-align: center;">
+                    {{curso.descripcion}}
+                </div>
 
-                    <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> {% if es_owner %}
-                    <a type="submit" class="btn boton btn-info" style=" float: right; margin: auto;" href="/curso/{{curso.id}}/{{archivo.id}}">
-                        <i class="bi bi-trash"></i></a> {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-            {% else %}
-            <div class="col">
-                <p class="text-center lead">Actualmente no hay subido ningún archivo</p>
-
+                </p>
             </div>
-            {% endif %}
-        </div>
-        <br> {% endif %}
-        <div style="align-content: center;">
-            {% if not es_suscriptor and not es_owner%}
-            <a class="btn boton col-sm-1 atras" style="margin-top: 20px;" type="button" value="Atrás" href="/cursosdisponibles"><b>Atrás</b></a>
-            <button class="btn boton col-sm-1 unirseCurso" style="margin-top: 20px;" data-toggle="modal" data-target="#reporteModal">Suscribirse</button>
-            <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog" aria-labelledby="reporteModal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="suscripcion_pop_up">Suscripción</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>¿Deseas suscribirte a este curso?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href='/suscripcion/{{id}}' class="btn btn-primary">Si</a>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            {% if es_owner or es_suscriptor %}
+            <div class="separado borde-azul">
+                {% if contenido_curso|length > 0 %}
+                <ul class="list-group">
+                    {% for archivo in contenido_curso %}
+                    <li class="list-group-item"
+                        style="border-radius: 25px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+                        {% if ".mp4" in archivo.ruta.url|slice:"-4:"%}
+                        <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="26px" height="19px"> {% elif ".pdf" in
+                        archivo.ruta.url|slice:"-4:"%}
+                        <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="26px" height="26px"> {% elif ".txt"
+                        in archivo.ruta.url|slice:"-4:"%}
+                        <img src="https://i.postimg.cc/LsGDHX6t/txt-icon.png" width="26px" height="26px"> {% else %}
+                        <img src="https://i.postimg.cc/nh4pKsNz/imagen-icon.png" width="26px" height="26px"> {% endif %}
+
+                        <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> {% if
+                        es_owner %}
+                        <a type="submit" class="btn boton btn-info" style=" float: right; margin: auto;"
+                            href="/curso/{{curso.id}}/{{archivo.id}}">
+                            <i class="bi bi-trash"></i></a> {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="col">
+                    <p class="text-center lead">Actualmente no hay subido ningún archivo</p>
+
+                </div>
+                {% endif %}
+            </div>
+            <br> {% endif %}
+            <div style="align-content: center;">
+                {% if not es_suscriptor and not es_owner%}
+                <a class="btn boton col-sm-1 atras" style="margin-top: 20px;" type="button" value="Atrás"
+                    href="/cursosdisponibles"><b>Atrás</b></a>
+                <button class="btn boton col-sm-1 unirseCurso" style="margin-top: 20px;" data-toggle="modal"
+                    data-target="#reporteModal">Suscribirse</button>
+                <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog" aria-labelledby="reporteModal"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="suscripcion_pop_up">Suscripción</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Deseas suscribirte a este curso?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href='/suscripcion/{{id}}' class="btn btn-primary">Si</a>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <h5>Para acceder al contenido de este curso debes unirte al mismo</h5>
-        {%endif%} {%if es_owner%}
+            <h5>Para acceder al contenido de este curso debes unirte al mismo</h5>
+            {%endif%} {%if es_owner%}
 
 
-        <form class="btn boton btn-info justify-content-center separado borde-azul standard_web_color" id="myform" method="post" enctype="multipart/form-data" style="background-color: #17a2b8;width: 80%;">
-            {% csrf_token %} {{form.file}}
-        </form>
+            <form class="btn boton btn-info justify-content-center separado borde-azul standard_web_color" id="myform"
+                method="post" enctype="multipart/form-data" style="background-color: #17a2b8;width: 80%;">
+                {% csrf_token %} {{form.file}}
+            </form>
 
-
-    </div>
-    <div class="col text-center">
-        <div class="row container justify-content-center" style="width: 80%;margin: auto;">
-            <input class="btn boton col-sm-2 btn-info añadirContenido justify-content-center separado borde-azul standard_web_color" form="myform" type="submit" style="margin: 20px;" value="Añadir">
-            <a class="btn boton col-sm-2 btn-info justify-content-center separado borde-azul standard_web_color" style="margin: 20px;" href="/inicio_profesor">Atrás</a> {%endif%} {%if es_suscriptor%}
 
         </div>
-    </div>
-    <div class="col text-center">
-        <a class="btn boton col-sm-2 btn-info justify-content-center separado borde-azul standard_web_color" style="margin: 5px;" href="/miscursos">Atrás</a>{%endif%} {%if excede_tamano%}
-    </div>
+        <div class="col text-center">
+            <div class="row container justify-content-center" style="width: 80%;margin: auto;">
+                <input
+                    class="btn boton col-sm-2 btn-info añadirContenido justify-content-center separado borde-azul standard_web_color"
+                    form="myform" type="submit" style="margin: 20px;" value="Añadir">
+                <a class="btn boton col-sm-2 btn-info justify-content-center separado borde-azul standard_web_color"
+                    style="margin: 20px;" href="/inicio_profesor">Atrás</a> {%endif%} {%if es_suscriptor%}
 
-    {%endif%}
+            </div>
+        </div>
+        <div class="col text-center">
+            <a class="btn boton col-sm-2 btn-info justify-content-center separado borde-azul standard_web_color"
+                style="margin: 5px;" href="/miscursos">Atrás</a>{%endif%} {%if excede_tamano%}
+        </div>
+
+        {%endif%}
     </div>
     </div>
     <br> {%if es_suscriptor and not es_owner%}
     <h5>Valora este curso </h5>
     <div class="rating">
-        <form class="rate-form standard_web_color borde-azul" action="" method="POST" id="{{ curso.id }}" style="display:flex; justify-content: center;">
+        <form class="rate-form standard_web_color borde-azul" action="" method="POST" id="{{ curso.id }}"
+            style="display:flex; justify-content: center;">
             {% csrf_token %}
             <button type="submit" class="fa fa-star fa-2x boton-estrella" id="first"></button>
             <button type="submit" class="fa fa-star fa-2x boton-estrella" id="second"></button>
@@ -197,7 +215,8 @@
         <div class="card text-center">
             <form id="myform" method="post" enctype="multipart/form-data">
                 {% csrf_token %} {{formResenya.as_p}}
-                <button class="btn boton center" type="submit" name="action" value="Publicar reseña">Publicar reseña</button>
+                <button class="btn boton center" type="submit" name="action" value="Publicar reseña">Publicar
+                    reseña</button>
 
             </form>
         </div>
