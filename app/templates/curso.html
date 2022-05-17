@@ -25,33 +25,12 @@
     <div class="alert alert-danger" role="alert">
         Ya existe un archivo con ese nombre en este curso
     </div>
-    {% endif %} {%if suscrito%}
+    {% endif %} 
 
-{%if  suscrito%}
-    
-        <div style="display: flex;" class="alert alert-success row d-flex justify-content-center" role="alert">
-            <h6 class ="text-justify">Te has suscrito correctamente a este curso</h6>
-        </div>
-        {% endif %}
-        <br>
-<div class="row d-flex justify-content-center">
-    {% if es_owner %}
-    <h2>Editar curso</h2>
-    {% endif %} {% if es_suscriptor %}
-    <h2> Curso </h2>
-    
-    {% endif %}
-</div>
+    {%if suscrito%}
 
-<br>
-<div style="align-content: center;">
-    <div class="separado borde-azul standard_web_color">
-        <p style="text-align: center; padding-top: 15px; font-size: 15px;"> <b>Curso:</b> {{curso.nombre}}
-            <br> <b>Profesor:</b> <a  href="/perfil/{{curso.propietario.nombre}} ">{{curso.propietario.nombre}} </a>
-            <br> <b>Descripción:</b> {{curso.descripcion}} 
-            <br> <b>Valoración media: {{valoracionCurso}}</b>
-        </p>
-
+    <div style="display: flex;" class="alert alert-success row d-flex justify-content-center" role="alert">
+        <h6 class="text-justify">Te has suscrito correctamente a este curso</h6>
     </div>
     {% endif %}
     <br>
@@ -60,7 +39,6 @@
         <h2>Editar curso</h2>
         {% endif %} {% if es_suscriptor %}
         <h2> Curso </h2>
-
         {% endif %}
     </div>
 
@@ -69,7 +47,7 @@
         <div class="separado borde-azul standard_web_color">
             <p style="text-align: center; padding-top: 15px; font-size: 15px;"> <b>Curso:</b> {{curso.nombre}}
                 <br> <b>Profesor:</b> {{curso.propietario.nombre}}
-                <br> <b>Descripción:</b> {{curso.descripcion}}
+                <br> <b>Profesor:</b> <a  href="/perfil/{{curso.propietario.nombre}} ">{{curso.propietario.nombre}} </a>
                 <br> <b>Valoración media: {{valoracionCurso}}</b>
             </p>
         </div>
@@ -78,19 +56,41 @@
             {% if contenido_curso|length > 0 %}
             <ul class="list-group">
                 {% for archivo in contenido_curso %}
-                <li class="list-group-item" style="border-radius: 25px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-                    {% if ".mp4" in archivo.ruta.url|slice:"-4:"%}
-                    <img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="26px" height="19px"> {% elif ".pdf" in archivo.ruta.url|slice:"-4:"%}
-                    <img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="26px" height="26px"> {% elif ".txt" in archivo.ruta.url|slice:"-4:"%}
-                    <img src="https://i.postimg.cc/LsGDHX6t/txt-icon.png" width="26px" height="26px"> {% else %}
-                    <img src="https://i.postimg.cc/nh4pKsNz/imagen-icon.png" width="26px" height="26px"> {% endif %}
 
-                    <a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a> {% if es_owner %}
-                    <a type="submit" class="btn boton btn-info" style=" float: right; margin: auto;" href="/curso/{{curso.id}}/{{archivo.id}}">
-                        <i class="bi bi-trash"></i></a> {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
+<li class="list-group-item "
+style="border-radius: 25px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+{% if ".mp4" in archivo.ruta.url|slice:"-4:"%}
+<img src="https://i.postimg.cc/6Q9TLMqz/video.png" width="26px" height="19px">
+{% elif ".pdf" in archivo.ruta.url|slice:"-4:"%}
+<img src="https://i.postimg.cc/3N7DV3x5/pdf-icon.png" width="26px" height="26px">
+{% elif ".txt" in archivo.ruta.url|slice:"-4:"%}
+<img src="https://i.postimg.cc/LsGDHX6t/txt-icon.png" width="26px" height="26px">
+{% else %}
+<img src="https://i.postimg.cc/nh4pKsNz/imagen-icon.png" width="26px" height="26px">
+{% endif %}
+
+<a href="/curso/{{curso.id}}/archivo/{{archivo.id}}"><b><b>{{archivo.nombre}}</b></a>
+{% if es_owner %}
+
+<a type="submit" class="btn boton btn-info " onclick="return confirm('¿Estás seguro de que quieres borrar el archivo?')" style=" float: right; margin-left: 10px;"
+    href="/curso/{{curso.id}}/{{archivo.id}}">
+    <i class="bi bi-trash"></i>
+</a>
+<input
+class="btn boton col-sm-1 btn-info añadirContenido justify-content-center separado borde-azul standard_web_color"
+form="updateForm{{archivo.id}}" type="submit" style="  float: right; margin: auto;" value="Actualizar Archivo">
+
+<form
+    id="updateForm{{archivo.id}}" method="post" enctype="multipart/form-data" style="all: initial;" action={% url 'editar_archivo' curso.id archivo.id %}>
+    <div class="btn-info justify-content-center separado borde-azul" id="customFile" style="  float: right; margin: auto;" >
+        {% csrf_token %}
+        {{formUpdate.file}}
+    </div>
+</form>
+{% endif %}
+</li>
+{% endfor %}
+</ul>
             {% else %}
             <div class="col">
                 <p class="text-center lead">Actualmente no hay subido ningún archivo</p>
@@ -183,9 +183,15 @@
             </ul>
             {%else%}
             <ul>
+                {%if not es_owner%}
                 <div class="card">
                     <h5>No hay reseñas, sé el primero en añadir una...</h5>
                 </div>
+                {% else %}
+                <div class="card">
+                    <h5>No tienes reseñas</h5>
+                </div>
+                {%endif%}
             </ul>
             {%endif%}
         </div>
@@ -199,6 +205,20 @@
         </div>
         {%endif%}
     </div>
-    {% endblock %}
 
+    {% if messages %}
+
+    {% for message in messages %}
+        {% if message.tags%}
+            {% if "Mínimo de archivos posible" or "Archivo repetido" or "El tamaño del archivo excede" or "Error al subir el archivo" or "El formato" in message.message%}
+                <script>
+                    alert("{{ message }}");
+                </script>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% endif %}
+
+    {% endblock %}
 </html>
