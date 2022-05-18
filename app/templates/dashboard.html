@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <title>UStudy</title>
+    {% extends 'base_navbar.html' %} {% load i18n static %} {% block contenido %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    
+</head>
+
+<body>
+
+    <div class="row mt-5 justify-content-center">
+        <table class="table table-striped table-responsive col-sm-4">
+            <thead>
+                <tr>
+                    <th class="col-sm-3">Dashboard Profesor</th>
+                    <th class="col-sm-1"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-sm-3">Número de suscriptores:</td>
+                    <td class="col-sm-1">{{suscriptores}}</td>
+                </tr>
+                <tr>
+                    <td class="col-sm-3">Número de cursos:</td>
+                    <td class="col-sm-1">{{cursos_propietario}}</td>
+                </tr>
+                <tr>
+                    <td class="col-sm-3">Número de archivos subidos:</td>
+                    <td class="col-sm-1">{{archivos_subidos}}</td>
+                </tr>
+                <tr>
+                    <td class="col-sm-3">Número de archivos reportes:</td>
+                    <td class="col-sm-1">{{reportes}}</td>
+                </tr>
+                <tr>
+                    <td class="col-sm-3">Número de valoraciones:</td>
+                    <td class="col-sm-1">{{valoraciones}}</td>
+                </tr>
+                <tr>
+                    <td class="col-sm-3">Valoración media por curso:</td>
+                    <td class="col-sm-1">{{valoracion_media_global}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+        <table class="table table-striped table-responsive col-sm-4">
+            <thead>
+                <tr>
+                    <th class="col-3">Dashboard Alumno</th>
+                    <th class="col-1"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-3">Cursos a los que estoy suscrito:</td>
+                    <td class="col-1">{{cursos_suscritos}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    {% endblock %}
+</body>
+
+</html>

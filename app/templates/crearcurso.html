@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <header>
+    {% extends 'base_navbar.html' %}{% load static %} {% block contenido %}
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <meta charset="utf-8" />
+  </header>
+  <br />
+<body>
+  <div class="container col-auto pt-5 pr-5 pl-5 display:flex;">
+    <div class="row d-flex justify-content-center">
+          <h2>Crear curso</h2>
+        </div>
+        <br />
+        <form
+          action="/crearcurso/"
+          class="form-signin container col-auto"
+          style="width: 80%; margin-top: 20px"
+          method="POST"
+        >
+          {% csrf_token %}
+
+          <label>Nombre del curso</label>
+          <div>{{form.nombre}}</div>
+          <div class="alert-danger">{{ form.nombre.errors }}</div>
+
+          <label class="mt-3">Descripción</label>
+          <div>{{form.descripcion}}</div>
+          <div class="alert-danger">{{ form.descripcion.errors }}</div>
+
+          <label class="mt-3">Asignatura</label>
+          <div>{{form.asignatura}}</div>
+          <div class="alert-danger">{{ form.asignatura.errors }}</div>
+
+          <br />
+          <div class="text-center mt-3">
+
+            <button id="crear" type="button" class="btn boton btn-info btn-block" data-toggle="modal" data-target="#reporteModal" >Crear</button>
+            <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog" aria-labelledby="reporteModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="suscripcion_pop_up">Creación Curso</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>  
+                        <div class="modal-body">
+                            <p>¿Deseas crear este curso?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button id="aceptarSi" type="submit"  class="btn btn-primary" data-dismiss="modal" onclick="curso_crear(this.form)">Si</button>
+                            
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+                    
+
+          </div>
+          <script>function curso_crear(form){console.log("hola");
+            form.submit()};</script>
+        </form>
+        {% endblock %}
+      </div>
+    </div
+  </div>
+</body>
+  <footer>{% block pie %}{% endblock %}</footer>
+</html>

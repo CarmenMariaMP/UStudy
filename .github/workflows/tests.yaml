@@ -1,0 +1,75 @@
+name: Tests
+
+env:
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  PAYPAL_SECRET_ID: ${{ secrets.PAYPAL_SECRET_ID }} 
+  PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
+  DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+  DATABASE_USER: ${{ secrets.DATABASE_USER }}
+  DATABASE_PASS: ${{ secrets.DATABASE_PASS }}
+  DATABASE_HOST: '127.0.0.1'
+  DATABASE_PORT: '5432'
+
+
+on:
+  # workflow_run:
+  #     workflows: ["Commits"]
+  #     types:
+  #       - completed
+  pull_request:
+    types:
+      - "opened"
+      - "reopened"
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASS }}
+          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
+          POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: psycopg2 prerequisites
+      run: sudo apt-get install libpq-dev
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Make Migrations with Merge
+      run: yes | python manage.py makemigrations app --merge
+    - name: Make Migrations Normal
+      run: python manage.py makemigrations app
+    - name: Migrate Database
+      run: python manage.py migrate app
+    - name: Populate Database
+      run: python manage.py loaddata datos_populate_asignaturas.json
+    - name: Run Tests and Analize Coverage
+      run: yes | coverage run --source . manage.py test -v 2
+    - name: Report Coverage
+      run: coverage report -m
+    - name: Generate XML
+      run: coverage xml -o 'cobertura.xml'
+    - name: Run codacy-coverage-reporter
+      uses: codacy/codacy-coverage-reporter-action@v1
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        coverage-reports: cobertura.xml

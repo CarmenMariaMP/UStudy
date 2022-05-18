@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    {% extends 'base_navbar.html' %}{% load static %}{% block contenido %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+</head>
+
+
+<body>
+    <br>
+    <div class="row d-flex justify-content-center">
+        <h2>Mis cursos</h2>
+    </div>
+
+    <!-- <form role="search" class="center" id="form">
+        <div class="row">
+            <input class="col-sm-8" type="search" id="query" name="q" placeholder="  Buscar cursos..." aria-label="Search through site content">
+            <button class="button-search col-sm-1">
+             <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+           </button>
+        </div>
+    </form> -->
+    <br>
+    <div class="container">
+        <br>
+        <div class="album p-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    {%if page_obj|length > 0 %} {% for cursoYvaloracion in page_obj %}
+                    <div class="col-md-4 mb-5">
+                        <div class="card h-100 box-shadow border-info standard_web_color">
+                            <div class="card-body standard_web_color ">
+                                <h5 class="card-title">Asignatura: {{cursoYvaloracion.0.asignatura.nombre}}</h5>
+                                <p class="card-text">Profesor: <a  href="/perfil/{{cursoYvaloracion.0.propietario.django_user.username}}">{{cursoYvaloracion.0.propietario.django_user.username}}</a></p>
+                                <p class="card-text text-truncate">Descripción: {{cursoYvaloracion.0.descripcion}}</p>
+                                <p class="card-text">Valoración: {{cursoYvaloracion.1}}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group text-center">
+                                        <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Ocultar</button> -->
+                                        <input type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='/curso/{{cursoYvaloracion.0.id}}';" value="Acceder" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}{%else%}
+                    <div class="col">
+                        <p class="font-italic text-center lead">Actualmente no te has suscrito a ningún curso</p>
+                        <p class="font-weight-lighter text-center"><ins><a href="/cursosdisponibles" class="text-decoration text-dark">Descubre los cursos disponibles</a></ins></p>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+            <br> {%if page_obj|length > 0 %}
+            <nav class="d-flex justify-content-center" aria-label="Page navigation example">
+                <ul class="pagination">
+                    <span class="step-links"></span> {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+                    {% endif %}
+                    <li class="page-item"><a class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+                    {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {%endif%} {% endblock %}
+        </div>
+</body>
+<footer>
+</footer>
+
+</html>

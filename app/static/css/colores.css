@@ -1,0 +1,15 @@
+.standard_web_color {
+    background-color: #F2F2F2;
+}
+
+.blue_standard {
+    background-color: #117a8b;
+}
+
+.borde-azul {
+    border: solid;
+    border-radius: 25px;
+    color: #000000;
+    border-color : #17a2b8;
+    font-size: small;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <header>
+    {% extends 'base_navbar.html' %}{% load static %}{% block contenido %}
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <meta charset="utf-8" />
+  </header>
+  <body>
+    <div class="container col-auto pt-5 pr-5 pl-5 display:flex;">
+      <br />
+      <div class="row d-flex justify-content-center">
+        <h2>Editar curso</h2>
+      </div>
+      <br />
+      <form
+        id = "formulario"
+        action=""
+        class="form-signin container col-auto"
+        style="width: 80%; margin-top: 20px"
+        method="POST"
+      >
+        {% csrf_token %}  <label>Nombre del curso</label>
+        <div>{{form.nombre}}</div>
+        <div class="alert-danger">{{ form.nombre.errors }}</div>
+
+        <label class="mt-3">Descripción</label>
+        <div>{{form.descripcion}}</div>
+        <div class="alert-danger">{{ form.descripcion.errors }}</div>
+
+        <label class="mt-3">Asignatura</label>
+        <div>{{form.asignatura}}</div>
+        <div class="alert-danger">{{ form.asignatura.errors }}</div>
+        <br>
+        <button class="btn boton btn-info btn-block" type="submit">Editar</button>
+      </form>
+      {% endblock %}
+    </div>
+  </body>
+  <footer></footer>
+</html>
