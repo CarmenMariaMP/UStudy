@@ -86,7 +86,7 @@ class Archivo(models.Model):
                             
 
 class Comentario(models.Model):
-    texto = models.CharField(max_length=500)
+    texto = models.CharField(max_length=600)
     fecha = models.DateTimeField(default=now, blank=True)
     archivo = models.ForeignKey(
         Archivo, verbose_name="Archivo", on_delete=models.CASCADE)
@@ -124,7 +124,7 @@ class Valoracion(models.Model):
         Curso, verbose_name="Curso", on_delete=models.CASCADE)
 
 class Resenya(models.Model):
-    descripcion = models.TextField(max_length=1000)
+    descripcion = models.TextField(max_length=500)
     fecha = models.DateTimeField(default=now, blank=True)
     usuario = models.ForeignKey(
         Usuario, verbose_name="Usuario", on_delete=models.CASCADE)
@@ -148,5 +148,6 @@ class TicketDescarga(models.Model):
     archivo = models.ForeignKey(Archivo, related_name="Archivo", on_delete=models.CASCADE)
 
 class RetiradaDinero(models.Model):
-    email = models.EmailField(unique=True, max_length=254)
+    email = models.EmailField(max_length=254)
     dinero = models.DecimalField(max_digits=12, decimal_places=2)
+    fecha = models.DateTimeField(default=now, blank=True)

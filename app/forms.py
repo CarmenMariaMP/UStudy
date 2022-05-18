@@ -42,7 +42,7 @@ class ComentarioForm(forms.Form):
     }))
 
 class ResenyaForm(forms.Form):
-    descripcion = forms.CharField(max_length=1000, label="", required=True, widget=forms.Textarea(attrs={
+    descripcion = forms.CharField(max_length=500, label="", required=True, widget=forms.Textarea(attrs={
         'cols': 100,
         'rows': 4,
         'style': 'width: 100%; border: 1px solid black; border-radius: 4px; padding: 10px;', 'class': 'form-control font-weight-bold',
@@ -80,7 +80,7 @@ class MonederoForm(forms.Form):
 class RetiradaDineroForm(forms.Form):
     paypal = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'user@domain.com'}))
     confirmar_paypal = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'user@domain.com'}))
-    dinero = forms.DecimalField(required=True ,min_value=5.00, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-control','placeholder':'5,00'}))
+    dinero = forms.DecimalField(required=True ,min_value=5.00, max_digits=12, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-control','placeholder':'5,00'}))
 
 
 class UsuarioForm(forms.Form):

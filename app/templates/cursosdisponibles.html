@@ -95,7 +95,7 @@ border:none;
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    {%if page_obj|length > 0 %} {% for cursoYvaloracion in page_obj %}
+                    {%if page_obj|length > 0 %} {% for cursoYvaloracion,numArchivos in page_obj_archivos %}
                     <div class="col-md-4 mb-5">
                         <div class="card h-100 box-shadow border-info standard_web_color">
                             <div class="card-body standard_web_color ">
@@ -103,6 +103,7 @@ border:none;
                                 <p class="card-text">Profesor: <a  href="/perfil/{{cursoYvaloracion.0.propietario.django_user.username}}">{{cursoYvaloracion.0.propietario.django_user.username}}</a></p>
                                 <p class="card-text text-truncate">Descripción: {{cursoYvaloracion.0.descripcion}} </p>
                                 <p class="card-text">Valoración: {{cursoYvaloracion.1}}</p>
+                                <p class="card-text">Archivos multimedia: {{numArchivos}}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group text-center">
                                         <div class="btn-group text-center">

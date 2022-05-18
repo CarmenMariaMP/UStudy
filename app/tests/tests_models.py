@@ -350,15 +350,15 @@ class ComentarioModelTests(TestCase):
         self.assertEquals(comentario.archivo, Archivo.objects.first())
         self.assertEquals(comentario.usuario, Usuario.objects.first())
 
-    # Longitud de texto mayor de 500 caracteres
+    # Longitud de texto mayor de 600 caracteres
     def test_crear_comentario_negative_texto_longitud_max(self):
 
         with self.assertRaises(Exception) as context:
             fecha = datetime.datetime.now().replace(tzinfo=timezone.utc)
             Comentario.objects.create(
-                texto='a'*501, fecha=fecha, archivo=Archivo.objects.first())
-        self.assertTrue('el valor es demasiado largo para el tipo character varying(500)' in str(context.exception) or
-                        "value too long for type character varying(500)" in str(context.exception))
+                texto='a'*601, fecha=fecha, archivo=Archivo.objects.first())
+        self.assertTrue('el valor es demasiado largo para el tipo character varying(600)' in str(context.exception) or
+                        "value too long for type character varying(600)" in str(context.exception))
 
 
 class ArchivoModelTests(TestCase):

@@ -18,7 +18,7 @@
 <body>
     {% if error %}
     <div class="alert alert-danger" role="alert">
-        El comentario debe tener menos de 500 caracteres
+        El comentario debe tener menos de 500 caracteres y contener al menos una letra.
     </div>
     {% endif %}
     <div class="container">
@@ -145,7 +145,7 @@
                                         <button class="btn boton" type="submit" name="action" value="Comentar">Comentar</button>
                                     </div>
                                 </form>
-                                <ul style="margin-right=20px;">
+                                <ul style="margin-right:20px;">
                                     {% for comentario in comentarios %}
                                     <div class="card">
                                         <div class="card-body">

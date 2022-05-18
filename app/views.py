@@ -52,12 +52,28 @@ def envio_correo(request):
                     return render(request, 'correo.html', {"form": form})
 
                 try:
-
-                    retirada = RetiradaDinero(email=paypal,dinero=dinero)
+                    retirada = RetiradaDinero(email=paypal,dinero=Decimal(dinero))
+                    retirada.full_clean()
                     retirada.save()
 
                     usuarioActual.dinero -= Decimal(dinero)
                     usuarioActual.save()
+                    
+                    email_host_user = config('EMAIL_HOST_USER')
+                    email_host_password = config('EMAIL_HOST_PASSWORD')
+                    smtp_server = config('EMAIL_HOST')
+                    msg = EmailMessage()
+                    msg['Subject'] = "Retirada Dinero"
+                    msg['From'] = email_host_user
+                    msg['To'] = email_host_user
+                    msg.set_content("La cuenta de correo del usuario que desea sacar el dinero es " + request.user.usuario.email + ". La cuenta de paypal a la que realizar la transferencia es " + paypal + ". El dinero que desea sacar es " + dinero + "€.")
+                    
+        
+                    server = smtplib.SMTP(smtp_server)
+                    server.starttls()
+                    server.login(email_host_user, email_host_password)
+                    server.send_message(msg)
+                    server.quit()
 
                     return redirect('/informacion_transferencia')
                 except Exception:
@@ -296,6 +312,7 @@ def perfil_usuario(request, username):
         nombre = usuario_perfil.nombre+' '+usuario_perfil.apellidos
         titulacion = usuario_perfil.titulacion
         dinero = usuario_perfil.dinero
+        descripcion = usuario_perfil.descripcion
 
         try:
             foto = usuario_perfil.foto.url
@@ -327,7 +344,7 @@ def perfil_usuario(request, username):
             usuario=usuario_perfil).order_by('-fecha')
         valoracion_media_redondeada = round(valoracion_media)
         
-        return render(request, "perfil.html", { "cursos_suscritos": cursos_suscritos, "nombre": nombre, "titulacion": titulacion,"cursos": cursosUsuario,
+        return render(request, "perfil.html", { "cursos_suscritos": cursos_suscritos, "nombre": nombre, "titulacion": titulacion,"cursos": cursosUsuario,"descripcion":descripcion,
                                                "dinero": dinero, "valoracion_media": valoracion_media, "foto": url, "notificaciones": notificaciones, "owner": owner_perfil, 
                                                "rango_r": range(valoracion_media_redondeada), "rango_sr": range(5-valoracion_media_redondeada)})
 
@@ -724,14 +741,20 @@ def curso(request, id, suscrito=False):
                     if formResenya.is_valid():
                         resenyaForm = formResenya.cleaned_data
                         descripcion = resenyaForm['descripcion']
-                        Resenya.objects.create(
-                        descripcion=descripcion, fecha=datetime.datetime.now(), curso=curso, usuario=usuario)
+                        resenya_instancia = Resenya(descripcion=descripcion, fecha=datetime.datetime.now(), curso=curso, usuario=usuario)
+                        try:
+                            resenya_instancia.full_clean()
+                            resenya_instancia.save()
+                        except ValidationError as e:
+                            print(e)
                         referencia = '/curso/' + \
                         str(id)
                         notificacion = Notificacion(referencia=referencia, usuario=curso.propietario, tipo="NUEVA RESEÑA", curso=curso, visto=False,
                                                 alumno=usuario, descripcion=descripcion)
                         notificacion.save()
                         return redirect('/curso/'+str(id))
+                    else:
+                        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "error_resenya": True, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": UploadFileForm(), "formResenya":ResenyaForm(), "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito,"nombre_archivo_unico": nombre_archivo_unico, "formUpdate": UploadFileForm(), "resenyas":resenyas})
 
         return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "formResenya":formResenya, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito,"nombre_archivo_unico": nombre_archivo_unico, "formUpdate": formUpdate, "resenyas":resenyas})
 
@@ -809,15 +832,19 @@ def cursosdisponibles(request, mensaje_error=False, mensaje=''):
     if request.user.is_authenticated:
         cursos_todos = Curso.objects.order_by('nombre')
         cursos = []
+        numero_archivos = []
         usuario_actual = request.user.usuario
         for curso in cursos_todos:
             suscriptores = curso.suscriptores.all()
+            archivos = len(curso.archivos.all())
+            numero_archivos.append(archivos)
             if (curso.propietario != usuario_actual):
                 if (usuario_actual not in suscriptores and usuario_actual.titulacion == curso.asignatura.titulacion):
                     valoracion = get_valoracion(curso)
                     cursos.append((curso, valoracion))
         page_obj = pagination(request, cursos, 9)
-        return render(request, "cursosdisponibles.html", {'page_obj': page_obj, "mensaje_error": mensaje_error, "mensaje": mensaje})
+        page_obj_archivos = zip(page_obj,numero_archivos)
+        return render(request, "cursosdisponibles.html", {'page_obj': page_obj,"page_obj_archivos":page_obj_archivos,"mensaje_error": mensaje_error, "mensaje": mensaje})
     else:
         return redirect("/login")
 
