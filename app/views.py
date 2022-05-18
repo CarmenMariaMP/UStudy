@@ -753,6 +753,8 @@ def curso(request, id, suscrito=False):
                                                 alumno=usuario, descripcion=descripcion)
                         notificacion.save()
                         return redirect('/curso/'+str(id))
+                    else:
+                        return render(request, "curso.html", {"id": id, "es_owner": es_owner, "error_resenya": True, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": UploadFileForm(), "formResenya":ResenyaForm(), "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito,"nombre_archivo_unico": nombre_archivo_unico, "formUpdate": UploadFileForm(), "resenyas":resenyas})
 
         return render(request, "curso.html", {"id": id, "es_owner": es_owner, "es_suscriptor": es_suscriptor, "curso": curso, "contenido_curso": contenido_curso, "form": form, "formResenya":formResenya, "excede_tamano": excede_tamano, "excede_mensaje": excede_mensaje, "valoracionCurso": valoracionCurso, "valoracionUsuario": valoracionUsuario, "suscrito": suscrito,"nombre_archivo_unico": nombre_archivo_unico, "formUpdate": formUpdate, "resenyas":resenyas})
 

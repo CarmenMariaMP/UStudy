@@ -17,15 +17,22 @@
 </head>
 
 <body>
+    {% if error_resenya%}
+        <div class="alert alert-danger" role="alert">
+            La reseña no debe superar los 500 caracteres y no estar vacio.
+        </div>
+    {%endif%}
     {% if excede_mensaje %}
-    <div class="alert alert-danger" role="alert">
-        {{excede_mensaje}}
-    </div>
-    {% endif %} {% if not nombre_archivo_unico %}
-    <div class="alert alert-danger" role="alert">
-        Ya existe un archivo con ese nombre en este curso
-    </div>
+        <div class="alert alert-danger" role="alert">
+            {{excede_mensaje}}
+        </div>
+    {% endif %} 
+    {% if not nombre_archivo_unico %}
+        <div class="alert alert-danger" role="alert">
+            Ya existe un archivo con ese nombre en este curso.
+        </div>
     {% endif %} {%if suscrito%}
+    
 
 {%if  suscrito%}
     

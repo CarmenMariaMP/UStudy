@@ -86,7 +86,7 @@ class Archivo(models.Model):
                             
 
 class Comentario(models.Model):
-    texto = models.CharField(max_length=500)
+    texto = models.CharField(max_length=600)
     fecha = models.DateTimeField(default=now, blank=True)
     archivo = models.ForeignKey(
         Archivo, verbose_name="Archivo", on_delete=models.CASCADE)
