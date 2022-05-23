@@ -108,7 +108,6 @@ def buscar_curso(request):
 
 
 
-
 def informacion_transferencia(request):
 
     if request.user.is_authenticated:
