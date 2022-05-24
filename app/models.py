@@ -151,3 +151,9 @@ class RetiradaDinero(models.Model):
     email = models.EmailField(max_length=254)
     dinero = models.DecimalField(max_digits=12, decimal_places=2)
     fecha = models.DateTimeField(default=now, blank=True)
+
+class Fraude(models.Model):
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    entidad = models.CharField(max_length=100)
+    entidad_id = models.CharField(max_length=100)
+    evidencia = models.CharField(max_length=600)

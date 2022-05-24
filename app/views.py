@@ -7,10 +7,11 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from app import paypal
 from app.forms import MonederoForm, ResenyaForm, RetiradaDineroForm, UsuarioForm, CursoForm, ReporteForm, UploadFileForm, CursoEditForm, ActualizarUsuarioForm, ComentarioForm, ResponderComentarioForm, ResponderComentarioForm2
-from app.models import Resenya, Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga, RetiradaDinero
+from app.models import Resenya, Usuario, Curso, Archivo, Comentario, Valoracion, Reporte, User, Notificacion, TicketDescarga, RetiradaDinero, Fraude
 from app.paypal import GetOrder
 import json
 import os
+import re
 from decimal import Decimal
 
 from django.conf import settings
@@ -413,6 +414,9 @@ def crearcurso(request):
                 curso.propietario = Usuario.objects.get(
                     django_user=request.user)
                 curso.save()
+                ## FRAUD DETECTION
+                fraud_detector(curso.propietario, "curso",str(curso.id), [str(curso.nombre),str(curso.descripcion)])
+                ##
                 return redirect('/inicio_profesor')
             else:
                 return render(request, 'crearcurso.html', {"form": form})
@@ -465,6 +469,7 @@ def registro_usuario(request):
                 user_django = User.objects.create_user(
                     username=usename, email=email, password=password)
                 user_django.save()
+                
 
             except ValidationError as e:
                 for i in e.error_dict:
@@ -479,6 +484,11 @@ def registro_usuario(request):
                 usuario_instancia.full_clean()
 
                 usuario_instancia.save()
+
+                ## FRAUD DETECTION
+                fraud_detector(usuario_instancia, "usuario",usuario_instancia.email_academico, [str(usuario_instancia.nombre),str(usuario_instancia.apellidos),str(usuario_instancia.descripcion)])
+                fraud_detector(usuario_instancia, "user",str(user_django.username), [str(user_django.username)])
+                ##
 
             except ValidationError as e:
                 user_django.delete()
@@ -573,6 +583,9 @@ def actualizar_usuario(request):
 
                     if comprobacion > 0:
                         request.user.save()
+                        ## FRAUD DETECTION
+                    fraud_detector(usuario_instancia, "user",str(request.user.username), [str(request.user.username)])
+                    ##
 
                 except ValidationError as e:
                     for i in e.error_dict:
@@ -620,6 +633,10 @@ def actualizar_usuario(request):
                         Usuario.objects.filter(django_user=request.user).update(
                             nombre=nombre, apellidos=apellidos, email=email, email_academico=email_academico, titulacion=titulacion, descripcion=descripcion, dinero=dinero, foto=Usuario.objects.get(django_user=request.user).foto)
 
+                    ## FRAUD DETECTION
+                    usuario = Usuario.objects.filter(django_user=request.user)[0]
+                    fraud_detector(usuario, "usuario",usuario.email_academico, [str(usuario.nombre),str(usuario.apellidos),str(usuario.descripcion)])
+                    ##
                 except ValidationError as e:
                     for i in e.error_dict:
                         form.add_error(i, e.error_dict[i])
@@ -671,6 +688,9 @@ def editar_curso(request, id_curso):
                     curso.descripcion = descripcion
                     curso.asignatura = asignatura
                     curso.save()
+                    ## FRAUD DETECTION
+                    fraud_detector(curso.propietario, "curso",str(curso.id), [str(curso.nombre),str(curso.descripcion)])
+                    ##
                     return redirect("/inicio_profesor")
                 else:
                     return render(request, 'editarcurso.html', {"form": form})
@@ -749,6 +769,7 @@ def curso(request, id, suscrito=False):
                         try:
                             resenya_instancia.full_clean()
                             resenya_instancia.save()
+                            fraud_detector(resenya_instancia.usuario, "resenya",str(resenya_instancia.id), [str(resenya_instancia.descripcion)])
                         except ValidationError as e:
                             print(e)
                         referencia = '/curso/' + \
@@ -898,6 +919,9 @@ def ver_archivo(request, id_curso, id_archivo):
                     reporte_instancia = Reporte(
                         descripcion=descripcion, tipo=tipo, usuario=usuario, archivo=archivo)
                     reporte_instancia.save()
+                    ## FRAUD DETECTION
+                    fraud_detector(reporte_instancia.usuario, "reporte",str(reporte_instancia.id), [str(reporte_instancia.descripcion)])
+                    ##
                     referencia = '/curso/' + \
                         str(id_curso)+'/archivo/'+str(id_archivo)
                     notificacion = Notificacion(referencia=referencia, usuario=curso.propietario, tipo="REPORTE", curso=curso, visto=False,
@@ -909,8 +933,11 @@ def ver_archivo(request, id_curso, id_archivo):
                 if formComentario.is_valid():
                     comentarioForm = formComentario.cleaned_data
                     texto = comentarioForm['texto']
-                    Comentario.objects.create(
+                    comentario = Comentario.objects.create(
                         texto=texto, archivo=archivo, fecha=datetime.datetime.now(), usuario=usuario)
+                    ## FRAUD DETECTION
+                    fraud_detector(comentario.usuario, "comentario",str(comentario.id), [str(comentario.texto)])
+                    ##
                     referencia = '/curso/' + \
                         str(id_curso)+'/archivo/'+str(id_archivo)
                     notificacion = Notificacion(referencia=referencia, usuario=curso.propietario, tipo="COMENTARIO", curso=curso, visto=False,
@@ -928,8 +955,11 @@ def ver_archivo(request, id_curso, id_archivo):
                     responderForm = formRespuesta.cleaned_data
                     responde_a = responderForm['responde_a']
                     texto = responderForm['texto']
-                    Comentario.objects.create(texto=texto, archivo=archivo, fecha=datetime.datetime.now(
+                    comentario = Comentario.objects.create(texto=texto, archivo=archivo, fecha=datetime.datetime.now(
                     ), usuario=usuario, responde_a=Comentario.objects.get(id=responde_a))
+                    ## FRAUD DETECTION
+                    fraud_detector(comentario.usuario, "comentario",str(comentario.id), [str(comentario.texto)])
+                    ##
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
                 else:
                     return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'respuestasDict': respuestasDict, 'error': True,
@@ -943,8 +973,11 @@ def ver_archivo(request, id_curso, id_archivo):
                     responde_a = responderForm['responde_a']
                     texto = responderForm['texto']
                     texto = "@"+usuario_responde_a+" "+texto
-                    Comentario.objects.create(texto=texto, archivo=archivo, fecha=datetime.datetime.now(
+                    comentario = Comentario.objects.create(texto=texto, archivo=archivo, fecha=datetime.datetime.now(
                     ), usuario=usuario, responde_a=Comentario.objects.get(id=responde_a))
+                    ## FRAUD DETECTION
+                    fraud_detector(comentario.usuario, "comentario",str(comentario.id), [str(comentario.texto)])
+                    ##
                     return redirect('/curso/'+str(id_curso)+'/archivo/'+str(id_archivo))
                 else:
                     return render(request, "archivo.html", {'pdf': archivo.ruta, 'curso': curso, 'archivo': archivo, 'contenido_curso': contenido_curso, 'respuestasDict': respuestasDict, 'error': True,
@@ -1146,3 +1179,12 @@ def terminos(request):
 
 def privacidad(request):
     return render(request, "privacidad.html")
+
+
+def fraud_detector(usuario,entidad,entidad_id,text_list):
+    for t in text_list:
+        if(bool(re.search(r"\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{3})", t)) or bool(re.search(r"[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*", t))):
+            fraude = Fraude(usuario=usuario,entidad=entidad,entidad_id=entidad_id,evidencia=t)
+            fraude.save()
+            break
+
