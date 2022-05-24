@@ -465,9 +465,7 @@ def registro_usuario(request):
                 user_django = User.objects.create_user(
                     username=usename, email=email, password=password)
                 user_django.save()
-                ## FRAUD DETECTION
-                fraud_detector(user_django, "user",str(user_django.username), [str(user_django.username),str(user_django.email)])
-                ##
+                
 
             except ValidationError as e:
                 for i in e.error_dict:
@@ -485,6 +483,7 @@ def registro_usuario(request):
 
                 ## FRAUD DETECTION
                 fraud_detector(usuario_instancia, "usuario",usuario_instancia.email_academico, [str(usuario_instancia.nombre),str(usuario_instancia.apellidos),str(usuario_instancia.descripcion)])
+                fraud_detector(usuario_instancia, "user",str(user_django.username), [str(user_django.username)])
                 ##
 
             except ValidationError as e:
@@ -581,7 +580,7 @@ def actualizar_usuario(request):
                     if comprobacion > 0:
                         request.user.save()
                         ## FRAUD DETECTION
-                    fraud_detector(usuario_instancia, "user",str(request.user.username), [str(request.user.username),str(request.user.email)])
+                    fraud_detector(usuario_instancia, "user",str(request.user.username), [str(request.user.username)])
                     ##
 
                 except ValidationError as e:
@@ -766,6 +765,7 @@ def curso(request, id, suscrito=False):
                         try:
                             resenya_instancia.full_clean()
                             resenya_instancia.save()
+                            fraud_detector(resenya_instancia.usuario, "resenya",str(resenya_instancia.id), [str(resenya_instancia.descripcion)])
                         except ValidationError as e:
                             print(e)
                         referencia = '/curso/' + \
