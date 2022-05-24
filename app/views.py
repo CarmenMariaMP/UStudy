@@ -91,21 +91,25 @@ def envio_correo(request):
 
 
 def buscar_curso(request):
-
-    busqueda = request.GET.get('q')
-    cursos_todos = Curso.objects.filter(asignatura__nombre__icontains=busqueda)
-    cursos = []
-    usuario_actual = request.user.usuario
-    for curso in cursos_todos:
-        suscriptores = curso.suscriptores.all()
-        if (curso.propietario != usuario_actual):
-            if (usuario_actual not in suscriptores and usuario_actual.titulacion == curso.asignatura.titulacion):
-                valoracion = get_valoracion(curso)
-                cursos.append((curso, valoracion))
-    page_obj = pagination(request, cursos, 9)
-    return render(request, "cursosdisponibles.html", {'page_obj': page_obj})
-
-
+    if request.user.is_authenticated:
+        busqueda = request.GET.get('q')
+        cursos_todos = Curso.objects.filter(asignatura__nombre__icontains=busqueda)
+        cursos = []
+        numero_archivos = []
+        usuario_actual = request.user.usuario
+        for curso in cursos_todos:
+            suscriptores = curso.suscriptores.all()
+            archivos = len(curso.archivos.all())
+            numero_archivos.append(archivos)
+            if (curso.propietario != usuario_actual):
+                if (usuario_actual not in suscriptores and usuario_actual.titulacion == curso.asignatura.titulacion):
+                    valoracion = get_valoracion(curso)
+                    cursos.append((curso, valoracion))
+        page_obj = pagination(request, cursos, 9)
+        page_obj_archivos = zip(page_obj,numero_archivos)
+        return render(request, "cursosdisponibles.html", {'page_obj': page_obj,"page_obj_archivos":page_obj_archivos})
+    else:
+        return redirect("/login")
 
 
 
