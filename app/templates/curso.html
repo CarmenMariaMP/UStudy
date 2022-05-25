@@ -214,9 +214,15 @@
             </ul>
             {%else%}
             <ul>
+                {% if es_owner %}
+                <div class="card">
+                    <h5>No tienes ninguna reseña en este curso</h5>
+                </div>
+                {%else%}
                 <div class="card">
                     <h5>No hay reseñas, sé el primero en añadir una...</h5>
                 </div>
+                {%endif%}
             </ul>
             {%endif%}
         </div>
