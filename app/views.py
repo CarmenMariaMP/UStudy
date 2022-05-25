@@ -379,7 +379,7 @@ def inicio_profesor(request):
                 puntos += valoracion.puntuacion
 
             if len(valoraciones) > 0:
-                mediaPuntos = puntos/len(valoraciones)
+                mediaPuntos = round(puntos/len(valoraciones),2)
                 acc_sum += mediaPuntos
                 ac += 1
 
