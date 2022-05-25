@@ -1102,6 +1102,10 @@ def error_500(request):
     context = {"error": "Parece que hay un error en el servidor..."}
     return render(request, 'error.html', context)
 
+def error_413(request):
+    context = {"error": "El archivo que intentas subir es demasiado grande..."}
+    return render(request, 'error.html', context)
+
 
 def servir_archivo(request, id_curso, archivo):
     if request.user.is_authenticated:
