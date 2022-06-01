@@ -8,7 +8,7 @@ import psutil
 
 
 def emails_distintos(email_academico):
-    if('@alum.us.es' in email_academico):
+    if('@alum.us.es'in email_academico or '@us.es' in email_academico):
         raise ValidationError(
             _('Los dos emails pertenecen a la Universidad de Sevilla'),
             params={'email_academico': email_academico}
@@ -16,7 +16,7 @@ def emails_distintos(email_academico):
 
 
 def validador_email(email):
-    if('@alum.us.es' not in email):
+    if('@alum.us.es' not in email and '@us.es' not in email):
         raise ValidationError(
             _('Este %(email)s no pertenece a la Universidad de Sevilla'),
             params={'email': email}
@@ -48,7 +48,7 @@ def image_directory_path(instance, filename):
 class Usuario(models.Model):
     nombre = models.CharField(max_length=40)
     apellidos = models.CharField(max_length=40)
-    email = models.EmailField(unique=True, max_length=254)
+    email = models.EmailField(unique=True, max_length=254, validators=[emails_distintos])
     email_academico = models.EmailField(
         primary_key=True, unique=True, validators=[validador_email])
     titulacion = models.CharField(max_length=200)
