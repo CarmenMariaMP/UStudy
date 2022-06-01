@@ -80,9 +80,11 @@ border:none;
         <div class="row height d-flex justify-content-center align-items-center">
           <div class="col-md-6">
             <div class="form">
-              <i class="fa fa-search"></i>
               <form action="/buscar_curso/" method="GET">
-              <input name="q" id="buscador" type="text" class="form-control form-input" placeholder="Buscar cursos...">
+                <button style="background-color:transparent; border: none;">
+                    <i style="padding-top: 14px" class="fa fa-search"></i>
+                </button>
+                <input name="q" id="buscador" type="text" class="form-control form-input" placeholder="Buscar cursos...">
             </form>
             </div>
           </div>
@@ -95,7 +97,7 @@ border:none;
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    {%if page_obj|length > 0 %} {% for cursoYvaloracion,numArchivos in page_obj_archivos %}
+                    {%if page_obj|length > 0 %} {% for cursoYvaloracion, numArchivos in page_obj_archivos %}
                     <div class="col-md-4 mb-5">
                         <div class="card h-100 box-shadow border-info standard_web_color">
                             <div class="card-body standard_web_color ">
@@ -103,7 +105,11 @@ border:none;
                                 <p class="card-text">Profesor: <a  href="/perfil/{{cursoYvaloracion.0.propietario.django_user.username}}">{{cursoYvaloracion.0.propietario.django_user.username}}</a></p>
                                 <p class="card-text text-truncate">Descripción: {{cursoYvaloracion.0.descripcion}} </p>
                                 <p class="card-text">Valoración: {{cursoYvaloracion.1}}</p>
-                                <p class="card-text">Archivos multimedia: {{numArchivos}}</p>
+                                {%if numArchivos == 0%}
+                                    <p class="card-text">Archivos multimedia: No hay archivos</p>
+                                {%else%}
+                                    <p class="card-text">Archivos multimedia: {{numArchivos}}</p>
+                                {%endif%}
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group text-center">
                                         <div class="btn-group text-center">
@@ -129,7 +135,7 @@ border:none;
                                             </div>
                                         </div>
                                     </div>
-                                    <small class="text-muted">Fecha publicación: {{cursoYvaloracion.0.fecha_publicacion|date:"d/m/Y"}}</small>
+                                    <small style="margin-left: 6px;" class="text-muted">Fecha publicación: {{cursoYvaloracion.0.fecha_publicacion|date:"d/m/Y"}}</small>
                                 </div>
                             </div>
                         </div>
